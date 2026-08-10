@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics="">
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/tokens/fig-tokens.css">
+<link rel="stylesheet" href="_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/components/action/fig-assets.css">
+<link rel="stylesheet" href="_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/components/extra/fig-assets.css">
+<script src="_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:#E4E4E9;font-family:Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#C2410C;text-decoration:none}a:hover{color:var(--tab-active)}
+.dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08)}
+.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}
+.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1D1D21;color:#fff;border-radius:4px;text-decoration:none}
+.dv-tname{font:600 13px/1.2 Pretendard,system-ui,sans-serif;color:#1D1D21}
+.dv-opts{display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start}
+.dv-opt{flex:none;display:flex;flex-direction:column;gap:12px}
+.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1D1D21;border-radius:5px;text-decoration:none}
+.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 12px/1.3 Pretendard,system-ui,sans-serif;color:rgba(0,0,0,.55)}
+.dv-opt:target .dv-oid{background:#EA580C;color:#fff}
+.dv-next{margin:22px 0 0;font:12px/1.5 Pretendard,system-ui,sans-serif;color:rgba(0,0,0,.5)}
+@keyframes pop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.08);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes limefade{0%,55%{background:#A3E635}100%{background:var(--ink)}}
+@keyframes printOut{from{transform:translateY(-101%)}to{transform:translateY(0)}}
+@keyframes dimIn{from{opacity:0}to{opacity:1}}
+@keyframes riseIn{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
+[data-theme="light"]{--ink:#1D1D21;--body:#56565E;--mute:#8E8E97;--canvas:#FFFFFF;--soft:#E8E8EC;--softer:#F2F2F4;--pressed:#DCDCE2;--primary:#EA580C;--tab-active:#C2410C;--on-primary:#FFFFFF;--on-primary:#FFFFFF;--secondary:#A3E635;--shadow:rgba(0,0,0,.05)}
+[data-theme="dark"]{--ink:#F7F7F9;--body:#A9A9B2;--mute:#71717A;--canvas:#1D1D21;--soft:#2B2B31;--softer:#131316;--pressed:#3E3E45;--primary:#F97316;--tab-active:#EA580C;--on-primary:#1D1D21;--secondary:#A3E635;--shadow:rgba(0,0,0,.4)}
+</style>
+</helmet>
+
+<section class="dv-turn" id="t7">
+<div class="dv-thd"><a class="dv-tid" href="#t7">7</a><span class="dv-tname">화면 2 확정 · <a class="dv-oid" href="#2a">2a</a> 결과 + 영수증을 시그니처로</span></div>
+
+<div class="dv-opts">
+
+<div class="dv-opt" id="7a">
+<div class="dv-olabel"><a class="dv-oid" href="#7a">7a</a>추천안 · CTA가 영수증을 “발행”한다 (버튼 탭)</div>
+<div style="display:flex;gap:20px;align-items:flex-start">
+
+<div data-theme="{{ theme }}" data-screen-label="결과 영수증 발행" style="width:390px;height:844px;border-radius:52px;background:var(--softer);box-shadow:0 0 0 11px #1D1D21,0 0 0 13px #56565E,0 24px 60px rgba(0,0,0,.28);overflow:hidden;display:flex;flex-direction:column;position:relative;color:var(--ink)">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 28px 0;font-size:15px;font-weight:600;flex:none">
+    <span>9:41</span><span style="font-size:13px;color:var(--body)">5G · 92%</span>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding:32px 20px 0;min-height:0;overflow:hidden">
+    <div style="font-size:12px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--body)">오늘의 학습</div>
+    <div style="height:8px"></div>
+    <div style="font-size:32px;font-weight:700;line-height:40px">다 했어요</div>
+
+    <div style="height:28px"></div>
+
+    <div style="background:var(--canvas);border-radius:24px;box-shadow:0 6px 14px var(--shadow);padding:24px 20px;display:flex;align-items:center;gap:18px">
+      <div style="width:88px;height:88px;border-radius:18px;background:#EDEDF1;display:flex;align-items:center;justify-content:center;flex:none;position:relative">
+        <img src="assets/mascot.png" alt="사장" style="width:74px;height:74px;object-fit:contain">
+        <div style="position:absolute;right:-6px;bottom:-6px;width:30px;height:30px;border-radius:999px;background:#A3E635;display:flex;align-items:center;justify-content:center">
+          <span style="display:flex;align-items:center;justify-content:center;width:24px;height:24px;color:#1D1D21;transform:scale(0.8);transform-origin:center"><x-import component-from-global-scope="DesignSystem_0bedd6.IconNormalCheck" hint-size="24px,24px"></x-import></span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+        <div style="font-size:12px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--body)">새 재료</div>
+        <div style="font-size:26px;font-weight:700;line-height:32px">쌀</div>
+        <div style="font-size:15px;color:var(--body)">사장이 재료를 하나 건넸어요</div>
+      </div>
+    </div>
+
+    <div style="height:28px"></div>
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <span style="font-size:20px;font-weight:600">참치마요</span>
+        <span style="font-size:13px;font-weight:500;color:var(--body);font-variant-numeric:tabular-nums">1 / 4</span>
+      </div>
+      <div style="display:flex;gap:8px">
+        <div style="flex:1;height:8px;border-radius:999px;background:var(--ink)"></div>
+        <div style="flex:1;height:8px;border-radius:999px;background:var(--pressed)"></div>
+        <div style="flex:1;height:8px;border-radius:999px;background:var(--pressed)"></div>
+        <div style="flex:1;height:8px;border-radius:999px;background:var(--pressed)"></div>
+      </div>
+      <div style="font-size:15px;color:var(--body)">완성까지 세 번 남았어요</div>
+    </div>
+
+    <div style="height:28px"></div>
+
+    <div style="display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-top:1px solid var(--pressed)">
+        <span style="font-size:15px;color:var(--body)">새로 배운 단어</span>
+        <span style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums">12</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-top:1px solid var(--pressed);border-bottom:1px solid var(--pressed)">
+        <span style="font-size:15px;color:var(--body)">아직이라고 표시한 단어</span>
+        <span style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums">3</span>
+      </div>
+    </div>
+
+    <div style="height:16px"></div>
+    <div style="font-size:15px;line-height:22px;color:var(--body);text-wrap:pretty">오늘 외운 12개는 내일 다시 확인해요.</div>
+
+    <sc-if value="{{ recResult }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:auto;padding:20px 0 28px">
+        <button onClick="{{ printReceipt }}" style="width:100%;min-height:56px;border:none;border-radius:999px;background:var(--primary);color:var(--on-primary);font-size:18px;font-weight:600;cursor:pointer">영수증 받고 마치기</button>
+      </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ recPrinted }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:rgba(19,19,22,.82);display:flex;flex-direction:column;animation:dimIn .2s ease both">
+      <div style="flex:1;overflow:hidden;display:flex;align-items:flex-start;justify-content:center;padding:56px 26px 0">
+        <div style="width:100%;background:var(--canvas);border-radius:4px;padding:30px 24px 26px;color:var(--ink);animation:printOut .9s cubic-bezier(.22,.61,.36,1) both">
+          <div style="text-align:center;font-size:15px;font-weight:600;letter-spacing:3px">ONIGIRI SHOP</div>
+          <div style="height:6px"></div>
+          <div style="text-align:center;font-size:13px;color:var(--body);font-variant-numeric:tabular-nums">2026.08.09 09:41</div>
+          <div style="height:22px"></div>
+          <div style="border-top:1px dashed var(--pressed)"></div>
+          <div style="display:flex;justify-content:space-between;padding:13px 0;font-size:15px">
+            <span style="color:var(--body)">새로 배운 단어</span><span style="font-weight:600;font-variant-numeric:tabular-nums">12</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:13px 0;font-size:15px;border-top:1px solid var(--soft)">
+            <span style="color:var(--body)">아직이라고 표시</span><span style="font-weight:600;font-variant-numeric:tabular-nums">3</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 0;font-size:15px;border-top:1px solid var(--soft)">
+            <span style="color:var(--body)">받은 재료</span>
+            <span style="display:flex;align-items:center;gap:8px;font-weight:600">
+              <span style="width:20px;height:20px;border-radius:999px;background:#A3E635;display:flex;align-items:center;justify-content:center">
+                <span style="display:flex;align-items:center;justify-content:center;width:24px;height:24px;color:#1D1D21;transform:scale(0.62);transform-origin:center"><x-import component-from-global-scope="DesignSystem_0bedd6.IconNormalCheck" hint-size="24px,24px"></x-import></span>
+              </span>쌀
+            </span>
+          </div>
+          <div style="border-top:1px dashed var(--pressed)"></div>
+          <div style="height:20px"></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:15px">
+            <span style="color:var(--body)">참치마요</span>
+            <span style="font-weight:600;font-variant-numeric:tabular-nums">1 / 4</span>
+          </div>
+          <div style="height:12px"></div>
+          <div style="display:flex;gap:6px">
+            <div style="flex:1;height:6px;border-radius:999px;background:var(--ink)"></div>
+            <div style="flex:1;height:6px;border-radius:999px;background:var(--pressed)"></div>
+            <div style="flex:1;height:6px;border-radius:999px;background:var(--pressed)"></div>
+            <div style="flex:1;height:6px;border-radius:999px;background:var(--pressed)"></div>
+          </div>
+          <div style="height:24px"></div>
+          <div style="text-align:center;font-size:15px;line-height:22px;color:var(--body);text-wrap:pretty">오늘 외운 12개는<br>내일 다시 확인해요.</div>
+          <div style="height:18px"></div>
+          <div style="text-align:center;font-size:12px;letter-spacing:2.4px;color:var(--body)">THANK YOU · 24일째</div>
+        </div>
+      </div>
+
+      <div style="flex:none;padding:20px 26px 34px;display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;gap:10px">
+          <button onClick="{{ noop }}" style="flex:1;min-height:52px;border:none;border-radius:999px;background:var(--canvas);color:var(--ink);font-size:16px;font-weight:600;cursor:pointer">이미지로 저장</button>
+          <button onClick="{{ noop }}" style="flex:1;min-height:52px;border:none;border-radius:999px;background:var(--canvas);color:var(--ink);font-size:16px;font-weight:600;cursor:pointer">공유</button>
+        </div>
+        <button onClick="{{ closeReceipt }}" style="width:100%;min-height:52px;border:1.5px solid rgba(255,255,255,.28);border-radius:999px;background:rgba(255,255,255,.08);color:#FFFFFF;font-size:16px;font-weight:600;cursor:pointer">닫기</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <div style="position:absolute;left:50%;bottom:9px;transform:translateX(-50%);width:134px;height:5px;border-radius:999px;background:var(--ink);opacity:.35"></div>
+</div>
+
+<div style="width:264px;background:#FAFAFB;border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+  <div style="font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:#8E8E97">개선 포인트</div>
+  <div style="display:flex;flex-direction:column;gap:11px;font-size:12.5px;line-height:19px;color:#56565E">
+    <div><b style="color:#1D1D21">1. 영수증을 ‘선택지’가 아니라 ‘결과물’로</b><br><a href="#2b">2b</a>를 두 번째 버튼으로 되살리면 다시 액션이 둘이 된다. 대신 하나뿐인 CTA의 <b>결과</b>로 만들었다 — “영수증 받고 마치기”를 누르면 영수증이 위에서 인쇄되어 내려온다. 선택 부담 0, 매일 반드시 한 번은 본다.</div>
+    <div><b style="color:#1D1D21">2. 리추얼의 마침표</b><br>가게에서 나오며 영수증을 받는 동작 그대로. 0.9초 프린트 모션이 세션의 끝을 신체적으로 표시해, 앱을 닫는 행동에 감정을 부여한다.</div>
+    <div><b style="color:#1D1D21">3. 공유는 여기서만</b><br>이미지 저장·공유는 영수증이 나온 뒤에만 등장. 결과 화면을 어지럽히지 않으면서, 자연스럽게 확산 자산이 된다(‘24일째’ 연속 기록을 푸터에 넣어 자랑할 거리를 준다).</div>
+    <div><b style="color:#1D1D21">4. 오렌지는 여전히 하나</b><br>영수증이 뜨면 스크림이 화면을 덮고 CTA는 가려진다. 시트 위 버튼은 전부 흰 면/텍스트 — 어떤 순간에도 오렌지는 하나.</div>
+    <div><b style="color:#1D1D21">5. 보관</b><br>모든 영수증은 기록 탭에 날짜순으로 쌓인다. 놓쳐도 사라지지 않으니 ‘닫기’의 심리적 비용이 없다.</div>
+    <div><b style="color:#1D1D21">6. 카피</b><br>‘오늘은 여기까지’ → ‘영수증 받고 마치기’. 버튼이 무슨 일이 일어날지 그대로 말한다.</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="dv-opt" id="7b">
+<div class="dv-olabel"><a class="dv-oid" href="#7b">7b</a>대안 · 기록 탭 = 영수증 아카이브</div>
+<div style="display:flex;gap:20px;align-items:flex-start">
+
+<div data-theme="{{ theme }}" data-screen-label="기록 영수증 아카이브" style="width:390px;height:844px;border-radius:52px;background:var(--softer);box-shadow:0 0 0 11px #1D1D21,0 0 0 13px #56565E,0 24px 60px rgba(0,0,0,.28);overflow:hidden;display:flex;flex-direction:column;position:relative;color:var(--ink)">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 28px 0;font-size:15px;font-weight:600;flex:none">
+    <span>9:41</span><span style="font-size:13px;color:var(--body)">5G · 92%</span>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding:28px 20px 0;min-height:0;overflow:hidden">
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <span style="font-size:36px;font-weight:700;line-height:44px">기록</span>
+      <span style="font-size:15px;font-weight:600;color:var(--body);font-variant-numeric:tabular-nums">24일째</span>
+    </div>
+    <div style="height:8px"></div>
+    <div style="font-size:15px;color:var(--body)">영수증 24장 · 단어 288개</div>
+
+    <div style="height:24px"></div>
+
+    <div style="background:var(--canvas);border-radius:4px;padding:24px 22px 20px;box-shadow:0 6px 14px var(--shadow)">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <span style="font-size:13px;font-weight:600;letter-spacing:2.4px">오늘</span>
+        <span style="font-size:13px;color:var(--body);font-variant-numeric:tabular-nums">08.09</span>
+      </div>
+      <div style="height:16px"></div>
+      <div style="border-top:1px dashed var(--pressed)"></div>
+      <div style="display:flex;justify-content:space-between;padding:12px 0;font-size:15px">
+        <span style="color:var(--body)">배운 단어</span><span style="font-weight:600;font-variant-numeric:tabular-nums">12</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:12px 0;font-size:15px;border-top:1px solid var(--soft)">
+        <span style="color:var(--body)">받은 재료</span><span style="font-weight:600">쌀</span>
+      </div>
+      <div style="border-top:1px dashed var(--pressed)"></div>
+      <div style="height:14px"></div>
+      <div style="text-align:center;font-size:12px;letter-spacing:2.4px;color:var(--body)">THANK YOU</div>
+    </div>
+
+    <div style="height:14px"></div>
+
+    <div style="background:var(--canvas);border-radius:4px;padding:20px 22px;box-shadow:0 4px 10px var(--shadow);opacity:.92">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <span style="font-size:13px;font-weight:600;letter-spacing:2.4px">어제</span>
+        <span style="font-size:13px;color:var(--body);font-variant-numeric:tabular-nums">08.08</span>
+      </div>
+      <div style="height:14px"></div>
+      <div style="border-top:1px dashed var(--pressed)"></div>
+      <div style="display:flex;justify-content:space-between;padding:12px 0;font-size:15px">
+        <span style="color:var(--body)">배운 단어</span><span style="font-weight:600;font-variant-numeric:tabular-nums">12</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:12px 0;font-size:15px;border-top:1px solid var(--soft)">
+        <span style="color:var(--body)">받은 재료</span><span style="font-weight:600">김</span>
+      </div>
+    </div>
+
+    <div style="height:14px"></div>
+
+    <div style="background:var(--canvas);border-radius:4px;padding:20px 22px;box-shadow:0 4px 10px var(--shadow);opacity:.84">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <span style="font-size:13px;font-weight:600;letter-spacing:2.4px">08.07</span>
+        <span style="font-size:13px;color:var(--body);font-variant-numeric:tabular-nums">목</span>
+      </div>
+      <div style="height:14px"></div>
+      <div style="border-top:1px dashed var(--pressed)"></div>
+      <div style="display:flex;justify-content:space-between;padding:12px 0;font-size:15px">
+        <span style="color:var(--body)">배운 단어</span><span style="font-weight:600;font-variant-numeric:tabular-nums">12</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex:none;display:flex;background:var(--softer);border-top:1px solid var(--pressed);padding:8px 8px 26px">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="1.5 1.5 29 29" fill="none" aria-hidden="true"><path d="M11 28V21C11 20.7348 11.1054 20.4804 11.2929 20.2929C11.4804 20.1054 11.7348 20 12 20H20C20.2652 20 20.5196 20.1054 20.7071 20.2929C20.8946 20.4804 21 20.7348 21 21V28" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.9113 18.8362C1.4313 22.8324 4.30505 27.9999 9.01005 27.9999H22.9901C27.6951 27.9999 30.5688 22.8324 28.0888 18.8362L21.0976 6.83618C18.7501 3.05493 13.2501 3.05493 10.9026 6.83618L3.9113 18.8362Z" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">오늘</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="-0.2 -0.2 15.4 15.4" fill="none" aria-hidden="true"><path d="M4.5 1.25V14.25M7 5.25H11M1.5 1.25H11.5C12.6046 1.25 13.5 2.14543 13.5 3.25V12.25C13.5 13.3546 12.6046 14.25 11.5 14.25H1.5V1.25Z" stroke="currentColor" stroke-width="1.16" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">메뉴</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--tab-active)">
+      <svg width="26" height="26" viewBox="3.5 3.5 25 25" fill="none" aria-hidden="true"><path d="M16 27c6.075 0 11-4.925 11-11S22.075 5 16 5 5 9.925 5 16s4.925 11 11 11Z" stroke="currentColor" stroke-width="1.85" stroke-linejoin="round"></path><path d="M16 10v6.4l4.6 2.8" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:600;letter-spacing:-.1px">기록</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="3.5 3.5 25 25" fill="none" aria-hidden="true"><path d="M5 11h22M5 21h22" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></path><path d="M12.5 14a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM20.5 24a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="var(--softer)" stroke="currentColor" stroke-width="1.85" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">설정</span>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:50%;bottom:9px;transform:translateX(-50%);width:134px;height:5px;border-radius:999px;background:var(--ink);opacity:.35"></div>
+</div>
+
+<div style="width:264px;background:#FAFAFB;border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+  <div style="font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:#8E8E97">함께 쓰는 화면</div>
+  <div style="display:flex;flex-direction:column;gap:11px;font-size:12.5px;line-height:19px;color:#56565E">
+    <div><b style="color:#1D1D21">대안이자 짝</b><br><a href="#7a">7a</a>와 배타적이지 않다. 발행은 7a에서, <b>보관은 기록 탭</b>에서. 기록 탭을 그래프가 아니라 <b>영수증 더미</b>로 만들면 시그니처가 앱 전체로 확장된다.</div>
+    <div><b style="color:#1D1D21">스크롤이 곧 시간</b><br>같은 양식이 날짜만 바뀌며 아래로 쌓인다. 24장을 스크롤하는 경험 자체가 “24일 했다”는 증거 — 숫자 하나보다 설득력 있다.</div>
+    <div><b style="color:#1D1D21">깊이 표현</b><br>과거 영수증일수록 그림자와 불투명도를 한 단씩 낮춰 종이가 겹친 느낌만 준다. 색은 쓰지 않는다.</div>
+    <div><b style="color:#1D1D21">4px 라운드</b><br>영수증에만 4px를 쓴다(카드 24px, 필 999px). 이 반경 하나가 “종이”라는 신호를 전담한다.</div>
+    <div><b style="color:#1D1D21">7a만 먼저 해도 됨</b><br>기록 탭 전면 개편은 비용이 크니, 1차 릴리스는 <a href="#7a">7a</a>만으로도 시그니처가 성립한다.</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+</div>
+<p class="dv-next">다음: “<a class="dv-oid" href="#7a">7a</a> 프린트 모션 더 길게/짧게” · “영수증 공유 이미지(1:1) 만들어줘” · “<a class="dv-oid" href="#7b">7b</a> 기록 탭 본격 설계”</p>
+</section>
+
+<section class="dv-turn" id="t6">
+<div class="dv-thd"><a class="dv-tid" href="#t6">6</a><span class="dv-tname">Foundation · Onikan Grey — Neutral과 Cool Neutral의 중간값</span></div>
+
+<div style="display:flex;gap:36px;align-items:flex-start;flex-wrap:wrap">
+
+<div style="display:flex;flex-direction:column;gap:16px;width:820px">
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <span style="font:600 11px/1 Pretendard,system-ui;letter-spacing:1.4px;text-transform:uppercase;color:#8E8E97">Ramp</span>
+    <span style="font:700 22px/1.2 Pretendard,system-ui;color:#1D1D21">Onikan Grey</span>
+    <span style="font:400 13px/20px Pretendard,system-ui;color:#56565E">전 단계 hue 228 고정, 채도 2.6% — Tintin Neutral(0%)과 Cool Neutral(≈5%)의 정확한 중간. 배경 #F2F2F4와 같은 축에 있어 카드·구분선·텍스트가 서로 겉돌지 않는다.</span>
+  </div>
+
+  <div style="display:flex;border-radius:10px;overflow:hidden">
+    <div style="flex:1;height:88px;background:#FAFAFB"></div>
+    <div style="flex:1;height:88px;background:#F2F2F4"></div>
+    <div style="flex:1;height:88px;background:#EDEDF1"></div>
+    <div style="flex:1;height:88px;background:#E8E8EC"></div>
+    <div style="flex:1;height:88px;background:#DCDCE2"></div>
+    <div style="flex:1;height:88px;background:#C4C4CC"></div>
+    <div style="flex:1;height:88px;background:#8E8E97"></div>
+    <div style="flex:1;height:88px;background:#71717A"></div>
+    <div style="flex:1;height:88px;background:#56565E"></div>
+    <div style="flex:1;height:88px;background:#3E3E45"></div>
+    <div style="flex:1;height:88px;background:#2B2B31"></div>
+    <div style="flex:1;height:88px;background:#1D1D21"></div>
+    <div style="flex:1;height:88px;background:#131316"></div>
+  </div>
+
+  <div style="display:flex;gap:0;font:500 11px/1.5 ui-monospace,Menlo,monospace;color:#56565E">
+    <div style="flex:1;text-align:center">99</div>
+    <div style="flex:1;text-align:center">97</div>
+    <div style="flex:1;text-align:center">96</div>
+    <div style="flex:1;text-align:center">95</div>
+    <div style="flex:1;text-align:center">90</div>
+    <div style="flex:1;text-align:center">80</div>
+    <div style="flex:1;text-align:center">60</div>
+    <div style="flex:1;text-align:center">50</div>
+    <div style="flex:1;text-align:center">40</div>
+    <div style="flex:1;text-align:center">30</div>
+    <div style="flex:1;text-align:center">22</div>
+    <div style="flex:1;text-align:center">15</div>
+    <div style="flex:1;text-align:center">10</div>
+  </div>
+</div>
+
+<div style="width:400px;background:#FAFAFB;border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+  <div style="font:600 11px/1 Pretendard,system-ui;letter-spacing:1.4px;text-transform:uppercase;color:#8E8E97">역할 매핑</div>
+  <div style="display:flex;flex-direction:column;gap:9px;font:400 12.5px/19px Pretendard,system-ui;color:#56565E">
+    <div style="display:flex;gap:10px"><span style="width:76px;flex:none;font-weight:600;color:#1D1D21">ink</span><span>10 / 99 — 제목·본문·진행바 채움</span></div>
+    <div style="display:flex;gap:10px"><span style="width:76px;flex:none;font-weight:600;color:#1D1D21">body</span><span>40 / 60 — 캡션·보조 텍스트·비활성 탭. 라이트 8.3:1, 다크 7.2:1</span></div>
+    <div style="display:flex;gap:10px"><span style="width:76px;flex:none;font-weight:600;color:#1D1D21">mute</span><span>50 / 60 — 잠김·플레이스홀더 전용. 이전 #A8A29E(2.4:1)보다 어두워져 3.4:1</span></div>
+    <div style="display:flex;gap:10px"><span style="width:76px;flex:none;font-weight:600;color:#1D1D21">canvas</span><span>흰색 / 10 — 카드 면</span></div>
+    <div style="display:flex;gap:10px"><span style="width:76px;flex:none;font-weight:600;color:#1D1D21">softer</span><span>95 / 15 — 페이지 배경(#F2F2F4)·탭바</span></div>
+    <div style="display:flex;gap:10px"><span style="width:76px;flex:none;font-weight:600;color:#1D1D21">soft</span><span>96 / 22 — 알약·예문 블록·세그먼트 트랙</span></div>
+    <div style="display:flex;gap:10px"><span style="width:76px;flex:none;font-weight:600;color:#1D1D21">pressed</span><span>90 / 30 — hairline 구분선·미완료 진행 칸</span></div>
+    <div style="display:flex;gap:10px"><span style="width:76px;flex:none;font-weight:600;color:#1D1D21">plate</span><span>96 — 일러스트 뒤 타일. 선화가 검정이라 다크에서도 고정</span></div>
+  </div>
+  <div style="height:1px;background:#DCDCE2"></div>
+  <div style="font:400 12.5px/19px Pretendard,system-ui;color:#56565E">오렌지·라임은 그대로. 다크는 같은 램프를 뒤집어 쓰되 ink만 99가 아닌 <b style="color:#1D1D21">97</b>을 써서 눈부심을 줄였다.</div>
+</div>
+
+</div>
+<p class="dv-next">아래 모든 시안에 이 램프가 적용돼 있습니다. 다음: “더 차갑게/따뜻하게 반 단계 조정” · “다크 배경을 한 단 밝게”</p>
+</section>
+
+<section class="dv-turn" id="t5">
+<div class="dv-thd"><a class="dv-tid" href="#t5">5</a><span class="dv-tname">화면 4 · 메뉴 — <a class="dv-oid" href="#4a">4a</a> + <a class="dv-oid" href="#4b">4b</a> 결합 (뷰 전환)</span></div>
+
+<div class="dv-opts">
+
+<div class="dv-opt" id="5a">
+<div class="dv-olabel"><a class="dv-oid" href="#5a">5a</a>결합안 · 리스트 ↔ 그리드 토글 (탭해서 확인)</div>
+<div style="display:flex;gap:20px;align-items:flex-start">
+
+<div data-theme="{{ theme }}" data-screen-label="메뉴 결합" style="width:390px;height:844px;border-radius:52px;background:var(--softer);box-shadow:0 0 0 11px #1D1D21,0 0 0 13px #56565E,0 24px 60px rgba(0,0,0,.28);overflow:hidden;display:flex;flex-direction:column;position:relative;color:var(--ink)">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 28px 0;font-size:15px;font-weight:600;flex:none">
+    <span>9:41</span><span style="font-size:13px;color:var(--body)">5G · 92%</span>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding:28px 20px 0;min-height:0;overflow:hidden">
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <span style="font-size:36px;font-weight:700;line-height:44px">메뉴</span>
+      <span style="font-size:15px;font-weight:600;color:var(--body);font-variant-numeric:tabular-nums">3 / 24</span>
+    </div>
+
+    <div style="height:20px"></div>
+
+    <div style="background:var(--canvas);border-radius:24px;box-shadow:0 6px 14px var(--shadow);padding:18px;display:flex;align-items:center;gap:14px">
+      <div style="width:56px;height:56px;border-radius:16px;background:#EDEDF1;flex:none;display:flex;align-items:center;justify-content:center;overflow:hidden"><img src="assets/onigiri.png" alt="참치마요" style="width: 57px; height: 57px; object-fit: contain"></div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:8px;min-width:0">
+        <div style="font-size:12px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--body)">만드는 중</div>
+        <div style="font-size:18px;font-weight:600">참치마요</div>
+        <div style="display:flex;gap:6px">
+          <div style="flex:1;height:5px;border-radius:999px;background:var(--ink)"></div>
+          <div style="flex:1;height:5px;border-radius:999px;background:var(--pressed)"></div>
+          <div style="flex:1;height:5px;border-radius:999px;background:var(--pressed)"></div>
+          <div style="flex:1;height:5px;border-radius:999px;background:var(--pressed)"></div>
+        </div>
+      </div>
+      <button onClick="{{ noop }}" style="flex: none; min-height: 44px; border: none; border-radius: 999px; color: var(--on-primary); font-size: 16px; font-weight: 600; padding: 0 18px; cursor: pointer; background-color: #EA580C">이어서</button>
+    </div>
+
+    <div style="height:24px"></div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:12px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--body)">전체 24</span>
+      <sc-if value="{{ isList }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ setGrid }}" aria-label="그리드로 보기" style="width:44px;min-height:44px;margin-right:-11px;border:none;border-radius:999px;background:transparent;color:var(--body);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.57 13.1h3.36c.25 0 .5 0 .7.02.22.02.48.06.73.19.36.18.65.47.83.83.13.25.17.51.19.73.02.2.02.45.02.7v3.36c0 .25 0 .5-.02.7a1.9 1.9 0 0 1-.19.73c-.18.36-.47.65-.83.83-.25.13-.51.17-.73.19-.2.02-.45.02-.7.02h-3.36c-.25 0-.5 0-.7-.02a1.9 1.9 0 0 1-.73-.19 1.9 1.9 0 0 1-.83-.83 1.9 1.9 0 0 1-.19-.73c-.02-.2-.02-.45-.02-.7v-3.36c0-.25 0-.5.02-.7.02-.22.06-.48.19-.73.18-.36.47-.65.83-.83.25-.13.51-.17.73-.19.2-.02.45-.02.7-.02Zm-.57 1.8a.1.1 0 0 0-.1.1v4.5c0 .06.04.1.1.1h4.5a.1.1 0 0 0 .1-.1V15a.1.1 0 0 0-.1-.1H15Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M5.07 13.1h3.36c.25 0 .5 0 .7.02.22.02.48.06.73.19.36.18.65.47.83.83.13.25.17.51.19.73.02.2.02.45.02.7v3.36c0 .25 0 .5-.02.7a1.9 1.9 0 0 1-.19.73c-.18.36-.47.65-.83.83-.25.13-.51.17-.73.19-.2.02-.45.02-.7.02H5.07c-.25 0-.5 0-.7-.02a1.9 1.9 0 0 1-.73-.19 1.9 1.9 0 0 1-.83-.83 1.9 1.9 0 0 1-.19-.73c-.02-.2-.02-.45-.02-.7v-3.36c0-.25 0-.5.02-.7.02-.22.06-.48.19-.73.18-.36.47-.65.83-.83.25-.13.51-.17.73-.19.2-.02.45-.02.7-.02Zm-.57 1.8a.1.1 0 0 0-.1.1v4.5c0 .06.04.1.1.1H9a.1.1 0 0 0 .1-.1V15a.1.1 0 0 0-.1-.1H4.5Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M15.57 2.6h3.36c.25 0 .5 0 .7.02.22.02.48.06.73.19.36.18.65.47.83.83.13.25.17.51.19.73.02.2.02.45.02.7v3.36c0 .25 0 .5-.02.7a1.9 1.9 0 0 1-.19.73c-.18.36-.47.65-.83.83-.25.13-.51.17-.73.19-.2.02-.45.02-.7.02h-3.36c-.25 0-.5 0-.7-.02a1.9 1.9 0 0 1-.73-.19 1.9 1.9 0 0 1-.83-.83 1.9 1.9 0 0 1-.19-.73c-.02-.2-.02-.45-.02-.7V5.07c0-.25 0-.5.02-.7.02-.22.06-.48.19-.73.18-.36.47-.65.83-.83.25-.13.51-.17.73-.19.2-.02.45-.02.7-.02Zm-.57 1.8a.1.1 0 0 0-.1.1V9c0 .06.04.1.1.1h4.5a.1.1 0 0 0 .1-.1V4.5a.1.1 0 0 0-.1-.1H15Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M5.07 2.6h3.36c.25 0 .5 0 .7.02.22.02.48.06.73.19.36.18.65.47.83.83.13.25.17.51.19.73.02.2.02.45.02.7v3.36c0 .25 0 .5-.02.7a1.9 1.9 0 0 1-.19.73c-.18.36-.47.65-.83.83-.25.13-.51.17-.73.19-.2.02-.45.02-.7.02H5.07c-.25 0-.5 0-.7-.02a1.9 1.9 0 0 1-.73-.19 1.9 1.9 0 0 1-.83-.83 1.9 1.9 0 0 1-.19-.73c-.02-.2-.02-.45-.02-.7V5.07c0-.25 0-.5.02-.7.02-.22.06-.48.19-.73.18-.36.47-.65.83-.83.25-.13.51-.17.73-.19.2-.02.45-.02.7-.02Zm-.57 1.8a.1.1 0 0 0-.1.1V9c0 .06.04.1.1.1H9a.1.1 0 0 0 .1-.1V4.5a.1.1 0 0 0-.1-.1H4.5Z"></path></svg></button>
+        </sc-if>
+        <sc-if value="{{ isGrid }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ setList }}" aria-label="목록으로 보기" style="width:44px;min-height:44px;margin-right:-11px;border:none;border-radius:999px;background:transparent;color:var(--body);display:flex;align-items:center;justify-content:center;cursor:pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.75 7A1.25 1.25 0 1 0 3.75 4.5a1.25 1.25 0 0 0 0 2.5Z"></path><path d="M7.35 5.75c0-.5.4-.9.9-.9h12a.9.9 0 0 1 0 1.8h-12a.9.9 0 0 1-.9-.9Z"></path><path d="M3.75 13.25a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z"></path><path d="M7.35 12c0-.5.4-.9.9-.9h12a.9.9 0 0 1 0 1.8h-12a.9.9 0 0 1-.9-.9Z"></path><path d="M3.75 19.5a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z"></path><path d="M8.25 17.35a.9.9 0 0 0 0 1.8h12a.9.9 0 0 0 0-1.8h-12Z"></path></svg></button>
+        </sc-if>
+    </div>
+
+    <div style="height:8px"></div>
+
+    <sc-if value="{{ isList }}" hint-placeholder-val="{{ true }}">
+      <div style="flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;gap:14px;min-height:64px;border-bottom:1px solid var(--pressed)">
+          <span style="font-size:13px;font-weight:500;color:var(--body);font-variant-numeric:tabular-nums;width:28px">01</span>
+          <span style="flex:1;font-size:20px;font-weight:600">참치마요</span>
+          <span style="font-size:13px;font-weight:600;color:var(--body);font-variant-numeric:tabular-nums">1 / 4</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;min-height:64px;border-bottom:1px solid var(--pressed)">
+          <span style="font-size:13px;font-weight:500;color:var(--body);font-variant-numeric:tabular-nums;width:28px">02</span>
+          <span style="flex:1;font-size:20px;font-weight:600">매실</span>
+          <span style="font-size:13px;font-weight:600;color:var(--body)">완성</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;min-height:64px;border-bottom:1px solid var(--pressed)">
+          <span style="font-size:13px;font-weight:500;color:var(--body);font-variant-numeric:tabular-nums;width:28px">03</span>
+          <span style="flex:1;font-size:20px;font-weight:600">연어</span>
+          <span style="font-size:13px;font-weight:600;color:var(--body)">완성</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;min-height:64px;border-bottom:1px solid var(--pressed)">
+          <span style="font-size:13px;font-weight:500;color:var(--mute);font-variant-numeric:tabular-nums;width:28px">04</span>
+          <span style="flex:1;font-size:20px;font-weight:600;color:var(--mute)">???</span>
+          <span style="font-size:13px;font-weight:600;color:var(--mute)">잠김</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;min-height:64px;border-bottom:1px solid var(--pressed)">
+          <span style="font-size:13px;font-weight:500;color:var(--mute);font-variant-numeric:tabular-nums;width:28px">05</span>
+          <span style="flex:1;font-size:20px;font-weight:600;color:var(--mute)">???</span>
+          <span style="font-size:13px;font-weight:600;color:var(--mute)">잠김</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;min-height:64px;border-bottom:1px solid var(--pressed)">
+          <span style="font-size:13px;font-weight:500;color:var(--mute);font-variant-numeric:tabular-nums;width:28px">06</span>
+          <span style="flex:1;font-size:20px;font-weight:600;color:var(--mute)">???</span>
+          <span style="font-size:13px;font-weight:600;color:var(--mute)">잠김</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;min-height:64px;border-bottom:1px solid var(--pressed)">
+          <span style="font-size:13px;font-weight:500;color:var(--mute);font-variant-numeric:tabular-nums;width:28px">07</span>
+          <span style="flex:1;font-size:20px;font-weight:600;color:var(--mute)">???</span>
+          <span style="font-size:13px;font-weight:600;color:var(--mute)">잠김</span>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isGrid }}" hint-placeholder-val="{{ false }}">
+      <div style="flex:1;min-height:0;overflow:hidden;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-content:start;padding-top:8px">
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+          <div style="width: 100%; aspect-ratio: 1; border-radius: 18px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 0 0 2px #1D1D21; background-color: var(--background-elevated-normal-2)"><img src="assets/onigiri.png" alt="참치마요" style="width:74%;height:74%;object-fit:contain"></div>
+          <span style="font-size:14px;font-weight:600">참치마요</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+          <div style="width:100%;aspect-ratio:1;border-radius:18px;background:#EDEDF1;display:flex;align-items:center;justify-content:center;overflow:hidden"><span style="font-size:11px;font-weight:500;letter-spacing:1px;color:#8E8E97;text-align:center;line-height:15px">매실<br>일러</span></div>
+          <span style="font-size:14px;font-weight:600">매실</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+          <div style="width:100%;aspect-ratio:1;border-radius:18px;background:#EDEDF1;display:flex;align-items:center;justify-content:center;overflow:hidden"><span style="font-size:11px;font-weight:500;letter-spacing:1px;color:#8E8E97;text-align:center;line-height:15px">연어<br>일러</span></div>
+          <span style="font-size:14px;font-weight:600">연어</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+          <div style="width:100%;aspect-ratio:1;border-radius:18px;background:transparent;box-shadow:inset 0 0 0 1.5px var(--pressed);display:flex;align-items:center;justify-content:center"><span style="font-size:22px;font-weight:700;color:var(--mute)">?</span></div>
+          <span style="font-size:14px;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums">04</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+          <div style="width:100%;aspect-ratio:1;border-radius:18px;background:transparent;box-shadow:inset 0 0 0 1.5px var(--pressed);display:flex;align-items:center;justify-content:center"><span style="font-size:22px;font-weight:700;color:var(--mute)">?</span></div>
+          <span style="font-size:14px;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums">05</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+          <div style="width:100%;aspect-ratio:1;border-radius:18px;background:transparent;box-shadow:inset 0 0 0 1.5px var(--pressed);display:flex;align-items:center;justify-content:center"><span style="font-size:22px;font-weight:700;color:var(--mute)">?</span></div>
+          <span style="font-size:14px;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums">06</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+          <div style="width:100%;aspect-ratio:1;border-radius:18px;background:transparent;box-shadow:inset 0 0 0 1.5px var(--pressed);display:flex;align-items:center;justify-content:center"><span style="font-size:22px;font-weight:700;color:var(--mute)">?</span></div>
+          <span style="font-size:14px;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums">07</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+          <div style="width:100%;aspect-ratio:1;border-radius:18px;background:transparent;box-shadow:inset 0 0 0 1.5px var(--pressed);display:flex;align-items:center;justify-content:center"><span style="font-size:22px;font-weight:700;color:var(--mute)">?</span></div>
+          <span style="font-size:14px;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums">08</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+          <div style="width:100%;aspect-ratio:1;border-radius:18px;background:transparent;box-shadow:inset 0 0 0 1.5px var(--pressed);display:flex;align-items:center;justify-content:center"><span style="font-size:22px;font-weight:700;color:var(--mute)">?</span></div>
+          <span style="font-size:14px;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums">09</span>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+
+  <div style="flex:none;display:flex;background:var(--softer);border-top:1px solid var(--pressed);padding:8px 8px 26px">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="1.5 1.5 29 29" fill="none" aria-hidden="true" style="width: 24px; height: 24px"><path d="M11 28V21C11 20.7348 11.1054 20.4804 11.2929 20.2929C11.4804 20.1054 11.7348 20 12 20H20C20.2652 20 20.5196 20.1054 20.7071 20.2929C20.8946 20.4804 21 20.7348 21 21V28" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.9113 18.8362C1.4313 22.8324 4.30505 27.9999 9.01005 27.9999H22.9901C27.6951 27.9999 30.5688 22.8324 28.0888 18.8362L21.0976 6.83618C18.7501 3.05493 13.2501 3.05493 10.9026 6.83618L3.9113 18.8362Z" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">오늘</span>
+    </div>
+    
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--tab-active)">
+      <svg width="26" height="26" viewBox="-0.2 -0.2 15.4 15.4" fill="none" aria-hidden="true" style="width: 24px; height: 24px"><path d="M4.5 1.25V14.25M7 5.25H11M1.5 1.25H11.5C12.6046 1.25 13.5 2.14543 13.5 3.25V12.25C13.5 13.3546 12.6046 14.25 11.5 14.25H1.5V1.25Z" stroke="currentColor" stroke-width="1.16" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:600;letter-spacing:-.1px">메뉴</span>
+    </div><div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="3.5 3.5 25 25" fill="none" aria-hidden="true" style="width: 24px; height: 24px"><path d="M16 27c6.075 0 11-4.925 11-11S22.075 5 16 5 5 9.925 5 16s4.925 11 11 11Z" stroke="currentColor" stroke-width="1.85" stroke-linejoin="round"></path><path d="M16 10v6.4l4.6 2.8" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">기록</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="3.5 3.5 25 25" fill="none" aria-hidden="true" style="width: 24px; height: 24px"><path d="M5 11h22M5 21h22" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></path><path d="M12.5 14a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM20.5 24a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="var(--softer)" stroke="currentColor" stroke-width="1.85" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">설정</span>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:50%;bottom:9px;transform:translateX(-50%);width:134px;height:5px;border-radius:999px;background:var(--ink);opacity:.35"></div>
+</div>
+
+<div style="width:264px;background:#FAFAFB;border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+  <div style="font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:#8E8E97">결합 방식</div>
+  <div style="display:flex;flex-direction:column;gap:11px;font-size:12.5px;line-height:19px;color:#56565E">
+    <div><b style="color:#1D1D21">고정: 만드는 중 카드</b><br><a href="#4a">4a</a>의 핵심인 ‘이어서’ 동선은 뷰와 무관하게 항상 맨 위에 남는다. 그래서 <a href="#4b">4b</a>에 있던 하단 전체폭 CTA는 제거 — 오렌지는 여전히 화면당 하나.</div>
+    <div><b style="color:#1D1D21">탭바: 라인 아이콘 + 라벨</b><br>오늘=오니기리(제공 SVG), 메뉴=책(도감), 기록=시계, 설정=슬라이더. 네 아이콘 모두 26px 박스 안에서 아트워크 크기와 스트로크 굵기(약 1.7px)를 맞춰 통일하고, currentColor로 칠해 다크에서도 같은 아이콘을 쓴다. 활성 탭은 오렌지 틴트만(면·배지 없음) — 12px 라벨이 AA(4.5:1)를 넘어야 해서 라이트는 orange-700 #C2410C(4.63:1), 다크는 #EA580C(5.55:1)로 테마별 토큰을 쓴다. <b>단, 이때 화면에 오렌지가 둘이 된다</b>(하단 CTA + 활성 탭). 탭바는 ‘위치 표시’라 액션과 경쟁하지 않는다고 보면 허용 가능하지만, 스펙을 엄격히 지킬 경우 활성 탭을 잉크로 두는 대안을 권한다.</div>
+    <div><b style="color:#1D1D21">전환: 아이콘 하나</b><br>‘전체 24’ 라벨 오른쪽에 <b>전환될 뷰의 아이콘</b> 하나만 둔다(목록일 때 그리드 아이콘). 세그먼트보다 조용하고, 뷰 전환은 되돌리기 쉬운 조작이라 현재 상태를 굳이 두 칸으로 보여줄 필요가 없다. 44pt 타깃, 선택은 기기에 기억시킨다.</div>
+    <div><b style="color:#1D1D21">역할 분담</b><br>목록 = 진행도·완성 여부를 정확히 읽는 뷰. 그리드 = 얼마나 모았는지 한눈에 보는 뷰. 같은 데이터, 다른 질문에 답한다.</div>
+    <div><b style="color:#1D1D21">공통 상태 표기</b><br>완성 = ‘완성’ 라벨(목록)/실물 타일(그리드), 만드는 중 = 1/4 + 잉크 테두리, 잠김 = ??? + hairline 링. 색이 아니라 형태로 구분해 다크에서도 동일하게 읽힌다.</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+</div>
+<p class="dv-next">다음: “<a class="dv-oid" href="#5a">5a</a>로 확정” · “그리드에서 잠긴 칸 탭하면 힌트 보여주기” · “레시피 상세(재료 4개) 화면 추가”</p>
+</section>
+
+<section class="dv-turn" id="t4">
+<div class="dv-thd"><a class="dv-tid" href="#t4">4</a><span class="dv-tname">화면 4 · 메뉴(도감) — 수집과 이어하기</span></div>
+
+<div class="dv-opts">
+
+<div class="dv-opt" id="4a">
+<div class="dv-olabel"><a class="dv-oid" href="#4a">4a</a>추천안 · 인덱스 리스트 + 이어 만들기</div>
+<div style="display:flex;gap:20px;align-items:flex-start">
+
+<div data-theme="{{ theme }}" data-screen-label="메뉴 리스트" style="width:390px;height:844px;border-radius:52px;background:var(--softer);box-shadow:0 0 0 11px #1D1D21,0 0 0 13px #56565E,0 24px 60px rgba(0,0,0,.28);overflow:hidden;display:flex;flex-direction:column;position:relative;color:var(--ink)">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 28px 0;font-size:15px;font-weight:600;flex:none">
+    <span>9:41</span><span style="font-size:13px;color:var(--body)">5G · 92%</span>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding:28px 20px 0;min-height:0;overflow:hidden">
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <span style="font-size:36px;font-weight:700;line-height:44px">메뉴</span>
+      <span style="font-size:15px;font-weight:600;color:var(--body);font-variant-numeric:tabular-nums">3 / 24</span>
+    </div>
+
+    <div style="height:24px"></div>
+
+    <div style="background:var(--canvas);border-radius:24px;box-shadow:0 6px 14px var(--shadow);padding:18px;display:flex;align-items:center;gap:14px">
+      <div style="width: 56px; height: 56px; border-radius: 16px; flex: none; display: flex; align-items: center; justify-content: center; overflow: hidden; background-color: var(--background-elevated-normal-2)"><img src="assets/onigiri.png" alt="참치마요" style="width:50px;height:50px;object-fit:contain"></div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:8px;min-width:0">
+        <div style="font-size:12px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--body)">만드는 중</div>
+        <div style="font-size:18px;font-weight:600">참치마요</div>
+        <div style="display:flex;gap:6px">
+          <div style="flex:1;height:5px;border-radius:999px;background:var(--ink)"></div>
+          <div style="flex:1;height:5px;border-radius:999px;background:var(--pressed)"></div>
+          <div style="flex:1;height:5px;border-radius:999px;background:var(--pressed)"></div>
+          <div style="flex:1;height:5px;border-radius:999px;background:var(--pressed)"></div>
+        </div>
+      </div>
+      <button onClick="{{ noop }}" style="flex:none;min-height:44px;border:none;border-radius:999px;background:var(--primary);color:var(--on-primary);font-size:16px;font-weight:600;padding:0 18px;cursor:pointer">이어서</button>
+    </div>
+
+    <div style="height:28px"></div>
+    <div style="font-size:12px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--body)">전체 24</div>
+    <div style="height:4px"></div>
+
+    <div style="flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:14px;min-height:64px;border-bottom:1px solid var(--pressed)">
+        <span style="font-size:13px;font-weight:500;color:var(--body);font-variant-numeric:tabular-nums;width:28px">01</span>
+        <span style="flex:1;font-size:20px;font-weight:600">참치마요</span>
+        <span style="font-size:13px;font-weight:600;color:var(--body);font-variant-numeric:tabular-nums">1 / 4</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;min-height:64px;border-bottom:1px solid var(--pressed)">
+        <span style="font-size:13px;font-weight:500;color:var(--body);font-variant-numeric:tabular-nums;width:28px">02</span>
+        <span style="flex:1;font-size:20px;font-weight:600">매실</span>
+        <span style="font-size:13px;font-weight:600;color:var(--body)">완성</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;min-height:64px;border-bottom:1px solid var(--pressed)">
+        <span style="font-size:13px;font-weight:500;color:var(--body);font-variant-numeric:tabular-nums;width:28px">03</span>
+        <span style="flex:1;font-size:20px;font-weight:600">연어</span>
+        <span style="font-size:13px;font-weight:600;color:var(--body)">완성</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;min-height:64px;border-bottom:1px solid var(--pressed)">
+        <span style="font-size:13px;font-weight:500;color:var(--mute);font-variant-numeric:tabular-nums;width:28px">04</span>
+        <span style="flex:1;font-size:20px;font-weight:600;color:var(--mute)">???</span>
+        <span style="font-size:13px;font-weight:600;color:var(--mute)">잠김</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;min-height:64px;border-bottom:1px solid var(--pressed)">
+        <span style="font-size:13px;font-weight:500;color:var(--mute);font-variant-numeric:tabular-nums;width:28px">05</span>
+        <span style="flex:1;font-size:20px;font-weight:600;color:var(--mute)">???</span>
+        <span style="font-size:13px;font-weight:600;color:var(--mute)">잠김</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;min-height:64px;border-bottom:1px solid var(--pressed)">
+        <span style="font-size:13px;font-weight:500;color:var(--mute);font-variant-numeric:tabular-nums;width:28px">06</span>
+        <span style="flex:1;font-size:20px;font-weight:600;color:var(--mute)">???</span>
+        <span style="font-size:13px;font-weight:600;color:var(--mute)">잠김</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;min-height:64px;border-bottom:1px solid var(--pressed)">
+        <span style="font-size:13px;font-weight:500;color:var(--mute);font-variant-numeric:tabular-nums;width:28px">07</span>
+        <span style="flex:1;font-size:20px;font-weight:600;color:var(--mute)">???</span>
+        <span style="font-size:13px;font-weight:600;color:var(--mute)">잠김</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;min-height:64px;border-bottom:1px solid var(--pressed)">
+        <span style="font-size:13px;font-weight:500;color:var(--mute);font-variant-numeric:tabular-nums;width:28px">08</span>
+        <span style="flex:1;font-size:20px;font-weight:600;color:var(--mute)">???</span>
+        <span style="font-size:13px;font-weight:600;color:var(--mute)">잠김</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex:none;display:flex;background:var(--softer);border-top:1px solid var(--pressed);padding:8px 8px 26px">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="1.5 1.5 29 29" fill="none" aria-hidden="true"><path d="M11 28V21C11 20.7348 11.1054 20.4804 11.2929 20.2929C11.4804 20.1054 11.7348 20 12 20H20C20.2652 20 20.5196 20.1054 20.7071 20.2929C20.8946 20.4804 21 20.7348 21 21V28" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.9113 18.8362C1.4313 22.8324 4.30505 27.9999 9.01005 27.9999H22.9901C27.6951 27.9999 30.5688 22.8324 28.0888 18.8362L21.0976 6.83618C18.7501 3.05493 13.2501 3.05493 10.9026 6.83618L3.9113 18.8362Z" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">오늘</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--tab-active)">
+      <svg width="26" height="26" viewBox="-0.2 -0.2 15.4 15.4" fill="none" aria-hidden="true"><path d="M4.5 1.25V14.25M7 5.25H11M1.5 1.25H11.5C12.6046 1.25 13.5 2.14543 13.5 3.25V12.25C13.5 13.3546 12.6046 14.25 11.5 14.25H1.5V1.25Z" stroke="currentColor" stroke-width="1.16" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:600;letter-spacing:-.1px">메뉴</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="3.5 3.5 25 25" fill="none" aria-hidden="true"><path d="M16 27c6.075 0 11-4.925 11-11S22.075 5 16 5 5 9.925 5 16s4.925 11 11 11Z" stroke="currentColor" stroke-width="1.85" stroke-linejoin="round"></path><path d="M16 10v6.4l4.6 2.8" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">기록</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="3.5 3.5 25 25" fill="none" aria-hidden="true"><path d="M5 11h22M5 21h22" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></path><path d="M12.5 14a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM20.5 24a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="var(--softer)" stroke="currentColor" stroke-width="1.85" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">설정</span>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:50%;bottom:9px;transform:translateX(-50%);width:134px;height:5px;border-radius:999px;background:var(--ink);opacity:.35"></div>
+</div>
+
+<div style="width:264px;background:#FAFAFB;border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+  <div style="font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:#8E8E97">개선 포인트</div>
+  <div style="display:flex;flex-direction:column;gap:11px;font-size:12.5px;line-height:19px;color:#56565E">
+    <div><b style="color:#1D1D21">1. 도감에도 주요 행동 하나</b><br>수집 화면은 보통 ‘볼 것만 있고 할 것이 없다’. 맨 위 <b>만드는 중</b> 카드에 오렌지 ‘이어서’를 두어, 도감에서 학습으로 돌아오는 길을 만든다. 화면의 유일한 오렌지.</div>
+    <div><b style="color:#1D1D21">2. 상태는 세 가지로만</b><br>만드는 중(1/4) · 완성(체크) · 잠김(mute + ???). 잠긴 이름을 숨겨 수집 동기를 남기고, mute는 스펙대로 잠김에만 쓴다.</div>
+    <div><b style="color:#1D1D21">3. 코드 + 이름 리스트</b><br>001·002 인덱스는 tabular figures로 자릿수를 맞춰, 스크롤 중 왼쪽 스파인이 흔들리지 않는다.</div>
+    <div><b style="color:#1D1D21">4. 카드 안 카드 없음</b><br>리스트는 카드로 감싸지 않고 hairline 구분선만. 흰 카드는 ‘만드는 중’ 하나뿐이라 시선이 거기서 시작한다.</div>
+    <div><b style="color:#1D1D21">5. 행 높이 64px</b><br>터치 타깃 여유 + 20px 제목이라 스크롤 중에도 읽힌다.</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="dv-opt" id="4b">
+<div class="dv-olabel"><a class="dv-oid" href="#4b">4b</a>대안 · 실루엣 그리드 도감</div>
+<div style="display:flex;gap:20px;align-items:flex-start">
+
+<div data-theme="{{ theme }}" data-screen-label="메뉴 그리드" style="width:390px;height:844px;border-radius:52px;background:var(--softer);box-shadow:0 0 0 11px #1D1D21,0 0 0 13px #56565E,0 24px 60px rgba(0,0,0,.28);overflow:hidden;display:flex;flex-direction:column;position:relative;color:var(--ink)">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 28px 0;font-size:15px;font-weight:600;flex:none">
+    <span>9:41</span><span style="font-size:13px;color:var(--body)">5G · 92%</span>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding:28px 20px 0;min-height:0;overflow:hidden">
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <span style="font-size:36px;font-weight:700;line-height:44px">메뉴</span>
+      <span style="font-size:15px;font-weight:600;color:var(--body);font-variant-numeric:tabular-nums">3 / 24</span>
+    </div>
+    <div style="height:8px"></div>
+    <div style="font-size:15px;color:var(--body)">참치마요를 만드는 중이에요 · 1 / 4</div>
+
+    <div style="height:24px"></div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;min-height:0;overflow:hidden">
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+        <div style="width: 100%; aspect-ratio: 1; border-radius: 18px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: inset 0 0 0 2px #1D1D21; background-color: var(--background-elevated-normal-2)"><img src="assets/onigiri.png" alt="참치마요" style="width: 86px; height: 86px; object-fit: contain"></div>
+        <span style="font-size:14px;font-weight:600">참치마요</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+        <div style="width:100%;aspect-ratio:1;border-radius:18px;background:#EDEDF1;display:flex;align-items:center;justify-content:center;overflow:hidden"><span style="font-size:11px;font-weight:500;letter-spacing:1px;color:#8E8E97;text-align:center;line-height:15px">매실<br>일러</span></div>
+        <span style="font-size:14px;font-weight:600">매실</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+        <div style="width:100%;aspect-ratio:1;border-radius:18px;background:#EDEDF1;display:flex;align-items:center;justify-content:center;overflow:hidden"><span style="font-size:11px;font-weight:500;letter-spacing:1px;color:#8E8E97;text-align:center;line-height:15px">연어<br>일러</span></div>
+        <span style="font-size:14px;font-weight:600">연어</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+        <div style="width:100%;aspect-ratio:1;border-radius:18px;background:transparent;box-shadow:inset 0 0 0 1.5px var(--pressed);display:flex;align-items:center;justify-content:center"><span style="font-size:22px;font-weight:700;color:var(--mute)">?</span></div>
+        <span style="font-size:14px;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums">04</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+        <div style="width:100%;aspect-ratio:1;border-radius:18px;background:transparent;box-shadow:inset 0 0 0 1.5px var(--pressed);display:flex;align-items:center;justify-content:center"><span style="font-size:22px;font-weight:700;color:var(--mute)">?</span></div>
+        <span style="font-size:14px;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums">05</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+        <div style="width:100%;aspect-ratio:1;border-radius:18px;background:transparent;box-shadow:inset 0 0 0 1.5px var(--pressed);display:flex;align-items:center;justify-content:center"><span style="font-size:22px;font-weight:700;color:var(--mute)">?</span></div>
+        <span style="font-size:14px;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums">06</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+        <div style="width:100%;aspect-ratio:1;border-radius:18px;background:transparent;box-shadow:inset 0 0 0 1.5px var(--pressed);display:flex;align-items:center;justify-content:center"><span style="font-size:22px;font-weight:700;color:var(--mute)">?</span></div>
+        <span style="font-size:14px;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums">07</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+        <div style="width:100%;aspect-ratio:1;border-radius:18px;background:transparent;box-shadow:inset 0 0 0 1.5px var(--pressed);display:flex;align-items:center;justify-content:center"><span style="font-size:22px;font-weight:700;color:var(--mute)">?</span></div>
+        <span style="font-size:14px;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums">08</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+        <div style="width:100%;aspect-ratio:1;border-radius:18px;background:transparent;box-shadow:inset 0 0 0 1.5px var(--pressed);display:flex;align-items:center;justify-content:center"><span style="font-size:22px;font-weight:700;color:var(--mute)">?</span></div>
+        <span style="font-size:14px;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums">09</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+        <div style="width:100%;aspect-ratio:1;border-radius:18px;background:transparent;box-shadow:inset 0 0 0 1.5px var(--pressed);display:flex;align-items:center;justify-content:center"><span style="font-size:22px;font-weight:700;color:var(--mute)">?</span></div>
+        <span style="font-size:14px;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums">10</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+        <div style="width:100%;aspect-ratio:1;border-radius:18px;background:transparent;box-shadow:inset 0 0 0 1.5px var(--pressed);display:flex;align-items:center;justify-content:center"><span style="font-size:22px;font-weight:700;color:var(--mute)">?</span></div>
+        <span style="font-size:14px;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums">11</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;align-items:center">
+        <div style="width:100%;aspect-ratio:1;border-radius:18px;background:transparent;box-shadow:inset 0 0 0 1.5px var(--pressed);display:flex;align-items:center;justify-content:center"><span style="font-size:22px;font-weight:700;color:var(--mute)">?</span></div>
+        <span style="font-size:14px;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums">12</span>
+      </div>
+    </div>
+
+    <div style="margin-top:auto;padding:20px 0">
+      <button onClick="{{ noop }}" style="width:100%;min-height:56px;border:none;border-radius:999px;background:var(--primary);color:var(--on-primary);font-size:18px;font-weight:600;cursor:pointer">참치마요 이어서 만들기</button>
+    </div>
+  </div>
+
+  <div style="flex:none;display:flex;background:var(--softer);border-top:1px solid var(--pressed);padding:8px 8px 26px">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="1.5 1.5 29 29" fill="none" aria-hidden="true"><path d="M11 28V21C11 20.7348 11.1054 20.4804 11.2929 20.2929C11.4804 20.1054 11.7348 20 12 20H20C20.2652 20 20.5196 20.1054 20.7071 20.2929C20.8946 20.4804 21 20.7348 21 21V28" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.9113 18.8362C1.4313 22.8324 4.30505 27.9999 9.01005 27.9999H22.9901C27.6951 27.9999 30.5688 22.8324 28.0888 18.8362L21.0976 6.83618C18.7501 3.05493 13.2501 3.05493 10.9026 6.83618L3.9113 18.8362Z" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">오늘</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--tab-active)">
+      <svg width="26" height="26" viewBox="-0.2 -0.2 15.4 15.4" fill="none" aria-hidden="true"><path d="M4.5 1.25V14.25M7 5.25H11M1.5 1.25H11.5C12.6046 1.25 13.5 2.14543 13.5 3.25V12.25C13.5 13.3546 12.6046 14.25 11.5 14.25H1.5V1.25Z" stroke="currentColor" stroke-width="1.16" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:600;letter-spacing:-.1px">메뉴</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="3.5 3.5 25 25" fill="none" aria-hidden="true"><path d="M16 27c6.075 0 11-4.925 11-11S22.075 5 16 5 5 9.925 5 16s4.925 11 11 11Z" stroke="currentColor" stroke-width="1.85" stroke-linejoin="round"></path><path d="M16 10v6.4l4.6 2.8" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">기록</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="3.5 3.5 25 25" fill="none" aria-hidden="true"><path d="M5 11h22M5 21h22" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></path><path d="M12.5 14a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM20.5 24a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="var(--softer)" stroke="currentColor" stroke-width="1.85" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">설정</span>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:50%;bottom:9px;transform:translateX(-50%);width:134px;height:5px;border-radius:999px;background:var(--ink);opacity:.35"></div>
+</div>
+
+<div style="width:264px;background:#FAFAFB;border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+  <div style="font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:#8E8E97">대안의 차이</div>
+  <div style="display:flex;flex-direction:column;gap:11px;font-size:12.5px;line-height:19px;color:#56565E">
+    <div><b style="color:#1D1D21">한 화면에 컬렉션 전체</b><br>9칸이 한눈에 들어와 “얼마나 남았나”가 즉각 읽힌다. 잠긴 칸은 회색 실루엣이라 빈칸을 채우고 싶은 압력이 리스트보다 강하다.</div>
+    <div><b style="color:#1D1D21">진행 중은 테두리로</b><br>만드는 중인 참치마요만 2px 잉크 테두리. 색을 쓰지 않고 상태를 구분한다.</div>
+    <div><b style="color:#1D1D21">트레이드오프</b><br>이름·진행도(1/4) 같은 정보가 타일에 안 들어가 스캔 정보량이 준다. 24종이 넘어가면 스크롤이 길어지고 그리드가 단조로워진다. 정보 밀도와 ‘이어하기’ 동선은 <a href="#4a">4a</a>가 낫다.</div>
+    <div><b style="color:#1D1D21">이럴 때 채택</b><br>레시피가 시즌제로 늘어나고 굿즈·공유처럼 ‘모으는 재미’를 전면에 둘 계획이면 4b가 맞다. 두 안을 <a href="#4a">4a</a> 리스트 + 상단 그리드 토글로 합치는 것도 가능.</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+</div>
+<p class="dv-next">다음: “<a class="dv-oid" href="#4a">4a</a>에 레시피 상세(재료 4개) 화면 추가” · “<a class="dv-oid" href="#4a">4a</a>/<a class="dv-oid" href="#4b">4b</a> 리스트·그리드 토글로 합쳐줘” · “기록 탭 만들어줘”</p>
+</section>
+
+<section class="dv-turn" id="t3">
+<div class="dv-thd"><a class="dv-tid" href="#t3">3</a><span class="dv-tname">화면 3 · 홈 — 오늘 학습 / 회독 전환</span></div>
+
+<div class="dv-opts">
+
+<div class="dv-opt" id="3a">
+<div class="dv-olabel"><a class="dv-oid" href="#3a">3a</a>추천안 · 상단 세그먼트로 모드 전환 (탭해서 확인)</div>
+<div style="display:flex;gap:20px;align-items:flex-start">
+
+<div data-theme="{{ theme }}" data-screen-label="홈 세그먼트" style="width:390px;height:844px;border-radius:52px;background:var(--softer);box-shadow:0 0 0 11px #1D1D21,0 0 0 13px #56565E,0 24px 60px rgba(0,0,0,.28);overflow:hidden;display:flex;flex-direction:column;position:relative;color:var(--ink)">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 28px 0;font-size:15px;font-weight:600;flex:none">
+    <span>9:41</span><span style="font-size:13px;color:var(--body)">5G · 92%</span>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding:28px 20px 0;min-height:0">
+    <div style="font-size:12px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--body)">8월 7일 목요일</div>
+    <div style="height:16px"></div>
+
+    <div style="display:flex;gap:4px;padding:4px;background:var(--soft);border-radius:999px">
+      <sc-if value="{{ isToday }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ setToday }}" style="flex:1;min-height:44px;border:none;border-radius:999px;background:var(--canvas);color:var(--ink);font-size:16px;font-weight:600;cursor:pointer;box-shadow:0 1px 3px var(--shadow)">오늘 학습</button>
+        <button onClick="{{ setReview }}" style="flex:1;min-height:44px;border:none;border-radius:999px;background:transparent;color:var(--body);font-size:16px;font-weight:600;cursor:pointer">회독</button>
+      </sc-if>
+      <sc-if value="{{ isReview }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ setToday }}" style="flex:1;min-height:44px;border:none;border-radius:999px;background:transparent;color:var(--body);font-size:16px;font-weight:600;cursor:pointer">오늘 학습</button>
+        <button onClick="{{ setReview }}" style="flex:1;min-height:44px;border:none;border-radius:999px;background:var(--canvas);color:var(--ink);font-size:16px;font-weight:600;cursor:pointer;box-shadow:0 1px 3px var(--shadow)">회독</button>
+      </sc-if>
+    </div>
+
+    <div style="height:24px"></div>
+
+    <sc-if value="{{ isToday }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:28px;min-height:0">
+        <div style="background:var(--canvas);border-radius:24px;box-shadow:0 6px 14px var(--shadow);padding:24px 20px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size: 12px; font-weight: 500; letter-spacing: 1.4px; text-transform: uppercase; color: var(--body)">오늘의 학습</span>
+            <span style="font-size:12px;font-weight:500;letter-spacing:1.4px;background:var(--soft);color:var(--ink);border-radius:999px;padding:5px 12px">N5</span>
+          </div>
+          <div style="height:14px"></div>
+          <div style="display:flex;align-items:baseline;gap:12px">
+            <span style="font-size: 52px; font-weight: 800; line-height: 55.4px; font-variant-numeric: tabular-nums; letter-spacing: 0px">20</span>
+            <span style="font-size:15px;color:var(--body)">새 단어</span>
+          </div>
+          <div style="height:14px"></div>
+          <div style="display:flex;gap:8px">
+            <span style="font-size:14px;font-weight:600;background:var(--soft);border-radius:999px;padding:8px 14px">복습 3</span>
+            <span style="font-size:14px;font-weight:600;background:var(--soft);border-radius:999px;padding:8px 14px">약 6분</span>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:14px">
+          <div style="width:48px;height:48px;border-radius:14px;background:#EDEDF1;flex:none;display:flex;align-items:center;justify-content:center;overflow:hidden;opacity:.9"><img src="assets/onigiri.png" alt="참치마요" style="width:44px;height:44px;object-fit:contain"></div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:9px;min-width:0">
+            <div style="display:flex;justify-content:space-between;align-items:baseline">
+              <span style="font-size:16px;font-weight:600;color:var(--body)">참치마요</span>
+              <span style="font-size:13px;font-weight:500;color:var(--body);font-variant-numeric:tabular-nums">1 / 4</span>
+            </div>
+            <div style="display:flex;gap:6px">
+              <div style="flex:1;height:5px;border-radius:999px;background:var(--body)"></div>
+              <div style="flex:1;height:5px;border-radius:999px;background:var(--pressed)"></div>
+              <div style="flex:1;height:5px;border-radius:999px;background:var(--pressed)"></div>
+              <div style="flex:1;height:5px;border-radius:999px;background:var(--pressed)"></div>
+            </div>
+            <div style="font-size:15px;color:var(--body)">쌀을 받았어요 · 다음 재료는 김</div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isReview }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:28px;min-height:0">
+        <div style="background:var(--canvas);border-radius:24px;box-shadow:0 6px 14px var(--shadow);padding:24px 20px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:12px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--body)">회독</span>
+            <span style="font-size:12px;font-weight:500;letter-spacing:1.4px;background:var(--soft);color:var(--ink);border-radius:999px;padding:5px 12px">N5</span>
+          </div>
+          <div style="height:14px"></div>
+          <div style="display:flex;align-items:baseline;gap:12px">
+            <span style="font-size:52px;font-weight:800;line-height:56px;font-variant-numeric:tabular-nums">50</span>
+            <span style="font-size:15px;color:var(--body)">빈도순 단어</span>
+          </div>
+          <div style="height:14px"></div>
+          <div style="display:flex;gap:8px">
+            <span style="font-size:14px;font-weight:600;background:var(--soft);border-radius:999px;padding:8px 14px">1–50번</span>
+            <span style="font-size:14px;font-weight:600;background:var(--soft);border-radius:999px;padding:8px 14px">약 4분</span>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:15px;line-height:22px;color:var(--body);text-wrap:pretty">기록에 남지 않고 가볍게 훑는 모드예요. 재료는 오늘 학습에서만 받아요.</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <span style="font-size:14px;font-weight:600;border:1.5px solid var(--pressed);border-radius:999px;padding:9px 14px">51–100번</span>
+            <span style="font-size:14px;font-weight:600;border:1.5px solid var(--pressed);border-radius:999px;padding:9px 14px">틀린 단어만</span>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <div style="margin-top:auto;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:14px;padding:0 4px 20px">
+        <div style="width:56px;height:56px;border-radius:18px;background:#EDEDF1;display:flex;align-items:center;justify-content:center;flex:none;overflow:hidden"><img src="assets/mascot.png" alt="사장" style="width: 54px; height: 54px; object-fit: contain"></div>
+        <div style="font-size:16px;line-height:24px;color:var(--body);text-wrap:pretty">왔네. 오늘 것만 하고 가.<br><span style="font-size:13px;color:var(--body)">— 사장</span></div>
+      </div>
+      <sc-if value="{{ isToday }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ noop }}" style="width:100%;min-height:56px;border:none;border-radius:999px;background:var(--primary);color:var(--on-primary);font-size:18px;font-weight:600;cursor:pointer">오늘 학습 시작</button>
+      </sc-if>
+      <sc-if value="{{ isReview }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ noop }}" style="width:100%;min-height:56px;border:none;border-radius:999px;background:var(--primary);color:var(--on-primary);font-size:18px;font-weight:600;cursor:pointer">회독 시작</button>
+      </sc-if>
+      <div style="height:20px"></div>
+    </div>
+  </div>
+
+  <div style="flex:none;display:flex;background:var(--softer);border-top:1px solid var(--pressed);padding:8px 8px 26px">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--tab-active)">
+      <svg width="26" height="26" viewBox="1.5 1.5 29 29" fill="none" aria-hidden="true"><path d="M11 28V21C11 20.7348 11.1054 20.4804 11.2929 20.2929C11.4804 20.1054 11.7348 20 12 20H20C20.2652 20 20.5196 20.1054 20.7071 20.2929C20.8946 20.4804 21 20.7348 21 21V28" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.9113 18.8362C1.4313 22.8324 4.30505 27.9999 9.01005 27.9999H22.9901C27.6951 27.9999 30.5688 22.8324 28.0888 18.8362L21.0976 6.83618C18.7501 3.05493 13.2501 3.05493 10.9026 6.83618L3.9113 18.8362Z" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:600;letter-spacing:-.1px">오늘</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="-0.2 -0.2 15.4 15.4" fill="none" aria-hidden="true"><path d="M4.5 1.25V14.25M7 5.25H11M1.5 1.25H11.5C12.6046 1.25 13.5 2.14543 13.5 3.25V12.25C13.5 13.3546 12.6046 14.25 11.5 14.25H1.5V1.25Z" stroke="currentColor" stroke-width="1.16" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">메뉴</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="3.5 3.5 25 25" fill="none" aria-hidden="true"><path d="M16 27c6.075 0 11-4.925 11-11S22.075 5 16 5 5 9.925 5 16s4.925 11 11 11Z" stroke="currentColor" stroke-width="1.85" stroke-linejoin="round"></path><path d="M16 10v6.4l4.6 2.8" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">기록</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="3.5 3.5 25 25" fill="none" aria-hidden="true"><path d="M5 11h22M5 21h22" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></path><path d="M12.5 14a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM20.5 24a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="var(--softer)" stroke="currentColor" stroke-width="1.85" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">설정</span>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:50%;bottom:9px;transform:translateX(-50%);width:134px;height:5px;border-radius:999px;background:var(--ink);opacity:.35"></div>
+</div>
+
+<div style="width:264px;background:#FAFAFB;border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+  <div style="font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:#8E8E97">개선 포인트</div>
+  <div style="display:flex;flex-direction:column;gap:11px;font-size:12.5px;line-height:19px;color:#56565E">
+    <div><b style="color:#1D1D21">1. 회독은 ‘버튼’이 아니라 ‘모드’</b><br>회독을 두 번째 버튼으로 두면 화면에 주요 액션이 둘이 된다. 상단 세그먼트로 올리면 <b>상태 전환</b>이 되고, 하단 오렌지 CTA는 계속 하나(“오늘 학습 시작” ↔ “회독 시작”). 선택한 모드가 화면 전체에 반영돼 무엇이 시작될지 오해가 없다.</div>
+    <div><b style="color:#1D1D21">2. 기존 안내문 삭제</b><br>“회독 모드 · 빈도순 50단어 반복”이 버튼 위 각주로 떠 있던 문제 → 회독 카드 본문(50 · 빈도순 단어 · 1–50번)으로 흡수.</div>
+    <div><b style="color:#1D1D21">3. 히어로 숫자 1개</b><br>12(또는 50)만 52px. ‘복습 0’처럼 두 번째 거대 숫자로 경쟁하던 값은 알약으로 강등하고, 0이면 아예 표시하지 않는다.</div>
+    <div><b style="color:#1D1D21">4. 소요 시간 추가</b><br>“약 6분” — 출퇴근·자투리 시간 사용자가 시작 전에 가장 알고 싶어 하는 정보.</div>
+    <div><b style="color:#1D1D21">5. 재료 진행은 카드 없이, 썸네일만</b><br>흰 카드를 하나 더 쓰면 히어로 카드와 같은 무게가 되어 “오늘 학습”의 우선순위가 흐려진다(그룹은 박스가 아니라 28px 여백으로). 대신 48px 스톤 타일을 앞에 붙여 어떤 오니기리인지 한눈에 알아보게 했다. 이 블록은 오늘 카드보다 한 단 조용하게 — 제목·진행바를 잉크가 아닌 body(스톤-600), 캡션은 mute로 내려 위계를 명확히 분리했다. 카드로 감싼 버전은 <a href="#3b">3b</a>에서 비교 가능. 라임은 쓰지 않는다 — 획득 순간이 아니므로.</div>
+    <div><b style="color:#1D1D21">6. 대비 보정(전 화면 공통)</b><br>캡션·안내문에서 mute(2.4:1)를 걷어내고 body(7.0:1)로 통일 — mute는 플레이스홀더·비활성 전용. 안내 문구는 15px 이상. 다크에서 오렌지 CTA는 흰 글자가 2.8:1이라 <b>글자를 잉크로</b> 바꿨다(라이트는 스펙대로 흰 글자, 3.6:1 — 브랜드 토큰이라 임의 변경 대신 보고: 필요하면 CTA를 orange-700로 낮추면 5.9:1).</div>
+    <div><b style="color:#1D1D21">7. 회독의 규칙 명시</b><br>“기록에 남지 않고 가볍게 훑어요 · 재료는 오늘 학습에서만” — 두 모드의 보상 차이를 미리 알려 기대 어긋남을 막는다.</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="dv-opt" id="3b">
+<div class="dv-olabel"><a class="dv-oid" href="#3b">3b</a>대안 · 오늘 학습 고정 + 회독은 보조 버튼</div>
+<div style="display:flex;gap:20px;align-items:flex-start">
+
+<div data-theme="{{ theme }}" data-screen-label="홈 보조버튼" style="width:390px;height:844px;border-radius:52px;background:var(--softer);box-shadow:0 0 0 11px #1D1D21,0 0 0 13px #56565E,0 24px 60px rgba(0,0,0,.28);overflow:hidden;display:flex;flex-direction:column;position:relative;color:var(--ink)">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 28px 0;font-size:15px;font-weight:600;flex:none">
+    <span>9:41</span><span style="font-size:13px;color:var(--body)">5G · 92%</span>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding:36px 20px 0;min-height:0">
+    <div style="font-size:12px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--body)">8월 7일 목요일</div>
+    <div style="height:10px"></div>
+    <div style="font-size:36px;font-weight:700;line-height:44px">오늘 12단어</div>
+    <div style="height:8px"></div>
+    <div style="font-size:16px;color:var(--body)">복습 3개 · 약 6분이면 끝나요</div>
+
+    <div style="height:32px"></div>
+
+    <div style="background:var(--canvas);border-radius:24px;box-shadow:0 6px 14px var(--shadow);padding:22px 20px;display:flex;align-items:center;gap:16px">
+      <div style="width:64px;height:64px;border-radius:18px;background:#EDEDF1;flex:none;display:flex;align-items:center;justify-content:center;overflow:hidden"><img src="assets/onigiri.png" alt="참치마요" style="width: 70px; height: 70px; object-fit: contain"></div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:8px;min-width:0">
+        <div style="display:flex;justify-content:space-between;align-items:baseline">
+          <span style="font-size:17px;font-weight:600">참치마요</span>
+          <span style="font-size:13px;color:var(--body);font-variant-numeric:tabular-nums">1 / 4</span>
+        </div>
+        <div style="display:flex;gap:6px">
+          <div style="flex:1;height:6px;border-radius:999px;background:var(--ink)"></div>
+          <div style="flex:1;height:6px;border-radius:999px;background:var(--pressed)"></div>
+          <div style="flex:1;height:6px;border-radius:999px;background:var(--pressed)"></div>
+          <div style="flex:1;height:6px;border-radius:999px;background:var(--pressed)"></div>
+        </div>
+        <div style="font-size:14px;color:var(--body)">다음 재료는 김</div>
+      </div>
+    </div>
+
+    <div style="margin-top:auto;display:flex;flex-direction:column">
+      <div style="display:flex;align-items:center;gap:14px;padding:0 4px 20px">
+        <div style="width:56px;height:56px;border-radius:18px;background:#EDEDF1;display:flex;align-items:center;justify-content:center;flex:none;overflow:hidden"><img src="assets/mascot.png" alt="사장" style="width: 56px; height: 56px; object-fit: contain"></div>
+        <div style="font-size:16px;line-height:24px;color:var(--body);text-wrap:pretty">왔네. 오늘 것만 하고 가.<br><span style="font-size:13px;color:var(--body)">— 사장</span></div>
+      </div>
+      <button onClick="{{ noop }}" style="width:100%;min-height:56px;border:none;border-radius:999px;background:var(--primary);color:var(--on-primary);font-size:18px;font-weight:600;cursor:pointer">오늘 학습 시작</button>
+      <div style="height:10px"></div>
+      <button onClick="{{ noop }}" style="width:100%;min-height:52px;border:1.5px solid var(--pressed);border-radius:999px;background:transparent;color:var(--ink);font-size:16px;font-weight:600;cursor:pointer">회독으로 훑기 · 50단어</button>
+      <div style="height:20px"></div>
+    </div>
+  </div>
+
+  <div style="flex:none;display:flex;background:var(--softer);border-top:1px solid var(--pressed);padding:8px 8px 26px">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--tab-active)">
+      <svg width="26" height="26" viewBox="1.5 1.5 29 29" fill="none" aria-hidden="true"><path d="M11 28V21C11 20.7348 11.1054 20.4804 11.2929 20.2929C11.4804 20.1054 11.7348 20 12 20H20C20.2652 20 20.5196 20.1054 20.7071 20.2929C20.8946 20.4804 21 20.7348 21 21V28" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.9113 18.8362C1.4313 22.8324 4.30505 27.9999 9.01005 27.9999H22.9901C27.6951 27.9999 30.5688 22.8324 28.0888 18.8362L21.0976 6.83618C18.7501 3.05493 13.2501 3.05493 10.9026 6.83618L3.9113 18.8362Z" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:600;letter-spacing:-.1px">오늘</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="-0.2 -0.2 15.4 15.4" fill="none" aria-hidden="true"><path d="M4.5 1.25V14.25M7 5.25H11M1.5 1.25H11.5C12.6046 1.25 13.5 2.14543 13.5 3.25V12.25C13.5 13.3546 12.6046 14.25 11.5 14.25H1.5V1.25Z" stroke="currentColor" stroke-width="1.16" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">메뉴</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="3.5 3.5 25 25" fill="none" aria-hidden="true"><path d="M16 27c6.075 0 11-4.925 11-11S22.075 5 16 5 5 9.925 5 16s4.925 11 11 11Z" stroke="currentColor" stroke-width="1.85" stroke-linejoin="round"></path><path d="M16 10v6.4l4.6 2.8" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">기록</span>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:52px;color:var(--body)">
+      <svg width="26" height="26" viewBox="3.5 3.5 25 25" fill="none" aria-hidden="true"><path d="M5 11h22M5 21h22" stroke="currentColor" stroke-width="1.85" stroke-linecap="round"></path><path d="M12.5 14a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM20.5 24a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="var(--softer)" stroke="currentColor" stroke-width="1.85" stroke-linejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:500;letter-spacing:-.1px">설정</span>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:50%;bottom:9px;transform:translateX(-50%);width:134px;height:5px;border-radius:999px;background:var(--ink);opacity:.35"></div>
+</div>
+
+<div style="width:264px;background:#FAFAFB;border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+  <div style="font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:#8E8E97">대안의 차이</div>
+  <div style="display:flex;flex-direction:column;gap:11px;font-size:12.5px;line-height:19px;color:#56565E">
+    <div><b style="color:#1D1D21">오늘 학습이 항상 주인공</b><br>모드 전환이라는 개념 없이, 오늘 것을 시작하거나 회독으로 훑거나 — 한 번의 탭으로 끝난다. 진입 마찰은 가장 낮다.</div>
+    <div><b style="color:#1D1D21">숫자를 문장으로</b><br>“오늘 12단어 · 약 6분이면 끝나요”. 히어로 숫자 카드 없이도 위계가 서고, 화면이 한 단 가벼워진다.</div>
+    <div><b style="color:#1D1D21">트레이드오프</b><br>하단에 버튼이 둘이라(오렌지 + 외곽선) 시선이 한 번 갈린다. 회독을 자주 쓰는 사용자에겐 편하지만, ‘하루 한 번의 리추얼’이라는 제품 의도는 <a href="#3a">3a</a>가 더 잘 지킨다.</div>
+    <div><b style="color:#1D1D21">이럴 때 채택</b><br>회독 사용률이 실제로 높게 나오면 3b로 바꾸는 게 맞다. 출시 초기 데이터가 없다면 <a href="#3a">3a</a>로 시작해 세그먼트 전환율을 먼저 측정하길 권한다.</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+</div>
+<p class="dv-next">다음: “<a class="dv-oid" href="#3a">3a</a>로 확정하고 메뉴(도감) 화면으로” · “회독 범위 선택 바텀시트 보여줘” · “<a class="dv-oid" href="#3a">3a</a> 다크모드에서 대비 다시 봐줘”</p>
+</section>
+
+<section class="dv-turn" id="t2">
+<div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">화면 2 · 학습 완료 결과 — 액션 1개 + 보상 체감</span></div>
+
+<div class="dv-opts">
+
+<div class="dv-opt" id="2a">
+<div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a>추천안 · 보상 카드형 (액션 1개)</div>
+<div style="display:flex;gap:20px;align-items:flex-start">
+
+<div data-theme="{{ theme }}" data-screen-label="학습 완료 결과 보상형" style="width:390px;height:844px;border-radius:52px;background:var(--softer);box-shadow:0 0 0 11px #1D1D21,0 0 0 13px #56565E,0 24px 60px rgba(0,0,0,.28);overflow:hidden;display:flex;flex-direction:column;position:relative;color:var(--ink)">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 28px 0;font-size:15px;font-weight:600;flex:none">
+    <span>9:41</span><span style="font-size:13px;color:var(--body)">5G · 92%</span>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding:32px 20px 0;min-height:0;overflow:hidden">
+    <div style="font-size:12px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--body)">오늘의 학습</div>
+    <div style="height:8px"></div>
+    <div style="font-size:32px;font-weight:700;line-height:40px">다 했어요</div>
+
+    <div style="height:28px"></div>
+
+    <div style="background:var(--canvas);border-radius:24px;box-shadow:0 6px 14px var(--shadow);padding:24px 20px;display:flex;align-items:center;gap:18px;animation:riseIn .4s ease both">
+      <div style="width:88px;height:88px;border-radius:18px;background:#EDEDF1;display:flex;align-items:center;justify-content:center;flex:none;position:relative">
+        <img src="./--msid1pfb-no2t.png" alt="사장" style="width: 93px; height: 93px; object-fit: contain">
+        <div style="position:absolute;right:-6px;bottom:-6px;width:30px;height:30px;border-radius:999px;background:#A3E635;display:flex;align-items:center;justify-content:center;animation:pop .45s .25s ease both">
+          <span style="display:flex;align-items:center;justify-content:center;width:24px;height:24px;color:#1D1D21;transform:scale(0.8);transform-origin:center"><x-import component-from-global-scope="DesignSystem_0bedd6.IconNormalCheck" hint-size="24px,24px"></x-import></span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+        <div style="font-size:12px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--body)">새 재료</div>
+        <div style="font-size:26px;font-weight:700;line-height:32px">쌀</div>
+        <div style="font-size:15px;color:var(--body)">사장이 재료를 하나 건넸어요</div>
+      </div>
+    </div>
+
+    <div style="height:28px"></div>
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <span style="font-size:20px;font-weight:600">참치마요</span>
+        <span style="font-size:13px;font-weight:500;color:var(--body);font-variant-numeric:tabular-nums">1 / 4</span>
+      </div>
+      <div style="display:flex;gap:8px">
+        <div style="flex:1;height:8px;border-radius:999px;background:var(--ink);animation:limefade 1.2s .3s ease both"></div>
+        <div style="flex:1;height:8px;border-radius:999px;background:var(--pressed)"></div>
+        <div style="flex:1;height:8px;border-radius:999px;background:var(--pressed)"></div>
+        <div style="flex:1;height:8px;border-radius:999px;background:var(--pressed)"></div>
+      </div>
+      <div style="font-size:15px;color:var(--body)">완성까지 세 번 남았어요</div>
+    </div>
+
+    <div style="height:28px"></div>
+
+    <div style="display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-top:1px solid var(--pressed)">
+        <span style="font-size:15px;color:var(--body)">새로 배운 단어</span>
+        <span style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums">12</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-top:1px solid var(--pressed);border-bottom:1px solid var(--pressed)">
+        <span style="font-size:15px;color:var(--body)">아직이라고 표시한 단어</span>
+        <span style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums">3</span>
+      </div>
+    </div>
+
+    <div style="height:16px"></div>
+    <div style="font-size:15px;line-height:22px;color:var(--body);text-wrap:pretty">오늘 외운 12개는 내일 다시 확인해요.</div>
+
+    <div style="margin-top:auto;padding:20px 0 28px">
+      <button onClick="{{ noop }}" style="width:100%;min-height:56px;border:none;border-radius:999px;background:var(--primary);color:var(--on-primary);font-size:18px;font-weight:600;cursor:pointer">오늘은 여기까지</button>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:50%;bottom:9px;transform:translateX(-50%);width:134px;height:5px;border-radius:999px;background:var(--ink);opacity:.35"></div>
+</div>
+
+<div style="width:264px;background:#FAFAFB;border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+  <div style="font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:#8E8E97">개선 포인트</div>
+  <div style="display:flex;flex-direction:column;gap:11px;font-size:12.5px;line-height:19px;color:#56565E">
+    <div><b style="color:#1D1D21">1. 버튼 2개 → 1개</b><br>‘메뉴에서 보기 / 영수증 보기’는 둘 다 탐색이라 결정을 강요했다. 하단은 세션을 닫는 <b>오늘은 여기까지</b> 하나만. 레시피가 궁금하면 참치마요 블록을 탭해 메뉴로 간다(선택이 아닌 탐색).</div>
+    <div><b style="color:#1D1D21">2. 결과보다 보상을 먼저</b><br>가장 위는 얻은 재료. 숫자(12·3)는 그 아래 두 줄로 강등 — “내가 뭘 얻었나”가 “내가 몇 개 했나”보다 앞선다.</div>
+    <div><b style="color:#1D1D21">3. 라임은 획득 순간에만</b><br>체크 배지, 그리고 방금 채워진 진행 칸이 라임에서 잉크로 1.2초간 가라앉는다. 그 외 라임 없음.</div>
+    <div><b style="color:#1D1D21">4. 화면당 오렌지 1개</b><br>하단 CTA만 오렌지. 진행바·요약·라벨은 전부 무채.</div>
+    <div><b style="color:#1D1D21">5. 다음 약속 한 줄</b><br>“오늘 외운 12개는 내일 다시 확인해요.” — 간격 힌트를 버튼에서 뺀 만큼 여기서 회수. 내일 다시 올 이유가 된다.</div>
+    <div><b style="color:#1D1D21">6. 카피 톤</b><br>‘COMPLETED / 12 / 0’ 같은 시스템 표기를 사장의 말투(해요체)로 교체.</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="dv-opt" id="2b">
+<div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a>대안 · 영수증 한 장</div>
+<div style="display:flex;gap:20px;align-items:flex-start">
+
+<div data-theme="{{ theme }}" data-screen-label="학습 완료 결과 영수증" style="width:390px;height:844px;border-radius:52px;background:var(--softer);box-shadow:0 0 0 11px #1D1D21,0 0 0 13px #56565E,0 24px 60px rgba(0,0,0,.28);overflow:hidden;display:flex;flex-direction:column;position:relative;color:var(--ink)">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 28px 0;font-size:15px;font-weight:600;flex:none">
+    <span>9:41</span><span style="font-size:13px;color:var(--body)">5G · 92%</span>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding:28px 20px 0;min-height:0">
+    <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0">
+      <div style="width:100%;background:var(--canvas);border-radius:8px;box-shadow:0 6px 14px var(--shadow);padding:32px 26px 28px;animation:riseIn .4s ease both">
+        <div style="text-align:center;font-size:15px;font-weight:600;letter-spacing:3px">ONIGIRI SHOP</div>
+        <div style="height:6px"></div>
+        <div style="text-align:center;font-size:13px;color:var(--body);font-variant-numeric:tabular-nums">2026.08.07</div>
+        <div style="height:24px"></div>
+        <div style="border-top:1px dashed var(--pressed)"></div>
+        <div style="display:flex;justify-content:space-between;padding:14px 0;font-size:15px">
+          <span style="color:var(--body)">새로 배운 단어</span><span style="font-weight:600;font-variant-numeric:tabular-nums">12</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:14px 0;font-size:15px;border-top:1px solid var(--soft)">
+          <span style="color:var(--body)">아직이라고 표시</span><span style="font-weight:600;font-variant-numeric:tabular-nums">3</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;font-size:15px;border-top:1px solid var(--soft)">
+          <span style="color:var(--body)">받은 재료</span>
+          <span style="display:flex;align-items:center;gap:8px;font-weight:600">
+            <span style="width:20px;height:20px;border-radius:999px;background:#A3E635;display:flex;align-items:center;justify-content:center;animation:pop .45s .25s ease both">
+              <span style="display:flex;align-items:center;justify-content:center;width:24px;height:24px;color:#1D1D21;transform:scale(0.62);transform-origin:center"><x-import component-from-global-scope="DesignSystem_0bedd6.IconNormalCheck" hint-size="24px,24px"></x-import></span>
+            </span>쌀
+          </span>
+        </div>
+        <div style="border-top:1px dashed var(--pressed)"></div>
+        <div style="height:22px"></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:15px">
+          <span style="color:var(--body)">참치마요</span>
+          <span style="font-weight:600;font-variant-numeric:tabular-nums">1 / 4</span>
+        </div>
+        <div style="height:12px"></div>
+        <div style="display:flex;gap:6px">
+          <div style="flex:1;height:6px;border-radius:999px;background:var(--ink);animation:limefade 1.2s .3s ease both"></div>
+          <div style="flex:1;height:6px;border-radius:999px;background:var(--pressed)"></div>
+          <div style="flex:1;height:6px;border-radius:999px;background:var(--pressed)"></div>
+          <div style="flex:1;height:6px;border-radius:999px;background:var(--pressed)"></div>
+        </div>
+        <div style="height:26px"></div>
+        <div style="text-align:center;font-size:15px;line-height:22px;color:var(--body);text-wrap:pretty">오늘 외운 12개는<br>내일 다시 확인해요.</div>
+        <div style="height:20px"></div>
+        <div style="text-align:center;font-size:12px;letter-spacing:2.4px;color:var(--body)">THANK YOU</div>
+      </div>
+    </div>
+
+    <div style="flex:none;padding:20px 0 28px;display:flex;flex-direction:column;gap:6px;align-items:center">
+      <button onClick="{{ noop }}" style="width:100%;min-height:56px;border:none;border-radius:999px;background:var(--primary);color:var(--on-primary);font-size:18px;font-weight:600;cursor:pointer">오늘은 여기까지</button>
+      <button onClick="{{ noop }}" style="border:none;background:transparent;color:var(--body);font-size:14px;font-weight:600;padding:12px 16px;min-height:44px;cursor:pointer">영수증 저장</button>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:50%;bottom:9px;transform:translateX(-50%);width:134px;height:5px;border-radius:999px;background:var(--ink);opacity:.35"></div>
+</div>
+
+<div style="width:264px;background:#FAFAFB;border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+  <div style="font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:#8E8E97">대안의 차이</div>
+  <div style="display:flex;flex-direction:column;gap:11px;font-size:12.5px;line-height:19px;color:#56565E">
+    <div><b style="color:#1D1D21">결과 = 영수증 한 장</b><br>기존 ‘영수증 보기’를 별도 화면으로 두지 않고, 결과 화면 자체를 영수증으로 만든다. 화면이 하나 줄고 세계관(오니기리 가게)이 강해진다.</div>
+    <div><b style="color:#1D1D21">스캔이 빠르다</b><br>모든 수치가 한 줄씩 정렬(tabular figures) — “내 결과만 간략히 보고 싶다”는 요구에 가장 직접적.</div>
+    <div><b style="color:#1D1D21">트레이드오프</b><br>보상(재료)이 표의 한 행으로 내려가 획득감이 <a href="#2a">2a</a>보다 약하다. 매일 반복되는 리추얼에서 성취 리듬을 지탱하기엔 <a href="#2a">2a</a>가 유리해 그쪽을 추천.</div>
+    <div><b style="color:#1D1D21">이럴 때 채택</b><br>공유·수집을 밀 계획이라면 이 영수증을 이미지로 저장/공유하는 자산으로 쓰고, 평소 결과는 <a href="#2a">2a</a>로 두는 조합이 가장 좋다.</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+</div>
+<p class="dv-next">다음: “<a class="dv-oid" href="#2a">2a</a>로 확정하고 홈 화면으로” · “<a class="dv-oid" href="#2a">2a</a>에 재료 획득 애니메이션 더 크게” · “<a class="dv-oid" href="#2b">2b</a> 영수증을 공유 이미지로 만들어줘”</p>
+</section>
+
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">화면 1 · 학습 세션 — 리콜 흐름 + 평가 버튼 축소</span>
+<button onClick="{{ toggleTheme }}" style="margin-left:16px;border:none;background:#1D1D21;color:#fff;font:600 11px Pretendard,system-ui;padding:7px 14px;border-radius:999px;cursor:pointer">{{ themeLabel }}</button>
+</div>
+
+<div class="dv-opts">
+
+<div class="dv-opt" id="1a">
+<div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>추천안 · 3단계 평가 (다시 · 애매 · 알아)</div>
+<div style="display:flex;gap:20px;align-items:flex-start">
+
+<div data-theme="{{ theme }}" data-screen-label="학습 세션 3단계" style="width:390px;height:844px;border-radius:52px;background:var(--softer);box-shadow:0 0 0 11px #1D1D21,0 0 0 13px #56565E,0 24px 60px rgba(0,0,0,.28);overflow:hidden;display:flex;flex-direction:column;position:relative;color:var(--ink)">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 28px 0;font-size:15px;font-weight:600;flex:none">
+    <span>9:41</span><span style="font-size:13px;color:var(--body)">5G · 92%</span>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:12px;padding:14px 12px 0;flex:none">
+    <button onClick="{{ aQuit }}" aria-label="학습 종료" style="width:44px;height:44px;border:none;background:transparent;color:var(--body);display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer"><x-import component-from-global-scope="DesignSystem_0bedd6.IconNormalClose" hint-size="24px,24px"></x-import></button>
+    <div style="flex:1;display:flex;flex-direction:column;gap:7px;padding-right:8px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <span style="font-size:12px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--body)">오늘의 학습</span>
+        <span style="font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink)">{{ aDone }}<span style="color:var(--body)"> / 12</span></span>
+      </div>
+      <div style="height:4px;border-radius:999px;background:var(--pressed);overflow:hidden">
+        <div style="height:100%;width:{{ aPct }}%;background:var(--ink);border-radius:999px;transition:width .35s ease"></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding:20px 20px 0;min-height:0">
+    <div onClick="{{ aReveal }}" style="flex:1;background:var(--canvas);border-radius:24px;box-shadow:0 6px 14px var(--shadow);padding:36px 24px 24px;display:flex;flex-direction:column;align-items:center;cursor:pointer;min-height:0;overflow:hidden">
+      <div style="font-size:12px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--body)">N5 · 동사</div>
+      <div style="height:32px"></div>
+      <div style="font-size:44px;font-weight:700;line-height:1.2;text-align:center;color:var(--ink)">{{ aWord }}</div>
+      <div style="height:10px"></div>
+      <div style="font-size:18px;font-weight:500;color:var(--body)">{{ aReading }}</div>
+      <div style="height:20px"></div>
+      <button onClick="{{ noop }}" aria-label="발음 듣기" style="width:52px;height:52px;border-radius:999px;border:none;background:var(--soft);color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"></path><path d="M16.5 8.5a5 5 0 0 1 0 7"></path><path d="M19.5 6a8.5 8.5 0 0 1 0 12"></path></svg>
+      </button>
+
+      <sc-if value="{{ aFront }}" hint-placeholder-val="{{ true }}">
+        <div style="margin-top:auto;padding-top:24px;font-size:15px;color:var(--body)">뜻을 떠올린 뒤 카드를 탭하세요</div>
+      </sc-if>
+
+      <sc-if value="{{ aBack }}" hint-placeholder-val="{{ false }}">
+        <div style="width:100%;margin-top:28px;display:flex;flex-direction:column;align-items:center">
+          <div style="width:56px;height:1px;background:var(--pressed)"></div>
+          <div style="height:24px"></div>
+          <div style="font-size:26px;font-weight:700;color:var(--ink);text-align:center">{{ aMeaning }}</div>
+          <div style="height:20px"></div>
+          <div style="width:100%;background:var(--soft);border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:16px;line-height:26px;color:var(--ink);text-wrap:pretty">{{ aExJp }}</div>
+            <div style="font-size:14px;line-height:20px;color:var(--body);text-wrap:pretty">{{ aExKo }}</div>
+          </div>
+          <div style="height:14px"></div>
+          <button onClick="{{ noop }}" style="border:none;background:transparent;color:var(--body);font-size:14px;font-weight:600;padding:12px 16px;min-height:44px;cursor:pointer">단어 상세 ›</button>
+        </div>
+      </sc-if>
+    </div>
+
+    <div style="flex:none;padding:20px 0 28px">
+      <sc-if value="{{ aFront }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ aReveal }}" style="width:100%;min-height:56px;border:none;border-radius:999px;background:var(--primary);color:var(--on-primary);font-size:18px;font-weight:600;cursor:pointer">뜻 보기</button>
+      </sc-if>
+      <sc-if value="{{ aBack }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;gap:8px">
+          <button onClick="{{ aAgain }}" style="flex:1;min-height:64px;border-radius:999px;border:1.5px solid var(--pressed);background:transparent;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px">
+            <span style="font-size:16px;font-weight:600">다시</span><span style="font-size:12px;color:var(--body);font-variant-numeric:tabular-nums">10분 뒤</span>
+          </button>
+          <button onClick="{{ aSoso }}" style="flex:1;min-height:64px;border-radius:999px;border:none;background:var(--soft);color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px">
+            <span style="font-size:16px;font-weight:600">애매</span><span style="font-size:12px;color:var(--body);font-variant-numeric:tabular-nums">내일</span>
+          </button>
+          <button onClick="{{ aKnown }}" style="flex:1;min-height:64px;border-radius:999px;border:none;background:var(--ink);color:var(--softer);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px">
+            <span style="font-size:16px;font-weight:600">알아</span><span style="font-size:12px;opacity:.7;font-variant-numeric:tabular-nums">4일 뒤</span>
+          </button>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:50%;bottom:9px;transform:translateX(-50%);width:134px;height:5px;border-radius:999px;background:var(--ink);opacity:.35"></div>
+</div>
+
+<div style="width:264px;background:#FAFAFB;border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+  <div style="font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:#8E8E97">개선 포인트</div>
+  <div style="display:flex;flex-direction:column;gap:11px;font-size:12.5px;line-height:19px;color:#56565E">
+    <div><b style="color:#1D1D21">1. 리콜 단계 신설</b><br>앞면은 일본어+발음만. 뜻·예문은 탭 이후에만 등장 → 회상 없이 넘기는 “읽기 학습” 방지.</div>
+    <div><b style="color:#1D1D21">2. 화면당 오렌지 1개</b><br>앞면의 유일한 주요 액션 “뜻 보기”만 오렌지. 뒷면에선 오렌지가 사라지고 평가 세트는 중립 에스컬레이션(외곽선→스톤→잉크).</div>
+    <div><b style="color:#1D1D21">3. 4개 → 3개</b><br>“어려움/앎” 구분은 사용자가 스스로 판단하기 어려워 망설임의 주원인. 실패/애매/성공 3단계가 FSRS 등급(Again·Hard·Good)에 그대로 매핑되면서 판단 부하는 최소.</div>
+    <div><b style="color:#1D1D21">4. 다음 복습 시점 힌트</b><br>각 버튼 아래 10분 뒤 / 내일 / 4일 뒤 — 선택의 결과를 미리 보여줘 망설임을 줄임.</div>
+    <div><b style="color:#1D1D21">5. 위계 정리</b><br>TTS는 카드 안 원형 아이콘(52pt), 단어 상세는 공개 후에만 텍스트 버튼으로 강등. 진행바·남은 개수는 상단 한 줄로 압축.</div>
+    <div><b style="color:#1D1D21">6. 터치·대비</b><br>모든 탭 타깃 ≥44pt(평가 버튼 64pt), 본문 15pt 이상, 라이트/다크 모두 AA 이상.</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="dv-opt" id="1b">
+<div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>채택안 · 2단계 평가 (아직이에요 · 외웠어요)</div>
+<div style="display:flex;gap:20px;align-items:flex-start">
+
+<div data-theme="{{ theme }}" data-screen-label="학습 세션 2단계" style="width:390px;height:844px;border-radius:52px;background:var(--softer);box-shadow:0 0 0 11px #1D1D21,0 0 0 13px #56565E,0 24px 60px rgba(0,0,0,.28);overflow:hidden;display:flex;flex-direction:column;position:relative;color:var(--ink)">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 28px 0;font-size:15px;font-weight:600;flex:none">
+    <span>9:41</span><span style="font-size:13px;color:var(--body)">5G · 92%</span>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:12px;padding:14px 12px 0;flex:none">
+    <button onClick="{{ bQuit }}" aria-label="학습 종료" style="width:44px;height:44px;border:none;background:transparent;color:var(--body);display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer"><x-import component-from-global-scope="DesignSystem_0bedd6.IconNormalClose" hint-size="24px,24px"></x-import></button>
+    <div style="flex:1;display:flex;align-items:center;gap:4px;padding-right:12px">
+      <sc-for list="{{ bDots }}" as="dot" hint-placeholder-count="12">
+        <div style="flex:1;height:4px;border-radius:999px;background:{{ dot.color }}"></div>
+      </sc-for>
+    </div>
+    <span style="font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--body);padding-right:16px">{{ bLeft }}개 남음</span>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding:24px 20px 0;min-height:0">
+    <div onClick="{{ bReveal }}" style="flex:1;background:var(--canvas);border-radius:24px;box-shadow:0 6px 14px var(--shadow);padding:40px 24px 24px;display:flex;flex-direction:column;align-items:center;cursor:pointer;min-height:0;overflow:hidden">
+      <div style="font-size:44px;font-weight:700;line-height:1.2;text-align:center;color:var(--ink)">{{ bWord }}</div>
+      <div style="height:10px"></div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px;font-weight:500;color:var(--body)">{{ bReading }}</span>
+        <button onClick="{{ noop }}" aria-label="발음 듣기" style="width:44px;height:44px;border-radius:999px;border:none;background:var(--soft);color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"></path><path d="M16.5 8.5a5 5 0 0 1 0 7"></path></svg>
+        </button>
+      </div>
+
+      <sc-if value="{{ bFront }}" hint-placeholder-val="{{ true }}">
+        <div style="margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:10px;padding-top:24px">
+          <div style="width:36px;height:36px;border-radius:999px;border:1.5px dashed var(--pressed);display:flex;align-items:center;justify-content:center;color:var(--body);font-size:16px">?</div>
+          <div style="font-size:15px;color:var(--body)">탭해서 뜻 확인</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ bBack }}" hint-placeholder-val="{{ false }}">
+        <div style="width:100%;margin-top:32px;display:flex;flex-direction:column;align-items:center">
+          <div style="font-size:26px;font-weight:700;color:var(--ink);text-align:center">{{ bMeaning }}</div>
+          <div style="height:20px"></div>
+          <div style="width:100%;background:var(--soft);border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:8px">
+            <div style="font-size:16px;line-height:26px;color:var(--ink);text-wrap:pretty">{{ bExJp }}</div>
+            <div style="font-size:14px;line-height:20px;color:var(--body);text-wrap:pretty">{{ bExKo }}</div>
+          </div>
+          <div style="height:14px"></div>
+          <button onClick="{{ noop }}" style="border:none;background:transparent;color:var(--body);font-size:14px;font-weight:600;padding:12px 16px;min-height:44px;cursor:pointer">단어 상세 ›</button>
+        </div>
+      </sc-if>
+    </div>
+
+    <div style="flex:none;padding:20px 0 28px">
+      <sc-if value="{{ bFront }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ bReveal }}" style="width:100%;min-height:56px;border:none;border-radius:999px;background:var(--primary);color:var(--on-primary);font-size:18px;font-weight:600;cursor:pointer">뜻 보기</button>
+      </sc-if>
+      <sc-if value="{{ bBack }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;gap:10px">
+          <button onClick="{{ bAgain }}" style="flex:1;min-height:60px;border-radius:999px;border:1.5px solid var(--pressed);background:transparent;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600">아직이에요</button>
+          <button onClick="{{ bKnown }}" style="flex:1;min-height:60px;border-radius:999px;border:none;background:var(--ink);color:var(--softer);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600">외웠어요</button>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:50%;bottom:9px;transform:translateX(-50%);width:134px;height:5px;border-radius:999px;background:var(--ink);opacity:.35"></div>
+</div>
+
+<div style="width:264px;background:#FAFAFB;border:1px solid rgba(0,0,0,.07);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+  <div style="font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:#8E8E97">대안의 차이</div>
+  <div style="display:flex;flex-direction:column;gap:11px;font-size:12.5px;line-height:19px;color:#56565E">
+    <div><b style="color:#1D1D21">2단계로 최소화</b><br>“알겠다 / 모르겠다”만 묻는다. 자투리 시간·한 손 조작에 가장 빠르고, 누르기 전 망설임이 사실상 0.</div>
+    <div><b style="color:#1D1D21">간격 힌트 제거</b><br>‘10분 뒤 / 3일 뒤’ 같은 시스템 언어는 판단을 다시 늘린다. 사용자의 말(아직이에요 / 외웠어요)만 남기고, 간격 계산은 FSRS가 뒤에서 처리.</div>
+    <div><b style="color:#1D1D21">사용자 언어 라벨</b><br>두 라벨 모두 ‘지금 내 상태’를 말하는 형태로 통일 — “아직이에요”는 이번 세션 안에서 다시 등장, “외웠어요”는 다음 날 이후로 이동.</div>
+    <div><b style="color:#1D1D21">진행 표시를 세그먼트로</b><br>12칸 중 채워진 칸 + “9개 남음”. 남은 양이 개수로 즉시 읽힌다.</div>
+    <div><b style="color:#1D1D21">남는 과제</b><br>FSRS에 Hard/Easy 신호가 없어 초반 간격 추정이 거칠다 → 첫 2주는 보수적 간격으로 시작하고, 필요하면 ‘외웠어요’ 롱프레스에 ‘완전 쉬움’을 숨겨 두는 방식으로 보완 가능.</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+</div>
+<p class="dv-next">다음: “<a class="dv-oid" href="#1a">1a</a>로 확정하고 화면 2(학습 완료 결과)로” · “<a class="dv-oid" href="#1a">1a</a>에 스와이프 제스처 추가” · “평가 후 재료 획득 마이크로 인터랙션 보기”</p>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1560,&quot;height&quot;:1080}}">
+const WORDS = [
+  {w:"コピーする", r:"こぴーする · kopī suru", m:"복사하다", jp:"「資料をコピーするなら、コピー機をあらかじめ予熱するのか」", ko:"자료를 복사할 거면 복사기를 미리 예열하는군."},
+  {w:"予約", r:"よやく · yoyaku", m:"예약", jp:"「席を予約しておきました」", ko:"자리를 예약해 두었습니다."},
+  {w:"届ける", r:"とどける · todokeru", m:"전달하다, 배달하다", jp:"「荷物を家まで届けます」", ko:"짐을 집까지 배달합니다."}
+];
+
+class Component extends DCLogic {
+  state = { theme: "light", aIdx: 0, aRev: false, aDone: 3, bIdx: 1, bRev: false, bDone: 3, homeMode: "today", menuView: "list" };
+
+  next(which) {
+    this.setState(s => {
+      const i = which === "a" ? s.aIdx : s.bIdx;
+      const d = which === "a" ? s.aDone : s.bDone;
+      const n = (i + 1) % WORDS.length;
+      return which === "a"
+        ? { aIdx: n, aRev: false, aDone: (d + 1) % 13 }
+        : { bIdx: n, bRev: false, bDone: (d + 1) % 13 };
+    });
+  }
+
+  renderVals() {
+    const s = this.state;
+    const a = WORDS[s.aIdx], b = WORDS[s.bIdx];
+    const dotFill = this.state.theme === "dark" ? "#F7F7F9" : "#1D1D21";
+    const dotEmpty = this.state.theme === "dark" ? "#3E3E45" : "#DCDCE2";
+    return {
+      theme: s.theme,
+      themeLabel: s.theme === "light" ? "다크 모드 보기" : "라이트 모드 보기",
+      toggleTheme: () => this.setState(p => ({ theme: p.theme === "light" ? "dark" : "light" })),
+      noop: (e) => { e.stopPropagation(); },
+
+      recResult: !s.receipt, recPrinted: !!s.receipt,
+      printReceipt: () => this.setState({ receipt: true }),
+      closeReceipt: () => this.setState({ receipt: false }),
+
+      isList: s.menuView !== "grid", isGrid: s.menuView === "grid",
+      setList: () => this.setState({ menuView: "list" }),
+      setGrid: () => this.setState({ menuView: "grid" }),
+
+      isToday: s.homeMode === "today", isReview: s.homeMode === "review",
+      setToday: () => this.setState({ homeMode: "today" }),
+      setReview: () => this.setState({ homeMode: "review" }),
+
+      aWord: a.w, aReading: a.r, aMeaning: a.m, aExJp: a.jp, aExKo: a.ko,
+      aFront: !s.aRev, aBack: s.aRev,
+      aDone: s.aDone, aPct: Math.round((s.aDone / 12) * 100),
+      aReveal: () => this.setState({ aRev: true }),
+      aAgain: () => this.next("a"), aSoso: () => this.next("a"), aKnown: () => this.next("a"),
+      aQuit: () => this.setState({ aRev: false, aIdx: 0, aDone: 3 }),
+
+      bWord: b.w, bReading: b.r, bMeaning: b.m, bExJp: b.jp, bExKo: b.ko,
+      bFront: !s.bRev, bBack: s.bRev,
+      bLeft: 12 - s.bDone,
+      bDots: Array.from({ length: 12 }, (_, i) => ({ color: i < s.bDone ? dotFill : dotEmpty })),
+      bReveal: () => this.setState({ bRev: true }),
+      bAgain: () => this.next("b"), bKnown: () => this.next("b"),
+      bQuit: () => this.setState({ bRev: false, bIdx: 1, bDone: 3 })
+    };
+  }
+}
+</script>
+</body>
+</html>

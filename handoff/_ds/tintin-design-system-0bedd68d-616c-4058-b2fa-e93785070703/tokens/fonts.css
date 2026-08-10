@@ -1,0 +1,21 @@
+/* Pretendard — the file's UI face. The Figma source specifies "Pretendard JP";
+   the supplied binaries are the Latin/Korean Pretendard build, declared under
+   BOTH family names so materialized components resolve either way. */
+@font-face{font-family:"Pretendard";font-weight:100;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-Thin.woff2") format("woff2")}
+@font-face{font-family:"Pretendard";font-weight:200;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-ExtraLight.woff2") format("woff2")}
+@font-face{font-family:"Pretendard";font-weight:300;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-Light.woff2") format("woff2")}
+@font-face{font-family:"Pretendard";font-weight:400;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-Regular.woff2") format("woff2")}
+@font-face{font-family:"Pretendard";font-weight:500;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-Medium.woff2") format("woff2")}
+@font-face{font-family:"Pretendard";font-weight:600;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Pretendard";font-weight:700;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-Bold.woff2") format("woff2")}
+@font-face{font-family:"Pretendard";font-weight:800;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-ExtraBold.woff2") format("woff2")}
+@font-face{font-family:"Pretendard";font-weight:900;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-Black.woff2") format("woff2")}
+@font-face{font-family:"Pretendard JP";font-weight:100;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-Thin.woff2") format("woff2")}
+@font-face{font-family:"Pretendard JP";font-weight:200;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-ExtraLight.woff2") format("woff2")}
+@font-face{font-family:"Pretendard JP";font-weight:300;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-Light.woff2") format("woff2")}
+@font-face{font-family:"Pretendard JP";font-weight:400;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-Regular.woff2") format("woff2")}
+@font-face{font-family:"Pretendard JP";font-weight:500;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-Medium.woff2") format("woff2")}
+@font-face{font-family:"Pretendard JP";font-weight:600;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Pretendard JP";font-weight:700;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-Bold.woff2") format("woff2")}
+@font-face{font-family:"Pretendard JP";font-weight:800;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-ExtraBold.woff2") format("woff2")}
+@font-face{font-family:"Pretendard JP";font-weight:900;font-style:normal;font-display:swap;src:url("../assets/fonts/Pretendard-Black.woff2") format("woff2")}
