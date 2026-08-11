@@ -6,11 +6,13 @@ description: The design language for Onikan (오니칸) — a restrained Japanes
 colors:
   # ─── Onikan Grey ramp (hue 228, ~2.6% sat — a chosen cool neutral) ───
   grey-99: "#FAFAFB"
+  grey-98: "#F7F7F9"            # dark-theme ink / on-ink
   grey-97: "#F2F2F4"
   grey-96: "#EDEDF1"
   grey-95: "#E8E8EC"
   grey-90: "#DCDCE2"
   grey-80: "#C4C4CC"
+  grey-70: "#A9A9B2"            # dark-theme body
   grey-60: "#8E8E97"
   grey-50: "#71717A"
   grey-40: "#56565E"
@@ -32,17 +34,19 @@ colors:
 
   # ─── Brand accents (sparse) ───
   primary: "#EA580C"            # orange-600 — the single conversion action per screen
-  on-primary: "#FFFFFF"
+  on-primary: "#1D1D21"         # ink — white on orange-600 is only 3.56:1 (fails AA); ink is 4.72:1
+  on-ink: "#F7F7F9"             # grey-98 — foreground on an INK fill (toast, grade-button Easy)
   tab-active: "#C2410C"         # orange-700 — active tab icon+label (AA 4.63:1 on light)
   secondary: "#A3E635"          # lime-400 — the reward moment ONLY
   on-secondary: "#1D1D21"
-  link: "#C2410C"               # orange-700 — on-brand text links
+  link: "#C2410C"               # orange-700 — on-brand text links (5.18:1)
 
   # ─── Semantic status (functional — NOT brand accents) ───
-  success: "#16A34A"            # green-600 — kept distinct from lime reward
-  warning: "#F59E0B"            # amber-500
-  danger: "#DC2626"             # red-600
-  info: "#2563EB"               # blue-600
+  # Mode-aware like {colors.primary}: darker in light, lighter in dark, so each clears AA in BOTH themes.
+  success: "#15803D"            # green-700 — kept distinct from lime reward (5.02:1)
+  warning: "#B45309"            # amber-700 (5.02:1 — amber-500 was only 2.15:1 on canvas)
+  danger: "#DC2626"             # red-600 (4.83:1)
+  info: "#2563EB"               # blue-600 (5.17:1)
 
 # Dark theme is first-class — values below OVERRIDE the light tokens under dark appearance.
 dark:
@@ -57,60 +61,74 @@ dark:
   shadow: "rgba(0,0,0,0.4)"
   primary: "#F97316"            # orange-500 — pops on dark
   on-primary: "#1D1D21"
-  tab-active: "#EA580C"         # orange-600 (5.55:1 on dark)
+  on-ink: "#1D1D21"             # inverts with ink — a fixed value would put white on a white chip
+  tab-active: "#EA580C"         # orange-600 (5.21:1 on dark)
   secondary: "#A3E635"
   link: "#F97316"               # orange-500
+  success: "#22C55E"            # green-500 (7.37:1 on dark canvas)
+  warning: "#F59E0B"            # amber-500 (7.82:1)
+  danger: "#F87171"             # red-400 (6.07:1 — red-600 was 3.48:1 here)
+  info: "#60A5FA"               # blue-400 (6.61:1 — blue-600 was 3.25:1 here)
 
 typography:
-  # One family carries the whole system: Pretendard (Korean + Latin), weights 400–800.
+  # One family carries the whole system: Pretendard JP (Korean + Japanese + Latin), weights 400–800.
+  # JP cut is REQUIRED, not a preference: plain Pretendard ships 14,336 glyphs with kana and
+  # hangul but NO kanji, so {components.kanji-tile} renders empty. Pretendard JP (22,059 glyphs)
+  # is the same typeface with the kanji set added — same design, same metrics.
   display-xxl:
-    fontFamily: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
     fontSize: 52px
     fontWeight: 800
     lineHeight: 60px
   display-xl:
-    fontFamily: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
     fontSize: 36px
     fontWeight: 700
     lineHeight: 44px
   display-lg:
-    fontFamily: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
     fontSize: 32px
     fontWeight: 700
     lineHeight: 40px
   display-md:
-    fontFamily: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
     fontSize: 24px
     fontWeight: 700
     lineHeight: 32px
   display-sm:
-    fontFamily: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
     fontSize: 20px
     fontWeight: 600
     lineHeight: 28px
   body-lg:
-    fontFamily: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
     fontSize: 18px
     fontWeight: 500
     lineHeight: 26px
   body-md:
-    fontFamily: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
     fontSize: 16px
     fontWeight: 400
     lineHeight: 24px
   body-md-strong:
-    fontFamily: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
     fontSize: 16px
     fontWeight: 600
     lineHeight: 22px
   body-sm:
-    fontFamily: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
     fontSize: 14px
     fontWeight: 400
     lineHeight: 20px
+  body-sm-strong:
+    # Mirrors body-md-strong at 14px. Referenced by {components.reward-chip}.
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
+    fontSize: 14px
+    fontWeight: 600
+    lineHeight: 20px
   label:
     # Replaces Uber's monospaced eyebrow. Pretendard 500, uppercase, tracked.
-    fontFamily: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
     fontSize: 12px
     fontWeight: 500
     lineHeight: 16px
@@ -118,18 +136,18 @@ typography:
     textTransform: uppercase
   code:
     # Numeric codes & indices (001, N5, 0/4). Tabular figures for alignment.
-    fontFamily: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
     fontSize: 13px
     fontWeight: 500
     lineHeight: 18px
     fontVariantNumeric: tabular-nums
   button-large:
-    fontFamily: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
     fontSize: 18px
     fontWeight: 600
     lineHeight: 24px
   button-md:
-    fontFamily: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
     fontSize: 16px
     fontWeight: 600
     lineHeight: 20px
@@ -184,7 +202,7 @@ components:
       unknown: "outline {colors.pressed}"
       hard: "fill {colors.soft} @ 60%"
       known: "fill {colors.soft}"
-      easy: "fill {colors.ink}, text {colors.on-dark}"
+      easy: "fill {colors.ink}, text {colors.on-ink}"
 
   # ─── Surfaces ───
   card:
@@ -201,10 +219,12 @@ components:
     rounded: "{rounded.lg}"
     padding: "{spacing.xl}"
   kanji-tile:
-    description: "The single large-kanji square inside a card. Soft grey fill."
+    description: "The single large-kanji square inside a card. Soft grey fill. Requires the JP font cut — see typography."
     backgroundColor: "{colors.soft}"
     textColor: "{colors.ink}"
+    typography: "{typography.display-xxl}"
     rounded: "{rounded.md}"
+    size: 104x104
 
   # ─── Reward system (lime lives here, and ONLY here) ───
   reward-chip:
@@ -259,13 +279,16 @@ components:
 
   # ─── Feedback ───
   toast:
-    description: "Transient confirmation (e.g. 재료 획득!). Reward toasts may carry a lime accent."
+    description: "Transient confirmation (e.g. 재료 획득!). Reward toasts carry a lime accent mark; plain ones do not."
     backgroundColor: "{colors.ink}"
-    textColor: "{colors.on-dark}"
+    textColor: "{colors.on-ink}"
     accent: "{colors.secondary}"
     rounded: "{rounded.pill}"
     padding: "{spacing.md} {spacing.lg}"
     typography: "{typography.body-sm}"
+    variants:
+      reward: "lime check mark + label"
+      plain: "label only — keeps lime gated to the earn moment"
 
 ---
 
@@ -306,7 +329,7 @@ Copy speaks in the boss's warm, terse Korean ("왔네. 처음 보는 얼굴이�
 ## Colors
 
 ### Brand & Accent
-- **Orange 600** (`{colors.primary}` — `#EA580C`): The single conversion colour — the one primary CTA per screen; on dark, brightens to orange-500 `#F97316`. The active tab icon+label use `{colors.tab-active}` — orange-700 `#C2410C` on light (AA 4.63:1 at 12px), orange-600 `#EA580C` on dark (5.55:1).
+- **Orange 600** (`{colors.primary}` — `#EA580C`): The single conversion colour — the one primary CTA per screen; on dark, brightens to orange-500 `#F97316`. Its label is `{colors.on-primary}` = ink `#1D1D21` in **both** themes: white on orange-600 measures only 3.56:1 and fails AA, while ink measures 4.72:1 — and dark mode already used ink, so the token is now consistent. The brand orange itself is unchanged. The active tab icon+label use `{colors.tab-active}` — orange-700 `#C2410C` on light (AA 4.63:1 at 12px), orange-600 `#EA580C` on dark (5.21:1).
 - **Lime 400** (`{colors.secondary}` — `#A3E635`): The reward colour, used only at the *moment of earning* — the check badge on a new ingredient, the fade-out of a just-filled progress cell. Nowhere else. Text on lime is always `{colors.on-secondary}` `#1D1D21`.
 
 > **Decision logic — which accent, if any?**
@@ -324,24 +347,42 @@ Neutrals are the **Onikan Grey** ramp: hue 228 fixed, ~2.6% saturation — a del
 
 ### Text
 - **Ink** (`{colors.ink}` — `#1D1D21` / dark `#F7F7F9`, grey-15): Headings, body, progress fill.
-- **Body** (`{colors.body}` — `#56565E` / dark `#A9A9B2`, grey-40): Captions, secondary text, inactive tab (8.3:1 / 7.2:1).
+- **Body** (`{colors.body}` — `#56565E` / dark `#A9A9B2`, grey-40 / grey-70): Captions, secondary text, inactive tab (7.27:1 / 7.20:1 on canvas — both clear the ≥7:1 bar).
 - **Mute** (`{colors.mute}` — `#8E8E97` / dark `#71717A`, grey-60/50): **LOCKED and placeholder only** (3.4:1). Never a regular caption — to quiet something, drop size/weight, not colour.
 
 ### Semantic (functional, not brand)
 Kept deliberately separate from the two brand accents so they never collide.
-- **Success** `{colors.success}` `#16A34A` (green-600) — *green, NOT lime.* Lime = brand reward; success = system validation. Different hues prevent "which green means what?".
-- **Warning** `{colors.warning}` `#F59E0B` · **Danger** `{colors.danger}` `#DC2626` · **Info** `{colors.info}` `#2563EB`.
-- **Link** `{colors.link}` `#C2410C` (orange-700) — on-brand inline text links.
+
+Each status colour is **mode-aware**, following the same rule as `{colors.primary}`: darker in light, lighter in dark. A single fixed hex cannot clear AA against both a white card and a `#1D1D21` card — every one of these failed in one theme or the other before the split.
+
+| Token | Light | Dark |
+|---|---|---|
+| **Success** `{colors.success}` | green-700 `#15803D` (5.02:1) | green-500 `#22C55E` (7.37:1) |
+| **Warning** `{colors.warning}` | amber-700 `#B45309` (5.02:1) | amber-500 `#F59E0B` (7.82:1) |
+| **Danger** `{colors.danger}` | red-600 `#DC2626` (4.83:1) | red-400 `#F87171` (6.07:1) |
+| **Info** `{colors.info}` | blue-600 `#2563EB` (5.17:1) | blue-400 `#60A5FA` (6.61:1) |
+
+Success stays *green, NOT lime.* Lime = brand reward; success = system validation. Different hues prevent "which green means what?" — and green-700 sits even further from lime `#A3E635` than green-600 did.
+
+- **Link** `{colors.link}` `#C2410C` (orange-700) — on-brand inline text links (5.18:1).
 
 ### Dark Theme
 Dark is a designed theme, not an inversion. Page drops to grey-10 `#131316`, cards to grey-15 `#1D1D21`, orange brightens to orange-500 so it stays the loudest thing on screen, lime holds `#A3E635`, and the illustration `plate` stays fixed. Contrast holds in both themes (body ≥ 7:1, mute ~3.4:1 by design).
 
+Two tokens **must** invert rather than hold a fixed value:
+- `{colors.on-ink}` — foreground on an ink fill. `ink` itself flips (`#1D1D21` → `#F7F7F9`), so a fixed light `on-ink` would put white text on a white chip. It flips with it: `#F7F7F9` → `#1D1D21`.
+- The four status colours above, for the AA reason already given.
+
+Everything that legitimately stays fixed in both themes: `plate`, `secondary`, `on-secondary`, `on-primary`.
+
 ## Typography
 
 ### Font Family
-**Pretendard** carries the entire system — Korean and Latin, weights 400–800. It replaces Uber's two proprietary faces with one open-source family (SIL OFL) that renders Korean beautifully and pairs its Latin glyphs cleanly. There is no second face and no monospace: the old mono "eyebrow / code" role is handled by Pretendard with letter-spacing (labels) and tabular figures (codes).
+**Pretendard JP** carries the entire system — Korean, Japanese and Latin, weights 400–800. It replaces Uber's two proprietary faces with one open-source family (SIL OFL) that renders Korean beautifully and pairs its Latin glyphs cleanly. There is no second face and no monospace: the old mono "eyebrow / code" role is handled by Pretendard with letter-spacing (labels) and tabular figures (codes).
 
-Fallback stack: `Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif`.
+**Use the JP cut, not plain Pretendard.** This is a hard requirement for a Japanese-vocabulary app, not a preference. Plain Pretendard carries 14,336 glyphs — kana and hangul are present, but **kanji are entirely absent** (漢, 字, 運 all missing), so `{components.kanji-tile}` renders empty and no font fallback rescues it. Pretendard JP is the same typeface with the kanji set added (22,059 glyphs): identical design, identical metrics, complete coverage.
+
+Fallback stack: `"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif`.
 
 ### Hierarchy
 
@@ -356,6 +397,7 @@ Fallback stack: `Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Appl
 | `{typography.body-md}` | 16px | 400 | 24px | Default body. |
 | `{typography.body-md-strong}` | 16px | 600 | 22px | Emphasis, tab labels. |
 | `{typography.body-sm}` | 14px | 400 | 20px | Captions, secondary meta. |
+| `{typography.body-sm-strong}` | 14px | 600 | 20px | Reward-chip label. |
 | `{typography.label}` | 12px | 500 | 16px | Eyebrows / group labels — uppercase, +1.4 tracking. |
 | `{typography.code}` | 13px | 500 | 18px | Codes & indices (001, N5, 0/4) — tabular figures. |
 | `{typography.button-large}` | 18px | 600 | 24px | Primary button label. |
@@ -400,9 +442,9 @@ Depth cues are **fill polarity** (white card on grey page; ink card for a dark p
 |---|---|---|
 | `{rounded.none}` | 0px | Full-bleed bands, raw dividers. |
 | `{rounded.sm}` | 12px | Small tiles (kanji tile). |
-| `{rounded.md}` | 18px | Secondary cards, inputs. |
-| `{rounded.lg}` | 22px | Standard content card. |
-| `{rounded.card}` | 24px | Hero / feature card. |
+| `{rounded.md}` | 18px | Secondary cards, inputs, kanji tile. |
+| `{rounded.lg}` | 22px | Sub-region card (`card-tinted`). |
+| `{rounded.card}` | 24px | Standard content card (`card`) and hero / feature card. |
 | `{rounded.pill}` | 999px | Every interactive control — buttons, chips, badges. |
 | `{rounded.full}` | 9999px | Circular icon containers. |
 
@@ -419,7 +461,7 @@ The signature is a **soft, generous radius**: cards at 22–24px, every control 
 
 **`button-subtle`** — soft grey pill (`{colors.soft}`) for tertiary / in-card actions (e.g. 단어 상세).
 
-**`grade-button`** — the study self-rating set (모름 · 어려움 · 앎 · 쉬움). A **neutral escalation**, because a set of peers has no single primary: outline → soft grey → grey → solid ink. Orange is *not* used here.
+**`grade-button`** — the study self-rating set (모름 · 어려움 · 앎 · 쉬움). A **neutral escalation**, because a set of peers has no single primary: outline → soft grey @ 60% → soft grey → solid ink. Orange is *not* used here. The Easy chip's label is `{colors.on-ink}`, which inverts with the fill so the step reads in both themes.
 
 ### Surfaces
 
@@ -453,7 +495,7 @@ The signature is a **soft, generous radius**: cards at 22–24px, every control 
 
 ### Feedback
 
-**`toast`** — transient confirmation on ink; **reward toasts (재료 획득!) carry a lime accent mark.** Pill shape, Level 1 shadow.
+**`toast`** — transient confirmation on ink; **reward toasts (재료 획득!) carry a lime accent mark**, plain ones (저장했어) do not. Pill shape, Level 1 shadow. The two variants exist precisely so lime stays gated to the earn moment instead of riding along on every toast.
 
 ## Component Composition Rules
 
@@ -490,3 +532,43 @@ These are the "how pieces combine" guarantees — an AI or dev can self-check ag
 - **Lime only at the earn moment** — the check badge or a just-filled progress cell's fade-out. Never as steady-state decoration.
 - **No second typeface or monospace** — Pretendard does every role; labels get tracking, codes get tabular figures.
 - **No all-caps headlines** — uppercase is only the tracked `label` eyebrow.
+
+## Implemented Variant Axes
+
+The Figma library ships 16 components. Only these carry variants — everything else is a single component, because a variant axis is only justified where the spec actually defines alternate states.
+
+| Component | Axis | Values |
+|---|---|---|
+| `grade-button` | `State` | Unknown · Hard · Known · Easy |
+| `card` | `Elevation` | Flat · Level 1 |
+| `ingredient-earned` | `State` | Earned · Locked |
+| `progress-dots` | `State` | Empty · Filled |
+| `tab-bar` | `Active` | 오늘 · 메뉴 · 기록 · 설정 |
+| `list-row` | `State` | Default · Locked |
+| `toast` | `Type` | Reward · Plain |
+
+`button-primary`, `button-secondary` and `button-subtle` are deliberately **three separate components, not one variant set** — they differ in typography *and* padding (`button-large` + 20/20 vs `button-md` + 12/20 vs `button-md` + 12/16), so a shared variant set would force one padding scheme and break the spec.
+
+## Changelog
+
+### alpha.1 — Figma library build
+
+Every change below came out of building the system in Figma and measuring it; each is a fix to a gap or an error in `alpha`, not a redesign.
+
+**Undefined tokens that components referenced**
+- `{colors.on-dark}` → defined as **`{colors.on-ink}`** and made mode-aware. Referenced by `grade-button.easy` and `toast` but absent from the colours block. A fixed value puts white text on the white Easy chip in dark mode.
+- `{typography.body-sm-strong}` → **defined** (14/600/20). Referenced by `reward-chip`, previously undefined. Typography is now **14 roles, not 13**.
+
+**Ramp additions** — the dark theme used two greys that were not in the ramp: **`grey-98` `#F7F7F9`** (dark ink / on-ink) and **`grey-70` `#A9A9B2`** (dark body).
+
+**Accessibility** — every foreground/background pair now clears AA in both themes.
+- `on-primary` was white on orange-600: **3.56:1, failing**. Now ink in both modes (**4.72:1** / 5.99:1). The brand orange is untouched; darkening `primary` to orange-700 was rejected because it would collide with `tab-active`.
+- Status colours had no dark values, so each failed AA in one theme. Now mode-aware — see the Semantic table.
+
+**Typeface** — **Pretendard → Pretendard JP.** Plain Pretendard has no kanji at all, so the kanji tile rendered empty.
+
+**Corrections to stated figures** — `body` on canvas is **7.27:1** in light, not 8.3:1. `tab-active` on dark is **5.21:1**, not 5.55:1. Both still satisfy their principles; the numbers were simply wrong.
+
+**Clarification** — the Shapes table listed `rounded.lg` (22px) as the standard content card while `components.card` specified `rounded.card` (24px). The component definition wins: `card` = 24px, `card-tinted` = 22px.
+
+**Known manual step** — the `code` role needs tabular figures enabled by hand in Figma (Type settings → Details → `tnum`). The Figma Plugin API can read OpenType features but cannot set them.
