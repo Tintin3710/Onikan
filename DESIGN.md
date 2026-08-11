@@ -30,6 +30,7 @@ colors:
   soft: "#E8E8EC"               # grey-95 — pills, example block, segment track
   pressed: "#DCDCE2"            # grey-90 — hairline dividers, incomplete progress cell
   plate: "#EDEDF1"              # grey-96 — illustration backing tile (FIXED in both themes)
+  bar-fill: "#71717A"           # grey-50 — progress-bar fill in BROWSING contexts (FIXED in both themes)
   shadow: "rgba(0,0,0,0.05)"
 
   # ─── Brand accents (sparse) ───
@@ -58,6 +59,7 @@ dark:
   soft: "#2B2B31"               # grey-22 — pills, example, segment track
   pressed: "#3E3E45"            # grey-30 — hairline, incomplete progress
   plate: "#EDEDF1"              # FIXED — same tile as light
+  bar-fill: "#71717A"           # FIXED — same in both themes
   shadow: "rgba(0,0,0,0.4)"
   primary: "#F97316"            # orange-500 — pops on dark
   on-primary: "#1D1D21"
@@ -76,10 +78,23 @@ typography:
   # hangul but NO kanji, so {components.kanji-tile} renders empty. Pretendard JP (22,059 glyphs)
   # is the same typeface with the kanji set added — same design, same metrics.
   display-xxl:
+    # 700/56 to match the confirmed prototype (handoff README), not 800/60.
     fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
     fontSize: 52px
-    fontWeight: 800
-    lineHeight: 60px
+    fontWeight: 700
+    lineHeight: 56px
+  display-word:
+    # The Japanese word on the study card — the largest thing in the product.
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
+    fontSize: 44px
+    fontWeight: 700
+    lineHeight: 53px
+  display-meaning:
+    # The revealed meaning, directly under the word.
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
+    fontSize: 26px
+    fontWeight: 700
+    lineHeight: 34px
   display-xl:
     fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
     fontSize: 36px
@@ -109,6 +124,19 @@ typography:
     fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
     fontSize: 16px
     fontWeight: 400
+    lineHeight: 24px
+  body-base:
+    # THE default body/caption size in product screens. 15px is the accessibility
+    # floor stated in the handoff ("본문 최소 15px") — do not go below it.
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
+    fontSize: 15px
+    fontWeight: 400
+    lineHeight: 22px
+  card-title:
+    # Title inside a compact list/progress card.
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
+    fontSize: 17px
+    fontWeight: 600
     lineHeight: 24px
   body-md-strong:
     fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
@@ -151,6 +179,20 @@ typography:
     fontSize: 16px
     fontWeight: 600
     lineHeight: 20px
+  tab-label:
+    # Bottom tab bar. NOT uppercase and NOT tracked — `label` is the eyebrow role,
+    # this is a navigation label. Negative tracking tightens it at 12px.
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
+    fontSize: 12px
+    fontWeight: 500
+    lineHeight: 16px
+    letterSpacing: -0.1px
+  tab-label-active:
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
+    fontSize: 12px
+    fontWeight: 600
+    lineHeight: 16px
+    letterSpacing: -0.1px
 
 rounded:
   none: 0px
@@ -178,7 +220,7 @@ components:
     textColor: "{colors.on-primary}"
     typography: "{typography.button-large}"
     rounded: "{rounded.pill}"
-    padding: "{spacing.xl} {spacing.xl}"
+    padding: "{spacing.lg} {spacing.xl}"   # 16 + 24 lineHeight + 16 = 56px, the confirmed CTA height
   button-secondary:
     description: "Paired or standalone non-primary action. Surface pill, ink text."
     backgroundColor: "{colors.canvas}"
@@ -343,7 +385,8 @@ Neutrals are the **Onikan Grey** ramp: hue 228 fixed, ~2.6% saturation — a del
 - **Softer** (`{colors.softer}` — `#F2F2F4` / dark `#131316`, grey-97/10): Page background and tab bar.
 - **Soft** (`{colors.soft}` — `#E8E8EC` / dark `#2B2B31`, grey-95/22): Pills, example blocks, segment-toggle track.
 - **Pressed** (`{colors.pressed}` — `#DCDCE2` / dark `#3E3E45`, grey-90/30): Hairline dividers and incomplete progress cells.
-- **Plate** (`{colors.plate}` — `#EDEDF1`, grey-96): The tile behind an illustration — **fixed in both themes**.
+- **Plate** (`{colors.plate}` — `#EDEDF1`, grey-96): The tile behind an illustration — **fixed in both themes**. The illustrations are black line art; if the tile darkened too, the drawing would disappear. Revisit when white-line-art assets exist.
+- **Bar fill** (`{colors.bar-fill}` — `#71717A`, grey-50): Progress-bar fill in **browsing** contexts (home, menu, recipe detail) — fixed in both themes. These bars are reference information, so filling them with `ink` would give them the same weight as the hero element. The result screen's bar is the one exception and *does* use `ink`, because that is the reward moment.
 
 ### Text
 - **Ink** (`{colors.ink}` — `#1D1D21` / dark `#F7F7F9`, grey-15): Headings, body, progress fill.
@@ -388,13 +431,17 @@ Fallback stack: `"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont,
 
 | Token | Size | Weight | Line H | Use |
 |---|---|---|---|---|
-| `{typography.display-xxl}` | 52px | 800 | 60px | Hero number / screen wordmark (TODAY, a hero metric). |
+| `{typography.display-xxl}` | 52px | 700 | 56px | Hero number / screen wordmark (TODAY, a hero metric). |
+| `{typography.display-word}` | 44px | 700 | 53px | The Japanese word on the study card. |
+| `{typography.display-meaning}` | 26px | 700 | 34px | The revealed meaning. |
 | `{typography.display-xl}` | 36px | 700 | 44px | Screen titles (ONIGIRI INDEX). |
 | `{typography.display-lg}` | 32px | 700 | 40px | Feature / recipe name (TUNA MAYO). |
 | `{typography.display-md}` | 24px | 700 | 32px | Card titles. |
 | `{typography.display-sm}` | 20px | 600 | 28px | List-row title, sub-headings. |
 | `{typography.body-lg}` | 18px | 500 | 26px | Lead paragraph, mascot line. |
-| `{typography.body-md}` | 16px | 400 | 24px | Default body. |
+| `{typography.body-md}` | 16px | 400 | 24px | Default body in the design system. |
+| `{typography.body-base}` | 15px | 400 | 22px | **Default body/caption in product screens.** 15px is the accessibility floor. |
+| `{typography.card-title}` | 17px | 600 | 24px | Title inside a compact list / progress card. |
 | `{typography.body-md-strong}` | 16px | 600 | 22px | Emphasis, tab labels. |
 | `{typography.body-sm}` | 14px | 400 | 20px | Captions, secondary meta. |
 | `{typography.body-sm-strong}` | 14px | 600 | 20px | Reward-chip label. |
@@ -402,6 +449,8 @@ Fallback stack: `"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont,
 | `{typography.code}` | 13px | 500 | 18px | Codes & indices (001, N5, 0/4) — tabular figures. |
 | `{typography.button-large}` | 18px | 600 | 24px | Primary button label. |
 | `{typography.button-md}` | 16px | 600 | 20px | Default button label. |
+| `{typography.tab-label}` | 12px | 500 | 16px | Bottom tab label — **not** uppercase, −0.1 tracking. |
+| `{typography.tab-label-active}` | 12px | 600 | 16px | Bottom tab label, active. |
 
 ### Principles
 - **One family, many weights.** Hierarchy comes from size + weight, never from a second typeface.
