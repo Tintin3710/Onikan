@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>오니칸 프로토타입</title>
+<style>
+  :root{ --ink:#1D1D21; --body:#56565E; --mute:#8E8E97; --canvas:#FFF; --softer:#F2F2F4; --soft:#E8E8EC; --pressed:#DCDCE2; --primary:#EA580C; --shadow:rgba(0,0,0,.06); }
+  @media (prefers-color-scheme:dark){ :root{ --ink:#F7F7F9; --body:#A9A9B2; --mute:#71717A; --canvas:#1D1D21; --softer:#131316; --soft:#2B2B31; --pressed:#3E3E45; --primary:#F97316; --shadow:rgba(0,0,0,.4); } }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body{ margin:0; background:var(--softer); color:var(--ink); font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif; -webkit-font-smoothing:antialiased; padding:max(28px,env(safe-area-inset-top)) 20px 40px; }
+  .wrap{ max-width:440px; margin:0 auto; }
+  .eyebrow{ font-size:12px; letter-spacing:1.6px; text-transform:uppercase; color:var(--primary); font-weight:700; }
+  h1{ font-size:30px; font-weight:800; letter-spacing:-0.02em; margin:8px 0 6px; }
+  .sub{ font-size:15px; line-height:1.6; color:var(--body); margin:0 0 24px; }
+  a.card{ display:flex; align-items:center; gap:14px; text-decoration:none; color:inherit; background:var(--canvas); border-radius:20px; padding:18px; margin-bottom:12px; box-shadow:0 6px 14px var(--shadow); }
+  a.card:active{ filter:brightness(.97); }
+  .ic{ width:48px; height:48px; border-radius:14px; background:var(--soft); display:flex; align-items:center; justify-content:center; font-size:24px; flex:none; }
+  .t{ flex:1; min-width:0; }
+  .t .nm{ font-size:17px; font-weight:700; }
+  .t .ds{ font-size:13px; color:var(--body); margin-top:3px; line-height:1.4; }
+  .chev{ color:var(--mute); font-size:22px; flex:none; }
+  .hint{ margin-top:22px; font-size:13px; line-height:1.6; color:var(--body); background:var(--canvas); border-radius:16px; padding:16px 18px; box-shadow:0 6px 14px var(--shadow); }
+  .hint b{ color:var(--ink); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Onikan · Prototype</div>
+  <h1>오니칸 프로토타입</h1>
+  <p class="sub">아래를 탭해 실제로 화면을 눌러보세요. 각 화면은 라이트/다크 전환과 실제 인터랙션이 동작해요.</p>
+
+  <a class="card" href="./screens.html">
+    <div class="ic">🍙</div>
+    <div class="t"><div class="nm">확정 화면 둘러보기</div><div class="ds">홈 · 학습 완료+영수증 · 도감 · 레시피 상세 (상단에서 전환)</div></div>
+    <div class="chev">›</div>
+  </a>
+
+  <a class="card" href="./study.html">
+    <div class="ic">🃏</div>
+    <div class="t"><div class="nm">학습 세션 (1b)</div><div class="ds">리콜 → 뜻 보기 → 2단계 평가. 카드를 탭해보세요</div></div>
+    <div class="chev">›</div>
+  </a>
+
+  <a class="card" href="../11c-word-detail.html">
+    <div class="ic">📖</div>
+    <div class="t"><div class="nm">단어 상세 (11c)</div><div class="ds">바텀시트 · 발음 듣기 · 사전 · 한자 분해</div></div>
+    <div class="chev">›</div>
+  </a>
+
+  <a class="card" href="../Onikan%20Study.dc.html">
+    <div class="ic">🖥️</div>
+    <div class="t"><div class="nm">전체 프로토타입 캔버스</div><div class="ds">모든 화면·대안을 한눈에 (데스크톱 화면 권장)</div></div>
+    <div class="chev">›</div>
+  </a>
+
+  <div class="hint">
+    <b>폰에서 앱처럼 쓰기:</b> 이 페이지를 폰 브라우저(Safari/Chrome)로 연 뒤 <b>공유 → 홈 화면에 추가</b>하면 주소창 없이 전체화면으로 실행돼요.
+  </div>
+</div>
+</body>
+</html>
