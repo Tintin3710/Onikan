@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onikan · 단어 상세 (11c)</title>
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#F2F2F4"/><rect x="60" y="60" width="80" height="80" rx="18" fill="#1D1D21"/><text x="100" y="115" font-family="sans-serif" font-size="34" font-weight="700" fill="#FFFFFF" text-anchor="middle">上着</text></svg>
+</template>
+<style>
+@font-face{font-family:"Pretendard";font-weight:400;font-style:normal;font-display:swap;src:url("_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Regular.woff2") format("woff2")}
+@font-face{font-family:"Pretendard";font-weight:500;font-style:normal;font-display:swap;src:url("_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Medium.woff2") format("woff2")}
+@font-face{font-family:"Pretendard";font-weight:600;font-style:normal;font-display:swap;src:url("_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Pretendard";font-weight:700;font-style:normal;font-display:swap;src:url("_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Bold.woff2") format("woff2")}
+</style>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:26px;padding:44px 20px;background:#E4E4E9;font-family:Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#C2410C;text-decoration:none}a:hover{color:#EA580C}
+[data-theme="light"]{--ink:#1D1D21;--body:#56565E;--mute:#8E8E97;--canvas:#FFFFFF;--soft:#E8E8EC;--softer:#F2F2F4;--pressed:#DCDCE2;--bar-mid:#71717A;--primary:#EA580C;--tab-active:#C2410C;--on-primary:#FFFFFF;--secondary:#A3E635;--shadow:rgba(0,0,0,.05)}
+[data-theme="dark"]{--ink:#F7F7F9;--body:#A9A9B2;--mute:#71717A;--canvas:#1D1D21;--soft:#2B2B31;--softer:#131316;--pressed:#3E3E45;--bar-mid:#8E8E97;--primary:#F97316;--tab-active:#EA580C;--on-primary:#1D1D21;--secondary:#A3E635;--shadow:rgba(0,0,0,.4)}
+body[data-theme="dark"]{background:#0B0B0D}
+.hdr{display:flex;align-items:center;gap:14px}
+.hdr b{font:600 13px/1.3 Pretendard,system-ui,sans-serif;color:rgba(0,0,0,.62)}
+body[data-theme="dark"] .hdr b{color:rgba(255,255,255,.6)}
+.badge{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1D1D21;color:#fff;border-radius:5px}
+body[data-theme="dark"] .badge{background:#F7F7F9;color:#131316}
+.tgl{min-height:36px;padding:0 16px;border:none;border-radius:999px;background:#1D1D21;color:#fff;font:600 13px Pretendard,system-ui,sans-serif;cursor:pointer}
+body[data-theme="dark"] .tgl{background:#F7F7F9;color:#131316}
+</style>
+</head>
+<body data-theme="light">
+
+<div class="hdr">
+  <span class="badge">11c</span>
+  <b>Onikan · 단어 상세 (바텀시트)</b>
+  <button class="tgl" type="button" onclick="var b=document.body;b.dataset.theme=b.dataset.theme==='dark'?'light':'dark';this.textContent=b.dataset.theme==='dark'?'라이트 모드 보기':'다크 모드 보기'">다크 모드 보기</button>
+</div>
+
+<div id="frame" data-theme="light">
+    <div data-screen-label="단어 상세" style="width:390px;height:844px;border-radius:52px;background:var(--canvas);box-shadow:0 0 0 11px #1D1D21,0 0 0 13px #56565E,0 24px 60px rgba(0,0,0,.28);overflow:hidden;display:flex;flex-direction:column;position:relative;color:var(--ink)">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 28px 0;font-size:15px;font-weight:600;flex:none;opacity:.5">
+        <span>9:41</span><span style="font-size:13px;color:var(--body)">5G · 92%</span>
+      </div>
+    
+      <div style="position:absolute;inset:0;background:rgba(19,19,22,.5)"></div>
+    
+      <div style="position:absolute;left:0;right:0;bottom:0;top:64px;background:var(--softer);border-radius:20px 20px 0 0;display:flex;flex-direction:column;overflow:hidden">
+        <div style="flex:none;display:flex;align-items:center;padding:10px 12px 6px">
+          <button type="button" aria-label="닫기" style="width:44px;height:44px;border:none;background:transparent;color:var(--body);display:flex;align-items:center;justify-content:center;border-radius:999px;cursor:pointer">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+          </button>
+          <span style="flex:1;text-align:center;font-size:17px;font-weight:600;padding-right:44px">단어 상세</span>
+        </div>
+    
+        <div style="flex:1;min-height:0;overflow:hidden;padding:8px 20px 0;display:flex;flex-direction:column;gap:12px">
+          <div style="background:var(--canvas);border-radius:24px;box-shadow:0 6px 14px var(--shadow);padding:24px 20px;display:flex;flex-direction:column;align-items:center">
+            <span style="font-size:12px;font-weight:500;letter-spacing:1.4px;background:var(--soft);border-radius:999px;padding:5px 12px">N5</span>
+            <div style="height:14px"></div>
+            <div style="font-size:44px;font-weight:700;line-height:1.2">上着</div>
+            <div style="height:6px"></div>
+            <div style="font-size:18px;font-weight:500;color:var(--body)">うわぎ</div>
+            <div style="height:18px"></div>
+            <div style="display:flex;gap:8px">
+              <button type="button" style="min-height:44px;border:none;border-radius:999px;background:var(--soft);color:var(--ink);font-size:15px;font-weight:600;padding:0 16px;display:flex;align-items:center;gap:8px;cursor:pointer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"></path><path d="M16.5 8.5a5 5 0 0 1 0 7"></path></svg>
+                발음 듣기
+              </button>
+              <button type="button" style="min-height:44px;border:1.5px solid var(--pressed);border-radius:999px;background:transparent;color:var(--ink);font-size:15px;font-weight:600;padding:0 16px;display:flex;align-items:center;gap:6px;cursor:pointer">
+                사전
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"></path><path d="M9 7h8v8"></path></svg>
+              </button>
+            </div>
+          </div>
+    
+          <div style="background:var(--canvas);border-radius:24px;box-shadow:0 6px 14px var(--shadow);padding:20px">
+            <div style="font-size:12px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--body)">뜻</div>
+            <div style="height:10px"></div>
+            <div style="font-size:26px;font-weight:700">겉옷</div>
+            <div style="height:6px"></div>
+            <div style="font-size:15px;color:var(--body)">명사</div>
+          </div>
+    
+          <div style="background:var(--canvas);border-radius:24px;box-shadow:0 6px 14px var(--shadow);padding:20px">
+            <div style="font-size:12px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--body)">한자 2</div>
+            <div style="height:14px"></div>
+            <div style="display:flex;align-items:flex-start;gap:16px;padding-bottom:16px;border-bottom:1px solid var(--pressed)">
+              <div style="font-size:40px;font-weight:700;line-height:1;width:52px;text-align:center;flex:none">上</div>
+              <div style="flex:1;display:flex;flex-direction:column;gap:4px;min-width:0">
+                <span style="font-size:17px;font-weight:600">위</span>
+                <span style="font-size:15px;line-height:22px;color:var(--body)">음 ジョウ · ショウ<br>훈 うえ · うわ−</span>
+                <span style="font-size:13px;color:var(--body);font-variant-numeric:tabular-nums">부수 一 · 3획</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:16px;padding-top:16px">
+              <div style="font-size:40px;font-weight:700;line-height:1;width:52px;text-align:center;flex:none">着</div>
+              <div style="flex:1;display:flex;flex-direction:column;gap:4px;min-width:0">
+                <span style="font-size:17px;font-weight:600">입다</span>
+                <span style="font-size:15px;line-height:22px;color:var(--body)">음 チャク · ジャク<br>훈 き.る · つ.く</span>
+                <span style="font-size:13px;color:var(--body);font-variant-numeric:tabular-nums">부수 目 · 12획</span>
+              </div>
+            </div>
+          </div>
+    
+          <div style="background:var(--canvas);border-radius:24px;box-shadow:0 6px 14px var(--shadow);padding:20px">
+            <div style="font-size:12px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--body)">예문</div>
+            <div style="height:10px"></div>
+            <div style="display:flex;align-items:flex-start;gap:12px">
+              <div style="flex:1;display:flex;flex-direction:column;gap:6px;min-width:0">
+                <span style="font-size:16px;line-height:26px">上着の肩にパッドをあてる。</span>
+                <span style="font-size:14px;line-height:20px;color:var(--body)">윗옷 어깨에 패드를 대다</span>
+              </div>
+              <button type="button" aria-label="예문 발음 듣기" style="width:44px;height:44px;flex:none;border:none;border-radius:999px;background:var(--soft);color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"></path><path d="M16.5 8.5a5 5 0 0 1 0 7"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div style="position:absolute;left:50%;bottom:9px;transform:translateX(-50%);width:134px;height:5px;border-radius:999px;background:var(--ink);opacity:.35"></div>
+    </div>
+</div>
+
+<script>
+new MutationObserver(function(){document.getElementById('frame').dataset.theme=document.body.dataset.theme;})
+  .observe(document.body,{attributes:true,attributeFilter:['data-theme']});
+</script>
+</body>
+</html>

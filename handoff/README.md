@@ -571,6 +571,7 @@ Tintin 디자인 시스템의 `IconNormalCheck` 글리프를 보상 체크에 �
 |---|---|
 | `screens/` | 확정 5화면 스크린샷 (2x PNG, 라이트/다크 + 주요 상태) |
 | `Onikan Study.dc.html` | 확정 5화면 디자인 프로토타입. 브라우저에서 바로 열린다 |
+| `11c-word-detail.html` | 단어 상세(11c) 단독 프로토타입 — 로컬 폰트로 오프라인 동작. 라이트/다크 토글 |
 | `interactions/` | 인터랙션 프로토타입(재료 노출 · 기록) + `MOTION.md` 모션 스펙 — 위 [인터랙션 프로토타입](#인터랙션-프로토타입--재료-노출--기록-추가) 참고 |
 | `assets/` · `ingredients/` · `onigiri/` | 이미지 에셋 |
 | `support.js` | 프로토타입 런타임. **구현에 필요 없다** |
@@ -594,6 +595,8 @@ Tintin 디자인 시스템의 `IconNormalCheck` 글리프를 보상 체크에 �
 | `5a-menu-list-dark.png` | 메뉴 — 다크 |
 | `8a-recipe-detail-light.png` | 레시피 상세 |
 | `8a-recipe-detail-dark.png` | 레시피 상세 — 다크 |
+| `11c-word-detail-light.png` | 단어 상세 (바텀시트) |
+| `11c-word-detail-dark.png` | 단어 상세 — 다크 |
 
 각 이미지는 390×844pt 프레임을 2배 해상도로 캡처한 것이므로, 픽셀을 재볼 때 실측값의 두 배로 읽는다.
 
@@ -603,7 +606,7 @@ Tintin 디자인 시스템의 `IconNormalCheck` 글리프를 보상 체크에 �
 
 1. **기록 탭** — 방향 미확정: 영수증 아카이브(`7b` 스케치) vs 통계형 기록([인터랙션 프로토타입 B](#b-기록-탭-신규-제안)). 택일/결합 결정 필요
 2. **레시피 완성(4/4) 순간** — 재료가 모두 공개되고 도감에 편입되는 화면
-3. **단어 상세** — 학습 세션에서 "단어 상세 ›"로 진입
+3. ~~단어 상세~~ → **설계 완료 (11c)** · `11c-word-detail.html` · `screens/11c-word-detail-{light,dark}.png` (학습 세션 "단어 상세 ›"로 진입하는 바텀시트)
 4. **설정 탭**, 온보딩, 알림
 
 ---

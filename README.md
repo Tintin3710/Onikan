@@ -10,7 +10,7 @@
   - 브랜드 성격 · 색상 사용 의사결정 로직 · 타이포그래피 · 스페이싱 철학 · 컴포넌트 조합 규칙 · Do/Don't
   - 폰트 **Pretendard**, 중립 **Onikan Grey**(hue 228·채도 2.6%), 포인트 **orange-600 `#EA580C`**(전환), 보조 **lime-400 `#A3E635`**(보상 순간 전용), 라이트·다크 1급 지원.
 - [**COMPONENTS.md**](./COMPONENTS.md) — 컴포넌트 계약. 재사용 부품을 이름·토큰·정확값으로 고정해 **디자인=개발 일치**를 강제(토큰 SSOT + 컴포넌트 계약 + Code Connect).
-- [**handoff/**](./handoff) — 확정 5화면(홈 · 학습 세션 · 완료+영수증 · 도감 · 레시피 상세) 핸드오프 패키지 (README 스펙 · 프로토타입 HTML · 화면 PNG · 토큰)
+- [**handoff/**](./handoff) — 확정 5화면(홈 · 학습 세션 · 완료+영수증 · 도감 · 레시피 상세) **+ 단어 상세(11c)** 핸드오프 패키지 (README 스펙 · 프로토타입 HTML · 화면 PNG · 토큰)
   - [**handoff/interactions/**](./handoff/interactions) — 인터랙션 프로토타입: 학습 완료 시 **재료 노출**과 **기록 페이지**의 구성·모션 ([MOTION.md](./handoff/interactions/MOTION.md) 스펙 · 프로토타입 HTML)
 
 ## 핵심 원칙 한 줄 요약
