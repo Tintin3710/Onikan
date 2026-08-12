@@ -132,6 +132,18 @@ typography:
     fontSize: 15px
     fontWeight: 400
     lineHeight: 22px
+  body-lg-strong:
+    # Recurring 18/600 name role — ingredient names, in-progress recipe name, next reward.
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
+    fontSize: 18px
+    fontWeight: 600
+    lineHeight: 24px
+  body-base-strong:
+    # Recurring 15/600 counter role — "3 / 24", "1 / 4" in headers.
+    fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
+    fontSize: 15px
+    fontWeight: 600
+    lineHeight: 22px
   card-title:
     # Title inside a compact list/progress card.
     fontFamily: '"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif'
@@ -196,6 +208,7 @@ typography:
 
 rounded:
   none: 0px
+  receipt: 4px   # THE receipt, and nothing else — this one radius carries the "paper" signal
   sm: 12px       # small tiles (kanji tile)
   md: 18px       # secondary cards / inputs
   lg: 22px       # standard content card
@@ -209,6 +222,7 @@ spacing:
   md: 12px
   lg: 16px
   xl: 20px
+  2xl: 24px      # hero/reward card vertical padding; the tight end of a group gap
   xxl: 28px
   huge: 40px
 
@@ -253,7 +267,7 @@ components:
     textColor: "{colors.ink}"
     typography: "{typography.body-md}"
     rounded: "{rounded.card}"
-    padding: "{spacing.xl}"
+    padding: "{spacing.2xl} {spacing.xl}"   # 24 vertical / 20 horizontal, per the confirmed screens
   card-tinted:
     description: "Sub-region card on a page. Grey-soft fill, no shadow."
     backgroundColor: "{colors.soft}"
@@ -441,6 +455,8 @@ Fallback stack: `"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont,
 | `{typography.body-lg}` | 18px | 500 | 26px | Lead paragraph, mascot line. |
 | `{typography.body-md}` | 16px | 400 | 24px | Default body in the design system. |
 | `{typography.body-base}` | 15px | 400 | 22px | **Default body/caption in product screens.** 15px is the accessibility floor. |
+| `{typography.body-base-strong}` | 15px | 600 | 22px | Counters in headers — "3 / 24", "1 / 4". |
+| `{typography.body-lg-strong}` | 18px | 600 | 24px | Ingredient names, in-progress recipe name, next reward. |
 | `{typography.card-title}` | 17px | 600 | 24px | Title inside a compact list / progress card. |
 | `{typography.body-md-strong}` | 16px | 600 | 22px | Emphasis, tab labels. |
 | `{typography.body-sm}` | 14px | 400 | 20px | Captions, secondary meta. |
@@ -466,7 +482,7 @@ Base unit **4px**. Grouping is done with spacing, not borders — *proximity is 
 - **Within a component** (label → value → caption): tight, `{spacing.sm}`–`{spacing.md}` (8–12px). Elements that belong together sit close.
 - **Between components / cards**: `{spacing.xxl}` (28px). The gap between two cards is what makes them read as separate groups.
 - **Section / screen padding**: horizontal gutter `{spacing.xl}` (20px); top of screen `{spacing.huge}` (40px) to let the first headline breathe.
-- **Card interior**: `{spacing.xl}` (20px) padding on standard cards.
+- **Card interior**: `{spacing.2xl} {spacing.xl}` (24 vertical / 20 horizontal) on hero and reward cards; compact progress and list cards tighten to `{spacing.lg}`.
 
 > **Decision logic — how much gap?** If two things are *the same idea*, use 8–12px. If they are *different groups*, jump to 28px. Never use an in-between 18–20px gap between groups — it blurs the boundary and is the #1 cause of "everything feels equally important."
 
@@ -490,6 +506,7 @@ Depth cues are **fill polarity** (white card on grey page; ink card for a dark p
 | Token | Value | Use |
 |---|---|---|
 | `{rounded.none}` | 0px | Full-bleed bands, raw dividers. |
+| `{rounded.receipt}` | 4px | **The receipt, and nothing else.** This single radius carries the "paper" signal, so it must not appear anywhere else. |
 | `{rounded.sm}` | 12px | Small tiles (kanji tile). |
 | `{rounded.md}` | 18px | Secondary cards, inputs, kanji tile. |
 | `{rounded.lg}` | 22px | Sub-region card (`card-tinted`). |
