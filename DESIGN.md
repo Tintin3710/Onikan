@@ -34,10 +34,11 @@ colors:
   shadow: "rgba(0,0,0,0.05)"
 
   # ─── Brand accents (sparse) ───
-  primary: "#EA580C"            # orange-600 — the single conversion action per screen
-  on-primary: "#1D1D21"         # ink — white on orange-600 is only 3.56:1 (fails AA); ink is 4.72:1
+  primary: "#EF5112"            # bright brand orange — the single conversion action per screen
+  primary-pressed: "#D2460E"    # pressed = one step DARKER in light (white label 4.54:1)
+  on-primary: "#FFFFFF"         # WHITE label in light. 3.59:1 → AA holds ONLY as LARGE text: keep CTA label ≥18pt (24px) or ≥14pt bold. (Dark uses ink — see below.)
   on-ink: "#F7F7F9"             # grey-98 — foreground on an INK fill (toast, grade-button Easy)
-  tab-active: "#C2410C"         # orange-700 — active tab icon+label (AA 4.63:1 on light)
+  tab-active: "#C2410C"         # orange-700 — active tab icon+label (AA 4.63:1). NOT primary — #EF5112 is only 3.21:1 as a 12px tint on the light tab bar
   secondary: "#A3E635"          # lime-400 — the reward moment ONLY
   on-secondary: "#1D1D21"
   link: "#C2410C"               # orange-700 — on-brand text links (5.18:1)
@@ -62,9 +63,10 @@ dark:
   bar-fill: "#71717A"           # FIXED — same in both themes
   shadow: "rgba(0,0,0,0.4)"
   primary: "#F97316"            # orange-500 — pops on dark
-  on-primary: "#1D1D21"
+  primary-pressed: "#FA8432"    # pressed = one step LIGHTER in dark
+  on-primary: "#1D1D21"         # INK label in dark — white on #F97316 is only 2.80:1 (fails even large-AA); ink = 5.99:1
   on-ink: "#1D1D21"             # inverts with ink — a fixed value would put white on a white chip
-  tab-active: "#EA580C"         # orange-600 (5.21:1 on dark)
+  tab-active: "#F97316"         # = dark primary (6.62:1 on dark tab bar). NOT #EF5112 (that is the LIGHT primary — cross-theme)
   secondary: "#A3E635"
   link: "#F97316"               # orange-500
   success: "#22C55E"            # green-500 (7.37:1 on dark canvas)
@@ -385,7 +387,7 @@ Copy speaks in the boss's warm, terse Korean ("왔네. 처음 보는 얼굴이�
 ## Colors
 
 ### Brand & Accent
-- **Orange 600** (`{colors.primary}` — `#EA580C`): The single conversion colour — the one primary CTA per screen; on dark, brightens to orange-500 `#F97316`. Its label is `{colors.on-primary}` = ink `#1D1D21` in **both** themes: white on orange-600 measures only 3.56:1 and fails AA, while ink measures 4.72:1 — and dark mode already used ink, so the token is now consistent. The brand orange itself is unchanged. The active tab icon+label use `{colors.tab-active}` — orange-700 `#C2410C` on light (AA 4.63:1 at 12px), orange-600 `#EA580C` on dark (5.21:1).
+- **Brand orange** (`{colors.primary}` — light `#EF5112` / dark `#F97316`): The single conversion colour — the one primary CTA per screen. Pressed steps one shade **darker in light** (`#D2460E`) and **lighter in dark** (`#FA8432`). Its label `{colors.on-primary}` differs by theme: **white `#FFFFFF` in light** (3.59:1 — AA holds only as *large text*, so keep the CTA label ≥18pt/24px or ≥14pt bold) and **ink `#1D1D21` in dark** (5.99:1; white on `#F97316` is 2.80:1 and fails). The active tab icon+label use `{colors.tab-active}` — a **separate** token from primary: `#C2410C` on light (4.63:1 at 12px; `#EF5112` itself is only 3.21:1 as a tint on the light tab bar) and `#F97316` on dark (= dark primary, 6.62:1).
 - **Lime 400** (`{colors.secondary}` — `#A3E635`): The reward colour, used only at the *moment of earning* — the check badge on a new ingredient, the fade-out of a just-filled progress cell. Nowhere else. Text on lime is always `{colors.on-secondary}` `#1D1D21`.
 
 > **Decision logic — which accent, if any?**
@@ -430,7 +432,7 @@ Two tokens **must** invert rather than hold a fixed value:
 - `{colors.on-ink}` — foreground on an ink fill. `ink` itself flips (`#1D1D21` → `#F7F7F9`), so a fixed light `on-ink` would put white text on a white chip. It flips with it: `#F7F7F9` → `#1D1D21`.
 - The four status colours above, for the AA reason already given.
 
-Everything that legitimately stays fixed in both themes: `plate`, `secondary`, `on-secondary`, `on-primary`.
+Everything that legitimately stays fixed in both themes: `plate`, `secondary`, `on-secondary`, `bar-fill`. (`on-primary` is **not** fixed — white in light, ink in dark.)
 
 ## Typography
 
@@ -628,12 +630,12 @@ Every change below came out of building the system in Figma and measuring it; ea
 **Ramp additions** — the dark theme used two greys that were not in the ramp: **`grey-98` `#F7F7F9`** (dark ink / on-ink) and **`grey-70` `#A9A9B2`** (dark body).
 
 **Accessibility** — every foreground/background pair now clears AA in both themes.
-- `on-primary` was white on orange-600: **3.56:1, failing**. Now ink in both modes (**4.72:1** / 5.99:1). The brand orange is untouched; darkening `primary` to orange-700 was rejected because it would collide with `tab-active`.
+- `primary` is a bright brand orange (light `#EF5112` / dark `#F97316`). `on-primary` is **white in light** (3.59:1 — passes AA only as *large text*, so the CTA label must stay ≥18pt/24px or ≥14pt bold) and **ink in dark** (5.99:1; white on the dark orange is 2.80:1). Pressed = one step darker in light (`#D2460E`) / lighter in dark (`#FA8432`).
 - Status colours had no dark values, so each failed AA in one theme. Now mode-aware — see the Semantic table.
 
 **Typeface** — **Pretendard → Pretendard JP.** Plain Pretendard has no kanji at all, so the kanji tile rendered empty.
 
-**Corrections to stated figures** — `body` on canvas is **7.27:1** in light, not 8.3:1. `tab-active` on dark is **5.21:1**, not 5.55:1. Both still satisfy their principles; the numbers were simply wrong.
+**Corrections to stated figures** — `body` on canvas is **7.27:1** in light, not 8.3:1. `tab-active` on dark is now `#F97316` = **6.62:1**. All figures verified against WCAG.
 
 **Clarification** — the Shapes table listed `rounded.lg` (22px) as the standard content card while `components.card` specified `rounded.card` (24px). The component definition wins: `card` = 24px, `card-tinted` = 22px.
 

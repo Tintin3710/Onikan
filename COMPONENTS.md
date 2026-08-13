@@ -68,7 +68,9 @@
 
 ### `PrimaryButton` / `<PrimaryButton>`
 - **언제**: **화면당 유일한** 주요 액션.
-- **정확값**: 전체폭, min-h **56**, 반경 pill, `primary` / `on-primary`, 18/600. press = 배경 한 단 어둡게(스케일·투명도 금지).
+- **정확값**: 전체폭, min-h **56**, 반경 pill, 18/600.
+- **색**: 배경 `primary`(라이트 `#EF5112` / 다크 `#F97316`), 라벨 `on-primary` — **라이트=흰색 `#FFFFFF`, 다크=ink `#1D1D21`**. 흰 라벨은 라이트에서 3.59:1이라 **large text로만 AA** → **CTA 라벨은 ≥18pt(24px) 또는 ≥14pt bold 유지**(작아지면 탈락). 다크 ink=5.99:1.
+- **press**: 배경을 `primary-pressed` 로 — **라이트 한 단 어둡게 `#D2460E`, 다크 한 단 밝게 `#FA8432`**. 스케일·투명도 금지.
 
 ### `SecondaryButton` / `<SecondaryButton>`
 - **변형**: `outline`(투명+1.5px `pressed`, 글자 `ink`) · `soft`(`soft` 배경). 학습 "아직이에요", 영수증 "이미지로 저장/공유" 등.
@@ -97,6 +99,7 @@
 ### `TabBar` / `<TabBar>` + `TabItem`
 - **해부**: 배경 `softer`, 위 1px `pressed`, padding `8 8 26`. 각 탭 flex:1 min-h 52, 세로, gap 5. 아이콘 26px·1.7 스트로크·라운드캡, 라벨 12px(활성 600/비활성 500, letter-spacing −0.1). **활성 `tab-active` 틴트만**(면·배지·밑줄 없음).
 - **아이콘**: 오늘=**`icon-today.svg`(제공, 오니기리)** · 메뉴=책 · 기록=시계 · 설정=슬라이더(원은 `softer`로 채움). viewBox 값 유지.
+- **`tab-active`는 primary와 별개 토큰**(12px 틴트라 탭바 배경 위 4.5:1 필요): 라이트 `#C2410C`(4.63:1) / 다크 `#F97316`(6.62:1). 라이트에서 primary `#EF5112`를 그대로 쓰면 near-white 탭바 위 **3.21:1로 미달** ✗ — 반드시 어두운 `#C2410C`.
 
 ### `ListRow` / `<ListRow>`
 - **해부**: min-h 64(메뉴)/68(재료), 아래 1px `pressed`, gap 14. 인덱스 13/500 `body` width 28, 이름 20/600(메뉴)·18/600(재료).

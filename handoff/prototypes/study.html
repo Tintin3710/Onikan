@@ -9,13 +9,13 @@
 
 :root{
   --ink:#1D1D21; --body:#56565E; --mute:#8E8E97; --canvas:#FFFFFF; --softer:#F2F2F4;
-  --soft:#E8E8EC; --pressed:#DCDCE2; --primary:#EA580C; --on-primary:#FFFFFF;
+  --soft:#E8E8EC; --pressed:#DCDCE2; --primary:#EF5112; --primary-pressed:#D2460E; --on-primary:#FFFFFF;
   --secondary:#A3E635; --shadow:rgba(0,0,0,.05);
   --page:#D9D8DE;
 }
 .app[data-theme="dark"]{
   --ink:#F7F7F9; --body:#A9A9B2; --mute:#71717A; --canvas:#1D1D21; --softer:#131316;
-  --soft:#2B2B31; --pressed:#3E3E45; --primary:#F97316; --on-primary:#1D1D21;
+  --soft:#2B2B31; --pressed:#3E3E45; --primary:#F97316; --primary-pressed:#FA8432; --on-primary:#1D1D21;
   --secondary:#A3E635; --shadow:rgba(0,0,0,.4);
   --page:#050506;
 }
@@ -106,6 +106,7 @@ body{margin:0; font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple 
 @keyframes riseIn{ from{ transform:translateY(10px); opacity:0; } to{ transform:none; opacity:1; } }
 @keyframes appendIn{ from{ transform:translateY(8px); opacity:0; } to{ transform:none; opacity:1; } }
 @media (prefers-reduced-motion: reduce){ .card.rise, .reveal.anim{ animation:none !important; } }
+.cta:active,.cont:active{background:var(--primary-pressed);filter:none}
 </style></head><body>
 
 

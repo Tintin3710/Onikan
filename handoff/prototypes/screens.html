@@ -9,12 +9,12 @@
 
 :root{
   --ink:#1D1D21; --body:#56565E; --mute:#8E8E97; --canvas:#FFFFFF; --softer:#F2F2F4;
-  --soft:#E8E8EC; --pressed:#DCDCE2; --primary:#EA580C; --on-primary:#FFFFFF; --tab-active:#C2410C;
+  --soft:#E8E8EC; --pressed:#DCDCE2; --primary:#EF5112; --primary-pressed:#D2460E; --on-primary:#FFFFFF; --tab-active:#C2410C;
   --secondary:#A3E635; --shadow:rgba(0,0,0,.05); --bar-fill:#71717A; --plate:#EDEDF1; --page:#D9D8DE;
 }
 .app[data-theme="dark"]{
   --ink:#F7F7F9; --body:#A9A9B2; --mute:#71717A; --canvas:#1D1D21; --softer:#131316;
-  --soft:#2B2B31; --pressed:#3E3E45; --primary:#F97316; --on-primary:#1D1D21; --tab-active:#EA580C;
+  --soft:#2B2B31; --pressed:#3E3E45; --primary:#F97316; --primary-pressed:#FA8432; --on-primary:#1D1D21; --tab-active:#F97316;
   --secondary:#A3E635; --shadow:rgba(0,0,0,.4); --bar-fill:#71717A; --plate:#EDEDF1; --page:#050506;
 }
 *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
@@ -152,6 +152,7 @@ body{margin:0; font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple 
 .anim-dim{ animation:dimIn .2s ease both; }
 .anim-print{ animation:printOut .9s cubic-bezier(.22,.61,.36,1) both; }
 @media (prefers-reduced-motion:reduce){ .anim-rise,.anim-pop,.anim-lime,.anim-dim,.anim-print{ animation:none !important; } }
+.cta:active,.cont:active{background:var(--primary-pressed);filter:none}
 </style></head><body>
 
 
