@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>오니칸 회독 (연습)</title>
+<style>
+@font-face{font-family:'Pretendard';font-weight:400;font-display:swap;src:url('../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Regular.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:500;font-display:swap;src:url('../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Medium.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:600;font-display:swap;src:url('../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-SemiBold.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:700;font-display:swap;src:url('../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Bold.woff2') format('woff2')}
+:root{
+  --ink:#1D1D21; --body:#56565E; --mute:#8E8E97; --canvas:#FFFFFF; --softer:#F2F2F4;
+  --soft:#E8E8EC; --pressed:#DCDCE2; --plate:#EDEDF1; --primary:#EF5112; --primary-pressed:#D2460E;
+  --on-primary:#FFFFFF; --secondary:#A3E635; --secondary-deep:#4D7C0F; --shadow:rgba(0,0,0,.05);
+}
+[data-theme="dark"]{
+  --ink:#F7F7F9; --body:#A9A9B2; --mute:#71717A; --canvas:#1D1D21; --softer:#131316;
+  --soft:#2B2B31; --pressed:#3E3E45; --plate:#2B2B31; --primary:#F97316; --primary-pressed:#FA8432;
+  --on-primary:#1D1D21; --secondary:#A3E635; --secondary-deep:#A3E635; --shadow:rgba(0,0,0,.4);
+}
+*{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html,body{ margin:0; height:100%; }
+body{ font-family:'Pretendard',-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic","Noto Sans JP","Apple SD Gothic Neo",system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+.app{ min-height:100dvh; max-width:480px; margin:0 auto; background:var(--softer); color:var(--ink);
+  display:flex; flex-direction:column; position:relative; transition:background .25s; }
+.scr{ flex:1; display:flex; flex-direction:column; min-height:100dvh; padding:0 20px;
+  padding-top:calc(env(safe-area-inset-top) + 12px); padding-bottom:calc(env(safe-area-inset-bottom) + 20px); }
+
+/* header */
+.nav{ display:flex; align-items:center; justify-content:space-between; min-height:40px; }
+.nav a{ font-size:16px; color:var(--body); text-decoration:none; }
+.nav .ttl{ font-size:16px; font-weight:700; color:var(--ink); }
+.overline{ font-size:13px; letter-spacing:1px; color:var(--body); }
+
+/* CONTINUOUS progress bar (1자 바) */
+.pbar{ height:6px; background:var(--pressed); border-radius:999px; overflow:hidden; }
+.pbar > i{ display:block; height:100%; background:var(--ink); border-radius:999px; transition:width .4s cubic-bezier(.4,0,.2,1); }
+.pbar.lime > i{ background:var(--secondary-deep); }
+
+/* generic */
+.grow{ flex:1; }
+.center{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:18px; }
+.cta{ width:100%; min-height:56px; border:none; border-radius:999px; background:var(--primary); color:var(--on-primary);
+  font-size:18px; font-weight:600; font-family:inherit; cursor:pointer; }
+.cta:active{ background:var(--primary-pressed); }
+.cta.ghost{ background:transparent; color:var(--body); font-weight:600; min-height:48px; }
+.plate{ background:var(--plate); border-radius:24px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.plate img{ display:block; }
+
+/* ===== HOME ===== */
+.datehead{ font-size:14px; color:var(--body); margin:2px 0 12px; }
+.seg{ display:flex; background:var(--soft); border-radius:999px; padding:4px; margin-bottom:20px; }
+.seg button{ flex:1; border:none; background:transparent; font-family:inherit; font-size:16px; font-weight:700;
+  color:var(--body); padding:12px 0; border-radius:999px; cursor:pointer; transition:.15s; }
+.seg button.on{ background:var(--canvas); color:var(--ink); box-shadow:0 2px 6px var(--shadow); }
+
+.stats{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; }
+.stat{ background:var(--canvas); border-radius:20px; box-shadow:0 6px 14px var(--shadow); padding:16px 18px; }
+.stat .ov{ font-size:13px; color:var(--body); font-weight:600; }
+.stat .big{ font-size:34px; font-weight:800; letter-spacing:-.02em; margin-top:6px; line-height:1; }
+.stat .big .u{ font-size:17px; font-weight:700; margin-left:2px; }
+.stat .dl{ font-size:12px; color:var(--mute); margin-top:8px; }
+.stat .dl b{ color:var(--secondary-deep); font-weight:700; }
+
+.sec{ font-size:14px; font-weight:700; color:var(--body); margin:10px 2px 10px; }
+
+.glist{ display:flex; flex-direction:column; gap:10px; }
+.gcard{ background:var(--canvas); border-radius:18px; box-shadow:0 6px 14px var(--shadow); padding:16px 18px;
+  display:flex; align-items:center; gap:14px; cursor:pointer; border:1.5px solid transparent; }
+.gcard:active{ filter:brightness(.98); }
+.gcard .body{ flex:1; min-width:0; }
+.gcard .nm{ font-size:17px; font-weight:700; }
+.gcard .sub{ font-size:13px; color:var(--body); margin-top:3px; }
+.gcard .sub.go{ color:var(--primary); font-weight:600; }
+.gcard .chev{ color:var(--mute); font-size:22px; flex:none; }
+.rbadge{ font-size:12px; font-weight:700; padding:5px 10px; border-radius:999px; background:var(--soft); color:var(--body);
+  font-variant-numeric:tabular-nums; flex:none; }
+.rbadge.zero{ color:var(--mute); }
+.miniprog{ height:5px; background:var(--pressed); border-radius:999px; overflow:hidden; margin-top:10px; }
+.miniprog > i{ display:block; height:100%; background:var(--primary); border-radius:999px; }
+
+/* today collect card */
+.gcard.today{ border-color:var(--secondary); }
+.gcard.today .ic{ width:44px; height:44px; border-radius:13px; background:var(--secondary); color:#1D1D21;
+  display:flex; align-items:center; justify-content:center; flex:none; }
+.gcard.today .ic svg{ display:block; }
+.tchip{ font-size:12px; font-weight:700; padding:5px 10px; border-radius:999px; background:var(--secondary); color:#1D1D21; flex:none; }
+
+/* ===== LIST HUB ===== */
+.hubtop{ margin:6px 0 12px; }
+.hubtitle{ font-size:26px; font-weight:800; letter-spacing:-.02em; }
+.hubmeta{ font-size:14px; color:var(--body); margin-top:6px; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.hubmeta .pill{ background:var(--soft); color:var(--body); font-size:12px; font-weight:700; padding:4px 10px; border-radius:999px; }
+.wlist{ flex:1; overflow-y:auto; margin:14px -4px 12px; padding:0 4px; display:flex; flex-direction:column; gap:2px; -webkit-overflow-scrolling:touch; }
+.wrow{ display:flex; align-items:center; gap:14px; padding:13px 4px; }
+.wrow + .wrow{ border-top:1px solid var(--soft); }
+.wrow .jp{ font-size:22px; font-weight:700; width:40px; flex:none; }
+.wrow .info{ flex:1; min-width:0; }
+.wrow .rd{ font-size:13px; color:var(--body); }
+.wrow .mn{ font-size:15px; font-weight:500; margin-top:1px; }
+.st{ width:24px; height:24px; border-radius:999px; flex:none; display:flex; align-items:center; justify-content:center; }
+.st.known{ background:var(--secondary); }
+.st.todo{ border:2px solid var(--primary); }
+.st.wait{ border:2px solid var(--pressed); }
+
+/* ===== CARD STUDY ===== */
+.card{ flex:1; background:var(--canvas); border-radius:24px; box-shadow:0 6px 14px var(--shadow);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+  margin:14px 0 16px; padding:32px 24px; min-height:0; cursor:pointer; }
+.word{ font-size:66px; font-weight:700; line-height:1; }
+.reading{ font-size:20px; font-weight:500; color:var(--body); margin-top:-2px; }
+.meaning{ font-size:30px; font-weight:700; }
+.hintt{ font-size:15px; color:var(--mute); }
+.grades{ display:flex; gap:10px; }
+.grade{ flex:1; min-height:60px; border-radius:999px; font-size:17px; font-weight:600; font-family:inherit; cursor:pointer; }
+.grade.no{ background:transparent; border:1.5px solid var(--pressed); color:var(--ink); }
+.grade.no:active{ background:var(--soft); }
+.grade.yes{ background:var(--ink); color:var(--softer); border:none; }
+.roundline{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:10px; }
+.roundline .r{ font-size:15px; font-weight:700; }
+.roundline .rem{ font-size:14px; color:var(--body); font-variant-numeric:tabular-nums; }
+.toast{ position:fixed; left:50%; top:88px; transform:translateX(-50%); background:var(--ink); color:var(--softer);
+  font-size:14px; font-weight:600; padding:10px 16px; border-radius:999px; z-index:60; opacity:0; pointer-events:none;
+  transition:opacity .25s, transform .25s; }
+.toast.show{ opacity:1; transform:translateX(-50%) translateY(-4px); }
+
+/* ===== COMPLETE ===== */
+.bigcheck{ width:96px; height:96px; border-radius:999px; background:var(--secondary); display:flex; align-items:center; justify-content:center; }
+.rec-card{ background:var(--canvas); border-radius:20px; box-shadow:0 6px 14px var(--shadow); padding:20px 20px; width:100%; }
+.rec-card .grp{ font-size:18px; font-weight:700; }
+.rec-card .done{ font-size:14px; color:var(--secondary-deep); font-weight:700; margin-top:2px; }
+.rec-stats{ display:flex; margin-top:16px; border-top:1px solid var(--soft); padding-top:14px; }
+.rec-stats .c{ flex:1; text-align:center; }
+.rec-stats .c + .c{ border-left:1px solid var(--soft); }
+.rec-stats .n{ font-size:22px; font-weight:800; font-variant-numeric:tabular-nums; }
+.rec-stats .l{ font-size:12px; color:var(--body); margin-top:3px; }
+
+/* ===== MODAL ===== */
+.modalbg{ position:fixed; inset:0; background:rgba(0,0,0,.42); z-index:70; display:flex; align-items:flex-end; justify-content:center;
+  animation:fade .2s ease; }
+@keyframes fade{ from{opacity:0} to{opacity:1} }
+.sheet{ background:var(--canvas); width:100%; max-width:480px; border-radius:24px 24px 0 0; padding:26px 22px calc(env(safe-area-inset-bottom) + 22px);
+  animation:rise .28s cubic-bezier(.2,.8,.2,1); }
+@keyframes rise{ from{transform:translateY(100%)} to{transform:translateY(0)} }
+.sheet h3{ font-size:21px; font-weight:800; margin:0 0 8px; }
+.sheet p{ font-size:15px; line-height:1.55; color:var(--body); margin:0 0 20px; }
+.sheet .cta{ margin-bottom:6px; }
+
+/* ===== TAB BAR ===== */
+.tabbar{ display:flex; border-top:1px solid var(--soft); padding:8px 0 calc(env(safe-area-inset-bottom) + 6px); margin:0 -20px -20px; background:var(--softer); }
+.tab{ flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; font-size:11px; color:var(--mute); }
+.tab.on{ color:var(--primary); }
+.tab svg{ display:block; }
+
+/* floating review controls */
+.ctrls{ position:fixed; top:calc(env(safe-area-inset-top) + 8px); right:10px; display:flex; gap:6px; z-index:50; }
+.ctrls button{ width:34px; height:34px; border-radius:999px; border:1px solid var(--pressed); background:var(--canvas);
+  color:var(--ink); font-size:15px; cursor:pointer; opacity:.9; }
+</style>
+</head>
+<body data-theme="light">
+<div class="ctrls">
+  <button id="restart" title="처음부터">⟲</button>
+  <button id="theme" title="테마">🌙</button>
+</div>
+<div class="app" id="app"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- data ---------- */
+const WORDS=[
+  {w:"秋",r:"あき",m:"가을"},{w:"水",r:"みず",m:"물"},{w:"山",r:"やま",m:"산"},
+  {w:"川",r:"かわ",m:"강"},{w:"空",r:"そら",m:"하늘"},{w:"花",r:"はな",m:"꽃"},
+  {w:"木",r:"き",m:"나무"},{w:"火",r:"ひ",m:"불"},{w:"石",r:"いし",m:"돌"},
+  {w:"雨",r:"あめ",m:"비"},{w:"風",r:"かぜ",m:"바람"},{w:"道",r:"みち",m:"길"},
+];
+let GROUPS=[
+  {id:"today",kind:"today",title:"오늘 모인 단어",sub:"오늘 학습에서 아직이예요 8개",count:8},
+  {id:"g1",level:"N5",range:"51–100번",total:12,rounds:1,state:"progress",remaining:6,last:"어제"},
+  {id:"g2",level:"N5",range:"1–50번",total:12,rounds:2,state:"done",remaining:0,last:"3일 전"},
+  {id:"g3",level:"N5",range:"101–150번",total:12,rounds:0,state:"new",remaining:12,last:null},
+  {id:"g4",level:"N4",range:"1–50번",total:12,rounds:0,state:"new",remaining:12,last:null},
+];
+const app=document.getElementById("app"), toastEl=document.getElementById("toast");
+
+let s={step:"home", modal:null, gid:null};
+let sess=null;
+
+/* ---------- helpers ---------- */
+function bar(pct,cls){ return `<div class="pbar${cls?' '+cls:''}"><i style="width:${pct}%"></i></div>`; }
+const check=(c='#1D1D21',sz=14)=>`<svg width="${sz}" height="${sz}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>`;
+function toast(msg){ toastEl.textContent=msg; toastEl.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(()=>toastEl.classList.remove("show"),1400); }
+const g=id=>GROUPS.find(x=>x.id===id);
+
+/* ---------- session ---------- */
+function startSession(gid,mode){ // mode: 'fresh' | 'resume'
+  const grp=g(gid);
+  const n = grp.kind==="today" ? grp.count : grp.total;
+  const words = WORDS.slice(0,n).map(x=>({...x,status:"todo"}));
+  let round=1;
+  if(mode==="resume"){
+    const known = n - (grp.remaining||Math.ceil(n/2));
+    for(let i=0;i<known;i++) words[i].status="known";
+    round=2;
+  }
+  sess={ gid, title: grp.kind==="today" ? grp.title : grp.level+" · "+grp.range, words, round, queue:[], idx:0, revealed:false, mode };
+  buildQueue();
+}
+function buildQueue(){ sess.queue=sess.words.map((w,i)=>i).filter(i=>sess.words[i].status==="todo"); sess.idx=0; }
+function known(){ return sess.words.filter(w=>w.status==="known").length; }
+function remain(){ return sess.words.length-known(); }
+
+/* ---------- render ---------- */
+function render(){
+  let h="";
+  if(s.step==="home") h=renderHome();
+  else if(s.step==="list") h=renderList();
+  else if(s.step==="card") h=renderCard();
+  else if(s.step==="done") h=renderDone();
+  if(s.modal) h+=renderModal();
+  app.innerHTML=h;
+  const wl=document.querySelector(".wlist"); if(wl) wl.scrollTop=0;
+}
+
+function statCard(ov,big,unit,dl){
+  return `<div class="stat"><div class="ov">${ov}</div>
+    <div class="big">${big}<span class="u">${unit}</span></div>
+    <div class="dl">${dl}</div></div>`;
+}
+function groupCard(x){
+  if(x.kind==="today"){
+    return `<div class="gcard today" data-open="${x.id}">
+      <div class="ic">${check('#1D1D21',22)}</div>
+      <div class="body"><div class="nm">${x.title}</div><div class="sub">${x.sub}</div></div>
+      <div class="tchip">회독 대기</div>
+    </div>`;
+  }
+  const badge = x.rounds>0 ? `<div class="rbadge">${x.rounds}회</div>` : `<div class="rbadge zero">안 함</div>`;
+  let sub;
+  if(x.state==="progress") sub=`<div class="sub go">이어서 · 남은 ${x.remaining}개</div>`;
+  else if(x.state==="done") sub=`<div class="sub">${x.total}단어 · ${x.last} 완료</div>`;
+  else sub=`<div class="sub">${x.total}단어 · 아직 안 함</div>`;
+  const prog = x.state==="progress" ? `<div class="miniprog"><i style="width:${Math.round((x.total-x.remaining)/x.total*100)}%"></i></div>` : "";
+  return `<div class="gcard" data-open="${x.id}">
+    <div class="body"><div class="nm">${x.level} · ${x.range}</div>${sub}${prog}</div>
+    ${badge}<div class="chev">›</div>
+  </div>`;
+}
+function renderHome(){
+  const week = GROUPS.reduce((a,x)=>a+(x.rounds||0),0); // demo: sum of records
+  return `<div class="scr">
+    <div class="datehead">8월 18일 월요일</div>
+    <div class="seg">
+      <button data-today>오늘 학습</button>
+      <button class="on">회독</button>
+    </div>
+    <div class="stats">
+      ${statCard("이번주 회독","3","회","지난주 2회 · <b>+1</b>")}
+      ${statCard("복습한 단어","240","개","누적 · 이번주 +36")}
+    </div>
+    <div class="sec">빈도순 회독</div>
+    <div class="glist">
+      ${GROUPS.map(groupCard).join("")}
+    </div>
+    ${tabbar()}
+  </div>`;
+}
+
+function renderList(){
+  const total=sess.words.length, kn=known();
+  const pct=Math.round(kn/total*100);
+  const rows=sess.words.map(w=>{
+    const cls = w.status==="known"?"known": (sess.mode==="fresh"&&sess.round===1?"wait":"todo");
+    const ic = w.status==="known"?check('#1D1D21',13):"";
+    return `<div class="wrow"><div class="jp">${w.w}</div>
+      <div class="info"><div class="rd">${w.r}</div><div class="mn">${w.m}</div></div>
+      <div class="st ${cls}">${ic}</div></div>`;
+  }).join("");
+  const cta = sess.mode==="resume"
+    ? `<button class="cta" data-start>이어서 하기 · 남은 ${remain()}개</button>`
+    : `<button class="cta" data-start>회독 시작</button>`;
+  return `<div class="scr">
+    <div class="nav"><a href="#" data-home>‹ 회독</a><span class="ttl">${sess.title}</span><span style="width:40px"></span></div>
+    <div class="hubtop">
+      <div class="hubmeta">
+        <span class="pill">라운드 ${sess.round}</span>
+        <span>알겠어요 ${kn}</span><span>·</span><span>아직 ${remain()}</span>
+      </div>
+      <div style="margin-top:12px">${bar(pct,'lime')}</div>
+    </div>
+    <div class="wlist">${rows}</div>
+    ${cta}
+  </div>`;
+}
+
+function renderCard(){
+  const total=sess.words.length;
+  const pct=Math.round(known()/total*100);
+  const wi=sess.queue[sess.idx]; const c=sess.words[wi];
+  const face = sess.revealed
+    ? `<div class="word">${c.w}</div><div class="reading">${c.r}</div><div class="meaning">${c.m}</div>`
+    : `<div class="word">${c.w}</div><div class="hintt">탭해서 뜻 확인</div>`;
+  const foot = sess.revealed
+    ? `<div class="grades"><button class="grade no" data-grade="0">아직이예요</button><button class="grade yes" data-grade="1">알겠어요</button></div>`
+    : `<button class="cta" data-reveal>뜻 보기</button>`;
+  return `<div class="scr">
+    <div class="nav"><a href="#" data-listback>‹ 목록</a><span class="ttl">${sess.title}</span><span style="width:40px"></span></div>
+    <div class="roundline"><span class="r">라운드 ${sess.round}</span><span class="rem">남은 ${remain()}개</span></div>
+    ${bar(pct,'lime')}
+    <div class="card" ${sess.revealed?'':'data-reveal'}>${face}</div>
+    ${foot}
+  </div>`;
+}
+
+function renderDone(){
+  const grp=g(sess.gid);
+  const total=sess.words.length;
+  return `<div class="scr">
+    <div class="grow" style="display:flex;flex-direction:column;justify-content:center;gap:22px;align-items:center;text-align:center">
+      <div class="bigcheck">${check('#1D1D21',44)}</div>
+      <div>
+        <div style="font-size:30px;font-weight:800;letter-spacing:-.02em">이번 회독 끝!</div>
+        <div style="font-size:16px;color:var(--body);margin-top:8px">모든 단어를 알겠어요로 넘겼어요.</div>
+      </div>
+      <div class="rec-card">
+        <div class="grp">${sess.title}</div>
+        <div class="done">${grp.kind==="today"?"오늘 모인 단어 정리 완료":grp.rounds+"회차 완료"}</div>
+        <div class="rec-stats">
+          <div class="c"><div class="n">${total}</div><div class="l">복습 단어</div></div>
+          <div class="c"><div class="n">${sess.round}</div><div class="l">라운드</div></div>
+          <div class="c"><div class="n">약 5분</div><div class="l">소요</div></div>
+        </div>
+      </div>
+    </div>
+    <button class="cta" data-home>회독 홈으로</button>
+  </div>`;
+}
+
+function renderModal(){
+  const x=g(s.modal);
+  return `<div class="modalbg" data-modalbg>
+    <div class="sheet">
+      <h3>이어서 학습할까요?</h3>
+      <p>${x.level} · ${x.range}에서 아직 <b style="color:var(--ink)">${x.remaining}개</b>가 남았어요.<br>이어서 하거나 처음부터 다시 볼 수 있어요.</p>
+      <button class="cta" data-resume="${x.id}">이어서 하기</button>
+      <button class="cta ghost" data-fresh="${x.id}">처음부터 학습하기</button>
+    </div>
+  </div>`;
+}
+
+function tabbar(){
+  const I={
+    today:'<path d="M6 3.5h9l4 4V20.5H6z"/><path d="M9 12h7M9 16h5"/>',
+    menu:'<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>',
+    log:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+    set:'<path d="M5 8h14M5 8a2 2 0 104 0M5 8a2 2 0 014 0M9 8h10M5 16h6M15 16h4M15 16a2 2 0 104 0M15 16a2 2 0 014 0"/>'
+  };
+  const t=(k,l,on)=>`<div class="tab${on?' on':''}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${I[k]}</svg><span>${l}</span></div>`;
+  return `<div class="tabbar">${t('today','오늘',true)}${t('menu','메뉴')}${t('log','기록')}${t('set','설정')}</div>`;
+}
+
+/* ---------- interactions ---------- */
+app.addEventListener("click",e=>{
+  const t=e.target.closest("[data-open],[data-start],[data-reveal],[data-grade],[data-home],[data-listback],[data-resume],[data-fresh],[data-modalbg],[data-today]");
+  if(!t) return;
+  e.preventDefault();
+
+  if(t.hasAttribute("data-today")){ toast("오늘 학습은 별도 프로토타입에서 볼 수 있어요"); return; }
+
+  if(t.dataset.open!==undefined){
+    const grp=g(t.dataset.open);
+    if(grp.state==="progress"){ s.modal=grp.id; return render(); }   // 진행 중 → 모달
+    startSession(grp.id,"fresh"); s.step="list"; return render();     // 신규/완료/오늘 → 바로 리스트
+  }
+  if(t.dataset.resume!==undefined){ s.modal=null; startSession(t.dataset.resume,"resume"); s.step="list"; return render(); }
+  if(t.dataset.fresh!==undefined){ s.modal=null; startSession(t.dataset.fresh,"fresh"); s.step="list"; return render(); }
+  if(t.hasAttribute("data-modalbg")){ if(e.target===t){ s.modal=null; render(); } return; }
+
+  if(t.hasAttribute("data-start")){ s.step="card"; sess.revealed=false; return render(); }
+  if(t.hasAttribute("data-listback")){ s.step="list"; return render(); }
+  if(t.hasAttribute("data-home")){ s.step="home"; sess=null; return render(); }
+
+  if(t.hasAttribute("data-reveal")){ if(!sess.revealed){ sess.revealed=true; render(); } return; }
+
+  if(t.dataset.grade!==undefined){
+    const wi=sess.queue[sess.idx];
+    if(t.dataset.grade==="1") sess.words[wi].status="known";
+    sess.revealed=false; sess.idx++;
+    if(sess.idx>=sess.queue.length){
+      if(remain()===0){ finish(); return; }
+      sess.round++; buildQueue();
+      render(); toast(`라운드 ${sess.round} · 남은 ${remain()}개`);
+      return;
+    }
+    return render();
+  }
+});
+
+function finish(){
+  const grp=g(sess.gid);
+  if(grp.kind!=="today"){ grp.rounds=(grp.rounds||0)+1; grp.state="done"; grp.remaining=0; grp.last="방금"; }
+  s.step="done"; render();
+}
+
+document.getElementById("restart").onclick=()=>{
+  GROUPS=[
+    {id:"today",kind:"today",title:"오늘 모인 단어",sub:"오늘 학습에서 아직이예요 8개",count:8},
+    {id:"g1",level:"N5",range:"51–100번",total:12,rounds:1,state:"progress",remaining:6,last:"어제"},
+    {id:"g2",level:"N5",range:"1–50번",total:12,rounds:2,state:"done",remaining:0,last:"3일 전"},
+    {id:"g3",level:"N5",range:"101–150번",total:12,rounds:0,state:"new",remaining:12,last:null},
+    {id:"g4",level:"N4",range:"1–50번",total:12,rounds:0,state:"new",remaining:12,last:null},
+  ];
+  s={step:"home",modal:null,gid:null}; sess=null; render();
+};
+document.getElementById("theme").onclick=()=>{ const b=document.body; const d=b.dataset.theme==="dark"; b.dataset.theme=d?"light":"dark"; document.getElementById("theme").textContent=d?"🌙":"☀️"; };
+render();
+</script>
+</body>
+</html>
