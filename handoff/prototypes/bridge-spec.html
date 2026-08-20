@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>한자 브리지 · 개발 목업</title>
+<title>한자 브리지 · 개발 목업 v2</title>
 <style>
 @font-face{font-family:'Pretendard';font-weight:400;font-display:swap;src:url('../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Regular.woff2') format('woff2')}
 @font-face{font-family:'Pretendard';font-weight:500;font-display:swap;src:url('../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Medium.woff2') format('woff2')}
@@ -11,11 +11,11 @@
 @font-face{font-family:'Pretendard';font-weight:700;font-display:swap;src:url('../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Bold.woff2') format('woff2')}
 :root{
   --ink:#1D1D21;--body:#56565E;--mute:#8E8E97;--canvas:#FFFFFF;--page:#F2F2F4;
-  --soft:#E8E8EC;--line:#DCDCE2;--primary:#EF5112;--lime:#A3E635;--lime-deep:#4D7C0F;--lime-soft:#EDF7D6;--shadow:rgba(0,0,0,.06);
+  --soft:#E8E8EC;--line:#DCDCE2;--primary:#EF5112;--primary-soft:#FFF1EA;--lime:#A3E635;--lime-deep:#4D7C0F;--lime-soft:#EDF7D6;--shadow:rgba(0,0,0,.06);
 }
 @media (prefers-color-scheme:dark){:root{
   --ink:#F7F7F9;--body:#A9A9B2;--mute:#71717A;--canvas:#1D1D21;--page:#131316;
-  --soft:#2B2B31;--line:#3E3E45;--primary:#F97316;--lime:#A3E635;--lime-deep:#A3E635;--lime-soft:#28311B;--shadow:rgba(0,0,0,.5);
+  --soft:#2B2B31;--line:#3E3E45;--primary:#F97316;--primary-soft:#3A2415;--lime:#A3E635;--lime-deep:#A3E635;--lime-soft:#28311B;--shadow:rgba(0,0,0,.5);
 }}
 *{box-sizing:border-box;}
 html,body{margin:0;}
@@ -23,91 +23,108 @@ body{background:var(--page);color:var(--ink);font-family:'Pretendard',-apple-sys
 .wrap{max-width:420px;margin:0 auto;}
 .h{font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--primary);margin:26px 2px 4px;}
 .sub{font-size:13px;color:var(--body);margin:0 2px 12px;line-height:1.5;}
-.new{display:inline-block;font-size:11px;font-weight:800;color:#1D1D21;background:var(--lime);border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:middle;}
+.sub code,.note code{background:var(--soft);border-radius:5px;padding:1px 5px;font-size:12px;}
+.tag{display:inline-block;font-size:11px;font-weight:800;color:#1D1D21;background:var(--lime);border-radius:999px;padding:2px 9px;margin-left:6px;vertical-align:middle;}
 
 .card{background:var(--canvas);border:1px solid var(--line);border-radius:22px;box-shadow:0 8px 20px -12px var(--shadow);padding:24px 20px;}
 .jp{font-size:52px;font-weight:800;text-align:center;line-height:1;}
 .rd{font-size:19px;color:var(--body);text-align:center;margin-top:10px;}
 .rd .spk{display:inline-flex;width:26px;height:26px;border-radius:999px;background:var(--soft);align-items:center;justify-content:center;font-size:12px;margin-left:6px;vertical-align:middle;}
 
-/* 브리지 블록 (신규) */
+/* 브리지 인식 블록 (reveal) */
 .bridge{margin-top:18px;background:var(--lime-soft);border:1px solid var(--lime);border-radius:16px;padding:16px;text-align:center;}
 .bridge .pill{display:inline-block;background:var(--lime);color:#1D1D21;font-size:12px;font-weight:800;padding:5px 12px;border-radius:999px;}
 .bridge .ko{font-size:30px;font-weight:800;margin-top:10px;letter-spacing:-.01em;}
-.bridge .compose{margin-top:10px;font-size:15.5px;font-weight:600;color:var(--ink);}
+.bridge .ko .hj{font-size:20px;font-weight:700;color:var(--body);margin-left:4px;}
+.bridge .sense{font-size:14px;color:var(--body);margin-top:4px;}
+.bridge .compose{margin-top:12px;padding-top:12px;border-top:1px dashed var(--lime);font-size:15.5px;font-weight:600;color:var(--ink);}
 .bridge .compose b{font-weight:800;}
 .bridge .compose i{font-style:normal;color:var(--primary);font-weight:800;}
 
-.meaning{font-size:28px;font-weight:700;text-align:center;margin-top:18px;}
-.pos{font-size:13px;color:var(--mute);text-align:center;margin-top:2px;}
 .ex{background:var(--page);border-radius:14px;padding:14px 16px;margin-top:16px;}
-.ex .jpx{font-size:16px;font-weight:600;}
+.ex .lb{font-size:11px;font-weight:700;color:var(--mute);letter-spacing:.5px;}
+.ex .jpx{font-size:16px;font-weight:600;margin-top:6px;}
 .ex .kox{font-size:14px;color:var(--body);margin-top:4px;}
+.grades{display:flex;gap:10px;margin-top:16px;}
+.grade{flex:1;text-align:center;min-height:50px;line-height:50px;border-radius:999px;font-size:15px;font-weight:700;}
+.grade.no{border:1.5px solid var(--line);color:var(--ink);}
+.grade.yes{background:var(--ink);color:var(--page);}
 
 /* 단어 상세 한자 분해 */
-.detail .row{display:flex;gap:16px;padding:16px 0;}
+.jlpt{display:inline-block;font-size:11px;font-weight:800;color:#3730A3;background:#E0E7FF;border-radius:6px;padding:2px 7px;vertical-align:middle;}
+@media (prefers-color-scheme:dark){.jlpt{color:#C7D2FE;background:#312E81;}}
+.detail .row{display:flex;gap:16px;padding:18px 0;}
 .detail .row+.row{border-top:1px solid var(--soft);}
-.detail .k{font-size:38px;font-weight:700;width:52px;flex:none;text-align:center;}
+.detail .k{font-size:40px;font-weight:700;width:52px;flex:none;text-align:center;}
 .detail .info{flex:1;min-width:0;}
-.detail .mn{font-size:15px;font-weight:700;}
-.detail .line{font-size:13.5px;color:var(--body);margin-top:5px;}
-.detail .line .kohanja{color:var(--lime-deep);font-weight:800;}
-.detail .bu{font-size:12px;color:var(--mute);margin-top:5px;}
+.detail .oke{font-size:16px;font-weight:800;}      /* 옥편 훈뜻+한국음 */
+.detail .oke .jlpt{margin-left:6px;}
+/* 브리지 라인: 음독 ≈ 한국음 */
+.detail .bl{display:inline-flex;align-items:center;gap:7px;background:var(--primary-soft);border:1px solid var(--primary);border-radius:9px;padding:5px 10px;margin-top:8px;font-size:14px;font-weight:700;}
+.detail .bl .on{color:var(--ink);}
+.detail .bl .ap{color:var(--primary);font-weight:800;}
+.detail .bl .ko{color:var(--primary);font-weight:800;}
+.detail .line{font-size:13.5px;color:var(--body);margin-top:7px;}
+.detail .bu{font-size:12.5px;color:var(--mute);margin-top:6px;}
 
 .note{font-size:12px;color:var(--body);background:var(--soft);border-radius:12px;padding:10px 12px;margin-top:12px;line-height:1.5;}
 .note b{color:var(--ink);}
+.diffbox{background:var(--primary-soft);border:1px solid var(--primary);border-radius:12px;padding:12px 14px;margin-top:12px;font-size:13px;line-height:1.55;color:var(--ink);}
+.diffbox b{color:var(--primary);}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <div class="h">개발 목업 · 한자 브리지</div>
-  <div class="sub">기존 학습 흐름은 그대로. <b>reveal</b>과 <b>단어 상세</b>에 라임색 요소만 추가됩니다. 스펙: <code>handoff/BRIDGE-SPEC.md</code></div>
+  <div class="h">개발 목업 v2 · 한자 브리지</div>
+  <div class="sub">경쟁 앱 표준(옥편 표기·JLPT 배지·부수 풀이) 채택 <b>+ 음독↔한국음 연결(우리만의 차별점)</b>. 스펙: <code>handoff/BRIDGE-SPEC.md</code></div>
 
-  <!-- STATE 1: reveal (enhanced) -->
-  <div class="h" style="color:var(--body)">① 뜻 공개(reveal) — 브리지 대상 단어<span class="new">신규 블록</span></div>
+  <!-- STATE 1: reveal -->
+  <div class="h" style="color:var(--body)">① 뜻 공개(reveal) — 브리지 대상 단어<span class="tag">동음이의 제거</span></div>
   <div class="card">
     <div class="jp">進度</div>
     <div class="rd">しんど <span class="spk">🔊</span></div>
 
     <div class="bridge">
-      <div class="pill">이미 아는 단어예요</div>
-      <div class="ko">진도</div>
+      <div class="pill">이미 아는 한자어</div>
+      <div class="ko">진도<span class="hj">(進度)</span></div>
+      <div class="sense">진행 정도 · 명사</div>
       <div class="compose">일본어 발음 <b>しんど</b> = シン<i>진</i> · ド<i>도</i></div>
     </div>
 
-    <div class="meaning">진도</div>
-    <div class="pos">진행 정도 · 명사</div>
     <div class="ex">
+      <div class="lb">예문</div>
       <div class="jpx">進度がおそい</div>
       <div class="kox">진도가 더디다</div>
     </div>
+    <div class="grades"><div class="grade no">아직이에요</div><div class="grade yes">외웠어요</div></div>
   </div>
-  <div class="note"><b>게이팅:</b> 음독 한자어(進度·図書館)에만 브리지 블록 노출. 훈독·고유어(山 やま, 水 みず)엔 <b>이 블록을 숨기고</b> 현행 그대로.</div>
+  <div class="note"><b>수정:</b> "진도" 단독 → <b>진도(進度) · 진행 정도</b> 로 한자 병기 + 뜻을 붙여 동음이의(震度·珍島) 제거. 예문은 인식 바로 아래 유지(SRS 회상 위계). <b>게이팅:</b> 음독 한자어에만 노출, 훈독·고유어(ダンス·山)엔 이 블록 숨김.</div>
 
-  <!-- STATE 2: 단어 상세 (enhanced) -->
-  <div class="h" style="color:var(--body);margin-top:30px">② 단어 상세 · 한자 분해 — 한국음 추가<span class="new">한 줄 추가</span></div>
+  <!-- STATE 2: 단어 상세 -->
+  <div class="h" style="color:var(--body);margin-top:30px">② 단어 상세 · 한자 분해 — 옥편 표기 + 브리지<span class="tag">업계 표준 + 연결</span></div>
   <div class="card detail">
     <div class="row">
       <div class="k">進</div>
       <div class="info">
-        <div class="mn">나아가다 · 진보하다</div>
-        <div class="line">음 シン &nbsp;·&nbsp; <span class="kohanja">한국음 진</span></div>
-        <div class="line">훈 すす.む · すす.める</div>
-        <div class="bu">부수 辵 · 11획</div>
+        <div class="oke">나아갈 진 <span class="jlpt">N3</span></div>
+        <div class="bl"><span class="on">음독 シン</span><span class="ap">≈</span><span class="ko">한국음 진</span></div>
+        <div class="line">훈독 すす.む · すす.める</div>
+        <div class="bu">부수 辵(쉬엄쉬엄갈 착) · 11획</div>
       </div>
     </div>
     <div class="row">
       <div class="k">度</div>
       <div class="info">
-        <div class="mn">정도 · 횟수 · 태도</div>
-        <div class="line">음 ド · ト · タク &nbsp;·&nbsp; <span class="kohanja">한국음 도 · 탁</span></div>
-        <div class="line">훈 たび · -た.い</div>
-        <div class="bu">부수 广 · 9획</div>
+        <div class="oke">법도 도 · 헤아릴 탁 <span class="jlpt">N3</span></div>
+        <div class="bl"><span class="on">음독 ド·ト</span><span class="ap">≈</span><span class="ko">한국음 도·탁</span></div>
+        <div class="line">훈독 たび · -た.い</div>
+        <div class="bu">부수 广(집 엄) · 9획</div>
       </div>
     </div>
   </div>
-  <div class="note"><b>데이터:</b> 한국음 = Unihan <code>kKorean</code> 필드를 KANJIDIC2와 코드포인트로 조인(빌드타임 전처리). 여러 음이면 병기(도·탁).</div>
+  <div class="diffbox"><b>우리만의 차별점 =</b> 저 <b>음독 シン ≈ 한국음 진</b> 연결선. 경쟁 앱은 음독과 옥편음을 나란히 보여주기만 하고 <b>이어주진 않음.</b> "규칙적으로 대응한다"를 명시하는 게 브리지의 핵심.</div>
+  <div class="note"><b>데이터:</b> 옥편 훈뜻+한국음 = 한자 사전(훈음) · 한국음 = Unihan <code>kKorean</code>. 음독은 KANJIDIC2. 전부 빌드타임 전처리.</div>
 
 </div>
 </body>
