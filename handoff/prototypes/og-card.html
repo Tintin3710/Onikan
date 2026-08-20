@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>OG card render</title>
+<style>
+@font-face{font-family:'Pretendard';font-weight:400;src:url('../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Regular.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:700;src:url('../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Bold.woff2') format('woff2')}
+body{margin:0;background:#ccc;}
+canvas{display:block;margin:0 auto;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1000" height="525"></canvas>
+<img id="m" src="thanks-mascot.png" crossorigin="anonymous" style="display:none">
+<script>
+window.OG = null;
+(async function(){
+  const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+  const img = document.getElementById('m');
+  // 폰트 + 이미지 로드 대기
+  try{ await document.fonts.load('700 48px Pretendard'); await document.fonts.load('400 30px Pretendard'); await document.fonts.ready; }catch(e){}
+  if(!img.complete){ await new Promise(r=>{ img.onload=r; img.onerror=r; }); }
+  try{ await img.decode(); }catch(e){}
+
+  // 배경 흰색
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0,0,1000,525);
+
+  // 마스코트 — Figma 노드 184:14197 크롭 프랙션 그대로
+  const nW = img.naturalWidth, nH = img.naturalHeight;
+  const fx0=0.4771, fy0=0.0495, fx1=0.9293, fy1=0.3980;
+  const SX=fx0*nW, SY=fy0*nH, SW=(fx1-fx0)*nW, SH=(fy1-fy0)*nH;
+  // -90도(CCW) 회전 후 배치 → 세로높이=SW, 가로폭=SH
+  const targetH = 232;
+  const scale = targetH / SW;
+  const cx = 500, cy = 168;
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(-Math.PI/2);
+  ctx.drawImage(img, SX, SY, SW, SH, -(SW*scale)/2, -(SH*scale)/2, SW*scale, SH*scale);
+  ctx.restore();
+
+  // 텍스트
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'alphabetic';
+  ctx.fillStyle = '#1D1D21';
+  ctx.font = "700 48px Pretendard, 'Apple SD Gothic Neo', sans-serif";
+  ctx.fillText('제출 완료!', 500, 350);
+  ctx.fillStyle = '#56565E';
+  ctx.font = "400 30px Pretendard, 'Apple SD Gothic Neo', sans-serif";
+  ctx.fillText('성실한 응답 감사합니다.', 500, 402);
+  ctx.fillText('일본어 공부 앱으로 곧 만나요 🍙', 500, 446);
+
+  window.OG = cv.toDataURL('image/jpeg', 0.86);
+  document.title = 'OG ready ' + window.OG.length;
+})();
+</script>
+</body>
+</html>
