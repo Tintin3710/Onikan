@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>일본어 공부 인터뷰 · 오니칸</title>
+<style>
+@font-face{font-family:'Pretendard';font-weight:400;font-display:swap;src:url('../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Regular.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:500;font-display:swap;src:url('../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Medium.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:600;font-display:swap;src:url('../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-SemiBold.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:700;font-display:swap;src:url('../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Bold.woff2') format('woff2')}
+:root{
+  --ink:#1D1D21; --body:#56565E; --mute:#8E8E97; --canvas:#FFFFFF; --page:#F2F2F4;
+  --soft:#E8E8EC; --line:#DCDCE2; --primary:#EF5112; --primary-soft:#FFF1EA; --lime:#4D7C0F; --lime-soft:#EDF7D6;
+  --shadow:rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme:dark){:root{
+  --ink:#F7F7F9; --body:#A9A9B2; --mute:#71717A; --canvas:#1D1D21; --page:#131316;
+  --soft:#2B2B31; --line:#3E3E45; --primary:#F97316; --primary-soft:#3A2415; --lime:#A3E635; --lime-soft:#28311B;
+  --shadow:rgba(0,0,0,.4);
+}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;}
+body{background:var(--page);color:var(--ink);font-family:'Pretendard',-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","Apple SD Gothic Neo",system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;padding:0 0 80px;}
+.wrap{max-width:640px;margin:0 auto;padding:0 18px;}
+.hero{background:linear-gradient(160deg,var(--primary),var(--primary));color:#fff;border-radius:0 0 26px 26px;padding:38px 22px 30px;margin:0 -18px 22px;}
+.wrap{padding-top:0;}
+.eyebrow{font-size:12px;letter-spacing:1.4px;text-transform:uppercase;font-weight:700;opacity:.9;}
+.hero h1{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:8px 0 12px;line-height:1.2;}
+.hero p{font-size:14.5px;line-height:1.6;margin:0;opacity:.95;}
+.sec{margin:30px 0 10px;}
+.sec .sn{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--primary);}
+.sec .st{font-size:19px;font-weight:800;letter-spacing:-.01em;margin-top:3px;}
+.q{background:var(--canvas);border:1px solid var(--line);border-radius:16px;padding:18px 18px;margin-bottom:12px;box-shadow:0 4px 12px -8px var(--shadow);}
+.q .label{font-size:15.5px;font-weight:700;line-height:1.5;}
+.q .label .req{color:var(--primary);margin-left:3px;}
+.q .help{font-size:13px;color:var(--body);margin-top:5px;line-height:1.5;}
+.opts{margin-top:12px;display:flex;flex-direction:column;gap:8px;}
+.opt{display:flex;align-items:flex-start;gap:10px;font-size:14.5px;color:var(--ink);cursor:pointer;padding:9px 12px;border:1px solid var(--line);border-radius:11px;transition:.12s;}
+.opt:hover{border-color:var(--primary);}
+.opt input{margin:2px 0 0;accent-color:var(--primary);width:17px;height:17px;flex:none;}
+.opt.strong{border-color:var(--lime);background:var(--lime-soft);}
+input[type=text],textarea{width:100%;margin-top:12px;font-family:inherit;font-size:15px;color:var(--ink);background:var(--page);border:1px solid var(--line);border-radius:11px;padding:12px 13px;}
+textarea{min-height:92px;resize:vertical;line-height:1.55;}
+input[type=text]:focus,textarea:focus{outline:none;border-color:var(--primary);background:var(--canvas);}
+.scale{display:flex;gap:7px;margin-top:14px;}
+.scale label{flex:1;text-align:center;border:1px solid var(--line);border-radius:11px;padding:11px 0;font-size:16px;font-weight:700;cursor:pointer;position:relative;}
+.scale input{position:absolute;opacity:0;inset:0;cursor:pointer;}
+.scale label:has(input:checked){background:var(--primary);color:#fff;border-color:var(--primary);}
+.scaleends{display:flex;justify-content:space-between;font-size:12px;color:var(--mute);margin-top:6px;padding:0 2px;}
+.concept{background:var(--lime-soft);border:1px solid var(--lime);border-radius:16px;padding:20px;margin-bottom:12px;}
+.concept .imgph{background:var(--canvas);border:1.5px dashed var(--line);border-radius:12px;padding:26px 16px;text-align:center;color:var(--mute);font-size:13px;margin-bottom:14px;}
+.concept .bridge{font-size:22px;font-weight:800;text-align:center;letter-spacing:-.01em;line-height:1.6;color:var(--ink);}
+.concept .bridge .ar{color:var(--primary);margin:0 6px;}
+.concept p{font-size:14px;line-height:1.65;color:var(--ink);margin:14px 0 0;}
+/* bridge card mockup */
+.bcard{background:var(--canvas);border:1px solid var(--line);border-radius:20px;padding:24px 20px 22px;text-align:center;box-shadow:0 8px 22px -12px var(--shadow);}
+.bjp{font-size:52px;font-weight:800;letter-spacing:-.01em;line-height:1;}
+.bpill{display:inline-block;background:var(--lime);color:#1D1D21;font-size:12px;font-weight:800;padding:5px 12px;border-radius:999px;margin:16px 0 8px;}
+.brecog{font-size:34px;font-weight:800;letter-spacing:-.01em;line-height:1.1;}
+.bsame{font-size:13px;color:var(--body);margin-top:7px;line-height:1.5;}
+.bcompose{margin-top:16px;background:var(--soft);border-radius:12px;padding:12px 10px;font-size:15.5px;font-weight:600;color:var(--ink);}
+.bcompose b{font-weight:800;}
+.bcompose i{color:var(--primary);font-style:normal;font-weight:800;margin-left:1px;}
+.submit{width:100%;min-height:56px;border:none;border-radius:999px;background:var(--primary);color:#fff;font-family:inherit;font-size:18px;font-weight:700;cursor:pointer;margin-top:26px;}
+.submit:active{filter:brightness(.94);}
+.foot{font-size:12px;color:var(--mute);text-align:center;margin-top:16px;line-height:1.6;}
+.hp{position:absolute;left:-9999px;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Onikan · User Interview</div>
+    <h1>일본어 공부, 솔직하게 몇 개만 물을게요</h1>
+    <p>5~7분이면 됩니다. <b>정답이 없어요</b> — 잘하고 못하고를 보려는 게 아니라, 실제로 어떻게 공부하고(또는 안 하고) 있는지가 궁금합니다. 구체적으로 적어주실수록 큰 도움이 돼요. 🙏</p>
+  </div>
+</div>
+
+<div class="wrap">
+<!--
+  응답 수집: Formsubmit → kujy37105@gmail.com
+  첫 제출 시 확인 메일이 1번 옵니다 → 링크 클릭하면 이후 모든 응답이 메일로 도착.
+  (이메일 노출이 싫으면 formsubmit.co 가입 후 받은 랜덤 문자열로 action을 교체)
+-->
+<form action="https://formsubmit.co/kujy37105@gmail.com" method="POST">
+  <!-- Formsubmit 옵션 -->
+  <input type="hidden" name="_subject" value="[오니칸] 일본어 인터뷰 응답">
+  <input type="hidden" name="_template" value="table">
+  <input type="hidden" name="_captcha" value="false">
+  <!-- 스팸 방지 허니팟 -->
+  <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off">
+
+  <!-- ===== 섹션 1 ===== -->
+  <div class="sec"><div class="sn">Section 1</div><div class="st">당신에 대해</div></div>
+
+  <div class="q"><div class="label">1. 연령대는?<span class="req">*</span></div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="1_연령대" value="20대" required>20대</label>
+      <label class="opt"><input type="radio" name="1_연령대" value="30대">30대</label>
+      <label class="opt"><input type="radio" name="1_연령대" value="40대">40대</label>
+      <label class="opt"><input type="radio" name="1_연령대" value="50대+">50대 이상</label>
+    </div>
+  </div>
+
+  <div class="q"><div class="label">2. 평일 출퇴근(통학)을 하나요? 편도 소요 시간은?<span class="req">*</span></div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="2_통근" value="안함" required>안 함(재택 등)</label>
+      <label class="opt"><input type="radio" name="2_통근" value="30분미만">30분 미만</label>
+      <label class="opt"><input type="radio" name="2_통근" value="30분~1시간">30분~1시간</label>
+      <label class="opt"><input type="radio" name="2_통근" value="1시간~1시간반">1시간~1시간 반</label>
+      <label class="opt"><input type="radio" name="2_통근" value="1시간반+">1시간 반 이상</label>
+    </div>
+  </div>
+
+  <div class="q"><div class="label">3. 지금 본인의 일본어 수준을 골라주세요.<span class="req">*</span></div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="3_수준" value="히라가나가물" required>히라가나도 가물가물하다</label>
+      <label class="opt"><input type="radio" name="3_수준" value="기초단어">히라가나·기초 단어는 안다</label>
+      <label class="opt strong"><input type="radio" name="3_수준" value="기초있는데안트임">기초 문법·단어는 아는데, 문장이 잘 안 트인다</label>
+      <label class="opt"><input type="radio" name="3_수준" value="간단문장N3">간단한 문장은 읽고 듣는다 (N3 근처)</label>
+      <label class="opt"><input type="radio" name="3_수준" value="N2이상">꽤 한다 (N2 이상)</label>
+    </div>
+  </div>
+
+  <div class="q"><div class="label">4. 일본어를 배우(려)는 이유는? (복수 선택)<span class="req">*</span></div>
+    <div class="opts">
+      <label class="opt"><input type="checkbox" name="4_이유[]" value="여행">여행</label>
+      <label class="opt"><input type="checkbox" name="4_이유[]" value="콘텐츠(애니·만화·드라마·게임)">애니·만화·드라마·게임 등 콘텐츠</label>
+      <label class="opt"><input type="checkbox" name="4_이유[]" value="아이돌·연예">아이돌·연예</label>
+      <label class="opt"><input type="checkbox" name="4_이유[]" value="업무">업무</label>
+      <label class="opt"><input type="checkbox" name="4_이유[]" value="자기계발·성취">자기계발·성취감</label>
+      <label class="opt"><input type="checkbox" name="4_이유[]" value="시험(JLPT)">시험(JLPT 등)</label>
+      <label class="opt"><input type="checkbox" name="4_이유[]" value="기타">기타</label>
+    </div>
+  </div>
+
+  <div class="q"><div class="label">5. 지금까지 일본어에 써본 것 전부 골라주세요. (복수 선택)<span class="req">*</span></div>
+    <div class="opts">
+      <label class="opt"><input type="checkbox" name="5_써본것[]" value="유료인강">유료 인강</label>
+      <label class="opt"><input type="checkbox" name="5_써본것[]" value="종이교재">종이 교재·문제집</label>
+      <label class="opt"><input type="checkbox" name="5_써본것[]" value="학습앱">학습 앱(듀오링고 등)</label>
+      <label class="opt"><input type="checkbox" name="5_써본것[]" value="유튜브">유튜브·무료 영상</label>
+      <label class="opt"><input type="checkbox" name="5_써본것[]" value="학원·과외">학원·과외</label>
+      <label class="opt"><input type="checkbox" name="5_써본것[]" value="안써봄">특별히 안 써봄</label>
+    </div>
+  </div>
+
+  <!-- ===== 섹션 2 ===== -->
+  <div class="sec"><div class="sn">Section 2</div><div class="st">실제로는 어떻게 공부하나요</div></div>
+
+  <div class="q"><div class="label">6. 최근에 "일본어 공부해야지" 했는데 결국 안 켠/안 편 순간을 하나 떠올려, 그때 상황을 구체적으로 적어주세요.<span class="req">*</span></div>
+    <div class="help">언제, 어디서, 왜 안 하게 됐는지.</div>
+    <textarea name="6_안한순간" required></textarea>
+  </div>
+
+  <div class="q"><div class="label">7. 사놓고 잘 안 쓰게 된 일본어 콘텐츠(인강·교재·앱)가 있나요? 있다면 무엇이고, 왜 안 쓰게 됐는지 적어주세요.<span class="req">*</span></div>
+    <textarea name="7_사놓고안씀" required></textarea>
+  </div>
+
+  <div class="q"><div class="label">8. 마지막으로 일본어를 공부한 게 언제고, 어디서, 몇 분 정도였나요?</div>
+    <input type="text" name="8_마지막학습">
+  </div>
+
+  <div class="q"><div class="label">9. 출퇴근·자투리 시간에 보통 뭘 하나요? 그때 손·눈·소리 상황도 알려주세요.<span class="req">*</span></div>
+    <div class="help">예: 서서 한 손, 이어폰 착용, 소음 많음</div>
+    <textarea name="9_자투리상황" required></textarea>
+  </div>
+
+  <div class="q"><div class="label">10. 지금 일본어 공부에서 가장 부담되는 지점은? (복수 선택)<span class="req">*</span></div>
+    <div class="opts">
+      <label class="opt"><input type="checkbox" name="10_부담[]" value="시간없음">시간이 없다</label>
+      <label class="opt"><input type="checkbox" name="10_부담[]" value="의지·꾸준함">의지·꾸준함</label>
+      <label class="opt"><input type="checkbox" name="10_부담[]" value="너무어렵다">너무 어렵다</label>
+      <label class="opt"><input type="checkbox" name="10_부담[]" value="지루하다">지루하다</label>
+      <label class="opt"><input type="checkbox" name="10_부담[]" value="뭘할지모름">뭘 어디서부터 할지 모르겠다</label>
+      <label class="opt"><input type="checkbox" name="10_부담[]" value="효과안느껴짐">효과가 안 느껴진다</label>
+      <label class="opt"><input type="checkbox" name="10_부담[]" value="기타">기타</label>
+    </div>
+  </div>
+
+  <!-- ===== 섹션 3 ===== -->
+  <div class="sec"><div class="sn">Section 3</div><div class="st">단어를 볼 때</div></div>
+
+  <div class="q"><div class="label">11. 일본어 단어를 볼 때, 한국어 한자어랑 비슷해서 "어, 이거 아는 느낌"이 든 적이 있나요?<span class="req">*</span></div>
+    <div class="scale">
+      <label><input type="radio" name="11_아는느낌" value="1" required>1</label>
+      <label><input type="radio" name="11_아는느낌" value="2">2</label>
+      <label><input type="radio" name="11_아는느낌" value="3">3</label>
+      <label><input type="radio" name="11_아는느낌" value="4">4</label>
+      <label><input type="radio" name="11_아는느낌" value="5">5</label>
+    </div>
+    <div class="scaleends"><span>전혀 없다</span><span>자주 그렇다</span></div>
+  </div>
+
+  <div class="q"><div class="label">12. (있다면) 그런 예시나 그때 느낌을 적어주세요. 없으면 "없음".</div>
+    <textarea name="12_예시"></textarea>
+  </div>
+
+  <div class="q"><div class="label">13. 그 "비슷하다"는 느낌은 공부에 도움이 됐나요, 방해였나요?</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="13_도움방해" value="도움">도움이 됐다</label>
+      <label class="opt"><input type="radio" name="13_도움방해" value="방해">방해가 됐다</label>
+      <label class="opt"><input type="radio" name="13_도움방해" value="무관">별 상관없다</label>
+      <label class="opt"><input type="radio" name="13_도움방해" value="느낌없음">그런 느낌 자체가 없었다</label>
+    </div>
+  </div>
+
+  <div class="q"><div class="label">14. 한자 자체(모양·읽기)를 외우는 것은 당신에게 어떤가요?<span class="req">*</span></div>
+    <div class="scale">
+      <label><input type="radio" name="14_한자난이도" value="1" required>1</label>
+      <label><input type="radio" name="14_한자난이도" value="2">2</label>
+      <label><input type="radio" name="14_한자난이도" value="3">3</label>
+      <label><input type="radio" name="14_한자난이도" value="4">4</label>
+      <label><input type="radio" name="14_한자난이도" value="5">5</label>
+    </div>
+    <div class="scaleends"><span>아주 쉽다</span><span>아주 어렵다</span></div>
+  </div>
+
+  <!-- ===== 섹션 4 ===== -->
+  <div class="sec"><div class="sn">Section 4</div><div class="st">이런 걸 상상해보세요</div></div>
+
+  <div class="concept">
+    <div class="bcard">
+      <div class="bjp">進度</div>
+      <div class="bpill">이미 아는 단어예요</div>
+      <div class="brecog">진도</div>
+      <div class="bsame">한국어 '진도(進度)'와 같은 한자 · 뜻은 '진행 정도'</div>
+      <div class="bcompose">일본어 발음 <b>しんど</b> = シン<i>진</i> · ド<i>도</i></div>
+    </div>
+    <p>새 일본어 단어(進度)를 보여줄 때, 이렇게 안내하는 앱을 상상해보세요. "이 단어, 너 이미 알아 — 한국어 <b>'진도'</b>랑 같은 한자야. 발음 <b>しんど</b>도 네가 아는 '진·도' 소리로 이어져." 처럼, <b>네가 이미 아는 한자어를 지렛대 삼아</b> "이건 이미 아는 거였네"를 매 단어 짚어주는 방식이에요.</p>
+  </div>
+
+  <div class="q"><div class="label">15. 이 방식이 일본어를 "할 만하다"고 느끼게 해줄 것 같나요?<span class="req">*</span></div>
+    <div class="scale">
+      <label><input type="radio" name="15_할만함" value="1" required>1</label>
+      <label><input type="radio" name="15_할만함" value="2">2</label>
+      <label><input type="radio" name="15_할만함" value="3">3</label>
+      <label><input type="radio" name="15_할만함" value="4">4</label>
+      <label><input type="radio" name="15_할만함" value="5">5</label>
+    </div>
+    <div class="scaleends"><span>전혀</span><span>매우 그렇다</span></div>
+  </div>
+
+  <div class="q"><div class="label">16. 그렇게 느낀(혹은 안 느낀) 이유를 적어주세요.<span class="req">*</span></div>
+    <textarea name="16_이유" required></textarea>
+  </div>
+
+  <div class="q"><div class="label">17. 이런 앱이 있다면 출퇴근·자투리 시간에 매일 3분 정도 쓸 것 같나요?<span class="req">*</span></div>
+    <div class="scale">
+      <label><input type="radio" name="17_매일3분" value="1" required>1</label>
+      <label><input type="radio" name="17_매일3분" value="2">2</label>
+      <label><input type="radio" name="17_매일3분" value="3">3</label>
+      <label><input type="radio" name="17_매일3분" value="4">4</label>
+      <label><input type="radio" name="17_매일3분" value="5">5</label>
+    </div>
+    <div class="scaleends"><span>전혀</span><span>꼭 쓸 것 같다</span></div>
+  </div>
+
+  <div class="q"><div class="label">18. 반대로, 이 방식이 안 통할 것 같거나 한계라고 느끼는 지점은?<span class="req">*</span></div>
+    <div class="help">솔직할수록 좋아요. 날카로운 지적이 제일 큰 도움이 됩니다.</div>
+    <textarea name="18_한계" required></textarea>
+  </div>
+
+  <!-- ===== 섹션 5 ===== -->
+  <div class="sec"><div class="sn">Section 5</div><div class="st">둘 중 하나만 고른다면</div></div>
+
+  <div class="q"><div class="label">19. 앱스토어에서 아래 두 소개 문구를 봤다면, 어느 쪽이 더 끌리나요?<span class="req">*</span></div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="19_카피" value="A_한국인유리" required>A. "한국인이라 유리한 일본어 — 이미 아는 한자어로 시작"</label>
+      <label class="opt"><input type="radio" name="19_카피" value="B_귀여운오니기리">B. "귀여운 오니기리를 모으며 배우는 일본어"</label>
+    </div>
+  </div>
+
+  <div class="q"><div class="label">20. 그걸 고른 이유를 한 줄로.<span class="req">*</span></div>
+    <input type="text" name="20_카피이유" required>
+  </div>
+
+  <!-- ===== 섹션 6 ===== -->
+  <div class="sec"><div class="sn">Section 6</div><div class="st">마지막으로</div></div>
+
+  <div class="q"><div class="label">21. 이 주제로 15분 정도 통화 인터뷰도 가능할까요?<span class="req">*</span></div>
+    <div class="help">더 깊이 듣고 싶어요.</div>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="21_통화가능" value="가능" required>가능</label>
+      <label class="opt"><input type="radio" name="21_통화가능" value="어려움">어려움</label>
+    </div>
+  </div>
+
+  <div class="q"><div class="label">22. (가능이라면) 편한 연락 방법을 남겨주세요.</div>
+    <input type="text" name="22_연락처" placeholder="카톡 ID · 전화 · 이메일 등">
+  </div>
+
+  <div class="q"><div class="label">23. 일본어 공부에 대해 하고 싶은 말이 있다면 자유롭게.</div>
+    <textarea name="23_자유"></textarea>
+  </div>
+
+  <button type="submit" class="submit">응답 보내기</button>
+  <div class="foot">응답은 오니칸 연구 목적으로만 쓰이고, 외부에 공개되지 않아요. 감사합니다 🙏</div>
+</form>
+</div>
+</body>
+</html>

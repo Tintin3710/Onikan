@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>한자 브리지 카드 · 오니칸</title>
+<style>
+@font-face{font-family:'Pretendard';font-weight:400;font-display:swap;src:url('../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Regular.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:600;font-display:swap;src:url('../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-SemiBold.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:700;font-display:swap;src:url('../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Bold.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:800;font-display:swap;src:url('../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Bold.woff2') format('woff2')}
+:root{
+  --ink:#1D1D21;--body:#56565E;--mute:#8E8E97;--canvas:#FFFFFF;--page:#F2F2F4;
+  --soft:#E8E8EC;--line:#DCDCE2;--primary:#EF5112;--lime:#A3E635;--lime-deep:#4D7C0F;--lime-soft:#EDF7D6;--shadow:rgba(0,0,0,.06);
+}
+@media (prefers-color-scheme:dark){:root{
+  --ink:#F7F7F9;--body:#A9A9B2;--mute:#71717A;--canvas:#1D1D21;--page:#131316;
+  --soft:#2B2B31;--line:#3E3E45;--primary:#F97316;--lime:#A3E635;--lime-deep:#A3E635;--lime-soft:#28311B;--shadow:rgba(0,0,0,.5);
+}}
+*{box-sizing:border-box;}
+html,body{margin:0;height:100%;}
+body{background:var(--page);color:var(--ink);font-family:'Pretendard',-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","Apple SD Gothic Neo",system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+  min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:32px 20px;}
+.cap{text-align:center;max-width:360px;}
+.cap .t{font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--primary);font-weight:800;}
+.cap .d{font-size:14px;color:var(--body);margin-top:6px;line-height:1.55;}
+.card{width:100%;max-width:340px;background:var(--canvas);border:1px solid var(--line);border-radius:26px;
+  padding:30px 24px 26px;text-align:center;box-shadow:0 14px 34px -18px var(--shadow);}
+.jp{font-size:62px;font-weight:800;letter-spacing:-.01em;line-height:1;}
+.read{font-size:19px;color:var(--body);font-weight:500;margin-top:12px;}
+.pill{display:inline-block;background:var(--lime);color:#1D1D21;font-size:12.5px;font-weight:800;padding:6px 13px;border-radius:999px;margin:20px 0 10px;}
+.recog{font-size:40px;font-weight:800;letter-spacing:-.02em;line-height:1.05;}
+.same{font-size:13.5px;color:var(--body);margin-top:9px;line-height:1.5;}
+.compose{margin-top:18px;background:var(--soft);border-radius:14px;padding:14px 12px;font-size:16px;font-weight:600;color:var(--ink);}
+.compose b{font-weight:800;}
+.compose i{color:var(--primary);font-style:normal;font-weight:800;margin-left:1px;}
+.compose .eq{color:var(--mute);margin:0 7px;font-weight:700;}
+</style>
+</head>
+<body>
+  <div class="cap">
+    <div class="t">Onikan · 핵심 기능</div>
+    <div class="d">한자 브리지 — 새 단어를 "이미 아는 한자어"로 짚어주는 순간</div>
+  </div>
+  <div class="card">
+    <div class="jp">進度</div>
+    <div class="read">しんど</div>
+    <div class="pill">이미 아는 단어예요</div>
+    <div class="recog">진도</div>
+    <div class="same">한국어 '진도(進度)'와 같은 한자 · 뜻은 '진행 정도'</div>
+    <div class="compose">일본어 발음 <b>しんど</b> <span class="eq">=</span> シン<i>진</i> · ド<i>도</i></div>
+  </div>
+</body>
+</html>
