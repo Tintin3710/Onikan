@@ -41,6 +41,7 @@ body{background:var(--page);color:var(--ink);font-family:'Pretendard',-apple-sys
 .opt input{margin:2px 0 0;accent-color:var(--primary);width:17px;height:17px;flex:none;}
 .opt.strong{border-color:var(--lime);background:var(--lime-soft);}
 input[type=text],textarea{width:100%;margin-top:12px;font-family:inherit;font-size:15px;color:var(--ink);background:var(--page);border:1px solid var(--line);border-radius:11px;padding:12px 13px;}
+.other-input{display:none;margin-top:0;}
 textarea{min-height:92px;resize:vertical;line-height:1.55;}
 input[type=text]:focus,textarea:focus{outline:none;border-color:var(--primary);background:var(--canvas);}
 .scale{display:flex;gap:7px;margin-top:14px;}
@@ -73,7 +74,7 @@ input[type=text]:focus,textarea:focus{outline:none;border-color:var(--primary);b
   <div class="wrap">
     <div class="eyebrow">Onikan · User Interview</div>
     <h1>일본어 공부, 솔직하게 몇 개만 물을게요</h1>
-    <p>5~7분이면 됩니다. <b>정답이 없어요</b> — 잘하고 못하고를 보려는 게 아니라, 실제로 어떻게 공부하고(또는 안 하고) 있는지가 궁금합니다. 구체적으로 적어주실수록 큰 도움이 돼요. 🙏</p>
+    <p>5~7분이면 됩니다. <b>빠르게 JLPT와 네이티브 수준까지 끌어올리고 싶은 한국인</b>들을 위한 일본어 학습 앱 개발을 위한 인터뷰예요. 실제로 어떻게 공부하고 계신지, 공부하실 계획이신지 궁금합니다. 구체적으로 적어주실수록 큰 도움이 돼요 🍙</p>
   </div>
 </div>
 
@@ -132,10 +133,11 @@ input[type=text]:focus,textarea:focus{outline:none;border-color:var(--primary);b
       <label class="opt"><input type="checkbox" name="4_이유[]" value="자기계발·성취">자기계발·성취감</label>
       <label class="opt"><input type="checkbox" name="4_이유[]" value="시험(JLPT)">시험(JLPT 등)</label>
       <label class="opt"><input type="checkbox" name="4_이유[]" value="기타">기타</label>
+      <input type="text" class="other-input" name="4_이유_기타" placeholder="기타 내용을 적어주세요">
     </div>
   </div>
 
-  <div class="q"><div class="label">5. 지금까지 일본어에 써본 것 전부 골라주세요. (복수 선택)<span class="req">*</span></div>
+  <div class="q"><div class="label">5. 지금까지 일본어 공부로 사용한 컨텐츠 / 사용해볼 컨텐츠 전부 골라주세요. (복수 선택)<span class="req">*</span></div>
     <div class="opts">
       <label class="opt"><input type="checkbox" name="5_써본것[]" value="유료인강">유료 인강</label>
       <label class="opt"><input type="checkbox" name="5_써본것[]" value="종이교재">종이 교재·문제집</label>
@@ -162,7 +164,7 @@ input[type=text]:focus,textarea:focus{outline:none;border-color:var(--primary);b
     <input type="text" name="8_마지막학습">
   </div>
 
-  <div class="q"><div class="label">9. 출퇴근·자투리 시간에 보통 뭘 하나요? 그때 손·눈·소리 상황도 알려주세요.<span class="req">*</span></div>
+  <div class="q"><div class="label">9. 출퇴근·자투리 시간에 보통 뭘 하나요? 그때 주변 상황과 나의 행동을 알려주세요.<span class="req">*</span></div>
     <div class="help">예: 서서 한 손, 이어폰 착용, 소음 많음</div>
     <textarea name="9_자투리상황" required></textarea>
   </div>
@@ -176,6 +178,7 @@ input[type=text]:focus,textarea:focus{outline:none;border-color:var(--primary);b
       <label class="opt"><input type="checkbox" name="10_부담[]" value="뭘할지모름">뭘 어디서부터 할지 모르겠다</label>
       <label class="opt"><input type="checkbox" name="10_부담[]" value="효과안느껴짐">효과가 안 느껴진다</label>
       <label class="opt"><input type="checkbox" name="10_부담[]" value="기타">기타</label>
+      <input type="text" class="other-input" name="10_부담_기타" placeholder="기타 내용을 적어주세요">
     </div>
   </div>
 
@@ -194,6 +197,7 @@ input[type=text]:focus,textarea:focus{outline:none;border-color:var(--primary);b
   </div>
 
   <div class="q"><div class="label">12. (있다면) 그런 예시나 그때 느낌을 적어주세요. 없으면 "없음".</div>
+    <div class="help">예: 무료를 일본어로 無料 むりょう 무료우 라고 읽어서 신기했어요.</div>
     <textarea name="12_예시"></textarea>
   </div>
 
@@ -228,7 +232,7 @@ input[type=text]:focus,textarea:focus{outline:none;border-color:var(--primary);b
       <div class="bsame">한국어 '진도(進度)'와 같은 한자 · 뜻은 '진행 정도'</div>
       <div class="bcompose">일본어 발음 <b>しんど</b> = シン<i>진</i> · ド<i>도</i></div>
     </div>
-    <p>새 일본어 단어(進度)를 보여줄 때, 이렇게 안내하는 앱을 상상해보세요. "이 단어, 너 이미 알아 — 한국어 <b>'진도'</b>랑 같은 한자야. 발음 <b>しんど</b>도 네가 아는 '진·도' 소리로 이어져." 처럼, <b>네가 이미 아는 한자어를 지렛대 삼아</b> "이건 이미 아는 거였네"를 매 단어 짚어주는 방식이에요.</p>
+    <p><b>새 단어를 '이미 아는 한자어'로 짚어주는 방식</b>이에요. 進度를 보면 바로 '진도'죠. 발음 しんど도 아는 '진·도' 소리라 금방 익혀져요.</p>
   </div>
 
   <div class="q"><div class="label">15. 이 방식이 일본어를 "할 만하다"고 느끼게 해줄 것 같나요?<span class="req">*</span></div>
@@ -291,13 +295,24 @@ input[type=text]:focus,textarea:focus{outline:none;border-color:var(--primary);b
     <input type="text" name="22_연락처" placeholder="카톡 ID · 전화 · 이메일 등">
   </div>
 
-  <div class="q"><div class="label">23. 일본어 공부에 대해 하고 싶은 말이 있다면 자유롭게.</div>
+  <div class="q"><div class="label">23. 일본어 공부에 대해 하고 싶으신 말이 있으시다면 자유롭게 남겨주세요!</div>
     <textarea name="23_자유"></textarea>
   </div>
 
   <button type="submit" class="submit">응답 보내기</button>
-  <div class="foot">응답은 오니칸 연구 목적으로만 쓰이고, 외부에 공개되지 않아요. 감사합니다 🙏</div>
+  <div class="foot">응답은 오니칸 연구 목적으로만 쓰이고, 외부에 공개되지 않아요. 감사합니다 🍙</div>
 </form>
 </div>
+<script>
+  // '기타' 선택 시 입력 필드 노출
+  document.querySelectorAll('.opt input[value="기타"]').forEach(function(cb){
+    var box = cb.closest('.opt').nextElementSibling;
+    if(!box || !box.classList.contains('other-input')) return;
+    cb.addEventListener('change', function(){
+      box.style.display = cb.checked ? 'block' : 'none';
+      if(cb.checked){ box.focus(); } else { box.value = ''; }
+    });
+  });
+</script>
 </body>
 </html>
