@@ -7,7 +7,7 @@
 
 | 자료 | 내용 |
 |---|---|
-| Figma `오니기리 칸지` node `254-6477` | 원본 리디자인 파일. **이 세션에서는 Figma 연결이 OAuth 미인증이라 직접 열지 못함** — 아래 분석은 전달된 **화면 6종(PNG) + 모션 2종(MOV)** 기준. Figma 원본 대조는 인증된 세션에서 별도 확인 필요. |
+| Figma `오니기리 칸지` node `254-6477` (섹션 "ui 최신화") | 원본 리디자인 파일. **직접 열람·대조 완료**(2× PNG 12종 익스포트 → `screens/`, 실제 변수·컴포넌트 이름 대조 → 아래 §실측 토큰·§신규 컴포넌트). |
 | 화면 PNG ①~⑥ | 홈(학습전) · 학습 뷰 · 홈(학습완료) · 홈(회독전) · 회독 뷰+완료 · 홈(회독완료)+기록 |
 | `motion/mov1` (8.25s) | 재료 획득 영수증 — `확인` 버튼 2초 fill 후 자동 전환 |
 | `motion/mov2` (12.9s) | 오니기리 완성 — 폭죽 파티클 축하 뷰 |
@@ -137,22 +137,28 @@ stateDiagram-v2
 
 ### 신규 컴포넌트 (COMPONENTS.md 카탈로그 추가 대상)
 
-| ID | 컴포넌트 | 용도 |
-|---|---|---|
-| N-1 | `StreakStamps` | 단골 N일차 스탬프(라임 밥알/점선 미획득/`P`) |
-| N-2 | `PhoneticHintCard` | 발음 유사 단어 라임 카드(조건부) |
-| N-3 | `ExampleTTSCard` | 예문 카드(탭→TTS) |
-| N-4 | `ChapterRow` | 회독 빈출단어 행(열기/잠김/완료) |
-| N-5 | `ReviewTopCard` | 홈 "오늘 학습 복습"(아직이예요 단어) |
-| N-6 | `ScoreDistribution` | 기록 점수 분포 히스토그램 |
-| N-7 | `HomeStateHero` | 상태별 히어로 카드(카피·지표·CTA 라벨 가변) |
+> **Figma 실측** = Figma 파일에서 확인된 실제 레이어/컴포넌트 이름. 가칭은 스펙 서술용.
+
+| ID | 가칭 | Figma 실측 | 용도 |
+|---|---|---|---|
+| N-1 | `StreakStamps` | **`도장`** (컴포넌트, 4× 인스턴스) | 단골 스탬프(라임 밥알/점선 미획득/`P`) |
+| N-2 | `PhoneticHintCard` | `hero`/카드 내 프레임(전용 컴포넌트 아님) | 발음 유사 단어 카드 — **뉴트럴 `--soft #e8e8ec`**(라임 아님, D-1 실측 확인) |
+| N-3 | `ExampleTTSCard` | 카드 내 프레임 | 예문 카드(탭→TTS) |
+| N-4 | `ChapterRow` | **`progress-card`** 내 행 | 회독 빈출단어 행(열기/잠김/완료) |
+| N-5 | `ReviewTopCard` | 프레임 | 홈 "오늘 학습 복습"(아직이예요 단어) |
+| N-6 | `ScoreDistribution` | 기록 내 커스텀 프레임 | 점수 분포 히스토그램 |
+| N-7 | `HomeStateHero` | **`hero-card`** (+ `hero-number` 지표행, `┗ Main/Sub/Alternative Action` CTA 슬롯) | 상태별 히어로 카드(카피·지표·CTA 라벨 가변) |
+
+**기존 컴포넌트 실측 이름 매핑:** PrimaryButton → **`button-primary`** · 지표 타일 → **`Ratio`** · 배지(완성·`P`) → **`Badge`** · 영수증 상/하단 엣지 → **`Top Acc`/`Bottom Acc`** · 진행바 → **`progress`**.
 
 ### 신규 모션 (DESIGN.md motion + handoff `interactions/MOTION.md`)
 
-| ID | 모션 | 스펙 |
-|---|---|---|
-| M-1 | `buttonAutoFill` | 영수증 `확인` 2s 선형 fill → 자동 push. ink fill/회색 트랙. |
-| M-2 | `confettiBurst` | 오니기리 완성 시 파티클 버스트(≈2–2.5s). 색 브랜드 정리 권장. |
+| ID | 모션 | 스펙 | 레퍼런스 |
+|---|---|---|---|
+| M-1 | `buttonAutoFill` | 영수증 `확인` 2s 선형 fill → 자동 push. ink fill/회색 트랙. | [mp4](./motion/button-autofill.mp4) · [gif](./motion/button-autofill.gif) |
+| M-2 | `confettiBurst` | 오니기리 완성 시 파티클 버스트(≈2–2.5s). 색 브랜드 정리 권장. | [mp4](./motion/confetti-burst.mp4) · [gif](./motion/confetti-burst.gif) |
+
+> 구현 참고: 레퍼런스는 **재현용 시각 자료**. 실제 구현은 네이티브 권장 — `buttonAutoFill`은 Reanimated width 트랜지션 + 완료 콜백 push, `confettiBurst`는 파티클/Lottie. mp4가 gif보다 가볍고 선명(개발 적용 유리), gif는 GitHub 인라인 미리보기용.
 
 ### 규칙 결정 (확정)
 
@@ -164,6 +170,21 @@ stateDiagram-v2
 | 단골=보상 | (충돌 아님) | DESIGN.md L359가 이미 "a streak kept"를 보상에 포함 → `StreakStamps` 라임은 **규칙 내**. 그대로 진행. |
 
 > 위 결정은 확정. `DESIGN.md`(규칙 불변) / `COMPONENTS.md`(D-2 예외 1줄, C-1 variant, 신규 컴포넌트 7종) 반영은 **정책 O-1~O-5 정리 + 화면 익스포트 후 일괄** 예정.
+
+## 실측 토큰·타이포 (Figma 변수 대조)
+
+> `get_variable_defs`로 `학습전`·`학습 카드`·`기록` 프레임에서 실제 바인딩된 변수를 추출. **결론: 리디자인은 기존 `DESIGN.md` 토큰을 충실히 사용** — 색·간격·반경·그림자 정본과 일치.
+
+**색 (모두 정본과 일치):** `--ink #1d1d21` · `--body #56565e` · `--mute #8e8e97` · `--bar-fill #71717a` · `--pressed #dcdce2` · `--soft #e8e8ec` · `--softer #f2f2f4` · `--plate #ededf1` · `--canvas #ffffff` · `--primary #ef5112` · `--on-ink #f7f7f9`.
+**간격/반경/그림자:** `--spacing-xl 20` · `--spacing-md 12` · `--radius-card 24` · `Elevation/Level 1` = drop-shadow `(0,6) blur14 spread0 #0000000d`.
+**타이포 (Pretendard JP):** `display/word 44/53 Bold` · `display/meaning 26/34 Bold` · `card-title 17/24 SB` · `body/lg 18/26 M` · `body/md 16/24 R` · `body/md-strong 16/22 SB` · `body/base-strong 15/22 SB` · `body/sm 14/20 R` · `tab-label(-active) 12/16`.
+
+### 정본 반영 시 확인할 실측 편차 (2건)
+
+| ID | 실측 | 이슈 | 제안 |
+|---|---|---|---|
+| **T-1** | `Semantic/Label/Alternative #37383C` (+ `#37383c9c` 알파) | 정본 그레이 램프(ink `#1D1D21` / body `#56565E`)에 **없는 중간 그레이**(기록 화면 라벨). | 정본 alias로 편입할지, 기존 `body`로 통일할지 결정. |
+| **T-2** | `Caption 2/Medium` = family **`Pretendard`** (11px, ls 3.1) | 오버라인/영수증 캡션이 `Pretendard JP`가 아닌 **`Pretendard`** 사용 — 폰트 패밀리 혼용. | 전 텍스트 `Pretendard JP`로 통일(정본 규칙). |
 
 ## 미확정 정책 (Open questions)
 
@@ -178,4 +199,4 @@ stateDiagram-v2
 ## 자료
 
 - **[`screens/`](./screens)** — Figma "ui 최신화"(`254-6477`)에서 **2× PNG 12종 익스포트 완료**(학습→회독 흐름 순, 파일명·node 매핑은 [screens/README](./screens/README.md)). 영수증 수정·라임→뉴트럴(03) 반영 확인.
-- `motion/` — 원본 MOV 2종은 용량상 저장소 외 보관(필요 시 대표 프레임/GIF 추출).
+- **[`motion/`](./motion)** — `buttonAutoFill`·`confettiBurst` 레퍼런스(각 mp4+gif) 커밋 완료.
