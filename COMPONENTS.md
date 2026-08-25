@@ -18,6 +18,10 @@
 | 라벨 | "사전 ↗"(추상화) | "네이버 사전" | 카피 소스가 하나로 안 정해짐 |
 | 색 | Onikan Grey + orange/lime | 옛 순수 모노톤 | 토큰 미이행 |
 | 컴포넌트 | 공통 부품 재사용 | **화면마다 수제** | 공용 라이브러리 부재 |
+| 중간 그레이 라벨 | 램프 내 값으로 통일 | `Semantic/Label/Alternative #37383C`(신규·미문서화, 기록 라벨) | (T-1) 램프에 없는 값 — `body`로 통일 권장 |
+| 폰트 패밀리 | 전 텍스트 `Pretendard JP` | 오버라인/영수증 캡션이 `Pretendard`(비-JP) 혼용 | (T-2) `Pretendard JP`로 통일 |
+
+> T-1·T-2는 [2026-08 리디자인 실측](./handoff/redesign-2026-08/README.md#실측-토큰타이포-figma-변수-대조)에서 확인된 편차. 정본은 `body`/`Pretendard JP`로 통일한다.
 
 **해결 = 3단 정렬을 강제한다:**
 
@@ -30,8 +34,9 @@
 ## 글로벌 규칙 (모든 컴포넌트 공통)
 
 - **층은 그림자 유무로만.** 흰 카드가 둘 이상이면 색·테두리·반경은 동일하게 두고 **shadow 유무**로만 위계. 테두리로 카드를 나누지 않는다.
-- **화면당 orange는 하나** (주요 액션). 탭바 활성 표시(`tab-active`)만 예외.
-- **lime은 보상 획득 순간에만** (체크 배지, 방금 채워진 진행 칸 페이드).
+- **화면당 orange는 하나** (주요 액션). **예외는 둘뿐**: 탭바 활성(`tab-active`), 그리고 **데이터 차트의 '나/현재' 위치 강조 1개소**(기록 점수 분포 히스토그램의 내 막대). 그 외 장식 금지. (D-2)
+- **lime은 보상 획득 순간에만** — 재료 체크 배지·방금 채워진 진행 칸 페이드·**단골(`도장`) 스탬프**. 학습 보조(발음 유사 카드·예문 등)에는 쓰지 않는다(뉴트럴 `soft`). (D-1)
+- **홈은 세그먼트 토글을 쓰지 않는다** — 상태(학습전/학습완료/회독전/회독완료)에 따라 `hero-card`의 단일 CTA 라벨이 바뀐다. (R-1)
 - **`mute`는 잠김·플레이스홀더 전용.** 읽는 텍스트에 쓰지 않는다.
 - **`plate`(#EDEDF1)는 라이트/다크 고정** — 검정 선화 일러스트가 다크에서 사라지지 않게.
 - **아이콘은 공용 글리프**(26px 박스·1.7px 스트로크·라운드 캡). **이모지 금지.** '오늘' 탭은 제공된 `assets/icon-today.svg`를 그대로 사용(viewBox 유지).
@@ -47,7 +52,8 @@
 ### Foundations
 
 **Tokens** — `DESIGN.md`가 정본. Figma Variables·`tokens.ts`는 이 값을 미러링만 한다.
-`ink #1D1D21` · `body #56565E` · `mute #8E8E97` · `canvas #FFF` · `softer #F2F2F4` · `soft #E8E8EC` · `pressed #DCDCE2` · `plate #EDEDF1` · `primary #EA580C` · `on-primary #FFF` · `tab-active #C2410C` · `secondary #A3E635` · `bar-fill #71717A` · `shadow rgba(0,0,0,.05)` (다크 값은 DESIGN.md).
+`ink #1D1D21` · `body #56565E` · `mute #8E8E97` · `canvas #FFF` · `softer #F2F2F4` · `soft #E8E8EC` · `pressed #DCDCE2` · `plate #EDEDF1` · `primary #EF5112` · `primary-pressed #D2460E` · `on-primary #FFF` · `tab-active #C2410C` · `secondary #A3E635` · `bar-fill #71717A` · `shadow rgba(0,0,0,.05)` (다크 값은 DESIGN.md).
+> 위 값은 2026-08 Figma 실측(`get_variable_defs`)과 일치 확인됨. (구 `primary #EA580C`는 폐기 — `#EF5112`.)
 반경: `card 24` · 타일 12/14/16/18 · 컨트롤 pill(999) · **영수증 4**. 좌우 여백 20. 그룹 간격: 한 덩어리 12 / 다른 그룹 24–28.
 
 ---
@@ -62,9 +68,9 @@
 - **언제**: 카드·섹션 머리말("오늘의 학습", "만드는 중", "재료 4").
 - **정확값**: 12px / 500 / `body`, uppercase, letter-spacing 1.4px.
 
-### `SegmentedControl` / `<SegmentedControl>`
-- **언제**: 홈 오늘 학습↔회독.
-- **해부**: 트랙 `soft`, 반경 pill, padding 4, gap 4. 각 버튼 flex:1, min-h **44**, 16/600. 활성 `canvas`+글자 `ink`+`0 1px 3px shadow` / 비활성 투명+`body`.
+### `SegmentedControl` / `<SegmentedControl>` — ⚠️ 홈에서 폐기 (2026-08)
+- **언제**: ~~홈 오늘 학습↔회독~~ → **폐기.** 홈은 상태 머신 `hero-card`의 단일 CTA 라벨 전환으로 대체(아래 §리디자인 신규 · R-1). 다른 화면에서 세그먼트가 필요할 때만 이 스펙을 유지한다.
+- **해부**(유지 시): 트랙 `soft`, 반경 pill, padding 4, gap 4. 각 버튼 flex:1, min-h **44**, 16/600. 활성 `canvas`+글자 `ink`+`0 1px 3px shadow` / 비활성 투명+`body`.
 
 ### `PrimaryButton` / `<PrimaryButton>`
 - **언제**: **화면당 유일한** 주요 액션.
@@ -75,9 +81,12 @@
 ### `SecondaryButton` / `<SecondaryButton>`
 - **변형**: `outline`(투명+1.5px `pressed`, 글자 `ink`) · `soft`(`soft` 배경). 학습 "아직이에요", 영수증 "이미지로 저장/공유" 등.
 
-### `GradeButtons` / `<GradeButtons>` (학습 전용)
-- **언제**: 학습 세션 공개 후 2단계 평가.
-- **해부**: gap 10, 각 flex:1 min-h **60** pill 17/600. `아직이에요`=outline(`pressed`) → FSRS **Again** · `외웠어요`=`ink` 채움/글자 `softer` → **Good**. **4단계 아님.**
+### `GradeButtons` / `<GradeButtons variant>`
+- **언제**: 학습·회독 공개 후 2단계 평가.
+- **해부**: gap 10, 각 flex:1 min-h **60** pill 17/600.
+- **변형 `study`(기본)**: `아직이에요`=outline(`pressed`) → FSRS **Again** · `외웠어요`=`ink` 채움/글자 `softer` → **Good**.
+- **변형 `review`(회독)**: `모름`=outline(`pressed`) · `안다`=`ink` 채움/글자 `softer`. 구조 동일, 라벨만 다름. (C-1)
+- **4단계 아님.**
 
 ### `Chip` / `<Chip>`
 - **변형**: `range`(테두리 1.5 `pressed`, 9/14 padding — 회독 범위) · `next`(배경 `soft` — 재료 "다음") · `level`(N5 필).
@@ -113,7 +122,7 @@
 
 ### `RewardCard` / `RewardBadge`
 - **RewardCard**: 88 PlateTile(재료 65) + 오버라인 "새 재료" / 이름 26/700 / 설명. 진입 `riseIn`.
-- **RewardBadge**: 우하단 −6/−6, 30×30 원 `secondary`(라임), 안에 체크(색 `ink`). 진입 `pop`. **라임의 유일 사용처.**
+- **RewardBadge**: 우하단 −6/−6, 30×30 원 `secondary`(라임), 안에 체크(색 `ink`). 진입 `pop`. **라임 사용처(보상 순간)** = 여기 + 재료 체크 + **단골 `도장`**. 그 외 금지.
 
 ### `Receipt` / `<Receipt>`
 - **해부**: 배경 `canvas`, **반경 4**(종이 신호 전용), padding `30 24 26`. "ONIGIRI SHOP" 15/600 tracking 3. 행 사이 1px `soft`, 섹션 경계 1px dashed `pressed`. 진입 `printOut`(translateY −101%→0, 0.9s).
@@ -124,6 +133,42 @@
 
 ### `WordDetailCards` (11c)
 - `HeaderCard`(N5 필 + 단어 44/700 + 읽기 18/500 + `발음 듣기`·`사전 ↗` 필), `MeaningCard`(오버라인 "뜻" + 뜻 + 품사), `KanjiCard`(오버라인 "한자 N" + KanjiRow[한자 글리프 + 뜻 + 음/훈/부수·획]). 모두 `Card`(그림자, **테두리 없음**), 사전 라벨은 하나로 확정해 공유.
+- **음독≈한국음 브리지**: KanjiRow 음독 하이라이트는 **orange 아웃라인 필**(기존 한자 브리지). 학습 카드가 아니라 상세 시트 전용.
+
+---
+
+### 리디자인 신규 (2026-08)
+
+> Figma 섹션 "ui 최신화"(`254-6477`) 실측. **가칭 → Figma 실측 이름**. 상세·화면은 [redesign-2026-08](./handoff/redesign-2026-08/README.md).
+
+#### `hero-card` / `<HomeHero>` — 홈 상태 머신 히어로
+- **언제**: 홈 오늘 학습 영역. 세그먼트 토글을 대체(R-1).
+- **해부**: `Card(elevated)`. `Overline`(상태 라벨) + 카피 + 지표행(`hero-number` = `Ratio` 타일 3) + 진행바(`progress`) + CTA 슬롯 **`┗ Main Action`**(=`button-primary`) + **`┗ Sub Action`/`┗ Alternative Action`**(텍스트 링크).
+- **상태(4)**: `study-before`(학습 시작하기) · `study-done`(회독 시작하기 + "학습 단어 다시 보기") · `review-before`(N5-1 시작하기 + 진행율) · `review-done`(이어서 N5-2 + "학습 단어 다시 보기"). 상태별로 **오버라인·카피·지표·CTA 라벨만** 바뀌고 골격 동일.
+
+#### `도장` / `<StreakStamps>` — 단골 스탬프
+- **언제**: 홈·기록의 "단골 N일차". 연속 학습일 보상.
+- **해부**: 밥알 스탬프 나열. `earned`=**라임(`secondary`)** 채움 · `locked`=점선 회색(`pressed`) · 마지막 칸 `Badge` "P"(프리미엄/보호 — 정책 O-4). 라임은 보상 규칙 내(단골=streak kept).
+
+#### `progress-card` + `ChapterRow` / `<ChapterRow>` — 회독 빈출단어
+- **언제**: 홈 회독 전/후의 "빈출 단어" 리스트.
+- **해부**(행): 좌 인덱스 배지 + 이름(`N5-1`) + `0/50 단어` + 우측 상태 버튼. `열기`=`ink` 필 pill · `잠김`=`mute` 텍스트 · `완료`=`body` 텍스트. 행 사이 spacing 구분(테두리 X).
+
+#### `<ReviewTopCard>` — 오늘 학습 복습
+- **언제**: 홈 회독 전/후 최상단. **학습에서 "아직이에요"로 표시한 단어만** 모은 FSRS 복습.
+- **해부**: `Card(flat)`, 좌 `あ` 타일 + 제목/설명 + 우측 `열기`(`ink` pill). ⚠️ "복습(FSRS)" vs "회독(챕터)" 네이밍 정리 필요(O-3).
+
+#### `<ScoreDistribution>` — 기록 점수 분포
+- **언제**: 기록 화면 "내 학습 점수 분포".
+- **해부**: 히스토그램 막대 다수(`pressed`) + **내 위치 1개 막대 orange**(D-2 예외) + "나" 라벨(`pop`) + 축 `0% · 평균 N% · 100%`. 숫자 `tabular-nums`.
+
+#### 학습 카드 추가 요소 (`FlashCard` 내)
+- **`PhoneticHintCard`(조건부)**: 발음이 유사한 단어가 있을 때만. 배경 **`soft`(뉴트럴, 라임 아님 — D-1)** + `발음이 유사한 단어` 필 + 2열 유사어.
+- **`ExampleCard`**: `🔊 예문을 들어보세요`(스피커·라벨 `body`) + 일문/국문. **카드 탭 → 예문 TTS.**
+
+#### 모션 (신규)
+- **`buttonAutoFill`**: 재료 획득 영수증 `확인`이 2s 선형 fill 후 자동 push(ink fill/회색 트랙). [ref](./handoff/redesign-2026-08/motion/button-autofill.mp4)
+- **`confettiBurst`**: 오니기리 완성 시에만 파티클 버스트(≈2–2.5s). [ref](./handoff/redesign-2026-08/motion/confetti-burst.mp4)
 
 ---
 
@@ -140,12 +185,19 @@
 | ListRow / IngredientRow / OnigiriCell | 동명 | `src/components/collection/*` |
 | RewardCard / RewardBadge / Receipt | 동명 | `src/features/done/components/*` |
 | GradeButtons / FlashCard | 동명 | `src/features/study/components/*` |
+| **hero-card** | `<HomeHero>` | `src/features/home/components/HomeHero.tsx` |
+| **도장** | `<StreakStamps>` | `src/features/home/components/StreakStamps.tsx` |
+| **progress-card** / ChapterRow | `<ChapterRow>` | `src/features/review/components/ChapterRow.tsx` |
+| ReviewTopCard | `<ReviewTopCard>` | `src/features/home/components/ReviewTopCard.tsx` |
+| ScoreDistribution | `<ScoreDistribution>` | `src/features/stats/components/ScoreDistribution.tsx` |
+| Ratio | `<StatTile>` | `src/components/ui/StatTile.tsx` |
 
 > **Code Connect**: 각 Figma 컴포넌트에 `.figma.tsx` 매핑을 붙여 Dev Mode에서 코드 스니펫이 뜨게 한다.
+> RN 경로·컴포넌트 이름은 제안 — 개발 레포(`taiyoungkim/AshitaKanji`)의 feature-first 구조 관례를 따름.
 
 ---
 
 ## Do / Don't 요약
 
-**Do** — 층은 그림자로, 아이콘은 공용 글리프로, 값은 이 문서/토큰에서만, 숫자는 tabular-nums, plate 고정.
-**Don't** — 카드에 테두리로 위계 주기, 이모지 아이콘, 화면당 orange 2개, lime 장식, `mute`로 본문, 카드 중첩, 라벨/카피를 화면마다 다르게.
+**Do** — 층은 그림자로, 아이콘은 공용 글리프로, 값은 이 문서/토큰에서만, 숫자는 tabular-nums, plate 고정, 홈은 상태 머신(`hero-card`)으로.
+**Don't** — 카드에 테두리로 위계 주기, 이모지 아이콘, 화면당 orange 2개(차트 '나' 강조·`tab-active`만 예외), lime 장식(학습 보조에 라임 금지), `mute`로 본문, 카드 중첩, 라벨/카피를 화면마다 다르게, 홈에 세그먼트 토글.

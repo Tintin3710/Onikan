@@ -392,6 +392,7 @@ Copy speaks in the boss's warm, terse Korean ("왔네. 처음 보는 얼굴이�
 
 > **Decision logic — which accent, if any?**
 > 1. *Is this the one primary action on the screen?* → **orange** fill. If a second action competes, it becomes neutral (grey), not a second orange.
+>    - *Two exceptions only:* the active tab (`{colors.tab-active}`), and **a single "you are here" mark in a data chart** (e.g. the user's own bar in the 기록 score-distribution histogram). A chart may tint exactly one element orange to locate the user; everything else in the chart stays neutral.
 > 2. *Is this the moment the user earns a reward?* → **lime** is allowed — briefly.
 > 3. *Neither?* → **no accent.** Use ink / grey. ~90% of the UI lives here.
 
