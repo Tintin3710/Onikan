@@ -177,5 +177,5 @@ stateDiagram-v2
 
 ## 자료
 
+- **[`screens/`](./screens)** — Figma "ui 최신화"(`254-6477`)에서 **2× PNG 12종 익스포트 완료**(학습→회독 흐름 순, 파일명·node 매핑은 [screens/README](./screens/README.md)). 영수증 수정·라임→뉴트럴(03) 반영 확인.
 - `motion/` — 원본 MOV 2종은 용량상 저장소 외 보관(필요 시 대표 프레임/GIF 추출).
-- 화면 PNG ①~⑥ — Figma 익스포트 첨부 예정(`screens/`).
