@@ -40,6 +40,19 @@ body{background:var(--page);color:var(--ink);font-family:'Pretendard',-apple-sys
 .bridge .compose{margin-top:12px;padding-top:12px;border-top:1px dashed var(--lime);font-size:15.5px;font-weight:600;color:var(--ink);}
 .bridge .compose b{font-weight:800;}
 .bridge .compose i{font-style:normal;color:var(--primary);font-weight:800;}
+/* v3: 뜻 먼저 + 소프트 발견형 브리지 */
+.meaning-block{text-align:center;margin-top:20px;}
+.meaning-block .mlabel{font-size:11px;font-weight:700;color:var(--mute);letter-spacing:.5px;}
+.meaning-block .mword{font-size:32px;font-weight:800;margin-top:5px;letter-spacing:-.01em;}
+.meaning-block .mpos{font-size:13px;color:var(--body);margin-top:3px;}
+.bridge.soft{background:var(--page);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:16px;text-align:center;}
+.bridge.soft .slabel{font-size:12px;font-weight:800;color:var(--lime-deep);}
+.bridge.soft .ko{font-size:22px;font-weight:800;margin-top:7px;}
+.bridge.soft .ko .hj{font-size:16px;color:var(--body);font-weight:700;margin-left:2px;}
+.bridge.soft .ko .same{font-size:14px;color:var(--body);font-weight:600;margin-left:3px;}
+.bridge.soft .compose{margin-top:11px;padding-top:11px;border-top:1px dashed var(--line);font-size:15px;font-weight:600;color:var(--ink);}
+.bridge.soft .compose b{font-weight:800;}
+.bridge.soft .compose i{font-style:normal;color:var(--primary);font-weight:800;}
 
 .ex{background:var(--page);border-radius:14px;padding:14px 16px;margin-top:16px;}
 .ex .lb{font-size:11px;font-weight:700;color:var(--mute);letter-spacing:.5px;}
@@ -80,16 +93,23 @@ body{background:var(--page);color:var(--ink);font-family:'Pretendard',-apple-sys
   <div class="sub">경쟁 앱 표준(옥편 표기·JLPT 배지·부수 풀이) 채택 <b>+ 음독↔한국음 연결(우리만의 차별점)</b>. 스펙: <code>handoff/BRIDGE-SPEC.md</code></div>
 
   <!-- STATE 1: reveal -->
-  <div class="h" style="color:var(--body)">① 뜻 공개(reveal) — 브리지 대상 단어<span class="tag">동음이의 제거</span></div>
+  <div class="h" style="color:var(--body)">① 뜻 공개(reveal) — 브리지 대상 단어<span class="tag">v3 · 뜻 먼저 · 발견형</span></div>
   <div class="card">
     <div class="jp">進度</div>
     <div class="rd">しんど <span class="spk">🔊</span></div>
 
-    <div class="bridge">
-      <div class="pill">이미 아는 한자어</div>
-      <div class="ko">진도<span class="hj">(進度)</span></div>
-      <div class="sense">진행 정도 · 명사</div>
-      <div class="compose">일본어 발음 <b>しんど</b> = シン<i>진</i> · ド<i>도</i></div>
+    <!-- 뜻(한글) 먼저 -->
+    <div class="meaning-block">
+      <div class="mlabel">뜻</div>
+      <div class="mword">진행 정도</div>
+      <div class="mpos">명사</div>
+    </div>
+
+    <!-- 소프트 발견형 연결 (단정 X, 단어의 사실만) -->
+    <div class="bridge soft">
+      <div class="slabel">한국어 연결</div>
+      <div class="ko">진도<span class="hj">(進度)</span><span class="same">와 같은 한자</span></div>
+      <div class="compose">발음 <b>しんど</b> = シン<i>진</i> · ド<i>도</i></div>
     </div>
 
     <div class="ex">
@@ -99,7 +119,7 @@ body{background:var(--page);color:var(--ink);font-family:'Pretendard',-apple-sys
     </div>
     <div class="grades"><div class="grade no">아직이에요</div><div class="grade yes">외웠어요</div></div>
   </div>
-  <div class="note"><b>수정:</b> "진도" 단독 → <b>진도(進度) · 진행 정도</b> 로 한자 병기 + 뜻을 붙여 동음이의(震度·珍島) 제거. 예문은 인식 바로 아래 유지(SRS 회상 위계). <b>게이팅:</b> 음독 한자어에만 노출, 훈독·고유어(ダンス·山)엔 이 블록 숨김.</div>
+  <div class="note"><b>수정(v3):</b> 단정 <s>"이미 아는 단어예요"</s> 삭제 → <b>뜻(진행 정도) 먼저</b> + 연결은 <b>"한국어 '진도(進度)'와 같은 한자"</b>(유저가 아니라 <b>단어의 사실</b>로 서술). R3·R5의 <b>"강요/억지"</b> 피드백 반영. 한자 병기로 동음이의(震度)도 여전히 제거. <b>게이팅:</b> 음독 한자어만, 훈독·고유어(ダンス·山)엔 숨김.</div>
 
   <!-- STATE 2: 단어 상세 -->
   <div class="h" style="color:var(--body);margin-top:30px">② 단어 상세 · 한자 분해 — 옥편 표기 + 브리지<span class="tag">업계 표준 + 연결</span></div>
