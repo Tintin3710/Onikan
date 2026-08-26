@@ -169,7 +169,7 @@ stateDiagram-v2
 | **C-1** ✅ | 회독 평가 쌍 `모름/안다` | `GradeButtons`에 **`variant="review"`(모름/안다)** 추가. 학습 variant(아직이에요/외웠어요)와 병존. |
 | 단골=보상 | (충돌 아님) | DESIGN.md L359가 이미 "a streak kept"를 보상에 포함 → `StreakStamps` 라임은 **규칙 내**. 그대로 진행. |
 
-> ✅ **정본 반영 완료(2026-08):** `DESIGN.md`에 D-2 차트 강조 예외 추가 · `COMPONENTS.md`에 R-1(홈 세그먼트 폐기)·C-1(GradeButtons `review`)·D-2·D-1·신규 컴포넌트(`hero-card`·`도장`·`ChapterRow`·`ReviewTopCard`·`ScoreDistribution` 등)·T-1/T-2 편차·명명 매핑 반영. 남은 것은 미확정 정책 O-1~O-5.
+> ✅ **정본 반영 완료(2026-08):** `DESIGN.md`에 D-2 차트 강조 예외 추가 · `COMPONENTS.md`에 R-1(홈 세그먼트 폐기)·C-1(GradeButtons `review`)·D-2·D-1·신규 컴포넌트(`hero-card`·`도장`·`ChapterRow`·`ReviewTopCard`·`ScoreDistribution` 등)·T-1/T-2 편차·명명 매핑·**정책 O-1~O-5 결정** 반영 완료.
 
 ## 실측 토큰·타이포 (Figma 변수 대조)
 
