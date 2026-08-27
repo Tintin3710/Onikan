@@ -200,5 +200,6 @@ stateDiagram-v2
 
 ## 자료
 
+- **[`prototypes/flow.html`](./prototypes/flow.html)** — 탭 가능한 **흐름 플레이어**(익스포트 화면 + 전환 hotspot/버튼). 로컬에서 흐름 검토용. 회독 학습 카드 등 **누락 지점은 빨간 플레이스홀더**로 표시.
 - **[`screens/`](./screens)** — Figma "ui 최신화"(`254-6477`)에서 **2× PNG 12종 익스포트 완료**(학습→회독 흐름 순, 파일명·node 매핑은 [screens/README](./screens/README.md)). 영수증 수정·라임→뉴트럴(03) 반영 확인.
 - **[`motion/`](./motion)** — `buttonAutoFill`·`confettiBurst` 레퍼런스(각 mp4+gif) 커밋 완료.

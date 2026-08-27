@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>오니칸 리디자인 흐름 (연습)</title>
+<style>
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  :root{
+    --bg:#16171b; --panel:#1f2126; --line:#2c2f36; --ink:#f4f4f6; --mute:#9a9ba3;
+    --primary:#ef5112; --primary-2:#f97316; --miss:#e5484d; --chip:#282b31;
+  }
+  html,body{ margin:0; height:100%; }
+  body{ background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; display:flex; flex-direction:column; height:100dvh; }
+
+  /* top toolbar */
+  .bar{ display:flex; align-items:center; gap:8px; padding:10px 12px; border-bottom:1px solid var(--line); background:var(--panel); }
+  .bar button{ font:inherit; color:var(--ink); background:var(--chip); border:1px solid var(--line);
+    border-radius:10px; padding:7px 11px; font-size:13px; cursor:pointer; white-space:nowrap; }
+  .bar button:active{ filter:brightness(1.2); }
+  .bar .title{ flex:1; min-width:0; font-size:14px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .bar .step{ font-size:12px; color:var(--mute); font-variant-numeric:tabular-nums; }
+
+  /* stage */
+  .stage{ flex:1; overflow:auto; display:flex; flex-direction:column; align-items:center; padding:16px 12px 8px; }
+  .phone{ width:100%; max-width:392px; background:#000; border-radius:30px; padding:8px; box-shadow:0 12px 40px rgba(0,0,0,.5); }
+  .screen{ position:relative; background:#fff; border-radius:24px; overflow:hidden; }
+  .screen img{ display:block; width:100%; height:auto; }
+  .screen.tap img{ cursor:pointer; }
+
+  /* hotspot overlays (highlight of outgoing CTAs) */
+  .hot{ position:absolute; border:2px dashed rgba(239,81,18,.9); border-radius:10px; background:rgba(239,81,18,.12);
+    display:none; align-items:flex-start; justify-content:flex-start; }
+  .hot b{ font-size:10px; background:var(--primary); color:#fff; padding:2px 5px; border-radius:6px; margin:3px; white-space:nowrap; }
+  body.showhot .hot{ display:flex; cursor:pointer; }
+
+  /* missing screen placeholder */
+  .missing{ aspect-ratio:390/844; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+    background:repeating-linear-gradient(45deg,#fff,#fff 14px,#fdecec 14px,#fdecec 28px); color:#7a1c1f; text-align:center; padding:28px; }
+  .missing .tag{ font-size:12px; font-weight:700; letter-spacing:1px; color:#fff; background:var(--miss); padding:5px 12px; border-radius:999px; }
+  .missing h3{ margin:0; font-size:19px; color:#3a1112; }
+  .missing p{ margin:0; font-size:13px; line-height:1.6; color:#7a1c1f; max-width:280px; }
+
+  /* actions panel */
+  .actions{ width:100%; max-width:392px; margin-top:12px; }
+  .actions .lb{ font-size:12px; color:var(--mute); margin:0 2px 8px; }
+  .edge{ display:flex; align-items:center; gap:10px; width:100%; text-align:left; font:inherit; color:var(--ink);
+    background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin-bottom:8px; cursor:pointer; }
+  .edge:active{ border-color:var(--primary); }
+  .edge .k{ font-size:14px; font-weight:600; flex:1; }
+  .edge .to{ font-size:12px; color:var(--mute); }
+  .edge .arw{ color:var(--primary); font-weight:700; }
+  .edge.noop{ opacity:.55; cursor:default; }
+  .edge.noop:active{ border-color:var(--line); }
+  .edge.miss .arw, .edge.miss .to{ color:var(--miss); }
+
+  /* jump list overlay */
+  .sheet{ position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; z-index:40; }
+  .sheet.on{ display:block; }
+  .sheet .card{ position:absolute; left:0; right:0; bottom:0; background:var(--panel); border-top:1px solid var(--line);
+    border-radius:18px 18px 0 0; padding:14px 14px 22px; max-height:76vh; overflow:auto; }
+  .sheet h4{ margin:4px 2px 12px; font-size:14px; }
+  .grid{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .grid button{ font:inherit; color:var(--ink); background:var(--chip); border:1px solid var(--line); border-radius:10px;
+    padding:10px; font-size:12.5px; text-align:left; cursor:pointer; }
+  .grid button.cur{ border-color:var(--primary); color:var(--primary-2); }
+  .grid button.miss{ color:#ff9ea1; }
+  .notes{ margin-top:14px; border-top:1px solid var(--line); padding-top:12px; }
+  .notes b{ font-size:12.5px; color:#ffb3a0; } .notes ul{ margin:8px 0 0; padding-left:18px; }
+  .notes li{ font-size:12.5px; color:var(--mute); line-height:1.7; }
+  .hint{ text-align:center; font-size:11.5px; color:var(--mute); margin:2px 0 10px; }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <button id="back">‹ 뒤로</button>
+    <button id="restart">⟲</button>
+    <div class="title" id="title">—</div>
+    <div class="step" id="step"></div>
+    <button id="hotbtn">핫스팟</button>
+    <button id="listbtn">☰ 목록</button>
+  </div>
+
+  <div class="stage">
+    <div class="phone"><div class="screen" id="screen"></div></div>
+    <div class="hint" id="hint">화면을 탭하면 주요 경로로, 아래 버튼으로 분기 이동</div>
+    <div class="actions"><div class="lb">이 화면에서 이동</div><div id="edges"></div></div>
+  </div>
+
+  <div class="sheet" id="sheet">
+    <div class="card">
+      <h4>화면으로 점프</h4>
+      <div class="grid" id="jump"></div>
+      <div class="notes">
+        <b>알려진 흐름 갭 (검토 포인트)</b>
+        <ul>
+          <li><b style="color:#ff9ea1">회독 학습 카드</b>(対応·모름/안다)는 Figma 단독 프레임이 없어 <b style="color:#ff9ea1">빨간 플레이스홀더</b>로 표시 — 실제 화면 필요.</li>
+          <li><b>오늘 학습 복습</b>(틀린 단어) 전용 화면이 없어 학습 카드(02)를 재사용하는 것으로 가정.</li>
+          <li>공유 영수증(06)의 <b>이미지로 저장·공유</b>는 이 연습에선 무동작.</li>
+          <li>메뉴·설정 탭, 8월 메뉴판 2depth(도감형)는 이 흐름에 미포함(별도).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+<script>
+const IMG = "../screens/";
+// 각 화면: 이미지 · 제목 · 전환(첫 edge = 화면 탭 시 주요 경로) · 핫스팟(대략 위치, %)
+const S = {
+  s01:{img:"01-home-study-before.png", t:"홈 · 학습 전", e:[
+      {k:"학습 시작하기", to:"s02", h:{x:6,y:60,w:88,h:6}},
+      {k:"기록 탭", to:"s11", h:{x:47,y:96,w:16,h:4}} ]},
+  s02:{img:"02-study-front.png", t:"학습 · 카드 앞면(리콜)", e:[
+      {k:"카드 탭 · 뜻 보기", to:"s03", h:{x:6,y:88,w:88,h:7}},
+      {k:"✕ 닫기 → 홈", to:"s01", h:{x:2,y:6,w:14,h:5}} ]},
+  s03:{img:"03-study-revealed.png", t:"학습 · 뜻 공개(발음유사·예문)", e:[
+      {k:"외웠어요", to:"s04", h:{x:51,y:90,w:44,h:7}},
+      {k:"아직이에요", to:"s04", h:{x:5,y:90,w:44,h:7}},
+      {k:"단어 상세", to:"s12", h:{x:35,y:70,w:30,h:5}} ]},
+  s04:{img:"04-receipt-ingredient.png", t:"재료 획득 영수증", e:[
+      {k:"확인 · 재료 완성", to:"s05", h:{x:6,y:88,w:88,h:7}},
+      {k:"확인 · 미완성이면", to:"s07"} ]},
+  s05:{img:"05-onigiri-complete.png", t:"오니기리 완성 🎉 (폭죽)", e:[
+      {k:"영수증 받고 마치기", to:"s06", h:{x:6,y:92,w:88,h:6}} ]},
+  s06:{img:"06-receipt-share.png", t:"공유 영수증 (ONIGIRI SHOP)", e:[
+      {k:"홈으로", to:"s07", h:{x:6,y:92,w:88,h:6}},
+      {k:"이미지로 저장 / 공유", to:null, noop:true} ]},
+  s07:{img:"07-home-study-done.png", t:"홈 · 학습 완료", e:[
+      {k:"회독 시작하기", to:"s08", h:{x:6,y:52,w:88,h:6}},
+      {k:"학습 단어 다시 보기 → 오늘 학습", to:"s02", h:{x:20,y:60,w:60,h:4}},
+      {k:"기록 탭", to:"s11"} ]},
+  s08:{img:"08-home-review-before.png", t:"홈 · 회독 전", e:[
+      {k:"N5-1 시작하기 → 회독 뷰", to:"sREV", miss:true, h:{x:6,y:57,w:88,h:6}},
+      {k:"오늘 학습 복습 · 열기", to:"s02", h:{x:78,y:20,w:18,h:5}},
+      {k:"빈출 N5-1 열기 → 회독 뷰", to:"sREV", miss:true},
+      {k:"기록 탭", to:"s11"} ]},
+  sREV:{img:null, t:"회독 학습 카드 — 누락", miss:true, e:[
+      {k:"모름 → 회독 완료", to:"s09"},
+      {k:"안다 → 회독 완료", to:"s09"},
+      {k:"✕ 닫기 → 회독 전", to:"s08"} ]},
+  s09:{img:"09-review-done.png", t:"회독 완료 · N1-1", e:[
+      {k:"챕터 목록으로 → 홈 회독완료", to:"s10", h:{x:6,y:90,w:88,h:6}},
+      {k:"다시 외우기 → 회독 뷰", to:"sREV", miss:true} ]},
+  s10:{img:"10-home-review-done.png", t:"홈 · 회독 완료", e:[
+      {k:"이어서 N5-2 시작하기 → 회독 뷰", to:"sREV", miss:true, h:{x:6,y:55,w:88,h:6}},
+      {k:"학습 단어 다시 보기 → 오늘 학습", to:"s02"},
+      {k:"오늘 학습 복습 · 열기", to:"s02", h:{x:78,y:14,w:18,h:4}},
+      {k:"기록 탭", to:"s11"} ]},
+  s11:{img:"11-record.png", t:"기록", e:[
+      {k:"지금 연습하기 → 다음 챕터(학습)", to:"s02", h:{x:6,y:78,w:88,h:5}},
+      {k:"오늘 탭 → 홈", to:"s01", h:{x:5,y:96,w:16,h:4}} ]},
+  s12:{img:"12-word-detail.png", t:"단어 상세 (11c)", e:[
+      {k:"✕ 닫기 → 학습", to:"s03", h:{x:2,y:4,w:14,h:4}} ]},
+};
+const ORDER = ["s01","s02","s03","s04","s05","s06","s07","s08","sREV","s09","s10","s11","s12"];
+const START = "s01";
+let cur = START, hist = [];
+
+const $=id=>document.getElementById(id);
+function render(){
+  const s = S[cur];
+  $("title").textContent = s.t;
+  $("step").textContent = (ORDER.indexOf(cur)+1)+" / "+ORDER.length;
+  const scr = $("screen");
+  scr.className = "screen" + (s.e[0] && !s.miss ? " tap":"");
+  if(s.miss || !s.img){
+    scr.innerHTML = `<div class="missing"><div class="tag">MISSING SCREEN</div>
+      <h3>회독 학습 카드</h3>
+      <p>「対応 · たいおう · 대응」 + <b>모름 / 안다</b> 평가 화면.<br>Figma "ui 최신화" 섹션에 <b>단독 프레임이 없어</b> 흐름상 비어 있음 — 실제 화면 제작 필요.</p></div>`;
+  } else {
+    let hots = s.e.filter(e=>e.h).map((e,i)=>{
+      const idx = s.e.indexOf(e);
+      return `<div class="hot" style="left:${e.h.x}%;top:${e.h.y}%;width:${e.h.w}%;height:${e.h.h}%" data-go="${idx}"><b>${e.k}</b></div>`;
+    }).join("");
+    scr.innerHTML = `<img src="${IMG}${s.img}" alt="${s.t}">${hots}`;
+    const img = scr.querySelector("img");
+    img.onclick = ()=>{ if(s.e[0] && s.e[0].to) go(s.e[0].to); };
+  }
+  scr.querySelectorAll(".hot").forEach(h=>h.onclick=(ev)=>{ ev.stopPropagation();
+    const e=s.e[+h.dataset.go]; if(e && e.to) go(e.to); });
+
+  // edges panel
+  $("edges").innerHTML = s.e.map((e,i)=>{
+    if(e.noop) return `<div class="edge noop"><span class="k">${e.k}</span><span class="to">무동작</span></div>`;
+    const cls = e.miss ? "edge miss":"edge";
+    const toT = e.to ? S[e.to].t : "";
+    return `<button class="${cls}" data-go="${i}"><span class="k">${e.k}</span><span class="to">${toT}</span><span class="arw">→</span></button>`;
+  }).join("");
+  $("edges").querySelectorAll("button[data-go]").forEach(b=>b.onclick=()=>{
+    const e=s.e[+b.dataset.go]; if(e && e.to) go(e.to); });
+
+  $("back").disabled = hist.length===0;
+  $("back").style.opacity = hist.length? 1:.4;
+  buildJump();
+}
+function go(to){ if(!to||to===cur) return; hist.push(cur); cur=to; scrollTop(); render(); }
+function scrollTop(){ document.querySelector(".stage").scrollTop=0; }
+
+$("back").onclick = ()=>{ if(hist.length){ cur=hist.pop(); scrollTop(); render(); } };
+$("restart").onclick = ()=>{ cur=START; hist=[]; scrollTop(); render(); };
+$("hotbtn").onclick = ()=>{ document.body.classList.toggle("showhot");
+  $("hotbtn").style.color = document.body.classList.contains("showhot") ? "var(--primary-2)":""; };
+$("listbtn").onclick = ()=> $("sheet").classList.add("on");
+$("sheet").onclick = (e)=>{ if(e.target.id==="sheet") $("sheet").classList.remove("on"); };
+function buildJump(){
+  $("jump").innerHTML = ORDER.map(id=>{
+    const s=S[id]; const cls=(id===cur?"cur ":"")+(s.miss?"miss":"");
+    return `<button class="${cls}" data-j="${id}">${ORDER.indexOf(id)+1}. ${s.t}</button>`;
+  }).join("");
+  $("jump").querySelectorAll("button[data-j]").forEach(b=>b.onclick=()=>{
+    go(b.dataset.j); $("sheet").classList.remove("on"); });
+}
+render();
+</script>
+</body>
+</html>
