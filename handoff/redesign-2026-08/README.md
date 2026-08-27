@@ -200,6 +200,7 @@ stateDiagram-v2
 
 ## 자료
 
-- **[`prototypes/flow.html`](./prototypes/flow.html)** — 탭 가능한 **흐름 플레이어**(익스포트 화면 + 전환 hotspot/버튼). 로컬에서 흐름 검토용. 회독 학습 카드 등 **누락 지점은 빨간 플레이스홀더**로 표시.
+- **[`prototypes/today-review.html`](./prototypes/today-review.html)** — **인터랙티브 프로토타입**(실제 HTML 화면). 오늘/회독 신규 IA: 오늘 홈(학습완료·복습 미완료) → 복습하기 → 회독 허브(2depth 헤더) → 복습 시작 → 회독 학습(13단어·모름/안다) → 회독 완료 → 오늘로 돌아가기 → 오늘 홈(복습 완료). `‹오늘` 백내비·`오늘 배운 단어` 브라우즈 동작. **로컬 실행: `cd handoff && python3 -m http.server 8799` → `http://localhost:8799/redesign-2026-08/prototypes/today-review.html`** (마스코트·폰트가 상위 폴더라 file:// 직접 열기보다 서버 권장).
+- **[`prototypes/flow.html`](./prototypes/flow.html)** — 탭 가능한 **흐름 플레이어**(익스포트 화면 PNG + 전환 hotspot/버튼). 전체 화면 흐름 검토용. 회독 학습 카드 등 **누락 지점은 빨간 플레이스홀더**로 표시.
 - **[`screens/`](./screens)** — Figma "ui 최신화"(`254-6477`)에서 **2× PNG 12종 익스포트 완료**(학습→회독 흐름 순, 파일명·node 매핑은 [screens/README](./screens/README.md)). 영수증 수정·라임→뉴트럴(03) 반영 확인.
 - **[`motion/`](./motion)** — `buttonAutoFill`·`confettiBurst` 레퍼런스(각 mp4+gif) 커밋 완료.
