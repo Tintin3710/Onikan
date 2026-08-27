@@ -243,13 +243,14 @@ function browse(){
 }
 
 function hub(){
-  const n51 = s.reviewDone ? 45 : 32;          // 오늘 복습(13) 완료 시 N5-1 진행률 +13
+  const n51 = 32;                              // 챕터 진도는 '새 단어 학습'으로만 오름 — 복습과 분리 (정책 O-6=B)
   const n51done = n51 >= 50;
   const topCard = s.reviewDone
     ? `<div class="card">
          <div class="ov n">오늘 복습 완료</div>
          <div class="big">오늘 복습을 마쳤어요.<br>내일 또 만나요.</div>
-         <div class="meta">${NREV} / ${NREV} 완료 · N5-1 +${NREV}단어</div>
+         <div class="desc">복습은 챕터 진도와 별개로, 헷갈린 단어의 기억을 다져요.</div>
+         <div class="meta">${NREV} / ${NREV} 완료</div>
          <button class="slink" data-go="study">다시 복습하기 ›</button>
        </div>`
     : `<div class="card">
