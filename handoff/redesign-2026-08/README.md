@@ -209,7 +209,13 @@ stateDiagram-v2
 
 ## 자료
 
-- **[`prototypes/today-review.html`](./prototypes/today-review.html)** — **인터랙티브 프로토타입**(실제 HTML 화면). 오늘/회독 신규 IA: 오늘 홈(학습완료·복습 미완료) → 복습하기 → 회독 허브(2depth 헤더) → 복습 시작 → 회독 학습(13단어·모름/안다) → 회독 완료 → 오늘로 돌아가기 → 오늘 홈(복습 완료). `‹오늘` 백내비·`오늘 배운 단어` 브라우즈 동작. **로컬 실행: `cd handoff && python3 -m http.server 8799` → `http://localhost:8799/redesign-2026-08/prototypes/today-review.html`** (마스코트·폰트가 상위 폴더라 file:// 직접 열기보다 서버 권장).
+- **[`prototypes/today-review.html`](./prototypes/today-review.html)** — **인터랙티브 프로토타입**(실제 HTML 화면). 오늘 홈을 **Adaptive "다음 학습" 카드** 중심으로 재편: 흩어진 카드(회독·오늘 배운 단어·오늘 복습)를 하나로 묶고, 오늘 배운 단어는 Hero의 secondary CTA로 흡수. **홈 상태 A/B/C/D**를 우하단 미리보기 FAB로 전환:
+  - **A** 복습 미완료 → 오늘 복습 Primary(오렌지) + N5 회독 Secondary(진행바+텍스트링크)
+  - **B** 복습 완료 → `✓ 오늘 복습 완료` + 회독 이어가기 Primary로 승격
+  - **C** 복습 대상 0 → 회독 Primary(빈 카드 없음)
+  - **D** 복습·회독 모두 완료 → `오늘 공부 끝!` 완료감(오렌지 CTA 제거, 텍스트링크만)
+  - 흐름: 복습하기 → 세션 → B로 전환 → 회독 이어가기 → 회독 챕터(hub) → 회독하기 → 세션 → D. **O-6 확인: 복습은 N5-1 32/50 불변, 회독 세션은 +13(→45/50)**.
+  - **로컬 실행: `cd handoff && python3 -m http.server 8799` → `http://localhost:8799/redesign-2026-08/prototypes/today-review.html`** (마스코트·폰트가 상위 폴더라 file:// 직접 열기보다 서버 권장).
 - **[`prototypes/flow.html`](./prototypes/flow.html)** — 탭 가능한 **흐름 플레이어**(익스포트 화면 PNG + 전환 hotspot/버튼). 전체 화면 흐름 검토용. 회독 학습 카드 등 **누락 지점은 빨간 플레이스홀더**로 표시.
 - **[`screens/`](./screens)** — Figma "ui 최신화"(`254-6477`)에서 **2× PNG 12종 익스포트 완료**(학습→회독 흐름 순, 파일명·node 매핑은 [screens/README](./screens/README.md)). 영수증 수정·라임→뉴트럴(03) 반영 확인.
 - **[`motion/`](./motion)** — `buttonAutoFill`·`confettiBurst` 레퍼런스(각 mp4+gif) 커밋 완료.
