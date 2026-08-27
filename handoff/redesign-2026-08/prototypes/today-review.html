@@ -91,6 +91,7 @@ body{ background:#d9d5cf; font-family:'Pretendard',-apple-system,BlinkMacSystemF
 .st{ font-size:12.5px; font-weight:700; padding:6px 12px; border-radius:999px; flex:none; }
 .st.go{ background:var(--ink); color:var(--canvas); }
 .st.prog{ background:#FCE8DE; color:var(--primary); }
+.st.done{ background:#E7F4D9; color:var(--secondary-deep); }
 .st.lock{ color:var(--mute); }
 
 /* achievement */
@@ -184,10 +185,11 @@ const TABICONS={today:'<path d="M12 4c.5 0 .96.26 1.22.7l6.5 11.1c.6 1.03-.14 2.
 function home(){
   const rd = s.reviewDone;
   const reviewCard = rd
-    ? `<div class="card" data-t="복습 기록은 실제 앱에서 제공돼요">
+    ? `<div class="card">
          <div class="ov n">오늘 복습 완료</div>
          <div class="big" style="font-size:21px">${NREV}개 단어를 다시 익혔어요.</div>
          <div class="done-tag"><span class="chk">${check}</span> 오늘 복습 끝</div>
+         <div><button class="tlink" data-go="hub">회독 단계 보기 <span class="arw">›</span></button></div>
        </div>`
     : `<div class="card">
          <div class="ov">오늘 복습</div>
@@ -241,6 +243,21 @@ function browse(){
 }
 
 function hub(){
+  const n51 = s.reviewDone ? 45 : 32;          // 오늘 복습(13) 완료 시 N5-1 진행률 +13
+  const n51done = n51 >= 50;
+  const topCard = s.reviewDone
+    ? `<div class="card">
+         <div class="ov n">오늘 복습 완료</div>
+         <div class="big">오늘 복습을 마쳤어요.<br>내일 또 만나요.</div>
+         <div class="meta">${NREV} / ${NREV} 완료 · N5-1 +${NREV}단어</div>
+         <button class="slink" data-go="study">다시 복습하기 ›</button>
+       </div>`
+    : `<div class="card">
+         <div class="ov">오늘 복습 ${NREV}개</div>
+         <div class="big">아직 기억날 때<br>한 번 더 보자.</div>
+         <div class="meta">N5-1 · 약 3분</div>
+         <button class="cta" data-go="study">복습 시작</button>
+       </div>`;
   return `<div class="scr">
     <div class="dnav">
       <button class="back" data-go="home">${chevL} 오늘</button>
@@ -248,18 +265,13 @@ function hub(){
       <button class="lvl" data-t="레벨 선택 (연습)">N5 <small>▾</small></button>
     </div>
 
-    <div class="card">
-      <div class="ov">오늘 복습 ${NREV}개</div>
-      <div class="big">아직 기억날 때<br>한 번 더 보자.</div>
-      <div class="meta">N5-1 · 약 3분</div>
-      <button class="cta" data-go="study">복습 시작</button>
-    </div>
+    ${topCard}
 
     <div class="sec-title">회독 단계</div>
     <div class="sec-sub">50단어씩 모두 외울 때까지 반복해요.</div>
     <div class="crow" data-go="study">
-      <div class="idx">01</div><div class="cn"><div class="nm">N5-1</div><div class="ct">32 / 50 단어</div></div>
-      <div class="st prog">진행 중</div>
+      <div class="idx">01</div><div class="cn"><div class="nm">N5-1</div><div class="ct">${n51} / 50 단어</div></div>
+      <div class="st ${n51done?'done':'prog'}">${n51done?'완료':'진행 중'}</div>
     </div>
     <div class="crow lock"><div class="idx">02</div><div class="cn"><div class="nm">N5-2</div><div class="ct">0 / 50 단어</div></div><div class="st lock">잠김</div></div>
     <div class="crow lock"><div class="idx">03</div><div class="cn"><div class="nm">N5-3</div><div class="ct">0 / 50 단어</div></div><div class="st lock">잠김</div></div>
