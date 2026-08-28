@@ -209,6 +209,7 @@ stateDiagram-v2
 
 ## 자료
 
+- **[`prototypes/review-hub.html`](./prototypes/review-hub.html)** — **회독 Chapter Hub 리디자인**(단독 시안). 3단 정보구조를 **서로 다른 시각언어**로: N5 전체 진척도=**Ring 게이지**(20%), 현재 챕터=**Linear 바**(32/50·18개 남음), 챕터 리스트=**텍스트+뱃지**(진행바 없음). `챕터 1/2/3` 용어, 누적 `10회` 기록. **상태 A/B/C/D**(진행중·완료직후 해금·다음챕터·N5완료) 우하단 FAB로 전환. `이어서 회독하기` → 세션 → **회독 페이지로 복귀(오늘 홈 자동이동 X)** + 다음 챕터 자동 해금(시작은 사용자 선택). 실행: 위 서버 → `…/prototypes/review-hub.html`.
 - **[`prototypes/today-review.html`](./prototypes/today-review.html)** — **인터랙티브 프로토타입**(실제 HTML 화면). 오늘 홈을 **Adaptive "다음 학습" 카드** 중심으로 재편: 흩어진 카드(회독·오늘 배운 단어·오늘 복습)를 하나로 묶고, 오늘 배운 단어는 Hero의 secondary CTA로 흡수. **홈 상태 A/B/C/D**를 우하단 미리보기 FAB로 전환:
   - **A** 복습 미완료 → 오늘 복습 Primary(오렌지) + N5 회독 Secondary(진행바+텍스트링크)
   - **B** 복습 완료 → `✓ 오늘 복습 완료` + 회독 이어가기 Primary로 승격

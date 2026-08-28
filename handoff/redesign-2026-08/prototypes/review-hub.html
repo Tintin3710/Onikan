@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>오니칸 · 회독 허브 (연습)</title>
+<style>
+@font-face{font-family:'Pretendard';font-weight:400;font-display:swap;src:url('../../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Regular.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:500;font-display:swap;src:url('../../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Medium.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:600;font-display:swap;src:url('../../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-SemiBold.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:700;font-display:swap;src:url('../../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Bold.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:800;font-display:swap;src:url('../../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-ExtraBold.woff2') format('woff2')}
+:root{
+  --ink:#1D1D21; --body:#56565E; --mute:#8E8E97; --canvas:#FFFFFF;
+  --page:#F4F2EF; --soft:#ECEAE6; --pressed:#DED9D2; --plate:#EDEDF1;
+  --primary:#EF5112; --primary-pressed:#D2460E; --on-primary:#FFFFFF;
+  --secondary:#A3E635; --secondary-deep:#4D7C0F;
+  --shadow:0 6px 18px rgba(40,30,20,.06); --shadow-sm:0 3px 10px rgba(40,30,20,.05);
+}
+*{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html,body{ margin:0; height:100%; }
+body{ background:#d9d5cf; font-family:'Pretendard',-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+.app{ min-height:100dvh; max-width:460px; margin:0 auto; background:var(--page); color:var(--ink); display:flex; flex-direction:column; position:relative; }
+.root{ flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; display:flex; flex-direction:column; }
+.scr{ display:flex; flex-direction:column; flex:1 0 auto; min-height:0;
+  padding:0 20px calc(env(safe-area-inset-bottom) + 90px); padding-top:calc(env(safe-area-inset-top) + 6px); }
+.scr.focus{ padding-bottom:calc(env(safe-area-inset-bottom) + 20px); }
+
+/* 2depth nav */
+.dnav{ display:flex; align-items:center; gap:10px; padding:8px 0 16px; }
+.dnav .back{ display:inline-flex; align-items:center; gap:4px; background:var(--canvas); border:none; border-radius:999px; padding:10px 16px 10px 12px; font:inherit; font-size:15px; font-weight:600; color:var(--ink); box-shadow:var(--shadow-sm); cursor:pointer; }
+.dnav .back svg{ width:9px; height:16px; }
+.dnav .cur{ flex:1; text-align:center; font-size:17px; font-weight:700; margin-right:-46px; }
+.lvl{ display:inline-flex; align-items:center; gap:5px; background:var(--canvas); border-radius:999px; padding:9px 13px; font-size:14px; font-weight:600; box-shadow:var(--shadow-sm); border:none; font-family:inherit; cursor:pointer; }
+.lvl small{ color:var(--mute); font-size:12px; }
+
+/* generic */
+.card{ background:var(--canvas); border-radius:24px; box-shadow:var(--shadow); padding:22px; margin-bottom:16px; }
+.seclabel{ font-size:12px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--mute); margin:8px 2px 12px; }
+.ov{ font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--primary); }
+.ov.n{ color:var(--mute); }
+
+/* ── ① summary ── */
+.sum{ position:relative; }
+.sum .mascot{ position:absolute; top:16px; right:16px; width:56px; height:56px; object-fit:contain; opacity:.95; }
+.sum .cols{ display:flex; align-items:center; gap:16px; margin-top:14px; }
+.sum .reps{ flex:1; }
+.sum .reps .n{ font-size:40px; font-weight:800; letter-spacing:-.03em; line-height:1; }
+.sum .reps .n b{ font-size:20px; font-weight:700; }
+.sum .reps .cap{ font-size:13.5px; color:var(--body); margin-top:8px; }
+.sum .ring{ display:flex; flex-direction:column; align-items:center; gap:2px; }
+.sum .ring .rl{ font-size:12px; font-weight:600; color:var(--body); }
+.sum .divl{ height:1px; background:var(--soft); margin:18px 0 14px; }
+.sum .words{ display:flex; align-items:center; justify-content:space-between; font-size:14px; }
+.sum .words .k{ color:var(--body); font-weight:500; } .sum .words .v{ font-weight:700; font-variant-numeric:tabular-nums; }
+
+/* ── ② current review ── */
+.cur-card .chap{ font-size:24px; font-weight:800; letter-spacing:-.01em; }
+.cur-card .frac{ font-size:15px; color:var(--body); font-weight:600; margin-top:10px; font-variant-numeric:tabular-nums; }
+.lbar{ height:10px; background:var(--pressed); border-radius:999px; overflow:hidden; margin:10px 0 0; }
+.lbar>i{ display:block; height:100%; background:var(--ink); border-radius:999px; transition:width .4s ease; }
+.remain{ font-size:15px; font-weight:600; color:var(--primary); margin-top:14px; }
+.cta{ width:100%; min-height:54px; border:none; border-radius:999px; background:var(--primary); color:var(--on-primary); font-size:17px; font-weight:700; cursor:pointer; font-family:inherit; margin-top:18px; }
+.cta:active{ background:var(--primary-pressed); }
+
+/* success banner (state B) */
+.banner{ background:#FCEFE7; border-radius:18px; padding:16px 18px; margin-bottom:14px; display:flex; gap:12px; align-items:flex-start; }
+.banner .chk{ width:24px; height:24px; border-radius:999px; background:var(--secondary); display:flex; align-items:center; justify-content:center; flex:none; margin-top:1px; }
+.banner .chk svg{ width:14px; height:14px; }
+.banner .bt{ font-size:15px; font-weight:700; } .banner .bd{ font-size:13.5px; color:var(--body); margin-top:3px; line-height:1.5; }
+
+/* new-unlock highlight */
+@keyframes pop{ 0%{transform:scale(.98)} 60%{transform:scale(1.012)} 100%{transform:scale(1)} }
+.pop{ animation:pop .5s ease; }
+
+/* ── ③ chapter list ── */
+.crow{ display:flex; align-items:center; gap:14px; background:var(--canvas); border-radius:18px; box-shadow:var(--shadow-sm); padding:16px 18px; margin-bottom:10px; }
+.crow.tap{ cursor:pointer; } .crow.lock{ opacity:.55; }
+.crow .idx{ width:30px; height:30px; border-radius:9px; background:var(--soft); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:var(--body); flex:none; }
+.crow .idx.done{ background:var(--secondary); color:var(--secondary-deep); }
+.crow .cn{ flex:1; } .crow .cn .nm{ font-size:16px; font-weight:700; } .crow .cn .ct{ font-size:12.5px; color:var(--mute); margin-top:2px; font-variant-numeric:tabular-nums; }
+.badge{ font-size:12.5px; font-weight:700; padding:6px 12px; border-radius:999px; flex:none; }
+.badge.done{ background:#E7F4D9; color:var(--secondary-deep); }
+.badge.cur{ background:#FCE8DE; color:var(--primary); }
+.badge.new{ background:var(--primary); color:#fff; }
+.badge.lock{ color:var(--mute); }
+.startlink{ display:block; text-align:right; font-size:13.5px; font-weight:700; color:var(--primary); margin:-2px 2px 10px; cursor:pointer; }
+
+/* state D completion */
+.dcard{ text-align:center; }
+.dcard img{ width:96px; height:96px; object-fit:contain; margin:0 auto 8px; display:block; }
+.dcard .big{ font-size:24px; font-weight:800; margin-top:2px; }
+.dcard .sub{ font-size:14.5px; color:var(--body); margin-top:8px; }
+
+/* focus study */
+.ftop{ display:flex; align-items:center; gap:14px; min-height:44px; }
+.ftop .x{ background:none; border:none; font-size:24px; color:var(--body); cursor:pointer; padding:4px; }
+.pbar{ flex:1; height:6px; background:var(--pressed); border-radius:999px; overflow:hidden; } .pbar>i{ display:block; height:100%; background:var(--ink); border-radius:999px; transition:width .35s ease; }
+.pcount{ font-size:14px; font-weight:600; color:var(--body); font-variant-numeric:tabular-nums; min-width:44px; text-align:right; }
+.fcard{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:8px; }
+.word{ font-size:46px; font-weight:800; } .reading{ font-size:20px; color:var(--body); font-weight:500; } .meaning{ font-size:26px; font-weight:700; margin-top:6px; } .tap-hint{ font-size:14px; color:var(--mute); margin-top:10px; }
+.grades{ display:flex; gap:10px; padding-top:8px; }
+.grade{ flex:1; min-height:58px; border-radius:999px; font-size:17px; font-weight:700; cursor:pointer; font-family:inherit; }
+.grade.no{ background:transparent; border:1.5px solid var(--pressed); color:var(--ink); } .grade.yes{ background:var(--ink); border:none; color:var(--page); }
+
+/* tabbar */
+.tabbar{ display:flex; background:var(--canvas); border-top:1px solid var(--soft); padding:8px 0 calc(env(safe-area-inset-bottom) + 6px); }
+.tab{ flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; color:var(--mute); background:none; border:none; cursor:pointer; font-family:inherit; }
+.tab svg{ width:26px; height:26px; } .tab span{ font-size:11px; font-weight:500; } .tab.on{ color:var(--primary); }
+
+/* switcher FAB */
+.sw{ position:fixed; right:14px; bottom:calc(env(safe-area-inset-bottom) + 78px); z-index:40; width:48px; height:48px; border-radius:999px; background:rgba(29,29,33,.9); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; line-height:1; box-shadow:0 6px 20px rgba(0,0,0,.28); cursor:pointer; border:2px solid rgba(255,255,255,.18); }
+.sw .lt{ font-size:18px; font-weight:800; } .sw .cp{ font-size:8px; opacity:.6; margin-top:2px; }
+.toast{ position:fixed; left:50%; bottom:130px; transform:translateX(-50%) translateY(10px); background:var(--ink); color:#fff; font-size:14px; font-weight:500; padding:12px 18px; border-radius:999px; opacity:0; pointer-events:none; transition:.25s; z-index:50; max-width:80%; text-align:center; }
+.toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <main class="root" id="root"></main>
+  <nav class="tabbar" id="tabbar"></nav>
+</div>
+<div class="sw" id="sw"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const N5TOTAL=320, CH=50;
+const DECK=[{w:"時間",r:"じかん",m:"시간"},{w:"電車",r:"でんしゃ",m:"전철"},{w:"会社",r:"かいしゃ",m:"회사"},{w:"天気",r:"てんき",m:"날씨"},{w:"名前",r:"なまえ",m:"이름"}];
+const M="../../assets/mascot.png", ONI="../../onigiri/01-tuna-mayo.png";
+
+// state templates
+function tpl(x){
+  if(x==='A') return {reps:10, n5:64, chapters:[{p:32,st:'current'},{p:0,st:'locked'},{p:0,st:'locked'},{p:0,st:'locked'}], done:null};
+  if(x==='B') return {reps:11, n5:82, chapters:[{p:50,st:'done'},{p:0,st:'unlocked'},{p:0,st:'locked'},{p:0,st:'locked'}], done:0};
+  if(x==='C') return {reps:12, n5:102, chapters:[{p:50,st:'done'},{p:20,st:'current'},{p:0,st:'locked'},{p:0,st:'locked'}], done:null};
+  return {reps:20, n5:320, chapters:[{p:50,st:'done'},{p:50,st:'done'},{p:50,st:'done'},{p:50,st:'done'}], done:null}; // D
+}
+let s=Object.assign({screen:'hub', ri:0, revealed:false, actIdx:0}, tpl('A'));
+const $=id=>document.getElementById(id);
+
+// helpers
+function stateLetter(){
+  if(s.chapters.every(c=>c.st==='done')) return 'D';
+  if(s.done!=null) return 'B';
+  const cur=s.chapters.find(c=>c.st==='current');
+  if(cur && cur.p>0 && s.chapters[0].st==='done') return 'C';
+  return 'A';
+}
+function pct(){ return Math.round(s.n5/N5TOTAL*100); }
+function actionable(){ return s.chapters.findIndex(c=>c.st==='current'||c.st==='unlocked'); }
+
+const chevL='<svg viewBox="0 0 9 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1 1.5 8 8 15"/></svg>';
+const check='<svg viewBox="0 0 24 24" fill="none" stroke="#1D1D21" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
+const checkG='<svg viewBox="0 0 24 24" fill="none" stroke="#4D7C0F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
+const TAB={today:'<path d="M12 4c.5 0 .96.26 1.22.7l6.5 11.1c.6 1.03-.14 2.3-1.32 2.3H5.6c-1.18 0-1.92-1.27-1.32-2.3l6.5-11.1C11.04 4.26 11.5 4 12 4Z"/>',menu:'<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 4v16"/>',stats:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',set:'<circle cx="7" cy="8" r="2"/><path d="M9 8h11M4 8h1"/><circle cx="16" cy="16" r="2"/><path d="M14 16H4M18 16h2"/>'};
+
+function ring(p){
+  const r=30, c=2*Math.PI*r, off=c*(1-p/100);
+  return `<svg width="78" height="78" viewBox="0 0 78 78">
+    <circle cx="39" cy="39" r="${r}" fill="none" stroke="var(--soft)" stroke-width="8"/>
+    <circle cx="39" cy="39" r="${r}" fill="none" stroke="var(--primary)" stroke-width="8" stroke-linecap="round" stroke-dasharray="${c.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 39 39)"/>
+    <text x="39" y="45" text-anchor="middle" font-size="19" font-weight="800" fill="var(--ink)">${p}%</text>
+  </svg>`;
+}
+
+// ── ① summary ──
+function summary(){
+  return `<div class="card sum">
+    <img class="mascot" src="${M}" alt="사장">
+    <div class="ov n">회독 기록</div>
+    <div class="cols">
+      <div class="reps"><div class="n">${s.reps}<b>회</b></div><div class="cap">지금까지 회독했어요.</div></div>
+      <div class="ring">${ring(pct())}<div class="rl">N5 전체</div></div>
+    </div>
+    <div class="divl"></div>
+    <div class="words"><span class="k">익힌 단어</span><span class="v">${s.n5} / ${N5TOTAL}</span></div>
+  </div>`;
+}
+
+// ── ② current review ──
+function currentSection(){
+  const st=stateLetter();
+  if(st==='D'){
+    return `<div class="seclabel">회독 완료</div>
+    <div class="card dcard">
+      <img src="${ONI}" alt="오니기리">
+      <div class="ov n">N5 회독 완료</div>
+      <div class="big">모든 챕터를 마쳤어요.</div>
+      <div class="sub">320 / 320 단어 · 전체 진척도 100%</div>
+    </div>`;
+  }
+  const i=actionable(); const c=s.chapters[i]; const rem=CH-c.p;
+  const unlocked=(c.st==='unlocked');
+  const banner = (s.done!=null) ? `<div class="banner"><span class="chk">${check}</span><div><div class="bt">챕터 ${s.done+1} 완료!</div><div class="bd">50개 단어를 모두 익혔어요. 다음 챕터가 열렸어요.</div></div></div>` : '';
+  return `${banner}
+    <div class="seclabel">현재 회독</div>
+    <div class="card cur-card ${unlocked?'pop':''}">
+      <div class="chap">챕터 ${i+1}${unlocked?' · 새로 열림':''}</div>
+      <div class="frac">${c.p} / ${CH} 단어</div>
+      <div class="lbar"><i style="width:${Math.round(c.p/CH*100)}%"></i></div>
+      <div class="remain">${rem}개 남았어요.</div>
+      <button class="cta" data-start="${i}">${unlocked?`챕터 ${i+1} 시작하기`:'이어서 회독하기'}</button>
+    </div>`;
+}
+
+// ── ③ chapter list ──
+function chapterList(){
+  const rows=s.chapters.map((c,i)=>{
+    const n=i+1;
+    if(c.st==='done') return `<div class="crow"><div class="idx done">${checkG}</div><div class="cn"><div class="nm">챕터 ${n}</div><div class="ct">${c.p} / ${CH} 단어</div></div><div class="badge done">완료</div></div>`;
+    if(c.st==='current') return `<div class="crow tap" data-start="${i}"><div class="idx">${String(n).padStart(2,'0')}</div><div class="cn"><div class="nm">챕터 ${n}</div><div class="ct">${c.p} / ${CH} 단어</div></div><div class="badge cur">진행 중</div></div>`;
+    if(c.st==='unlocked') return `<div class="crow tap" data-start="${i}"><div class="idx">${String(n).padStart(2,'0')}</div><div class="cn"><div class="nm">챕터 ${n}</div><div class="ct">${c.p} / ${CH} 단어</div></div><div class="badge new">새로 열림</div></div><div class="startlink" data-start="${i}">시작하기 ›</div>`;
+    return `<div class="crow lock"><div class="idx">${String(n).padStart(2,'0')}</div><div class="cn"><div class="nm">챕터 ${n}</div><div class="ct">${c.p} / ${CH} 단어</div></div><div class="badge lock">잠김</div></div>`;
+  }).join('');
+  return `<div class="seclabel" style="margin-top:22px">회독 챕터</div>
+    <div class="sub" style="font-size:13.5px;color:var(--body);margin:-6px 2px 14px">50개씩 모두 익힐 때까지 반복해요.</div>
+    ${rows}`;
+}
+
+function hub(){
+  return `<div class="scr">
+    <div class="dnav"><button class="back" data-t="오늘 홈으로 (연습)">${chevL} 오늘</button><div class="cur">회독</div><button class="lvl" data-t="레벨 선택 (연습)">N5 <small>▾</small></button></div>
+    ${summary()}
+    ${currentSection()}
+    ${chapterList()}
+  </div>`;
+}
+
+// study
+function study(){
+  const c=DECK[s.ri]; const p=Math.round(s.ri/DECK.length*100);
+  const face=s.revealed?`<div class="word">${c.w}</div><div class="reading">${c.r}</div><div class="meaning">${c.m}</div>`:`<div class="word">${c.w}</div><div class="reading">${c.r}</div><div class="tap-hint">탭해서 뜻 보기</div>`;
+  return `<div class="scr focus">
+    <div class="ftop"><button class="x" data-go="hub">✕</button><div class="pbar"><i style="width:${p}%"></i></div><div class="pcount">${s.ri+1} / ${DECK.length}</div></div>
+    <div class="fcard" ${s.revealed?'':'data-reveal'}>${face}</div>
+    ${ s.revealed?`<div class="grades"><button class="grade no" data-grade>모름</button><button class="grade yes" data-grade>안다</button></div>`:`<button class="cta" data-reveal>뜻 보기</button>` }
+  </div>`;
+}
+
+function tabbar(){
+  const t=[['today','오늘'],['menu','메뉴'],['stats','기록'],['set','설정']];
+  $("tabbar").innerHTML=t.map(([k,l])=>`<button class="tab ${k==='today'?'on':''}" data-t="${l} 탭 (연습)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${TAB[k]}</svg><span>${l}</span></button>`).join('');
+}
+function switcher(){ $("sw").innerHTML=`<span class="lt">${stateLetter()}</span><span class="cp">상태</span>`; }
+
+const VIEWS={hub,study};
+function render(){
+  $("root").innerHTML=VIEWS[s.screen]();
+  const focus=s.screen==='study';
+  $("tabbar").style.display=focus?'none':'flex';
+  $("root").scrollTop=0; switcher();
+}
+function setState(x){ s=Object.assign(s, tpl(x), {screen:'hub'}); render(); }
+let tT; function toast(m){ const t=$("toast"); t.textContent=m; t.classList.add('show'); clearTimeout(tT); tT=setTimeout(()=>t.classList.remove('show'),1800); }
+
+$("app").addEventListener('click',(e)=>{
+  const t=e.target.closest('[data-start],[data-go],[data-reveal],[data-grade],[data-t]'); if(!t) return;
+  if(t.hasAttribute('data-reveal')){ s.revealed=true; render(); return; }
+  if(t.hasAttribute('data-grade')){
+    if(s.ri+1>=DECK.length){ finishChapter(); } else { s.ri++; s.revealed=false; render(); } return;
+  }
+  if(t.dataset.start!=null){ s.actIdx=+t.dataset.start; s.ri=0; s.revealed=false; s.screen='study'; render(); return; }
+  if(t.dataset.go){ s.screen=t.dataset.go; render(); return; }
+  if(t.dataset.t){ toast(t.dataset.t); return; }
+});
+function finishChapter(){
+  const i=s.actIdx, c=s.chapters[i];
+  s.n5=Math.min(N5TOTAL, s.n5 + (CH - c.p));   // O-6: 고유 단어 coverage 증가 (챕터 신규 학습분)
+  c.p=CH; c.st='done'; s.reps+=1; s.done=i;
+  const nx=s.chapters[i+1]; if(nx && nx.st==='locked') nx.st='unlocked';   // 자동 해금, 자동 시작 X
+  s.screen='hub'; render();
+}
+$("sw").addEventListener('click',()=>{ const nx={A:'B',B:'C',C:'D',D:'A'}[stateLetter()]; setState(nx); toast('미리보기 · 상태 '+nx); });
+
+tabbar(); render();
+</script>
+</body>
+</html>
