@@ -17,7 +17,8 @@
 | 온보딩 완료(마침 도달 또는 "나중에") | 재노출 안 함 (완료 플래그 저장 — 연습 학습 결과는 미저장, O-6) |
 | 세션 평가 진행 | 진행바 갱신(`N / 5`, O-8), 다음 단어. **5단어 소진** 시 재료 획득(⑤)으로 |
 | 세션 완료 + 재료 4/4 미달(온보딩=1개 획득, 3개 남음) | **오니기리 완성 화면 건너뜀** → 곧장 영수증(⑥) |
-| 재료 획득(⑤) 화면 표시 | 파티클 버스트 + "계속" 2초 자동 fill → 자동 전환 |
+| ② 안내 화면 표시 | "계속" 2초 자동 fill(M-1) → ③ 자동 진행 · 탭=즉시 (O-13) |
+| 재료 획득(⑤) 화면 표시 | 파티클 버스트(M-2) + "계속" 2초 자동 fill(M-1) → 자동 전환 |
 | "계속" 탭(⑤) | 남은 fill 스킵 → 즉시 영수증(⑥) (O-5 준용) |
 | `prefers-reduced-motion` | 파티클·자동 fill·출력 모션 비활성 → 일반 버튼·즉시 표시 |
 | 온보딩 미완료 상태로 앱 종료 후 재진입 | **처음부터(①)** — 연습이라 중간 진행 미저장 (O-12, 기본값) |
@@ -26,7 +27,7 @@
 | # | 상황 (화면) | 동작 |
 |---|---|---|
 | 1 | ① 시작 — 사장 인사 "왔네. 여긴 오니기리 가게야. 단어를 외우면 재료가 쌓여." | `시작하기`(잉크) 탭 → ② |
-| 2 | ② 안내 — "먼저 5개만." + "어떤 주먹밥이 완성될까?" | `계속`(잉크) 탭 → ③ |
+| 2 | ② 안내 — "먼저 5개만." + "짧게 공부하고, 재료를 얻는 흐름을 먼저 연습해보자." (마스코트) · *"?" 주먹밥·teaser 카피 없음(O-13)* | `계속`(잉크) = **buttonAutoFill(M-1)** 2초 자동 진행 · 탭=즉시 → ③ |
 | 3 | ③ 학습 앞면 — 표제어 `勉強`·읽기 `べんきょう`·🔊, "탭해서 뜻 확인" / 진행바 `1 / 5` | 카드/`뜻 보기`(잉크) 탭 → ④ |
 | 4 | ④ 뜻 공개 — 뜻 `공부, 학습` + `PhoneticHintCard`(발음 유사) + `ExampleTTSCard`(예문·TTS) + `단어 상세 ›` | `아직이에요`(Again) / `외웠어요`(Good) 평가 → 다음 단어(진행바 +1) |
 | 5 | (반복) **5단어** 소진 | ⑤ 재료 획득으로 |
@@ -37,6 +38,7 @@
 ## 상태 · 예외
 - **학습 카드 2상태**: 앞면(뜻 가림, `뜻 보기`) ↔ 뒷면(뜻 공개, `아직이에요` outline·`외웠어요` 잉크). = `GradeButtons` 학습 variant.
 - **진행바**: 상단 연속 1자 바 + **`N / 5`**(O-8). *(현 mockup의 `1 / 10`은 5로 수정 대상.)*
+- **② 안내(O-13)**: "?" 미스터리 주먹밥 + "어떤 주먹밥이 완성될까?" **제거**(디자인 수정). `계속` = buttonAutoFill 자동 진행.
 - **완성 분기**: 재료 4/4 완성 시에만 오니기리 완성 화면. 온보딩은 미완성 → 건너뜀.
 - **영수증(온보딩=연습 1종, O-10)**: 참치마요 주먹밥 카드 + `ありがとう · 연습` + 단일 CTA `확인했어`(화이트). 실제 결과의 `이미지로 저장`·`공유`·`홈으로`·진행바는 **온보딩 미노출**(실제 학습 전용, `screens/06b` 참고).
 - **CTA 색(O-9)**: 주요 액션 = **잉크**(D-3). **라이트 화면**(시작·안내·학습·마침) = 잉크 다크 버튼. **다크 서피스**(영수증) = **화이트 버튼 + 잉크 텍스트**(인버트).
@@ -55,18 +57,23 @@
 | **O-10** ✅ | 온보딩 영수증 | **연습 버전 1종** — 참치마요 주먹밥 카드 + `ありがとう · 연습` + 단일 `확인했어`. 실제 결과 UI(이미지 저장/공유/홈으로)는 미노출. |
 | **O-11** ✅ | 발음 유사 카드 데이터 | `PhoneticHintCard`는 **실데이터 개발 연결**(현 mockup 값 = 플레이스홀더). 디자인은 뉴트럴(D-1) 유지. |
 | **O-12** ✅ | 미완료 재진입 | **처음부터(①)** — 연습·중간 미저장. *(기본값 제안, 팀 확인 시 변경 가능.)* |
+| **O-13** ✅ | ② 안내 화면 수정 | "?" 주먹밥 플레이스홀더 + "어떤 주먹밥이 완성될까?" **제거**. `계속` = **buttonAutoFill**(2초 자동 진행·탭=즉시). |
 
 ## 변경 델타 (Δ — 정본 반영 대상)
 | ID | 항목 | 변경 |
 |---|---|---|
 | **N-8** | 온보딩 일러스트 화면 3종 | 신규 — `OnboardingIntro`(사장 인사) · `OnboardingGuide`(먼저 5개만) · `OnboardingFinish`(오늘 학습 시작). COMPONENTS.md 카탈로그 추가 대상. |
 | **M-3** | `receiptPrint` (영수증 출력) | 신규 모션 — 영수증 카드가 **프린트되듯 슬라이드-업**(≈1.5s). `reduced-motion` 시 즉시 표시. 레퍼런스 [`motion/02-receipt-print.mov`](./motion/02-receipt-print.mov). DESIGN.md motion + `../../interactions/MOTION.md` 반영 대상. |
-| (재사용) | `buttonAutoFill(M-1)`·`confettiBurst(M-2)` | 재료 획득(⑤)에 적용. 신규 아님. |
+| (재사용) | `buttonAutoFill(M-1)` | **② 안내 계속 + ⑤ 재료획득 계속**에 적용. 레퍼런스 [`motion/button-continue-autofill.mp4`](./motion/button-continue-autofill.mp4). |
+| (재사용) | `confettiBurst(M-2)` | ⑤ 재료획득 파티클. 레퍼런스 [`motion/ingredient-particle.mp4`](./motion/ingredient-particle.mp4). |
 
 ## 관련 화면 · 모션 · 컴포넌트
 - **화면**: [`screens/`](./screens) — `01-start` · `02-guide` · `03-study-front` · `04-study-revealed` · `05-ingredient-earned` · `06-receipt-practice` · `06b-receipt-result` · `07-finish`
+  - ⚠️ 에셋 참고: `02-guide.png`는 **구 버전("?" 주먹밥 + "어떤 주먹밥이 완성될까?" 포함)** — 최종은 **제거**(O-13). 재익스포트 예정.
   - ⚠️ 에셋 참고: `06-receipt-practice.png`는 **구 버전(오렌지 `확인했어`)** — 최종 CTA 색은 **O-9(화이트 인버트)** 기준. 재익스포트 예정.
-- **모션**: [`motion/`](./motion) — `01-ingredient-particle-autofill.mov`(파티클+자동 넘어감) · `02-receipt-print.mov`(영수증 출력) · 각 poster PNG
-  - 구현: `confettiBurst`=파티클/Lottie, `buttonAutoFill`=Reanimated width 트랜지션+완료 콜백 push, `receiptPrint`=slide/mask 트랜지션. mov는 재현용 레퍼런스, 실제 구현은 네이티브 권장.
+- **모션**: [`motion/`](./motion)
+  - `button-continue-autofill.mp4` — **계속 버튼 자동 fill(M-1)** · `ingredient-particle.mp4` — **파티클(M-2)** *(단독 레퍼런스, 개발용 권장)*
+  - `01-ingredient-particle-autofill.mov`(재료획득 인컨텍스트) · `02-receipt-print.mov`(영수증 출력 M-3) · poster PNG
+  - 구현: `confettiBurst`=파티클/Lottie, `buttonAutoFill`=Reanimated width 트랜지션+완료 콜백 push, `receiptPrint`=slide/mask 트랜지션. 영상은 재현용 레퍼런스, 실제 구현은 네이티브 권장.
 - **컴포넌트**(COMPONENTS.md): `GradeButtons` · `PhoneticHintCard` · `ExampleTTSCard` · `PrimaryButton`(`button-primary`) · `progress` · 신규 `OnboardingIntro/Guide/Finish`
 - **문서**: 색 역할 규칙 = DESIGN.md **D-3** · 상위 리디자인 스펙 [`../README.md`](../README.md)
