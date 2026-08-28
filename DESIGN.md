@@ -1,7 +1,7 @@
 ---
 version: alpha
 name: Onikan-design-system
-description: The design language for Onikan (오니칸) — a restrained Japanese-vocabulary study game. A cool-neutral "Onikan Grey" ramp (hue 228, ~2.6% saturation) carried by Pretendard holds ~90% of the UI, where a single orange {colors.primary} owns conversion (one primary action per screen) and a lime {colors.secondary} is reserved strictly for the reward moment (earning an ingredient, completing a recipe). Card-based mobile layout, one line-art mascot ("사장"), first-class light and dark themes.
+description: The design language for Onikan (오니칸) — a restrained Japanese-vocabulary study game. A cool-neutral "Onikan Grey" ramp (hue 228, ~2.6% saturation) carried by Pretendard holds ~85% of the UI. Colour roles (2026-08): the one primary action per screen is an INK-filled pill ({colors.ink}, label {colors.on-ink}); orange {colors.primary} is the brand/status accent (active tab, 단골 stamps, section overlines, status badges, a chart's "you are here" mark) — not the primary button; lime/green {colors.secondary} marks progress & reward (N5 arc gauge, completion card, earned check). Card-based mobile layout, one line-art mascot ("사장"), first-class light and dark themes.
 
 colors:
   # ─── Onikan Grey ramp (hue 228, ~2.6% sat — a chosen cool neutral) ───
@@ -34,12 +34,13 @@ colors:
   shadow: "rgba(0,0,0,0.05)"
 
   # ─── Brand accents (sparse) ───
-  primary: "#EF5112"            # bright brand orange — the single conversion action per screen
-  primary-pressed: "#D2460E"    # pressed = one step DARKER in light (white label 4.54:1)
-  on-primary: "#FFFFFF"         # WHITE label in light. 3.59:1 → AA holds ONLY as LARGE text: keep CTA label ≥18pt (24px) or ≥14pt bold. (Dark uses ink — see below.)
-  on-ink: "#F7F7F9"             # grey-98 — foreground on an INK fill (toast, grade-button Easy)
+  # 2026-08: PRIMARY ACTION = INK ({ink}+{on-ink}), NOT orange. Orange = brand/status accent.
+  primary: "#EF5112"            # bright brand orange — BRAND/STATUS accent (tab, 단골 stamps, overlines, 진행 중 badge, chart "you are here", 음독 pills). NOT the primary button.
+  primary-pressed: "#D2460E"    # pressed orange (when orange is an interactive accent)
+  on-ink: "#F7F7F9"             # grey-98 — label on an INK fill = the PRIMARY BUTTON label (15.8:1)
+  on-primary: "#FFFFFF"         # white on orange — only if orange is ever used as a fill (badge/stamp); check contrast per use. (Primary CTAs no longer use orange.)
   tab-active: "#C2410C"         # orange-700 — active tab icon+label (AA 4.63:1). NOT primary — #EF5112 is only 3.21:1 as a 12px tint on the light tab bar
-  secondary: "#A3E635"          # lime-400 — the reward moment ONLY
+  secondary: "#A3E635"          # lime-400 — PROGRESS & REWARD (N5 arc gauge, 복습 완료 card, earned check, 완성 badge)
   on-secondary: "#1D1D21"
   link: "#C2410C"               # orange-700 — on-brand text links (5.18:1)
 
@@ -231,9 +232,9 @@ spacing:
 components:
   # ─── Actions ───
   button-primary:
-    description: "THE single primary action of a screen (e.g. Start Study). Orange pill. At most one per visible screen."
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.on-primary}"
+    description: "THE single primary action of a screen (e.g. Start Study). INK pill (2026-08: was orange). At most one per visible screen; a competing action is a white outline."
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.on-ink}"
     typography: "{typography.button-large}"
     rounded: "{rounded.pill}"
     padding: "{spacing.lg} {spacing.xl}"   # 16 + 24 lineHeight + 16 = 56px, the confirmed CTA height
@@ -353,16 +354,18 @@ components:
 
 ## Overview
 
-Onikan (오니칸) is a Japanese-vocabulary study game: finish a daily study set, earn an onigiri ingredient, complete recipes. The design language has to hold two feelings at once — the **calm focus** a study tool needs, and the **small reward rush** a game runs on. It resolves that tension with restraint: a quiet cool-neutral "Onikan Grey" canvas carried by Pretendard, and exactly two brand colours that each mean one specific thing.
+Onikan (오니칸) is a Japanese-vocabulary study game: finish a daily study set, earn an onigiri ingredient, complete recipes. The design language has to hold two feelings at once — the **calm focus** a study tool needs, and the **small reward rush** a game runs on. It resolves that tension with restraint: a quiet cool-neutral "Onikan Grey" canvas carried by Pretendard, and a clear split of colour roles — ink for the action, orange for identity, lime/green for progress. *(2026-08 리디자인: 주요 액션이 오렌지 → 잉크로 바뀌었다. 아래는 그 기준.)*
 
-- **Orange `{colors.primary}` = conversion.** It appears on the one primary action of a screen and almost nowhere else. When you see orange, you know what to tap.
-- **Lime `{colors.secondary}` = reward.** It is the taste of progress — an ingredient earned, a recipe completed, a streak kept. It never decorates; it only celebrates.
+- **Ink `{colors.ink}` = action.** The one primary action of a screen is an **ink-filled** pill (label `{colors.on-ink}` `#F7F7F9`). When you see the dark button, you know what to tap.
+- **Orange `{colors.primary}` = identity & status.** The brand mark — active tab, 단골 streak stamps, section overlines, a status badge (진행 중), the "you are here" bar in a chart, 음독 bridge pills. It signals *where / what*, never *tap here*.
+- **Lime/green `{colors.secondary}` = progress & reward.** The taste of progress — the N5 arc gauge, a completion card, an ingredient-earned check, a 완성 badge.
 
-Everything between those two moments is neutral grey. That is the whole system: **quiet by default, loud only where it means something.**
+Everything else is neutral grey. The system stays **quiet by default, loud only where it means something** — the "loud" primary is now ink, and orange has stepped back to brand/status.
 
 **Key Characteristics:**
-- One conversion colour (orange), used at most once per visible screen. Restraint is the brand's confidence.
-- One reward colour (lime), gated strictly to achievement moments. It is a *semantic* of joy, not a palette slot to fill.
+- Primary action is **ink** — one ink-filled CTA per screen; a competing action becomes a white outline, never a second ink pill. Restraint is the brand's confidence.
+- Orange is the **brand / status** accent (active tab, 단골 stamps, overlines, 진행 중 badge, chart "you are here") — never a primary button.
+- Lime/green marks **progress & reward** (arc gauge, completion card, earned check) — a semantic of achievement, not decoration.
 - A single type family — Pretendard — from the 52px hero down to the 12px label. No second face, no mono.
 - Card-based mobile layout: information groups into rounded grey/white cards; spacing between cards carries the rhythm.
 - A hand-drawn line-art mascot ("사장") is the only illustration system — warm, personal, never a stock graphic.
@@ -387,14 +390,15 @@ Copy speaks in the boss's warm, terse Korean ("왔네. 처음 보는 얼굴이�
 ## Colors
 
 ### Brand & Accent
-- **Brand orange** (`{colors.primary}` — light `#EF5112` / dark `#F97316`): The single conversion colour — the one primary CTA per screen. Pressed steps one shade **darker in light** (`#D2460E`) and **lighter in dark** (`#FA8432`). Its label `{colors.on-primary}` differs by theme: **white `#FFFFFF` in light** (3.59:1 — AA holds only as *large text*, so keep the CTA label ≥18pt/24px or ≥14pt bold) and **ink `#1D1D21` in dark** (5.99:1; white on `#F97316` is 2.80:1 and fails). The active tab icon+label use `{colors.tab-active}` — a **separate** token from primary: `#C2410C` on light (4.63:1 at 12px; `#EF5112` itself is only 3.21:1 as a tint on the light tab bar) and `#F97316` on dark (= dark primary, 6.62:1).
-- **Lime 400** (`{colors.secondary}` — `#A3E635`): The reward colour, used only at the *moment of earning* — the check badge on a new ingredient, the fade-out of a just-filled progress cell. Nowhere else. Text on lime is always `{colors.on-secondary}` `#1D1D21`.
+- **Primary action = ink** (`{colors.ink}` — light `#1D1D21` / dark surfaces use the ink ramp): The one primary CTA per screen is an **ink-filled pill**, label `{colors.on-ink}` `#F7F7F9` (light-on-dark, 15.8:1 — passes at any size). Pressed: a hair lighter. A competing action is a **white outline** (1.5px `pressed`, ink label), never a second ink pill. *(2026-08: primary CTAs moved orange → ink. The old white-on-orange large-text AA caveat no longer applies to CTAs.)*
+- **Brand orange** (`{colors.primary}` — light `#EF5112` / dark `#F97316`): The **brand & status** accent — active tab, **단골 streak stamps** (orange onigiri), section overlines (오늘 학습 완료 · 이어서 회독해요), status badges (진행 중), the single "you are here" bar in a chart, 음독 bridge pills. **Not the primary button.** The active tab icon+label use `{colors.tab-active}` — a separate token: `#C2410C` on light (4.63:1 at 12px; `#EF5112` is only 3.21:1 as a tint on the light tab bar) and `#F97316` on dark (6.62:1). An orange fill used as a badge/stamp must clear contrast for its own text.
+- **Lime 400 / green** (`{colors.secondary}` — `#A3E635`): **Progress & reward** — the N5 arc gauge (lime→green), the 오늘 복습 완료 card (light-green tint + green check), the check badge on a new ingredient, a 완성 badge, a just-filled progress cell. Text on lime is always `{colors.on-secondary}` `#1D1D21`. (System validation still uses `success #15803D`, kept distinct from brand lime.)
 
-> **Decision logic — which accent, if any?**
-> 1. *Is this the one primary action on the screen?* → **orange** fill. If a second action competes, it becomes neutral (grey), not a second orange.
->    - *Two exceptions only:* the active tab (`{colors.tab-active}`), and **a single "you are here" mark in a data chart** (e.g. the user's own bar in the 기록 score-distribution histogram). A chart may tint exactly one element orange to locate the user; everything else in the chart stays neutral.
-> 2. *Is this the moment the user earns a reward?* → **lime** is allowed — briefly.
-> 3. *Neither?* → **no accent.** Use ink / grey. ~90% of the UI lives here.
+> **Decision logic — which colour?**
+> 1. *Is this the primary action on the screen?* → **ink fill** (label `on-ink`). One per screen; a competing action becomes a **white outline**, not a second ink pill.
+> 2. *Is this brand identity, current location, or a status?* → **orange** — active tab (`{colors.tab-active}`), 단골 stamps, a section overline, a 진행 중 badge, or the single "you are here" bar in a chart.
+> 3. *Is this progress or a reward earned?* → **lime/green** — an arc gauge, a completion card, an earned check.
+> 4. *None of the above?* → **no accent.** Ink / grey. ~85% of the UI lives here.
 
 ### Surface — the "Onikan Grey" ramp (cool neutral)
 Neutrals are the **Onikan Grey** ramp: hue 228 fixed, ~2.6% saturation — a deliberately *chosen* cool-leaning neutral, midway between pure grey (0%) and cool-neutral (~5%). Everything rides one axis (page `#F2F2F4`, cards, dividers, text) so nothing feels borrowed from another system.
@@ -427,7 +431,7 @@ Success stays *green, NOT lime.* Lime = brand reward; success = system validatio
 - **Link** `{colors.link}` `#C2410C` (orange-700) — on-brand inline text links (5.18:1).
 
 ### Dark Theme
-Dark is a designed theme, not an inversion. Page drops to grey-10 `#131316`, cards to grey-15 `#1D1D21`, orange brightens to orange-500 so it stays the loudest thing on screen, lime holds `#A3E635`, and the illustration `plate` stays fixed. Contrast holds in both themes (body ≥ 7:1, mute ~3.4:1 by design).
+Dark is a designed theme, not an inversion. Page drops to grey-10 `#131316`, cards to grey-15 `#1D1D21`. The **primary button inverts** — an ink fill on a light page becomes a light (`grey-98`) fill with ink label on dark, so it stays the loudest action. Orange brightens to orange-500 for its accent jobs (tab, stamps, status), lime holds `#A3E635`, and the illustration `plate` stays fixed. Contrast holds in both themes (body ≥ 7:1, mute ~3.4:1 by design).
 
 Two tokens **must** invert rather than hold a fixed value:
 - `{colors.on-ink}` — foreground on an ink fill. `ink` itself flips (`#1D1D21` → `#F7F7F9`), so a fixed light `on-ink` would put white text on a white chip. It flips with it: `#F7F7F9` → `#1D1D21`.
@@ -523,10 +527,10 @@ The signature is a **soft, generous radius**: cards at 22–24px, every control 
 
 ### Actions
 
-**`button-primary`** — the orange conversion pill. Background `{colors.primary}`, text `{colors.on-primary}`, `{typography.button-large}`, `{rounded.pill}`, padding `{spacing.xl} {spacing.xl}`, full-width at screen bottom.
-- **When to use:** the single most important action on the screen. If you're about to add a second orange pill, stop — one of them is secondary.
+**`button-primary`** — the **ink** action pill. Background `{colors.ink}`, label `{colors.on-ink}` `#F7F7F9`, `{typography.button-large}`, `{rounded.pill}`, padding `{spacing.xl}`, full-width at screen bottom. *(2026-08: primary CTA is ink, was orange.)*
+- **When to use:** the single most important action on the screen (학습 시작하기 · 회독하기 · 외웠어요 · 지금 연습하기 · 오늘 학습 시작 · 영수증 받고 마치기 · 확인). If a second action competes, it becomes a **white outline**, not a second ink pill.
 
-**`button-secondary`** — surface pill, ink text. Non-primary actions that still deserve a button.
+**`button-secondary`** — **white outline** pill (1.5px `{colors.pressed}`, ink label) for a non-primary action beside a primary, or a de-emphasised CTA (아직이에요 · 백업 내보내기 · 완료-state 회독하러 가기 · 발음 듣기·사전). A `{colors.soft}`-filled variant exists for in-card use.
 
 **`button-subtle`** — soft grey pill (`{colors.soft}`) for tertiary / in-card actions (e.g. 단어 상세).
 
@@ -540,25 +544,31 @@ The signature is a **soft, generous radius**: cards at 22–24px, every control 
 
 **`kanji-tile`** — the large-kanji square, grey-soft fill, `{rounded.md}`.
 
-### Reward System (lime lives here, and only here)
+### Progress & Reward (lime / green)
+
+**`arc-gauge`** — macro progress ring/arc (N5 전체 진척도, 반원). A lime→green sweep on a `{colors.soft}` track; the % and label read *before* the arc. Small — under half the card. Linear bars are for *current-task* progress; the arc is for *whole-level* progress (never both in the same role). *(2026-08 신규.)*
 
 **`reward-chip`** — an earned/next ingredient (RICE). Grey-soft pill with a **lime-accented icon**. The chip body stays neutral; only the reward mark is lime.
 
-**`ingredient-earned`** — a collected ingredient: **lime check** + ink label. Uncollected = mute outline + mute label.
+**`ingredient-earned`** — a collected ingredient: **green/lime check** + ink label. Uncollected = mute outline + mute label.
+
+**`completion-card`** — a done-state callout (오늘 복습 완료): **light-green tint** surface + green check + short line. No CTA (or a de-emphasised outline).
 
 **`progress-dots`** — outlined squares fill with ink as ingredients are earned; the *just-earned* dot may pulse lime briefly, then settle to ink.
+
+**`streak-stamp` (단골 도장)** — the loyalty stamp: an **orange** onigiri stamp for each kept day, grey dashed for unfilled. This is the one place a warm brand fill (orange) marks a streak — brand identity, not a reward check. *(2026-08: 단골 = orange, not lime.)*
 
 ### Labels, Badges, Metrics
 
 **`section-label`** — uppercase tracked eyebrow (`{typography.label}`), `{colors.body}`. Groups a card's content (오늘의 학습, INGREDIENTS).
 
-**`badge`** — JLPT / meta tag. **Neutral** grey pill (`{colors.soft}`), never orange — orange belongs to actions, not labels.
+**`badge`** — JLPT / meta tag = **neutral** grey pill (`{colors.soft}`). **Status** badges are the deliberate exception: `진행 중` = orange-soft pill (`#FCE8DE`/primary), `완료` = green-soft pill (`#E7F4D9`/`success-deep`), `잠김` = mute text. Status badges carry colour because they signal state, not because they are actions.
 
 **`stat-block`** — one hero number (`display-xxl`) + a stacked `label` caption. **One hero number per card**; secondary metrics drop to a small pill, never a second giant number.
 
 ### Navigation
 
-**`tab-bar`** — bottom tabs (오늘·메뉴·기록·설정). Text only; active = ink + 2px underline, inactive = body. Sits on `{colors.softer}` with a `{colors.pressed}` top hairline.
+**`tab-bar`** — bottom tabs (오늘·메뉴·기록·설정). Icon + label; **active = `{colors.tab-active}` (orange) tint** on both, inactive = `{colors.mute}`. No underline / fill / badge. Sits on `{colors.softer}` with a `{colors.pressed}` top hairline. (The active-tab orange is one of orange's few jobs now.)
 
 **`list-row`** — collection/index row: `{typography.code}` index + `display-sm` title, `{colors.pressed}` divider. Locked rows drop title + trailing to `{colors.mute}` with a lock glyph.
 
@@ -571,9 +581,9 @@ The signature is a **soft, generous radius**: cards at 22–24px, every control 
 These are the "how pieces combine" guarantees — an AI or dev can self-check against them.
 
 - **No card inside a card.** A `card` never contains another `card`. For a sub-region, use `card-tinted`, a divider, or plain spacing. Nested rounded surfaces read as a bug.
-- **One `button-primary` per screen.** If two actions both feel primary, demote one to `button-secondary`. The orange is a spotlight, not a paint.
+- **One `button-primary` (ink) per screen.** If two actions both feel primary, demote one to a `button-secondary` white outline. The ink pill is the spotlight — never two.
 - **One hero number per card.** Additional metrics become pills / inline text (see the home card: `12` is hero, `복습 0` is a pill).
-- **Lime only on reward.** If lime is about to appear and no ingredient/achievement is involved, it's wrong — use ink or grey.
+- **Lime/green = progress or reward.** It belongs on the arc gauge, a completion card, or an earned check — a progress/achievement semantic, not decoration. **Orange never means "tap here."** If orange is about to sit on a primary button, it's wrong — the primary is ink.
 - **Badges/labels stay neutral.** Never color a JLPT badge or section label with orange or lime.
 - **Group by gap, not by box.** Prefer spacing (8–12 within, 28 between) over adding borders/cards to separate content.
 - **Shadow is a rarity.** Only `card` (Level 1) and `toast` may cast one. Everything else is flat.
@@ -582,9 +592,10 @@ These are the "how pieces combine" guarantees — an AI or dev can self-check ag
 ## Do's and Don'ts
 
 ### Do
-- Keep orange `{colors.primary}` for the single primary action per screen — that scarcity *is* the conversion signal.
-- Reserve lime `{colors.secondary}` strictly for reward/achievement — earning an ingredient, completing a recipe.
-- Let the Onikan Grey neutrals and Pretendard carry ~90% of the UI; accents are the exception, not the rhythm.
+- Make the single primary action per screen an **ink** pill (`{colors.ink}` + `{colors.on-ink}`); a competing action is a white outline.
+- Keep orange `{colors.primary}` for **brand/status** only — active tab, 단골 stamps, section overlines, 진행 중 badge, a chart's "you are here" mark. Its scarcity as an accent *is* the brand signal.
+- Use lime/green `{colors.secondary}` for **progress & reward** — the arc gauge, a completion card, an earned check, a 완성 badge.
+- Let the Onikan Grey neutrals and Pretendard carry ~85% of the UI; accents are the exception, not the rhythm.
 - Group information by proximity: tight inside a group, a clear 28px jump between groups.
 - Give every token a dark value and check contrast in both themes.
 - Use tabular figures wherever numbers align or compare.
@@ -593,8 +604,8 @@ These are the "how pieces combine" guarantees — an AI or dev can self-check ag
 ### Don't
 - **No gradients.** Not on buttons, cards, backgrounds, or text. Flat fills only.
 - **No text shadows**, and no drop shadow beyond the single Level 1 card shadow.
-- **No second orange** on a screen, and no orange on labels, badges, or icons that aren't the primary action.
-- **No lime as decoration** — if it's not a reward, it's not lime.
+- **No orange on a primary button** — the primary is ink. Orange is brand/status only (tab, 단골 stamps, overlines, 진행 중 badge, chart "you are here"); don't spread it onto plain labels or icons.
+- **No lime/green as decoration** — if it's not progress or a reward, it's not lime.
 - **No card nested in a card**, and no rectangular (hard-corner) buttons.
 - **No warm or true-grey neutral** — neutrals are the Onikan Grey ramp (cool, hue 228, ~2.6% sat). Don't swap in stone, zinc, or a pure 0%-saturation grey.
 - **`mute` is not a caption colour** — it's for LOCKED / placeholder only (3.4:1). To quiet a caption, lower size/weight, not colour.
@@ -631,7 +642,7 @@ Every change below came out of building the system in Figma and measuring it; ea
 **Ramp additions** — the dark theme used two greys that were not in the ramp: **`grey-98` `#F7F7F9`** (dark ink / on-ink) and **`grey-70` `#A9A9B2`** (dark body).
 
 **Accessibility** — every foreground/background pair now clears AA in both themes.
-- `primary` is a bright brand orange (light `#EF5112` / dark `#F97316`). `on-primary` is **white in light** (3.59:1 — passes AA only as *large text*, so the CTA label must stay ≥18pt/24px or ≥14pt bold) and **ink in dark** (5.99:1; white on the dark orange is 2.80:1). Pressed = one step darker in light (`#D2460E`) / lighter in dark (`#FA8432`).
+- **Primary button = ink** (`{colors.ink}` + `{colors.on-ink}` `#F7F7F9`, 15.8:1 — passes at any size, so the old white-on-orange large-text caveat is gone). `primary` (orange, light `#EF5112` / dark `#F97316`) is now a brand/status **accent**; where it fills a badge/stamp, verify that element's own text contrast (`tab-active #C2410C` gives the text-safe orange).
 - Status colours had no dark values, so each failed AA in one theme. Now mode-aware — see the Semantic table.
 
 **Typeface** — **Pretendard → Pretendard JP.** Plain Pretendard has no kanji at all, so the kanji tile rendered empty.
