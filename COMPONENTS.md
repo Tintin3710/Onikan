@@ -181,8 +181,17 @@
 - **`PhoneticHintCard`(조건부)**: 발음이 유사한 단어가 있을 때만. 배경 **`soft`(뉴트럴, 라임 아님 — D-1)** + `발음이 유사한 단어` 필 + 2열 유사어.
 - **`ExampleCard`**: `🔊 예문을 들어보세요`(스피커·라벨 `body`) + 일문/국문. **카드 탭 → 예문 TTS.**
 
+#### 인터랙션 (신규) — 모션과 구분
+
+- **`ButtonFillProgress`** (온보딩 화면2 `data-interaction="guide-continue"` / fill 레이어 `data-interaction-target="guide-continue-fill"`): 하단 `계속` 버튼의 **진행 표시 fill**. 회색 트랙(`--track #9A9AA1`) 위로 **잉크(`--ink`) fill이 좌→우 `width 0%→100%`**(왼쪽 edge 고정). 라벨은 fill 위 중앙 고정(z-index).
+  - **타이밍**(한 곳=CSS 변수에서 관리): `--guide-fill-duration: 2000ms` · `--guide-fill-easing: cubic-bezier(0.25,0.46,0.45,0.94)`(ease-out) · `--guide-fill-delay: 0ms`. 레퍼런스 `온보딩2.mp4` 계측값(0.5s→45% · 1.0s→77% · 1.5s→94% · 2.0s→100%) 근사.
+  - **화면 진입 시 1회 자동 재생.** `prefers-reduced-motion` → 애니메이션 없이 **즉시 100%**.
+  - **navigation과 완전 독립.** fill이 100%가 돼도 **자동 이동 없음** — 화면 이동은 오직 사용자 `계속` 클릭. fill 진행 중에도 클릭하면 즉시 이동. **fill 완료 여부를 버튼 활성/네비 조건으로 쓰지 않는다.** 금지: gradient/scaleX(center)/shine/bounce/spring/overshoot/loop.
+  - **⚠️ `buttonAutoFill`과 구분:** `buttonAutoFill`(영수증 `확인`)은 fill = **카운트다운 → 자동 push**. `ButtonFillProgress`(guide)는 fill = **순수 시각 진행 표시(자동 이동 없음)**. 두 인터랙션을 같은 로직으로 구현하지 않는다.
+  - dev: `window.replayGuideFill()`(실 UI 미노출). 구현: `handoff/redesign-2026-08/onboarding/styles.css`(`--guide-fill-*`·`.btn-fill`·`@keyframes guideFill`) + `app.js`(`startGuideFill()`). [ref 영상 원본은 디자이너 보관]
+
 #### 모션 (신규)
-- **`buttonAutoFill`**: 재료 획득 영수증 `확인`이 2s 선형 fill 후 자동 push(ink fill/회색 트랙). **탭 = 즉시 전환**(남은 fill 100% 스냅 + 햅틱 후 push). `prefers-reduced-motion` 시 자동 fill·자동 전환 비활성(일반 탭 버튼). 요약은 `영수증 다시 보기`로 재열람. (O-5) [ref](./handoff/redesign-2026-08/motion/button-autofill.mp4)
+- **`buttonAutoFill`**: 재료 획득 영수증 `확인`이 2s 선형 fill 후 자동 push(ink fill/회색 트랙). **탭 = 즉시 전환**(남은 fill 100% 스냅 + 햅틱 후 push). `prefers-reduced-motion` 시 자동 fill·자동 전환 비활성(일반 탭 버튼). 요약은 `영수증 다시 보기`로 재열람. (O-5, cf. `ButtonFillProgress`) [ref](./handoff/redesign-2026-08/motion/button-autofill.mp4)
 - **`confettiBurst`**: 오니기리 완성 시에만 파티클 버스트(≈2–2.5s). [ref](./handoff/redesign-2026-08/motion/confetti-burst.mp4)
 
 ---
