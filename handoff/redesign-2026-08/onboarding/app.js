@@ -87,7 +87,7 @@ function renderGuide(){
     <div class="body">
       <img class="illust guide-illust" src="assets/guide-mascot.png" alt="">
       <div class="guide-copy">
-        <p class="lead-title">먼저 5개만.</p>
+        <p class="lead-title">먼저 10개만.</p>
         <p class="lead-sub">짧게 공부하고, 재료를 얻는<br>흐름을 먼저 연습해보자.</p>
       </div>
     </div>
