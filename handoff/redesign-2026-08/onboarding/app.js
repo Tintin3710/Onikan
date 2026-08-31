@@ -15,8 +15,8 @@
 
 'use strict';
 
-/* 화면5 → 화면6 자동 전환 지연. 추후 Motion Reference에 맞춰 값만 조정. */
-const AUTO_ADVANCE_DELAY = 1500;
+/* 화면5(학습완료)는 자동 전환하지 않는다 — 이동은 오직 사용자 [계속] 클릭.
+   (과거 AUTO_ADVANCE_DELAY 자동전환은 학습완료.mp4 스펙에 따라 제거됨) */
 
 /* 테스트용 단어 10개. sim*(발음 유사)는 있을 때만 노출(화면 뒷면). */
 const WORDS = [
@@ -54,6 +54,8 @@ const icoSpeakerSm = '<svg viewBox="0 0 13 10" fill="var(--secondary-deep)"><pat
 const icoClose = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#1D1D21" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 const icoCheck = '<svg viewBox="0 0 24 24" fill="none" stroke="#1D1D21" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
 const icoChevR = '<svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="#8E8E97" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 2.5 8 6l-3.5 3.5"/></svg>';
+/* 잠긴 오니기리 타일 — Figma의 둥근 삼각형(오니기리 실루엣) + "?". 색·경로 Figma 실측(320:858/859). */
+const icoOnigiriQ = '<svg class="onigiri-q" viewBox="0 0 35.3433 33.1813" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9.27446 4.84813C13.0066 -1.61604 22.3368 -1.61605 26.0689 4.84813L34.0298 18.6369C37.7619 25.101 33.0968 33.1813 25.6326 33.1813H9.71073C2.24655 33.1813 -2.41857 25.1011 1.31352 18.6369L9.27446 4.84813Z" fill="#CACACE" fill-opacity="0.4"/><path transform="translate(12.07 10.6)" d="M2.41527 14.9618V11.9695H5.27939V14.9618H2.41527ZM5.27939 10.174H2.41527V6.96794L8.33588 5.47176V2.65038H0V0H8.84885L11.2 2.35115V7.28855L5.27939 8.8916V10.174Z" fill="#929299" fill-opacity="0.6"/></svg>';
 
 function statusBar(){ return `<div class="status-bar"><span>9:41</span><span class="r">5G · 92%</span></div>`; }
 
@@ -166,12 +168,15 @@ function renderStudyComplete(){
       </div>
       <div class="spacer"></div>
       <div class="locked-recipe">
-        <div class="q-tile">?</div>
+        <div class="onigiri-tile lg">${icoOnigiriQ}</div>
         <div class="t"><div class="nm">참치마요 주먹밥</div><div class="ds">완성까지 재료 3개가 남았어.</div></div>
       </div>
     </div>
     <div class="actions">
-      <button class="btn btn-primary" data-action="complete-continue">계속</button>
+      <button class="btn btn-primary btn-fill-host" data-interaction="study-complete-continue" data-action="complete-continue">
+        <span class="btn-fill" data-interaction-target="study-complete-continue-fill"></span>
+        <span class="label">계속</span>
+      </button>
     </div>
   </section>`;
 }
@@ -216,6 +221,7 @@ function renderReceipt(known, again){
   return `
   <div class="receipt-overlay" data-motion="receipt-overlay">
     <div class="receipt-title">영수증을 받으세요</div>
+    <div class="receipt-slot">
     <div class="receipt-card" data-motion="receipt-card-entrance">
       <div class="shop">ONIGIRI SHOP</div>
       <div class="date">2026. 8. 7</div>
@@ -224,9 +230,10 @@ function renderReceipt(known, again){
       <div class="rc-row"><span class="k">다시 배울 단어</span><span class="v">${again}</span></div>
       <div class="rc-row"><span class="k">받은 재료</span><span class="got"><span class="chk">${icoCheck}</span>참치</span></div>
       <div class="dash"></div>
-      <div class="rc-locked"><div class="q-tile" style="width:36px;height:36px">?</div>
+      <div class="rc-locked"><div class="onigiri-tile">${icoOnigiriQ}</div>
         <div class="t"><div class="nm">참치마요 주먹밥</div><div class="ds">완성까지 재료 3개가 남았어.</div></div></div>
       <div class="thanks">ありがとう · 연습</div>
+    </div>
     </div>
     <div class="receipt-help">연습 중이라 결과는 저장되지 않아요.<br>실제 학습 후 보상과 기록이 남아요.</div>
     <div class="receipt-actions">
@@ -322,14 +329,22 @@ function render(){
   app.innerHTML = html + `<div class="dev-badge">step: ${state.currentPage === 'home' ? 'home' : state.onboardingStep}${state.isReceiptOpen ? ' · receipt' : ''}</div>`;
   isTransitioning = false;
 
-  /* 화면5: 사용자 입력 없이 자동으로 결과 화면으로 (지연값은 상수로 관리) */
+  /* 화면5: 진입 시 particle(Motion) + 버튼 fill(Interaction) 1회 자동 재생.
+     자동 화면 전환 없음 — 다음 화면 이동은 오직 사용자 [계속] 클릭(아래 handler). */
   if (state.currentPage === 'onboarding' && state.onboardingStep === 'studyComplete'){
-    autoAdvanceTimer = setTimeout(() => { goToResult(); }, AUTO_ADVANCE_DELAY);
+    startStudyCompleteMotion();
   }
 
   /* 화면2: 진입 시 Fill Interaction 1회 자동 재생. navigation과 완전 분리(순수 시각 효과). */
   if (state.currentPage === 'onboarding' && state.onboardingStep === 'guide'){
     startGuideFill();
+  }
+
+  /* 화면7: 영수증이 열릴 때 Entrance(printOut) 1회만 재생.
+     re-render로 반복 실행되지 않도록 receiptEntrancePlayed 플래그로 가드.
+     이미 재생됐으면 클래스 미부여 → 카드는 최종 위치(translateY 0)로 렌더. */
+  if (state.currentPage === 'onboarding' && state.onboardingStep === 'result' && state.isReceiptOpen){
+    if (!receiptEntrancePlayed){ startReceiptEntrance(); receiptEntrancePlayed = true; }
   }
 }
 
@@ -345,6 +360,178 @@ function startGuideFill(){
 }
 /* dev 검수용: 콘솔에서 window.replayGuideFill() 로 반복 재생. 실제 UI엔 버튼 노출 안 함. */
 window.replayGuideFill = function(){ startGuideFill(); };
+
+/* ── 화면5 학습완료: Particle(Motion) + 하단 [계속] Fill(Interaction) ──
+   레퍼런스 학습완료.mp4 계측을 Source of Truth로 사용.
+   ⚠️ 노출 정책(O-7): 이 재료 획득 버스트는 *온보딩 전용*이다.
+      실사용(프로덕션)에선 confettiBurst를 *오니기리 완성(재료 4/4) 시에만* 노출하고,
+      재료만 획득한 경우엔 노출하지 않는다. 이 코드를 프로덕션에 그대로 옮길 때 트리거 조건 주의.
+   ⚠️ 둘은 분리된 동작이다(같은 로직으로 묶지 않는다):
+     · Particle  = Motion — 상단중앙 방사형 버스트 → 공기저항 감속 낙하 → 페이드. 진입 1회, loop 없음.
+     · 버튼 Fill = Interaction — 화면2와 동일한 ButtonFillProgress(회색 트랙→잉크, 좌→우).
+   ⚠️ Fill은 순수 시각 효과다. 100%가 돼도 자동 전환 없음 — 다음 화면 이동은 오직 [계속] 클릭.
+   타이밍은 여기 STUDY_COMPLETE_MOTION 한 곳(+버튼 duration은 CSS --sc-fill-duration)에서만 관리. */
+const STUDY_COMPLETE_MOTION = {
+  particles: {
+    delay: 140,          // ms — 진입 후 particle 최초 등장(영상 t≈0.14s, fill보다 늦음)
+    stagger: 70,         // ms — 방출 산포(단발 버스트, 연속 emitter 아님)
+    count: 34,           // 영상 최고 밀도 근사
+    seed: 20260830,      // 고정 시드 → 새로고침·Replay 시 동일 패턴(seeded random)
+    // 영상 계측: 등장 즉시(t≈0.2s) 상단 영역 전면에 이미 확산 → 점 폭발이 아니라
+    // '상단 영역에 분포 spawn 후 낙하'. spawn box(390×844 기준) + 약한 초기속도.
+    spawn: { xCenter: 195, xSpread: 176, yCenter: 214, ySpread: 194 },
+    vBurstMax: 240,      // px/s — 등장 시 약한 초기 속도(대부분 아래로, 일부 위로 팝)
+    vyBias: 46,          // px/s — 하향 편향(전체적으로 낙하)
+    vTermMin: 190, vTermMax: 360,           // px/s — 종단(낙하) 속도
+    spinMin: 60, spinMax: 340,              // deg/s — particle별 회전(부호 랜덤)
+    lifeMin: 2200, lifeMax: 2650,           // ms — 수명(영상 소멸 ~2.8s)
+    fadeIn: 70, fadeOut: 620,               // ms — 등장/소멸 페이드
+    sizeMin: 6, sizeMax: 14,                // px
+    colors: ['#FAB815', '#EB4308', '#F164AD'] // 영상 계측 3색(그 외 추가 금지)
+  }
+  // buttonFill: duration = CSS --sc-fill-duration(1800ms), easing = --guide-fill-easing, delay 0
+};
+
+let scRaf = null;          // particle rAF 핸들(중복 방지)
+let scParticles = null;    // {el, ...물리 파라미터}[]
+
+/* 결정적 PRNG(mulberry32) — 시드 고정 시 항상 같은 수열 → 반복 검수 가능 */
+function mulberry32(a){
+  return function(){
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/* seeded 파라미터로 particle DOM 생성(레이어에 append). 위치/색/회전 모두 시드 결정. */
+function buildScParticles(layer){
+  const P = STUDY_COMPLETE_MOTION.particles;
+  const rnd = mulberry32(P.seed);
+  const rng = (a, b) => a + rnd() * (b - a);
+  const arr = [];
+  for (let i = 0; i < P.count; i++){
+    const bar = rnd() < 0.55;                          // 55% 길쭉한 막대 / 45% 사각형
+    const w = bar ? rng(4, 8)  : rng(7, P.sizeMax);
+    const h = bar ? rng(10, 18) : w;
+    // spawn: 상단 영역에 분포(x는 중앙 편향 위해 두 난수 평균, y는 균등)
+    const xr = (rnd() + rnd()) - 1;                     // -1..1, 중앙 편향(삼각분포)
+    const yr = rnd() * 2 - 1;                           // -1..1 균등
+    const el = document.createElement('span');
+    el.className = 'sc-particle';
+    el.style.width  = w.toFixed(1) + 'px';
+    el.style.height = h.toFixed(1) + 'px';
+    el.style.background = P.colors[(rnd() * P.colors.length) | 0];
+    el.style.opacity = '0';
+    layer.appendChild(el);
+    arr.push({
+      el,
+      x0: P.spawn.xCenter + xr * P.spawn.xSpread - w / 2,
+      y0: P.spawn.yCenter + yr * P.spawn.ySpread - h / 2,
+      vx0: (rnd() * 2 - 1) * P.vBurstMax,               // 좌우 drift
+      vy0: (rnd() * 2 - 1) * P.vBurstMax + P.vyBias,    // 대부분 아래, 일부 위로 팝
+      vTerm: rng(P.vTermMin, P.vTermMax),
+      kH: rng(1.8, 2.2),
+      kV: rng(1.8, 2.2),
+      rot0: rng(0, 360),
+      spin: rng(P.spinMin, P.spinMax) * (rnd() < 0.5 ? -1 : 1),
+      birth: P.delay + rnd() * P.stagger,
+      life: rng(P.lifeMin, P.lifeMax)
+    });
+  }
+  return arr;
+}
+
+/* 특정 경과시간(ms)에서 particle 위치/투명도 계산·적용. 닫힌형(closed-form)이라
+   프레임 누적오차 없음 → Replay·정지프레임(dev scrub)이 항상 동일하게 재현. 반환=생존 수. */
+function paintScParticles(elapsed){
+  if (!scParticles) return 0;
+  const P = STUDY_COMPLETE_MOTION.particles;
+  let alive = 0;
+  for (const p of scParticles){
+    const t = (elapsed - p.birth) / 1000;             // 개별 수명 기준 초
+    if (t < 0){ p.el.style.opacity = '0'; alive++; continue; }
+    const ms = t * 1000;
+    if (ms > p.life){ p.el.style.opacity = '0'; continue; }
+    alive++;
+    // 수평: 초기속도가 감쇠하며 유한 변위(vx0/kH)만큼 확산 후 정지
+    const x = p.x0 + (p.vx0 / p.kH) * (1 - Math.exp(-p.kH * t));
+    // 수직: 종단속도로 수렴하는 낙하(자유낙하 아님) — 위로 튄 것은 잠깐 상승 후 낙하
+    const y = p.y0 + p.vTerm * t + ((p.vy0 - p.vTerm) / p.kV) * (1 - Math.exp(-p.kV * t));
+    const rot = p.rot0 + p.spin * t;
+    let op = 1;
+    if (ms < P.fadeIn) op = ms / P.fadeIn;
+    else if (ms > p.life - P.fadeOut) op = Math.max(0, (p.life - ms) / P.fadeOut);
+    p.el.style.opacity = op.toFixed(3);
+    p.el.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) rotate(${rot.toFixed(1)}deg)`;
+  }
+  return alive;
+}
+
+/* 화면5 진입 시 호출: 버튼 Fill(Interaction) + particle(Motion)을 각자 타이밍으로 1회 재생.
+   자동 화면 전환은 하지 않는다(Motion completion ≠ Navigation). */
+function startStudyCompleteMotion(){
+  const fill  = app.querySelector('[data-interaction-target="study-complete-continue-fill"]');
+  const layer = app.querySelector('[data-motion="study-complete-particles"]');
+
+  // 1) 버튼 Fill(Interaction) — delay 0, 화면2와 동일 컴포넌트(순수 시각). 완료돼도 자동 이동 없음.
+  if (fill){
+    fill.classList.remove('sc-fill--run');
+    void fill.offsetWidth;                 // reflow → 진입/replay마다 0%부터
+    fill.classList.add('sc-fill--run');
+  }
+
+  // 2) Particle(Motion)
+  if (!layer) return;
+  if (scRaf){ cancelAnimationFrame(scRaf); scRaf = null; }   // 중복 rAF/누적 방지
+  layer.innerHTML = '';
+  scParticles = null;
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; // 모션 최소화 → particle 생략(버튼은 위에서 즉시 100%)
+
+  scParticles = buildScParticles(layer);
+  const P = STUDY_COMPLETE_MOTION.particles;
+  const end = P.delay + P.stagger + P.lifeMax + 120;
+  const start = performance.now();
+  function frame(now){
+    const el = now - start;
+    const alive = paintScParticles(el);
+    if (el < end && alive > 0){ scRaf = requestAnimationFrame(frame); }
+    else { layer.innerHTML = ''; scParticles = null; scRaf = null; }   // 종료 시 DOM 정리
+  }
+  scRaf = requestAnimationFrame(frame);
+}
+/* dev 검수용: 콘솔에서 반복 재생(리스너/DOM 누적 없이 리셋). 실제 UI엔 버튼 노출 안 함. */
+window.replayStudyCompleteMotion = function(){ startStudyCompleteMotion(); };
+/* dev 검수용: 특정 경과시간(ms) 정지 프레임으로 particle 표시(영상 대조용). */
+window._scMotionScrub = function(ms){
+  const layer = app.querySelector('[data-motion="study-complete-particles"]');
+  if (!layer) return;
+  if (scRaf){ cancelAnimationFrame(scRaf); scRaf = null; }
+  if (!scParticles){ layer.innerHTML = ''; scParticles = buildScParticles(layer); }
+  paintScParticles(ms);
+};
+
+/* ── 화면7 영수증 Entrance(printOut) ──
+   레퍼런스 "영수증 출력.mp4" 계측을 Source of Truth로.
+   메커니즘: 상단 슬롯(overflow:hidden)에 고정된 clip 안에서 카드가
+   translateY -100%(카드 높이) → 0 으로 출력(=인쇄되어 나오는 느낌).
+   ⚠️ Motion completion ≠ Navigation: 모션이 끝나도 자동 이동 없음.
+      다음 화면(finish) 이동은 오직 사용자 [확인했어] 클릭.
+   타이밍/토큰은 CSS 변수 한 곳(--receipt-entrance-*, --receipt-dimmer-*)에서만 관리.
+   (참고값: duration 1350ms · delay 60ms · easing cubic-bezier(0.5,0,0.25,1) ease-in-out
+            · dimmer rgba(0,0,0,.6) + backdrop blur 7px, fade 없음(영상 frame0부터 full).) */
+let receiptEntrancePlayed = false;   // 진입 시 1회만 재생하도록 가드(re-render 반복 방지)
+function startReceiptEntrance(){
+  const card = app.querySelector('[data-motion="receipt-card-entrance"]');
+  if (!card) return;
+  card.classList.remove('printout--run');
+  void card.offsetWidth;               // reflow → from(-100%)부터 재생
+  card.classList.add('printout--run');
+}
+/* dev 검수용: 콘솔에서 Entrance 재생. 실제 사용자 Flow에선 자동 Replay 없음. */
+window.replayReceiptEntrance = function(){ startReceiptEntrance(); };
 
 /* ============================ flow / actions ============================ */
 function startGuide(){ state.onboardingStep = 'guide'; render(); }
@@ -380,10 +567,11 @@ function goToResult(){
   state.onboardingStep = 'result';
   render();
 }
-function openReceipt(){ if (state.isReceiptOpen) return; state.isReceiptOpen = true; render(); }
+function openReceipt(){ if (state.isReceiptOpen) return; receiptEntrancePlayed = false; state.isReceiptOpen = true; render(); }
 function closeReceipt(){
   if (!state.isReceiptOpen) return;
   state.isReceiptOpen = false;
+  receiptEntrancePlayed = false;             // 다음 open 시 다시 1회 재생
   state.onboardingStep = 'finish';
   render();
 }

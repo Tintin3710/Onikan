@@ -211,7 +211,7 @@ typography:
 
 rounded:
   none: 0px
-  receipt: 4px   # THE receipt, and nothing else — this one radius carries the "paper" signal
+  receipt: 10px  # THE receipt, and nothing else — this one radius carries the "paper" signal (Figma 2026-08: 4→10)
   sm: 12px       # small tiles (kanji tile)
   md: 18px       # secondary cards / inputs
   lg: 22px       # standard content card
@@ -513,7 +513,7 @@ Depth cues are **fill polarity** (white card on grey page; ink card for a dark p
 | Token | Value | Use |
 |---|---|---|
 | `{rounded.none}` | 0px | Full-bleed bands, raw dividers. |
-| `{rounded.receipt}` | 4px | **The receipt, and nothing else.** This single radius carries the "paper" signal, so it must not appear anywhere else. |
+| `{rounded.receipt}` | 10px | **The receipt, and nothing else.** This single radius carries the "paper" signal, so it must not appear anywhere else. *(Figma 2026-08: 4→10.)* |
 | `{rounded.sm}` | 12px | Small tiles (kanji tile). |
 | `{rounded.md}` | 18px | Secondary cards, inputs, kanji tile. |
 | `{rounded.lg}` | 22px | Sub-region card (`card-tinted`). |

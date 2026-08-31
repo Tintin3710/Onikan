@@ -199,7 +199,7 @@ stateDiagram-v2
 | ID | 모션 | 스펙 | 레퍼런스 |
 |---|---|---|---|
 | M-1 | `buttonAutoFill` | 영수증 `확인` 2s 선형 fill → 자동 push. ink fill/회색 트랙. | [mp4](./motion/button-autofill.mp4) · [gif](./motion/button-autofill.gif) |
-| M-2 | `confettiBurst` | 오니기리 완성 시 파티클 버스트(≈2–2.5s). 색 브랜드 정리 권장. | [mp4](./motion/confetti-burst.mp4) · [gif](./motion/confetti-burst.gif) |
+| M-2 | `confettiBurst` | 파티클 버스트(≈2–2.5s). **노출: 실사용=오니기리 완성 시에만 · 온보딩=재료 획득 시(O-7 예외).** 색 브랜드 정리 권장. | [mp4](./motion/confetti-burst.mp4) · [gif](./motion/confetti-burst.gif) |
 
 > 구현 참고: 레퍼런스는 **재현용 시각 자료**. 실제 구현은 네이티브 권장 — `buttonAutoFill`은 Reanimated width 트랜지션 + 완료 콜백 push, `confettiBurst`는 파티클/Lottie. mp4가 gif보다 가볍고 선명(개발 적용 유리), gif는 GitHub 인라인 미리보기용.
 
@@ -212,7 +212,7 @@ stateDiagram-v2
 | **C-1** ✅ | 회독 평가 쌍 `모름/안다` | `GradeButtons`에 **`variant="review"`(모름/안다)** 추가. 학습 variant(아직이에요/외웠어요)와 병존. |
 | 단골=보상 | (충돌 아님) | DESIGN.md L359가 이미 "a streak kept"를 보상에 포함 → `StreakStamps` 라임은 **규칙 내**. 그대로 진행. |
 
-> ✅ **정본 반영 완료(2026-08):** `DESIGN.md`·`COMPONENTS.md`에 **D-3 색 역할 재정의(주요 액션 오렌지→잉크, 단골 도장 라임→오렌지, 라임/그린=진척·완료, 오렌지=브랜드·상태)** + `ArcGauge`·`CompletionCard`·`StatusBadge` 신규 · D-2 차트 강조 예외 · R-1(홈 세그먼트 폐기) · C-1(GradeButtons `review`) · D-1 · 신규 컴포넌트(`hero-card`·`도장`·`ChapterRow`·`ReviewTopCard`·`ScoreDistribution` 등) · T-1/T-2 편차 · 명명 매핑 · **정책 O-1~O-6** 반영 완료. 최종 화면 = [`final-screens/`](./final-screens) 20종.
+> ✅ **정본 반영 완료(2026-08):** `DESIGN.md`·`COMPONENTS.md`에 **D-3 색 역할 재정의(주요 액션 오렌지→잉크, 단골 도장 라임→오렌지, 라임/그린=진척·완료, 오렌지=브랜드·상태)** + `ArcGauge`·`CompletionCard`·`StatusBadge` 신규 · D-2 차트 강조 예외 · R-1(홈 세그먼트 폐기) · C-1(GradeButtons `review`) · D-1 · 신규 컴포넌트(`hero-card`·`도장`·`ChapterRow`·`ReviewTopCard`·`ScoreDistribution` 등) · T-1/T-2 편차 · 명명 매핑 · **정책 O-1~O-7** 반영 완료. 최종 화면 = [`final-screens/`](./final-screens) 20종.
 
 ## 실측 토큰·타이포 (Figma 변수 대조)
 
@@ -241,6 +241,15 @@ stateDiagram-v2
 | **O-4** ✅ | 단골 배지 | **단골 보호권(스트릭 프리즈)** — 7일 마일스톤에 1개, 하루 결석해도 단골 유지. 상시 혜택(재료 2배)과 별개. **`P` → 방패/보호 아이콘으로 교체**(Premium/Point 오독 방지). |
 | **O-5** ✅ | 영수증 확인 | **탭 = 즉시 전환**(남은 fill 스킵 → 100% 스냅 + 햅틱 후 push). 자동 fill은 수동 유저용 폴백. `prefers-reduced-motion` 시 자동 fill·자동 전환 비활성(일반 탭 버튼). 요약은 `영수증 다시 보기`로 재열람 보장. |
 | **O-6** ✅ | 복습 ↔ 회독 챕터 진도 연동 | **분리(B).** `복습`(오늘 "아직이에요" 단어·FSRS) 완료는 `회독` 챕터 진도(N5-x·50단어)를 **올리지 않는다**. 챕터 진도 = **coverage(새로 학습한 단어 수)** — `mastery` 아님. 챕터 진도는 **새 단어 학습(N5-x 챕터 진행)으로만 증가**. 근거: 복습 단어는 이미 학습·카운트된 단어라 합산 시 **중복 카운트·진도 부풀림**(유저가 "챕터 거의 다 함" 착각). 복습 완료는 `✓ 오늘 복습 끝`으로만 표시. |
+| **O-7** ✅ | `confettiBurst` 노출 맥락 | **맥락별 분리.** **실사용(프로덕션) = 오니기리 완성 시에만**(재료 4/4 완성). 재료만 획득하고 끝나면 **미노출**. **온보딩(첫 사이클 체험) = 재료 획득(학습완료 화면)에서 노출** — 보상 루프를 처음 가르치는 가이드 경험이라 레시피 미완성이어도 축하 버스트 노출(**의도된 예외**). 같은 컴포넌트, 트리거만 다름. |
+
+### O-7 조건 → 결과 (`confettiBurst` 노출)
+
+| 맥락 | 트리거 | confettiBurst |
+|---|---|---|
+| **실사용(프로덕션)** | 오니기리 완성 (재료 4/4) | **노출** — 완성 순간 = 보상 정점 (M-2) |
+| **실사용(프로덕션)** | 재료 획득만 (미완성) | **미노출** |
+| **온보딩(첫 사이클 체험)** | 학습완료·재료 획득 화면5 | **노출** — 의도된 예외(보상 루프 최초 학습) |
 
 ### O-6 조건 → 결과
 

@@ -66,6 +66,17 @@ body{ background:#c9c6c1; font-family:'Pretendard JP',-apple-system,BlinkMacSyst
   .btn-fill.guide-fill--run{ animation: none; width:100%; }
 }
 
+/* ── 화면5 학습완료 [계속] Fill ──
+   화면2와 동일 컴포넌트(ButtonFillProgress): 회색 트랙→잉크, 좌→우 width.
+   easing은 --guide-fill-easing 공유, duration만 영상 계측 1.8s. navigation과 무관(순수 시각). */
+:root{ --sc-fill-duration: 1800ms; }   /* 학습완료 fill 0→100%(학습완료.mp4 계측 1.8s) */
+.btn-fill.sc-fill--run{
+  animation: guideFill var(--sc-fill-duration) var(--guide-fill-easing) 0ms forwards;
+}
+@media (prefers-reduced-motion: reduce){
+  .btn-fill.sc-fill--run{ animation: none; width:100%; }
+}
+
 /* ── illustration screens (intro/guide/finish) ── */
 /* 온보딩 일러스트 화면은 흰 배경(제공 일러스트가 흰 배경이라 자연스럽게 블렌드) */
 .illust-screen{ background:var(--canvas); }
@@ -131,11 +142,14 @@ body{ background:#c9c6c1; font-family:'Pretendard JP',-apple-system,BlinkMacSyst
 .reward-tile .chk svg{ width:15px; height:15px; }
 .reward-text .ov{ font-size:13px; color:var(--body); } .reward-text .nm{ font-size:26px; font-weight:700; margin-top:2px; } .reward-text .ds{ font-size:15px; color:var(--body); margin-top:6px; }
 .locked-recipe{ background:var(--canvas); border-radius:18px; box-shadow:var(--shadow); padding:14px 16px; display:flex; align-items:center; gap:14px; }
-.q-tile{ width:44px; height:44px; border-radius:12px; background:var(--soft); display:flex; align-items:center; justify-content:center; color:var(--mute); font-weight:700; flex:none; }
 .locked-recipe .t .nm{ font-size:16px; font-weight:700; } .locked-recipe .t .ds{ font-size:13px; color:var(--mute); margin-top:2px; }
 
-/* motion layer (빈 hook — 현재 아무것도 안 함) */
-.motion-layer{ position:absolute; inset:0; pointer-events:none; z-index:50; }
+/* motion layer — particle overlay(UI 위, 클릭 방해 안 함, layout 영향 없음) */
+.motion-layer{ position:absolute; inset:0; pointer-events:none; z-index:50; overflow:hidden; }
+/* particle: 위치/회전/투명도는 JS 물리(transform)로 갱신. 작은 사각형/막대. */
+.sc-particle{ position:absolute; top:0; left:0; border-radius:1px; will-change:transform,opacity; }
+/* 접근성: 모션 최소화 시 particle 미표시(버튼 fill은 즉시 100%로 대체) */
+@media (prefers-reduced-motion: reduce){ .motion-layer .sc-particle{ display:none; } }
 
 /* ── result (화면6) ── */
 .result-body{ padding:0 20px; }
@@ -152,10 +166,36 @@ body{ background:#c9c6c1; font-family:'Pretendard JP',-apple-system,BlinkMacSyst
 .sum-row .k{ font-size:15px; color:var(--body); } .sum-row .v{ font-size:18px; font-weight:700; }
 .result-note{ font-size:15px; color:var(--body); margin-top:14px; }
 
-/* ── receipt modal (화면7) — result 위 overlay ── */
-.receipt-overlay{ position:absolute; inset:0; background:rgba(20,18,16,.55); z-index:60; display:flex; flex-direction:column; align-items:center; padding:0 20px; }
-.receipt-title{ color:#fff; font-size:22px; font-weight:700; margin-top:58px; }
-.receipt-card{ width:100%; background:var(--canvas); border-radius:var(--radius-card); padding:28px 24px 22px; margin-top:22px; }
+/* ── receipt modal (화면7) — result 위 overlay ──
+   Receipt 전용 Dimmer + Entrance(printOut). 값은 Receipt namespace 토큰으로만 관리.
+   ⚠️ 이 dimmer/모션 값을 일반 Modal·Bottom Sheet·Level Selector로 일반화하지 않는다. */
+.receipt-overlay{
+  position:absolute; inset:0; z-index:60; display:flex; flex-direction:column; align-items:center; padding:0 20px;
+  /* Receipt 전용 Dimmer (영상: frame0부터 full — fade 없음) */
+  --receipt-dimmer-bg: rgba(0,0,0,.6);         /* #000 / 60% — 일반 오버레이보다 어둡게 */
+  --receipt-dimmer-blur: 7px;                  /* Figma Dev export 값(backdrop-blur-[7px]) */
+  background: var(--receipt-dimmer-bg);
+  backdrop-filter: blur(var(--receipt-dimmer-blur));
+  -webkit-backdrop-filter: blur(var(--receipt-dimmer-blur));
+  /* Receipt 전용 Entrance 토큰(영상 계측) — 한 곳에서만 관리 */
+  --receipt-entrance-duration: 1350ms;
+  --receipt-entrance-delay: 60ms;
+  --receipt-entrance-easing: cubic-bezier(0.5, 0, 0.25, 1);  /* ease-in-out(감속 tail) */
+}
+.receipt-title{ color:#fff; font-size:24px; font-weight:600; margin-top:56px; }
+/* printOut용 clip 슬롯: 상단 고정, 카드가 이 안에서 translateY로 '출력'됨.
+   width/radius는 Figma 실측(320:816 w338 · 320:818 rounded-10). */
+.receipt-slot{ width:338px; margin-top:22px; overflow:hidden; border-radius:10px; flex:none; }
+.receipt-card{ width:100%; background:var(--canvas); border-radius:10px; padding:30px 24px 36px; }
+/* Entrance: translateY -100%(카드 높이) → 0. opacity/scale 변화 없음(영상 계측). */
+@keyframes printOut{ from{ transform: translateY(-100%); } to{ transform: translateY(0); } }
+.receipt-card.printout--run{
+  animation: printOut var(--receipt-entrance-duration) var(--receipt-entrance-easing) var(--receipt-entrance-delay) both;
+}
+/* 접근성: 모션 최소화 시 카드는 최종 위치에 즉시(dimmer는 정상 표시) */
+@media (prefers-reduced-motion: reduce){
+  .receipt-card.printout--run{ animation:none; transform:none; }
+}
 .receipt-card .shop{ text-align:center; font-size:16px; font-weight:600; letter-spacing:3px; }
 .receipt-card .date{ text-align:center; font-size:14px; color:var(--body); margin-top:6px; }
 .dash{ border-top:1px dashed var(--pressed); margin:18px 0; }
@@ -164,12 +204,16 @@ body{ background:#c9c6c1; font-family:'Pretendard JP',-apple-system,BlinkMacSyst
 .rc-row .got{ display:inline-flex; align-items:center; gap:7px; }
 .rc-row .got .chk{ width:22px; height:22px; border-radius:999px; background:var(--secondary); display:inline-flex; align-items:center; justify-content:center; }
 .rc-row .got .chk svg{ width:12px; height:12px; }
-.rc-locked{ background:var(--page); border-radius:14px; padding:12px 14px; display:flex; align-items:center; gap:12px; }
+.rc-locked{ background:#fafafa; border-radius:16px; padding:16px 14px; display:flex; align-items:center; gap:12px; }
+/* 잠긴 오니기리 타일(둥근 삼각형) — Figma 320:856(35.2px). study-complete는 .lg(44px). */
+.onigiri-tile{ flex:none; display:flex; align-items:center; justify-content:center; }
+.onigiri-tile .onigiri-q{ width:35px; height:35px; display:block; }
+.onigiri-tile.lg .onigiri-q{ width:44px; height:44px; }
 .rc-locked .t .nm{ font-size:14px; font-weight:700; } .rc-locked .t .ds{ font-size:12px; color:var(--mute); margin-top:2px; }
 .thanks{ text-align:center; font-size:14px; color:var(--body); margin-top:16px; letter-spacing:1px; }
 .receipt-help{ color:rgba(255,255,255,.85); text-align:center; font-size:14px; line-height:22px; margin-top:18px; }
 .receipt-actions{ margin-top:auto; width:100%; padding:16px 0 26px; }
-.receipt-actions .btn{ background:var(--canvas); color:var(--ink); }
+.receipt-actions .btn{ background:var(--canvas); color:var(--ink); box-shadow:none; }  /* 영수증 CTA는 그림자 없음(사용자 지정) */
 
 /* ── home (화면9) ── */
 .home-body{ padding:0 16px 100px; overflow-y:auto; }

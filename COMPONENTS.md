@@ -56,7 +56,7 @@
 **Tokens** — `DESIGN.md`가 정본. Figma Variables·`tokens.ts`는 이 값을 미러링만 한다.
 `ink #1D1D21` · `body #56565E` · `mute #8E8E97` · `canvas #FFF` · `softer #F2F2F4` · `soft #E8E8EC` · `pressed #DCDCE2` · `plate #EDEDF1` · `primary #EF5112` · `primary-pressed #D2460E` · `on-primary #FFF` · `tab-active #C2410C` · `secondary #A3E635` · `bar-fill #71717A` · `shadow rgba(0,0,0,.05)` (다크 값은 DESIGN.md).
 > 위 값은 2026-08 Figma 실측(`get_variable_defs`)과 일치 확인됨. (구 `primary #EA580C`는 폐기 — `#EF5112`.)
-반경: `card 24` · 타일 12/14/16/18 · 컨트롤 pill(999) · **영수증 4**. 좌우 여백 20. 그룹 간격: 한 덩어리 12 / 다른 그룹 24–28.
+반경: `card 24` · 타일 12/14/16/18 · 컨트롤 pill(999) · **영수증 10**(Figma 2026-08: 4→10). 좌우 여백 20. 그룹 간격: 한 덩어리 12 / 다른 그룹 24–28.
 
 ---
 
@@ -127,7 +127,12 @@
 - **RewardBadge**: 우하단 −6/−6, 30×30 원 `secondary`(라임/그린), 안에 체크(색 `ink`). 진입 `pop`. **라임/그린 사용처(진척·완료)** = 여기(재료 체크) + N5 아크 게이지 + 오늘 복습 완료 카드 + 완성 뱃지. **단골 `도장`은 오렌지로 이동**(D-3).
 
 ### `Receipt` / `<Receipt>`
-- **해부**: 배경 `canvas`, **반경 4**(종이 신호 전용), padding `30 24 26`. "ONIGIRI SHOP" 15/600 tracking 3. 행 사이 1px `soft`, 섹션 경계 1px dashed `pressed`. 진입 `printOut`(translateY −101%→0, 0.9s).
+- **해부**: 배경 `canvas`, **반경 10**(종이 신호 전용 · Figma 2026-08: 4→10), padding `30 24 36`, width **338**. "ONIGIRI SHOP" 15/600 tracking 3. 행 사이 1px `soft`, 섹션 경계 1px dashed `pressed`. 잠긴 오니기리 타일 = **둥근 삼각형**(`icoOnigiriQ`, 폴리곤 `#CACACE`@.4 + `?` `#929299`@.6), locked 서브카드 `#fafafa`·radius 16.
+- **Receipt Overlay (Dimmer) — Receipt 전용 스타일:** `background rgba(0,0,0,.6)`(#000/60%, 일반 오버레이보다 어둡게) + `backdrop-filter: blur(7px)`(Figma Dev export). **Result 화면 위 dimmer 레이어의 backdrop-filter로만** 적용(Result DOM·카드에 직접 `filter:blur` 금지). 토큰 `--receipt-dimmer-bg`·`--receipt-dimmer-blur`(Receipt namespace).
+  - **Do**: 영수증 출력 시에만 · 카드 뒤 · Result 위 overlay. **Don't**: 일반 Bottom Sheet/Level Selector/Global Modal Dimmer로 승격, 공통 overlay 토큰(`--modal-overlay` 등) 덮어쓰기. → **"Modal Dimmer 토큰"이 아니라 "Receipt 전용 Overlay Style".**
+- **Entrance `printOut` (레퍼런스 `영수증 출력.mp4` 계측):** 상단 고정 슬롯(`.receipt-slot`, `overflow:hidden` clip) 안에서 카드가 **`translateY −100%(카드 높이) → 0`** 으로 출력. **opacity·scale 변화 없음, overshoot/bounce 없음.** `duration 1350ms · delay 60ms · easing cubic-bezier(0.5, 0, 0.25, 1)`(ease-in-out). Dimmer는 **fade 없이 즉시 full**(영상 frame0부터). 토큰 `--receipt-entrance-*`.
+  - **Trigger** `isReceiptOpen`. **Playback 진입 시 1회 · Loop 없음.** re-render로 반복 재생 금지(`receiptEntrancePlayed` 가드 — 이미 재생됐으면 카드는 최종 위치로 렌더). **⚠️ Motion completion ≠ Navigation** — 완료돼도 자동 이동 없음, `finish` 이동은 오직 [확인했어] 클릭. **Exit 모션은 별도 정의 없음**(닫힘은 기존 navigation 그대로, slide/fade-out 추가 금지). `prefers-reduced-motion` → 카드 최종 위치 즉시(dimmer 정상). dev: `window.replayReceiptEntrance()`(실 UI 미노출).
+  - 구현: `onboarding/styles.css`(`.receipt-slot`·`@keyframes printOut`·`.receipt-overlay` 토큰) + `app.js`(`startReceiptEntrance`·가드). [ref](./handoff/redesign-2026-08/motion/receipt-entrance.mp4)
 
 ### `TopNav` (상세) / `BottomSheetHeader` (단어 상세 11c)
 - **TopNav**: 44 뒤로 셰브론(`ink`) + 가운데 워드마크 15/600 `body` tracking 1.4 (오른쪽 44 패딩 광학중앙). **'＜ 뒤로' 알약 금지.**
@@ -183,16 +188,29 @@
 
 #### 인터랙션 (신규) — 모션과 구분
 
-- **`ButtonFillProgress`** (온보딩 화면2 `data-interaction="guide-continue"` / fill 레이어 `data-interaction-target="guide-continue-fill"`): 하단 `계속` 버튼의 **진행 표시 fill**. 회색 트랙(`--track #9A9AA1`) 위로 **잉크(`--ink`) fill이 좌→우 `width 0%→100%`**(왼쪽 edge 고정). 라벨은 fill 위 중앙 고정(z-index).
-  - **타이밍**(한 곳=CSS 변수에서 관리): `--guide-fill-duration: 2000ms` · `--guide-fill-easing: cubic-bezier(0.25,0.46,0.45,0.94)`(ease-out) · `--guide-fill-delay: 0ms`. 레퍼런스 `온보딩2.mp4` 계측값(0.5s→45% · 1.0s→77% · 1.5s→94% · 2.0s→100%) 근사.
-  - **화면 진입 시 1회 자동 재생.** `prefers-reduced-motion` → 애니메이션 없이 **즉시 100%**.
+- **`ButtonFillProgress`** (온보딩 화면2 guide + 화면5 학습완료 **공용**): 하단 `계속` 버튼의 **진행 표시 fill**. 회색 트랙(`--track #9A9AA1`) 위로 **잉크(`--ink`) fill이 좌→우 `width 0%→100%`**(왼쪽 edge 고정, keyframe `guideFill`). 라벨은 fill 위 중앙 고정(z-index). 두 인스턴스는 **easing·keyframe·구조 동일, duration만 다름.**
+  - **인스턴스 1 — 화면2 guide**(hooks `data-interaction="guide-continue"` / `data-interaction-target="guide-continue-fill"`): `--guide-fill-duration: 2000ms` · `--guide-fill-easing: cubic-bezier(0.25,0.46,0.45,0.94)`(ease-out) · `--guide-fill-delay: 0ms`. 레퍼런스 `온보딩2.mp4` 계측(0.5s→45% · 1.0s→77% · 1.5s→94% · 2.0s→100%). dev: `window.replayGuideFill()`.
+  - **인스턴스 2 — 화면5 학습완료**(hooks `data-interaction="study-complete-continue"` / `data-interaction-target="study-complete-continue-fill"`): 동일 컴포넌트·keyframe·easing, **duration만 `--sc-fill-duration: 1800ms`**, delay 0. 레퍼런스 `학습완료.mp4` 계측(0.36s→37% · 0.9s→77% · 1.4s→95% · 1.8s→100%). 진입 시 particle(`confettiBurst`)과 함께 재생되지만 **별개 동작**(같은 로직으로 묶지 않음). dev: `window.replayStudyCompleteMotion()`.
+  - **타이밍은 한 곳(CSS 변수)에서만 관리.** **화면 진입 시 1회 자동 재생.** `prefers-reduced-motion` → 애니메이션 없이 **즉시 100%**.
   - **navigation과 완전 독립.** fill이 100%가 돼도 **자동 이동 없음** — 화면 이동은 오직 사용자 `계속` 클릭. fill 진행 중에도 클릭하면 즉시 이동. **fill 완료 여부를 버튼 활성/네비 조건으로 쓰지 않는다.** 금지: gradient/scaleX(center)/shine/bounce/spring/overshoot/loop.
   - **⚠️ `buttonAutoFill`과 구분:** `buttonAutoFill`(영수증 `확인`)은 fill = **카운트다운 → 자동 push**. `ButtonFillProgress`(guide)는 fill = **순수 시각 진행 표시(자동 이동 없음)**. 두 인터랙션을 같은 로직으로 구현하지 않는다.
   - dev: `window.replayGuideFill()`(실 UI 미노출). 구현: `handoff/redesign-2026-08/onboarding/styles.css`(`--guide-fill-*`·`.btn-fill`·`@keyframes guideFill`) + `app.js`(`startGuideFill()`). [ref 영상 원본은 디자이너 보관]
 
 #### 모션 (신규)
 - **`buttonAutoFill`**: 재료 획득 영수증 `확인`이 2s 선형 fill 후 자동 push(ink fill/회색 트랙). **탭 = 즉시 전환**(남은 fill 100% 스냅 + 햅틱 후 push). `prefers-reduced-motion` 시 자동 fill·자동 전환 비활성(일반 탭 버튼). 요약은 `영수증 다시 보기`로 재열람. (O-5, cf. `ButtonFillProgress`) [ref](./handoff/redesign-2026-08/motion/button-autofill.mp4)
-- **`confettiBurst`**: 오니기리 완성 시에만 파티클 버스트(≈2–2.5s). [ref](./handoff/redesign-2026-08/motion/confetti-burst.mp4)
+- **`confettiBurst`** — 축하 파티클 버스트. **노출 정책은 맥락별로 다르다 (O-7):**
+  - **실사용(프로덕션): 오니기리 완성 시에만.** 재료만 획득하고 끝나면 **미노출** — 재료 4/4로 오니기리가 완성되는 순간에만 버스트(README ①~④ 흐름과 일치, 더 큰 스케일 가능 · ref onigiri-complete.mp4).
+  - **온보딩(첫 사이클 체험): 재료 획득 시 노출.** 온보딩은 보상 루프를 **처음 가르치는** 가이드 경험이라, 레시피가 미완성이어도 학습완료(재료 획득) 화면5에서 축하 버스트를 보여준다 — **의도된 예외**. hooks `data-motion="study-complete-particles"`, ref `학습완료.mp4`.
+  - 두 경우 **같은 `confettiBurst` 컴포넌트**, **트리거(노출 조건)만** 맥락에 따라 다르다. 아래 계측값은 온보딩 인스턴스(`학습완료.mp4`) 기준.
+  - **계측(학습완료.mp4, 390×844)**: 진입 후 delay **~140ms**에 등장(버튼 fill보다 늦음 — 동시 아님). **단발**(연속 emitter/loop 아님).
+  - **분포 spawn**: 점 폭발이 아니라 **상단 영역 전면(full-width, 상단~중앙)에 분포 spawn 후 낙하**. 각 particle: 약한 초기속도(좌우 drift + 대부분 하향, 일부 위로 팝) → **공기저항으로 종단속도 수렴(플러터, 자유낙하 아님)** + 개별 회전. 수명 ~**2.2–2.65s**, 끝에서 opacity 페이드, 전체 소멸 ~2.8s. 밀도 최고 ~0.9–1.3s. **bounce/turbulence 추가 금지.**
+  - **형태**: 소형 사각형 + 길쭉한 막대 혼합(~6–18px). **색 3종(계측): 골드 `#FAB815` · 버밀리언 `#EB4308` · 핑크 `#F164AD`.** 임의 색 추가 금지.
+  - **결정적**: seeded PRNG(mulberry32, 고정 시드) → 새로고침·Replay 시 동일 패턴. 매회 다른 `Math.random()` 모션 금지. 파라미터 한 곳: `STUDY_COMPLETE_MOTION.particles`.
+  - **레이어**: `.motion-layer`(overlay · `pointer-events:none` · z-index 50) — 버튼 클릭 방해 없음, layout 영향 없음.
+  - **`prefers-reduced-motion`** → particle 생략(버튼 fill은 즉시 100%). dev: 재생 `window.replayStudyCompleteMotion()` · 정지프레임 `window._scMotionScrub(ms)`(실 UI 미노출).
+  - ⚠️ **Motion completion ≠ Navigation** — particle·fill이 끝나도 자동 전환 없음. 화면 이동은 오직 [계속] 클릭. (학습완료 화면은 과거 auto-advance 제거됨.)
+  - 구현: `onboarding/app.js`(`STUDY_COMPLETE_MOTION`·`startStudyCompleteMotion`·`buildScParticles`·`paintScParticles`) + `styles.css`(`.sc-particle`·`--sc-fill-duration`). [ref](./handoff/redesign-2026-08/motion/confetti-burst.mp4)
+- **`printOut` (영수증 Entrance)** — 영수증 출력 시 카드가 상단 슬롯에서 `translateY −100%→0`(clip). 1350ms·delay 60ms·`cubic-bezier(0.5,0,0.25,1)` ease-in-out, opacity/scale/overshoot 없음. 진입 1회·loop 없음·**Motion completion ≠ Navigation**. Dimmer는 **Receipt 전용**(`#000/60%`+blur 7px). 전체 스펙·Do/Don't은 위 **`Receipt`** 컴포넌트 항목 참조.
 
 ---
 
