@@ -241,7 +241,7 @@ body{
 /* test score */
 .score-card{display:flex;align-items:center;gap:14px;padding:14px 16px}
 .score-ic{width:46px;height:46px;border-radius:14px;background:rgba(163,230,53,.22);display:grid;place-items:center;flex:none}
-.score-ic svg{width:26px;height:26px}
+.score-ic img{width:28px;height:28px;display:block}
 .score-main{flex:1;display:flex;flex-direction:column;gap:2px}
 .score-main .v{font-size:20px;font-weight:700}
 .score-main .k{font-size:14px;color:var(--body)}
@@ -252,8 +252,7 @@ body{
 /* 단골 도장 카드 (구 week-row 스트릭 → 오니기리 도장 그리드) */
 .stamp-card{padding:18px 20px 20px}
 .stamp-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.cal{width:26px;height:26px;border-radius:7px;background:var(--canvas);border:1.5px solid var(--primary);position:relative;display:grid;place-items:center;flex:none;box-shadow:inset 0 6px 0 -4px var(--primary)}
-.cal b{font-size:12px;font-weight:800;color:var(--primary);line-height:1;margin-top:3px;font-variant-numeric:tabular-nums}
+.cal{width:29px;height:30px;flex:none;display:block}
 .stamp-title{font-size:18px;font-weight:700}
 .stamp-div{border-top:1px dashed var(--pressed);margin:0 0 16px}
 .stamp-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px 8px}
@@ -411,7 +410,7 @@ body{
             <!-- test score -->
             <div class="card score-card anim" style="--d:.05s">
               <div class="score-ic">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#7CB342" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 15.5l5-5 3.5 3 8.5-9"/><path d="M15 4.5h6v6"/></svg>
+                <img src="assets/icon-graph.svg" alt="" width="28" height="28">
               </div>
               <div class="score-main">
                 <span class="v tnum"><span data-count="12">12</span>/12</span>
@@ -423,7 +422,7 @@ body{
             <!-- 단골 도장 카드 (구 스트릭 week-row → 오니기리 도장 그리드) -->
             <div class="card stamp-card anim" style="--d:.12s">
               <div class="stamp-head">
-                <span class="cal"><b>6</b></span>
+                <img class="cal" src="assets/icon-calendar.svg" alt="">
                 <span class="stamp-title">단골 6일차</span>
               </div>
               <div class="stamp-div"></div>
