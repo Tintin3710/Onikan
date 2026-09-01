@@ -327,7 +327,10 @@ function render(){
       default:              html = renderIntro();
     }
   }
-  app.innerHTML = html + `<div class="dev-badge">step: ${state.currentPage === 'home' ? 'home' : state.onboardingStep}${state.isReceiptOpen ? ' · receipt' : ''}</div>`;
+  /* dev badge — 핸드오프 캡처용으로 ?clean 시 숨김 + 데스크톱 래퍼(중앙정렬·그림자) 제거 */
+  const showDevBadge = !new URLSearchParams(location.search).has('clean');
+  document.documentElement.classList.toggle('capture', !showDevBadge);
+  app.innerHTML = html + (showDevBadge ? `<div class="dev-badge">step: ${state.currentPage === 'home' ? 'home' : state.onboardingStep}${state.isReceiptOpen ? ' · receipt' : ''}</div>` : '');
   isTransitioning = false;
 
   /* 화면5: 진입 시 particle(Motion) + 버튼 fill(Interaction) 1회 자동 재생.

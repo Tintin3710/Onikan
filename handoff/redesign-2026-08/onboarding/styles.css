@@ -244,5 +244,9 @@ body{ background:#c9c6c1; font-family:'Pretendard JP',-apple-system,BlinkMacSyst
 .home-nav .tab svg{ width:26px; height:26px; }
 .home-nav .tab.on{ color:var(--primary); }
 
+/* 핸드오프 캡처 모드(?clean) — 데스크톱 래퍼 제거해 390×844 디바이스만 flush 렌더 */
+html.capture, html.capture body{ background:#fff; display:block; }
+html.capture .device{ margin:0; box-shadow:none; max-width:none; }
+
 /* dev badge (연습용) */
 .dev-badge{ position:absolute; left:8px; bottom:8px; z-index:80; font-size:10px; color:var(--mute); background:rgba(255,255,255,.7); padding:2px 6px; border-radius:6px; pointer-events:none; }
