@@ -90,7 +90,7 @@ body{
 
 /* ---------- phone ---------- */
 .phone{
-  width:375px;height:788px;flex:none;
+  width:390px;height:800px;flex:none;
   background:#0b0b0d;border-radius:46px;padding:10px;
   box-shadow:0 30px 60px -20px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.06);
   position:relative;
@@ -250,16 +250,17 @@ body{
 .chev svg{width:20px;height:20px}
 
 /* 단골 도장 카드 (구 week-row 스트릭 → 오니기리 도장 그리드) */
-.stamp-card{padding:18px 20px 20px}
-.stamp-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.stamp-card{padding:16px 14px 20px}
+.stamp-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .cal{width:29px;height:30px;flex:none;display:block}
 .stamp-title{font-size:18px;font-weight:700}
-.stamp-div{border-top:1px dashed var(--pressed);margin:0 0 16px}
-.stamp-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px 8px}
-.stamp{aspect-ratio:1;background-repeat:no-repeat;background-position:center;background-size:contain}
+.stamp-div{border-top:1px dashed var(--pressed);margin:0 0 12px}
+/* 도장: 디자인 스펙 58×58 고정, 5열 space-between, 행 간격 12 */
+.stamp-grid{display:grid;grid-template-columns:repeat(5,58px);justify-content:space-between;row-gap:12px}
+.stamp{width:58px;height:58px;background-repeat:no-repeat;background-position:center;background-size:contain}
 .stamp.on{background-image:url(assets/stamp-earned.png)}
 .stamp.off{background-image:url(assets/stamp-locked.png)}
-.stamp-foot{margin-top:16px;font-size:13px;color:var(--body)}
+.stamp-foot{margin-top:12px;font-size:13px;color:var(--body)}
 
 /* stat tiles */
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
