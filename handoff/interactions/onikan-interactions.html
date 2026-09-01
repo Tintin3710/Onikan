@@ -90,7 +90,7 @@ body{
 
 /* ---------- phone ---------- */
 .phone{
-  width:390px;height:800px;flex:none;
+  width:410px;height:810px;flex:none;
   background:#0b0b0d;border-radius:46px;padding:10px;
   box-shadow:0 30px 60px -20px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.06);
   position:relative;
@@ -123,7 +123,7 @@ body{
 /* ============================================================
    SCREEN A — 학습 완료 / 재료 노출
 ============================================================ */
-#viewA .scrollA{position:absolute;inset:0;padding:64px 20px 24px;display:flex;flex-direction:column}
+#viewA .scrollA{position:absolute;inset:0;padding:64px 16px 24px;display:flex;flex-direction:column}
 #viewA .head .label{margin-bottom:6px}
 #viewA .headline{margin-bottom:24px}
 
@@ -231,7 +231,7 @@ body{
   font-size:17px;font-weight:700;color:var(--ink);opacity:0;transform:translateY(4px);
 }
 
-#viewB .scrollB{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding:52px 20px 32px;-webkit-overflow-scrolling:touch}
+#viewB .scrollB{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding:52px 16px 32px;-webkit-overflow-scrolling:touch}
 #viewB .scrollB::-webkit-scrollbar{width:0}
 #viewB .bigtitle{font-size:36px;font-weight:700;line-height:44px;letter-spacing:-.5px;margin:56px 0 24px;transform-origin:left center}
 
@@ -256,7 +256,7 @@ body{
 .stamp-title{font-size:18px;font-weight:700}
 .stamp-div{border-top:1px dashed var(--pressed);margin:0 0 12px}
 /* 도장: 디자인 스펙 58×58 고정, 5열 space-between, 행 간격 12 */
-.stamp-grid{display:grid;grid-template-columns:repeat(5,58px);justify-content:space-between;row-gap:12px}
+.stamp-grid{display:grid;grid-template-columns:repeat(5,58px);justify-content:center;gap:12px 10px}
 .stamp{width:58px;height:58px;background-repeat:no-repeat;background-position:center;background-size:contain}
 .stamp.on{background-image:url(assets/stamp-earned.png)}
 .stamp.off{background-image:url(assets/stamp-locked.png)}
@@ -278,9 +278,9 @@ body{
 /* 점수 분포 (구 곡선 → 막대 그래프) */
 .bars{position:relative;margin:20px 0 8px;height:150px;display:flex;align-items:flex-end;gap:5px}
 .bar{flex:1;background:var(--pressed);border-radius:5px 5px 0 0;position:relative;transform-origin:bottom center}
-.bar.you{background:var(--primary)}
+.bar.you{background:#FF902F}
 .barspace{flex:1}
-.bar .you-lab{position:absolute;left:50%;top:-22px;transform:translateX(-50%);font-size:13px;font-weight:700;color:var(--primary)}
+.bar .you-lab{position:absolute;left:50%;top:-22px;transform:translateX(-50%);font-size:13px;font-weight:700;color:#FF902F}
 .axis{display:flex;justify-content:space-between;font-size:12px;color:var(--body);margin-top:6px}
 .axis .mid{color:var(--mute)}
 .dist-cta{margin-top:18px}
@@ -479,8 +479,11 @@ const stampGrid=document.getElementById('stampGrid');
 stampGrid.innerHTML=Array.from({length:STAMP_TOTAL},(_,i)=>
   `<div class="stamp ${i<STAMP_EARNED?'on':'off'}" style="--dd:${(.5+i*.05).toFixed(2)}s"></div>`).join('');
 
-// build 점수 분포 막대 — 나(오렌지) 강조. 높이(%)는 Figma 분포 근사. 진입 시 아래→위 rise
-const barData=[0,0,10,14,11,0,0,30,52,74,96,70,44];  // index 10 = 나
+// build 점수 분포 막대 — 나(오렌지) 강조. 진입 시 아래→위 rise
+// ⚠️ 아래 barData/YOU_IDX는 모션 시연용 목업(placeholder)이다. 실제 앱에서는
+//    개발자가 유저의 실제 점수 분포(구간별 인원수 + 내 위치)를 바인딩해야 한다.
+//    막대 개수·높이(%)·나 인덱스는 실데이터로 대체. (0 = 막대 없음/빈 구간)
+const barData=[0,0,10,14,11,0,0,30,52,74,96,70,44];  // 목업: index 10 = 나
 const YOU_IDX=10;
 const bars=document.getElementById('bars');
 bars.innerHTML=barData.map((h,i)=>{
