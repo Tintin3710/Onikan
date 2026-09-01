@@ -292,7 +292,8 @@ function renderHome(){
       </div>
       <div class="home-card">
         <div class="t1">단골 0일차</div>
-        <div class="t2">학습을 시작하고 단골 혜택을 받아보세요!</div>
+        <img class="regular-empty" src="assets/regular-empty.png" alt="아직 단골이 아니에요">
+        <div class="regular-caption">학습을 시작하면 단골 혜택을 받아요</div>
       </div>
       <div class="home-card">
         <div class="t1">8월 N5 메뉴판</div>

@@ -82,14 +82,16 @@ body{ background:#c9c6c1; font-family:'Pretendard JP',-apple-system,BlinkMacSyst
 .illust-screen{ background:var(--canvas); }
 .illust-screen .body{ align-items:center; text-align:center; }
 .illust{ display:block; object-fit:contain; }
-.intro-illust{ width:318px; margin-top:150px; }
-.guide-illust{ width:215px; margin-top:96px; }
-.finish-illust{ width:166px; margin-top:150px; }
+/* 신규 일러스트(정사각 300~320) — Figma 298-45139(img1 300·top131.5) / 345-586(img3 320·top93.5) 실측 */
+.intro-illust{ width:300px; margin-top:132px; }
+.guide-illust{ width:300px; margin-top:104px; }
+.finish-illust{ width:320px; margin-top:94px; }
 .lead-title{ font-size:24px; font-weight:700; line-height:32px; margin:0; }
 .lead-sub{ font-size:16px; font-weight:400; line-height:24px; color:var(--body); margin:8px 0 0; }
 .lead-byline{ font-size:15px; color:var(--mute); margin:14px 0 0; }
-.intro-copy{ margin-top:40px; } .intro-copy .lead-title{ line-height:34px; }
-.guide-copy{ margin-top:28px; } .finish-copy{ margin-top:24px; }
+/* 카피 상단 여백 — 일러스트 박스 하단 여백(에셋 내장) 포함해 Figma 간격에 맞춤 */
+.intro-copy{ margin-top:0; } .intro-copy .lead-title{ line-height:34px; }
+.guide-copy{ margin-top:20px; } .finish-copy{ margin-top:10px; }
 
 /* ── study session ── */
 .study-topbar{ flex:none; }
@@ -224,7 +226,7 @@ body{ background:#c9c6c1; font-family:'Pretendard JP',-apple-system,BlinkMacSyst
 .home-hero .top{ display:flex; justify-content:space-between; gap:12px; }
 .home-hero .copy{ font-size:19px; font-weight:700; line-height:1.35; max-width:180px; }
 .home-hero .meta{ font-size:12px; color:var(--body); margin-top:12px; }
-.home-hero .hero-cat{ width:84px; height:86px; object-fit:contain; flex:none; }
+.home-hero .hero-cat{ width:100px; height:auto; object-fit:contain; flex:none; }
 .home-hero .divider{ border-top:1px solid var(--soft); margin:20px 0; }
 .ing-head{ font-size:14px; font-weight:600; } .ing-head span{ color:var(--mute); margin-left:6px; }
 .ing-row{ display:flex; gap:8px; margin-top:12px; }
@@ -234,6 +236,9 @@ body{ background:#c9c6c1; font-family:'Pretendard JP',-apple-system,BlinkMacSyst
 .home-card{ background:var(--canvas); border-radius:var(--radius-card); box-shadow:var(--shadow); padding:20px; margin-top:16px; }
 .home-card .t1{ font-size:14px; font-weight:600; } .home-card .t2{ font-size:14px; color:var(--body); margin-top:6px; }
 .home-card .sub{ font-size:14px; color:var(--body); }
+/* 단골 empty 카드 — Figma 338-5167(일러스트 120×120 중앙 + 캡션) */
+.regular-empty{ display:block; width:120px; height:120px; object-fit:contain; margin:16px auto 0; }
+.regular-caption{ text-align:center; font-size:14px; color:var(--body); margin-top:8px; }
 .home-nav{ position:absolute; left:0; right:0; bottom:0; height:95px; background:var(--canvas); border-top:1px solid var(--soft); display:flex; }
 .home-nav .tab{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; color:var(--mute); font-size:12px; font-weight:500; }
 .home-nav .tab svg{ width:26px; height:26px; }
