@@ -428,7 +428,7 @@ body{
               </div>
               <div class="stamp-div"></div>
               <div class="stamp-grid" id="stampGrid"></div>
-              <div class="stamp-foot">단골 혜택 · 다음 학습 재료 2배</div>
+              <div class="stamp-foot" id="stampFoot">뭐 주냐고? …모아보면 알아.</div>
             </div>
 
             <!-- stat tiles -->
@@ -478,6 +478,18 @@ const STAMP_TOTAL=10, STAMP_EARNED=6;
 const stampGrid=document.getElementById('stampGrid');
 stampGrid.innerHTML=Array.from({length:STAMP_TOTAL},(_,i)=>
   `<div class="stamp ${i<STAMP_EARNED?'on':'off'}" style="--dd:${(.5+i*.05).toFixed(2)}s"></div>`).join('');
+
+// 단골 도장 라벨 — earned 수에 따라 사장 대사 전환(진행 중 → 임박 → 완성). 정책: dangol-reward-SPEC.md O-3
+// 보상(고양이 카드)은 완성 화면에서 공개하므로 진행 중 라벨은 티저(E안).
+const STAMP_FOOT={
+  progress:'뭐 주냐고? …모아보면 알아.',        // 0~total-2
+  almost:'딱 한 개! 이거 채우면 바로 준다.',      // total-1 (9/10)
+  done:'받아. 사장이 약속한 거.'                  // total 완성 (10/10)
+};
+document.getElementById('stampFoot').textContent =
+  STAMP_EARNED>=STAMP_TOTAL ? STAMP_FOOT.done
+  : STAMP_EARNED===STAMP_TOTAL-1 ? STAMP_FOOT.almost
+  : STAMP_FOOT.progress;
 
 // build 점수 분포 막대 — 나(오렌지) 강조. 진입 시 아래→위 rise
 // ⚠️ 아래 barData/YOU_IDX는 모션 시연용 목업(placeholder)이다. 실제 앱에서는
