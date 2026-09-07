@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>단골 보상 · IA & 플로우</title>
+<!--
+  팀 공유용 설명 시안 (핸드오프). 단골 보상(고양이 카드)의 위치(IA) · 획득→열람 플로우 · 단골 UI 역할 분담.
+  정책 출처: ../../dangol-reward-SPEC.md (O-7 열람 위치, O-12 역할 분담, N-3 탭 승격). 픽셀 목업 아님 — 흐름/구조 설명용.
+-->
+<style>
+  @font-face{font-family:'Pretendard JP';font-weight:400;font-display:swap;src:url('../../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Regular.woff2') format('woff2')}
+  @font-face{font-family:'Pretendard JP';font-weight:500;font-display:swap;src:url('../../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Medium.woff2') format('woff2')}
+  @font-face{font-family:'Pretendard JP';font-weight:600;font-display:swap;src:url('../../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-SemiBold.woff2') format('woff2')}
+  @font-face{font-family:'Pretendard JP';font-weight:700;font-display:swap;src:url('../../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Bold.woff2') format('woff2')}
+
+  :root{
+    --ink:#1D1D21; --on-ink:#F7F7F9; --body:#56565E; --mute:#8E8E97;
+    --canvas:#FFFFFF; --page:#F2F2F4; --surface:#FAFBFC; --soft:#E8E8EC; --pressed:#DCDCE2; --line:#E4E4EA;
+    --primary:#EF5112; --primary-tint:rgba(239,81,18,.10); --secondary:#A3E635; --secondary-tint:rgba(163,230,53,.20);
+    --shadow:0 6px 14px rgba(30,25,20,.05); --radius:16px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --ink:#F2F2F4; --on-ink:#1D1D21; --body:#B4B4BC; --mute:#8E8E97;
+      --canvas:#1D1D21; --page:#131316; --surface:#212127; --soft:#2A2A31; --pressed:#33333B; --line:#33333B;
+      --primary:#F97316; --primary-tint:rgba(249,115,22,.16); --secondary:#A3E635; --secondary-tint:rgba(163,230,53,.14);
+      --shadow:0 6px 14px rgba(0,0,0,.3);
+    }
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0}
+  body{background:var(--page);color:var(--ink);font-family:'Pretendard JP',-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;padding:32px 20px 64px}
+  .wrap{max-width:940px;margin:0 auto}
+
+  header.top{margin-bottom:28px}
+  .kicker{font-size:12px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--primary)}
+  h1{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:6px 0 8px}
+  .lead{font-size:15px;color:var(--body);max-width:640px;margin:0}
+  .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .tag{font-size:12px;font-weight:600;padding:5px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--body)}
+  .tag.ok{background:var(--secondary-tint);border-color:transparent;color:var(--ink)}
+
+  section{background:var(--canvas);border-radius:20px;box-shadow:var(--shadow);padding:24px 22px;margin-top:18px}
+  .sec-h{display:flex;align-items:baseline;gap:10px;margin:0 0 4px}
+  .sec-n{font-size:13px;font-weight:800;color:var(--primary)}
+  .sec-t{font-size:19px;font-weight:700;margin:0}
+  .sec-d{font-size:13.5px;color:var(--body);margin:2px 0 18px}
+  .sec-d code{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:12.5px}
+
+  /* ── ① IA : bottom nav ── */
+  .nav{display:flex;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:10px;max-width:460px}
+  .nav .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:8px 4px;border-radius:12px;color:var(--mute);font-size:12px;font-weight:600}
+  .nav .tab svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .nav .tab.active{color:var(--primary);background:var(--primary-tint)}
+  .nav .tab.active .lbl{font-weight:700}
+
+  .ia-flow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px}
+  .seg{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+  .seg .s{font-size:13px;font-weight:600;color:var(--body);padding:7px 16px;border-radius:999px}
+  .seg .s.on{background:var(--canvas);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08);font-weight:700}
+  .seg .s.cat{color:var(--primary)}
+  .drop{font-size:22px;color:var(--mute);line-height:1}
+  .pill-note{font-size:12.5px;color:var(--mute)}
+
+  /* ── ② 플로우 스텝 ── */
+  .steps{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+  .step{flex:1;min-width:150px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 14px 16px;position:relative}
+  .step .idx{width:22px;height:22px;border-radius:999px;background:var(--ink);color:var(--on-ink);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+  .step .st{font-size:14.5px;font-weight:700;margin:0 0 4px}
+  .step .sd{font-size:12.5px;color:var(--body);margin:0}
+  .step.win{border-color:var(--primary);background:var(--primary-tint)}
+  .step.win .idx{background:var(--primary)}
+  .arrow{align-self:center;color:var(--mute);font-size:22px;font-weight:700;padding:0 8px;flex:none}
+  @media (max-width:720px){ .arrow{transform:rotate(90deg);padding:6px 0;width:100%;text-align:center} .step{min-width:100%} }
+
+  .deeplink{margin-top:14px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--body);background:var(--surface);border:1px dashed var(--pressed);border-radius:12px;padding:12px 14px}
+  .deeplink b{color:var(--ink)}
+  .deeplink .dl-ic{color:var(--primary);font-weight:800;flex:none}
+
+  /* ── ③ 역할 분담 ── */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:640px){ .split{grid-template-columns:1fr} }
+  .col{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .col h4{margin:0 0 3px;font-size:14.5px;font-weight:700}
+  .col .where{font-size:12px;font-weight:600;color:var(--primary);margin-bottom:12px}
+  .mini-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .mini-grid i{aspect-ratio:1;border-radius:8px;background:var(--pressed)}
+  .mini-grid i.on{background:var(--primary)}
+  .mini-card{display:flex;align-items:center;gap:10px;background:var(--canvas);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+  .mini-card .txt{flex:1}
+  .mini-card .t1{font-size:12px;color:var(--body)}
+  .mini-card .t2{font-size:15px;font-weight:700}
+  .mini-card .cta{font-size:12px;font-weight:700;color:var(--on-ink);background:var(--ink);border-radius:999px;padding:7px 12px}
+  .col .cap{font-size:12px;color:var(--mute);margin:10px 0 0}
+  .source-note{margin-top:14px;font-size:12.5px;color:var(--body);background:var(--secondary-tint);border-radius:10px;padding:10px 14px}
+  .source-note b{color:var(--ink)}
+
+  /* ── ④ 파생 결정 ── */
+  ul.deltas{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  ul.deltas li{display:flex;gap:10px;font-size:13.5px;color:var(--body);align-items:baseline}
+  ul.deltas .id{font-size:11px;font-weight:800;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:2px 7px;flex:none;min-width:34px;text-align:center}
+  ul.deltas b{color:var(--ink)}
+  .foot{margin-top:22px;font-size:12.5px;color:var(--mute);text-align:center}
+  .foot a{color:var(--body)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="kicker">Onikan · 단골 보상</div>
+    <h1>단골 카드는 어디에 있고, 어떻게 얻고 보나</h1>
+    <p class="lead">매일 오면 단골 도장이 쌓이고, 10칸을 채우면 <b>고양이 카드</b> 한 장을 받는다. 카드는 <b>도감</b> 탭에서 모아 본다. 아래는 그 위치(IA)·획득 흐름·단골 UI 역할 분담을 팀이 한눈에 보도록 정리한 것.</p>
+    <div class="tags">
+      <span class="tag ok">확정 O-7 · 열람 위치</span>
+      <span class="tag ok">확정 O-12 · 역할 분담</span>
+      <span class="tag">2026-09-07</span>
+      <span class="tag">출처: dangol-reward-SPEC.md</span>
+    </div>
+  </header>
+
+  <!-- ① IA -->
+  <section>
+    <div class="sec-h"><span class="sec-n">①</span><h2 class="sec-t">어디에 있나 — IA</h2></div>
+    <p class="sec-d">하단 4탭 유지. 기존 <code>메뉴</code> 탭을 <code>도감</code>으로 <b>승격</b>(N-3)하고, 그 안에서 세그먼트 <code>[재료 | 고양이]</code>로 나눈다. 고양이 카드는 <b>“고양이” 세그먼트</b>. 새 탭·설정행은 만들지 않는다.</p>
+
+    <div class="nav" aria-label="하단 탭">
+      <div class="tab"><svg viewBox="0 0 24 24"><path d="M12 4c-1 0-1.8.6-2.3 1.6L4.2 16.4C3.4 18 4.3 20 6.2 20h11.6c1.9 0 2.8-2 2-3.6L14.3 5.6C13.8 4.6 13 4 12 4Z"/><path d="M9 17h6"/></svg><span class="lbl">오늘</span></div>
+      <div class="tab active"><svg viewBox="0 0 24 24"><path d="M5 5.5A1.5 1.5 0 0 1 6.5 4H18a1 1 0 0 1 1 1v13H6.5A1.5 1.5 0 0 0 5 19.5Z"/><path d="M19 18v2H6.5A1.5 1.5 0 0 1 5 18.5"/><path d="M9.2 8.2l1.3 1.6L9 11m6-2.8l-1.3 1.6L15 11"/><path d="M10.6 12.4c.9.5 1.9.5 2.8 0"/></svg><span class="lbl">도감</span></div>
+      <div class="tab"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.2 2"/></svg><span class="lbl">기록</span></div>
+      <div class="tab"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg><span class="lbl">설정</span></div>
+    </div>
+
+    <div class="ia-flow">
+      <span class="drop">↳ 도감 탭을 열면</span>
+      <div class="seg"><span class="s on">재료</span><span class="s cat">고양이</span></div>
+      <span class="pill-note">재료(핵심 루프) 먼저 · 고양이(리텐션 보상) 다음 → “고양이”가 카드 컬렉션</span>
+    </div>
+  </section>
+
+  <!-- ② 플로우 -->
+  <section>
+    <div class="sec-h"><span class="sec-n">②</span><h2 class="sec-t">어떻게 얻고 → 본다 — 플로우</h2></div>
+    <p class="sec-d">획득의 주 동선은 학습 → 단골 → 카드. 카드는 도감에 쌓인다. 홈·기록의 단골 도장 카드에서 도감으로 바로 가는 <b>지름길(딥링크)</b>도 함께 둔다.</p>
+
+    <div class="steps">
+      <div class="step"><span class="idx">1</span><p class="st">매일 학습 완료</p><p class="sd">단골 도장 +1칸 (오렌지 오니기리)</p></div>
+      <span class="arrow">→</span>
+      <div class="step"><span class="idx">2</span><p class="st">10칸 완성</p><p class="sd">라벨 “받아. 사장이 약속한 거.”</p></div>
+      <span class="arrow">→</span>
+      <div class="step win"><span class="idx">3</span><p class="st">고양이 카드 획득 🐱</p><p class="sd">완성 연출로 카드 1장 공개·지급</p></div>
+      <span class="arrow">→</span>
+      <div class="step"><span class="idx">4</span><p class="st">도감 › 고양이에 수집</p><p class="sd">그리드에 추가 · 진척 N/총 · 탭 → 카드 상세</p></div>
+    </div>
+
+    <div class="deeplink"><span class="dl-ic">⤷ 지름길</span><span>홈·기록의 <b>단골 도장 카드</b>를 탭하면 → <b>도감 › 고양이</b>로 딥링크(획득 맥락에서 바로 보상 확인). 상시 열람의 정식 홈은 어디까지나 도감 탭.</span></div>
+  </section>
+
+  <!-- ③ 역할 분담 -->
+  <section>
+    <div class="sec-h"><span class="sec-n">③</span><h2 class="sec-t">단골 UI 역할 분담 — O-12</h2></div>
+    <p class="sec-d">같은 단골 상태를 두 곳에서 <b>서로 다른 목적</b>으로 보여준다. 전체 진척 상세는 기록, 동기+행동 유도는 도감 상단.</p>
+
+    <div class="split">
+      <div class="col">
+        <h4>전체 10칸 도장 그리드</h4>
+        <div class="where">📍 기록 탭</div>
+        <div class="mini-grid">
+          <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i>
+          <i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <p class="cap">진척 상세 — 며칠째, 몇 칸 남았는지 한눈에</p>
+      </div>
+      <div class="col">
+        <h4>단골 요약 + 오늘 인증</h4>
+        <div class="where">📍 도감(고양이) 상단</div>
+        <div class="mini-card"><div class="txt"><div class="t1">매일 학습 중</div><div class="t2">단골 5일차</div></div><span class="cta">오늘 인증</span></div>
+        <p class="cap">동기(단골)와 결과(카드 그리드)를 한 화면에</p>
+      </div>
+    </div>
+    <p class="source-note"><b>소스는 단일 상태</b> — 두 곳은 같은 데이터를 각자 목적에 맞게 보여주는 뷰다. 중복 노출 OK, 값이 갈라지지 않게 상태는 하나로 관리. <b>완성 후 리셋 규칙(O-5)</b>은 아직 미정 → 두 뷰 모두 그 결정에 따라 갱신.</p>
+  </section>
+
+  <!-- ④ 파생 결정 -->
+  <section>
+    <div class="sec-h"><span class="sec-n">④</span><h2 class="sec-t">이 결정에서 파생된 것</h2></div>
+    <ul class="deltas">
+      <li><span class="id">N-3</span><span><b>탭 승격</b> — “메뉴” → “도감”, 안에 <code style="background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1px 6px">[재료 | 고양이]</code> 세그먼트. 4탭 유지.</span></li>
+      <li><span class="id">O-7</span><span><b>열람 위치</b> — 고양이 세그먼트 = 카드 컬렉션. 홈·기록에서 딥링크. 설정·신규 탭 배제.</span></li>
+      <li><span class="id">O-12</span><span><b>역할 분담</b> — 전체 그리드=기록 / 요약+오늘 인증=도감 상단. 소스 단일.</span></li>
+      <li><span class="id">순서</span><span>세그먼트는 <b>재료 먼저, 고양이 다음</b>(핵심 루프 → 리텐션 보상).</span></li>
+      <li><span class="id">O-5</span><span>연결된 미정 — <b>10칸 완성 후 리셋 사이클</b>. 결정되면 위 두 뷰 표시가 함께 확정.</span></li>
+    </ul>
+  </section>
+
+  <p class="foot">정책 정본: <a href="../../dangol-reward-SPEC.md">handoff/dangol-reward-SPEC.md</a> · 토큰/컴포넌트 정본: DESIGN.md · COMPONENTS.md (충돌 시 정본 우선)</p>
+
+</div>
+</body>
+</html>
