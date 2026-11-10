@@ -90,10 +90,11 @@ button{ font-family:inherit; }
 /* ── 공통 일러스트 ── */
 .ill{ position:relative; width:220px; height:132px; margin:0 auto; }
 .mini{ position:absolute; width:52px; height:68px; border-radius:12px; background:var(--canvas); box-shadow:0 2px 8px rgba(30,25,20,.10); border:1px solid var(--soft); display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:800; }
-/* 익혔어요: 카드 → 내일 달력 */
+/* 익혔어요: 카드 → '며칠 뒤' 달력 (정확한 날짜는 FSRS가 정하므로 숫자 대신 칸만) */
 .cal{ position:absolute; right:30px; top:26px; width:76px; height:84px; border-radius:16px; background:var(--canvas); border:1px solid var(--soft); box-shadow:0 2px 8px rgba(30,25,20,.08); overflow:hidden; }
 .cal .hd{ height:22px; background:var(--ink); color:var(--on-ink); font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; }
-.cal .d{ font-size:30px; font-weight:800; text-align:center; margin-top:8px; font-variant-numeric:tabular-nums; }
+.cal .d{ display:grid; grid-template-columns:repeat(4,9px); gap:5px; justify-content:center; margin-top:12px; }
+.cal .d i{ width:9px; height:9px; border-radius:3px; background:var(--soft); }
 .chk{ position:absolute; right:22px; top:16px; width:26px; height:26px; border-radius:999px; background:var(--secondary); display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 3px var(--canvas); transform:scale(0); }
 .chk svg{ width:14px; height:14px; }
 .ill.good .mini{ left:30px; top:32px; }
@@ -218,7 +219,7 @@ const LABELS = {
   old: { neg:'다시 볼래요', pos:'한 번 익혔어요' },  // 기존 사용자도 같은 새 이름. 이전 이름은 안내에서만 보여준다.
 };
 const COPY = {
-  good:  { t:'익힌 단어는\n내일 다시 꺼내 볼게요', p:'오늘은 한 번 살펴본 것으로 충분해요.\n내일 기억나는지 함께 확인해요.', toast:'내일 다시 꺼내 볼게요' },
+  good:  { t:'익힌 단어는\n며칠 뒤 다시 꺼내 볼게요', p:'오늘은 한 번 살펴본 것으로 충분해요.\n며칠 뒤 기억나는지 함께 확인해요.', toast:'며칠 뒤 다시 꺼내 볼게요' },
   again: { t:'이 단어는\n오늘 한 번 더 나와요', p:'단어를 다 본 뒤 다시 보여 드릴게요.\n부담 없이 넘어가도 돼요.', toast:'오늘 한 번 더 보여 드릴게요' },
   // 기존 사용자: 처음 누른 버튼의 이전 이름 → 새 이름 (토스트 1회)
   renameGood:  { toast:"'외웠어요'가 '한 번 익혔어요'로 바뀌었어요" },
@@ -230,7 +231,7 @@ const S = { form:'sheet', user:'new', i:0, revealed:false, busy:false, seen:{ go
 // ── 일러스트 ──
 const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="#1D1D21" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
 function ill(kind, word){
-  if (kind === 'good') return `<div class="ill good"><div class="mini">${word.k.slice(0,1)}</div><div class="cal"><div class="hd">내일</div><div class="d">${tomorrow()}</div></div><span class="chk">${CHECK}</span></div>`;
+  if (kind === 'good') return `<div class="ill good"><div class="mini">${word.k.slice(0,1)}</div><div class="cal"><div class="hd">며칠 뒤</div><div class="d">${"<i></i>".repeat(12)}</div></div><span class="chk">${CHECK}</span></div>`;
   if (kind === 'again'){
     const rest = WORDS.filter(w => w !== word).slice(0, 3).map((w, n) => `<div class="mini q q${n+1}">${w.k.slice(0,1)}</div>`).join('');
     return `<div class="ill again">${rest}<div class="mini m0">${word.k.slice(0,1)}</div><span class="again-tag">↻ 한 번 더</span></div>`;
@@ -239,7 +240,6 @@ function ill(kind, word){
   return `<div class="rename"><div class="pill o"><span class="old">아직이에요</span><span class="new">${l.neg}</span></div><div class="pill i"><span class="old">외웠어요</span><span class="new">${l.pos}</span></div></div>`;
 }
 const SPK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D1D21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z" fill="#1D1D21"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
-function tomorrow(){ const d = new Date(); d.setDate(d.getDate()+1); return d.getDate(); }
 function play(root){ const el = root.firstElementChild; if (!el) return; el.classList.remove('play'); void el.offsetWidth; el.classList.add('play'); }
 
 // ── 카드 ──

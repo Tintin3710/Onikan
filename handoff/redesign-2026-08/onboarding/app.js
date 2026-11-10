@@ -232,7 +232,7 @@ function renderResult(){
         <div class="sum-row"><span class="k">새로 배운 단어</span><span class="v">${known}</span></div>
         <div class="sum-row"><span class="k">아직이라고 표시한 단어</span><span class="v">${again}</span></div>
       </div>
-      <div class="result-note">오늘 외운 ${known}개는 내일 다시 확인해요.</div>
+      <div class="result-note">오늘 익힌 ${known}개는 며칠 뒤 다시 확인해요.</div>
       <div class="spacer"></div>
     </div>
     <div class="actions">
