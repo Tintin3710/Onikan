@@ -1,5 +1,5 @@
 ---
-version: alpha
+version: beta.1
 name: Onikan-design-system
 description: The design language for Onikan (오니칸) — a restrained Japanese-vocabulary study game. A cool-neutral "Onikan Grey" ramp (hue 228, ~2.6% saturation) carried by Pretendard holds ~85% of the UI. Colour roles (2026-08): the one primary action per screen is an INK-filled pill ({colors.ink}, label {colors.on-ink}); orange {colors.primary} is the brand/status accent (active tab, 단골 stamps, section overlines, status badges, a chart's "you are here" mark) — not the primary button; lime/green {colors.secondary} marks progress & reward (N5 arc gauge, completion card, earned check). Card-based mobile layout, one line-art mascot ("사장"), first-class light and dark themes.
 
@@ -26,7 +26,7 @@ colors:
   body: "#56565E"               # grey-40 — captions, secondary text, inactive tab (8.3:1)
   mute: "#8E8E97"               # grey-60 — LOCKED / placeholder ONLY (3.4:1)
   canvas: "#FFFFFF"             # card surface
-  softer: "#F2F2F4"             # grey-97 — page background, tab bar
+  softer: "#F5F5F5"             # page background, tab bar — OFF-RAMP neutral by decision D0-2 (2026-11): warmer than grey-97 to sit with the illustrations. grey-97 stays in the ramp.
   soft: "#E8E8EC"               # grey-95 — pills, example block, segment track
   pressed: "#DCDCE2"            # grey-90 — hairline dividers, incomplete progress cell
   plate: "#EDEDF1"              # grey-96 — illustration backing tile (FIXED in both themes)
@@ -37,11 +37,14 @@ colors:
   # 2026-08: PRIMARY ACTION = INK ({ink}+{on-ink}), NOT orange. Orange = brand/status accent.
   primary: "#EF5112"            # bright brand orange — BRAND/STATUS accent (tab, 단골 stamps, overlines, 진행 중 badge, chart "you are here", 음독 pills). NOT the primary button.
   primary-pressed: "#D2460E"    # pressed orange (when orange is an interactive accent)
+  primary-soft: "#FCE8DE"       # orange-soft surface — 진행 중 status badge background
+  ink-pressed: "#131316"        # grey-10 — pressed state of the ink primary button
   on-ink: "#F7F7F9"             # grey-98 — label on an INK fill = the PRIMARY BUTTON label (15.8:1)
   on-primary: "#FFFFFF"         # white on orange — only if orange is ever used as a fill (badge/stamp); check contrast per use. (Primary CTAs no longer use orange.)
   tab-active: "#C2410C"         # orange-700 — active tab icon+label (AA 4.63:1). NOT primary — #EF5112 is only 3.21:1 as a 12px tint on the light tab bar
   secondary: "#A3E635"          # lime-400 — PROGRESS & REWARD (N5 arc gauge, 복습 완료 card, earned check, 완성 badge)
   on-secondary: "#1D1D21"
+  secondary-soft: "#EAF6DD"     # light-green surface — completion card, 완료 status badge
   link: "#C2410C"               # orange-700 — on-brand text links (5.18:1)
 
   # ─── Semantic status (functional — NOT brand accents) ───
@@ -65,6 +68,9 @@ dark:
   shadow: "rgba(0,0,0,0.4)"
   primary: "#F97316"            # orange-500 — pops on dark
   primary-pressed: "#FA8432"    # pressed = one step LIGHTER in dark
+  primary-soft: "#3A2216"       # tone only — no bright surface on dark
+  ink-pressed: "#FFFFFF"        # ink inverts to light in dark, so pressed goes one step lighter
+  secondary-soft: "#26301A"
   on-primary: "#1D1D21"         # INK label in dark — white on #F97316 is only 2.80:1 (fails even large-AA); ink = 5.99:1
   on-ink: "#1D1D21"             # inverts with ink — a fixed value would put white on a white chip
   tab-active: "#F97316"         # = dark primary (6.62:1 on dark tab bar). NOT #EF5112 (that is the LIGHT primary — cross-theme)
@@ -210,24 +216,42 @@ typography:
     letterSpacing: -0.1px
 
 rounded:
+  # SEED radius scale as-is (N-3, 2026-11-10): name = value ÷ 4, half steps "_5" up to 16.
+  # Onikan uses only the steps below. Components reference the ROLE aliases (card, card-tinted, receipt, pill).
   none: 0px
-  receipt: 10px  # THE receipt, and nothing else — this one radius carries the "paper" signal (Figma 2026-08: 4→10)
-  sm: 12px       # small tiles (kanji tile)
-  md: 18px       # secondary cards / inputs
-  lg: 22px       # standard content card
-  card: 24px     # hero / feature card
-  pill: 999px    # every interactive control (buttons, chips, badges)
-  full: 9999px   # circular icon containers
+  r2_5: 10px        # receipt
+  r3: 12px          # small tiles (kanji tile, 44px-and-under thumbnails)
+  r3_5: 14px        # medium tiles (44–48px thumbnails)
+  r4: 16px          # secondary cards / inputs / large tiles (was 18 — not on the SEED scale)
+  r5: 20px          # grey card-tinted (was 22 — not on the SEED scale)
+  r6: 24px          # white cards
+  full: 9999px      # every interactive control + circular icon containers (pill and full merged, as in SEED)
+  # Role aliases
+  card: "{rounded.r6}"          # 24 — EVERY white card (D0-3)
+  card-tinted: "{rounded.r5}"   # 20 — grey sub-region card, one step under the white card
+  receipt: "{rounded.r2_5}"     # 10 — THE receipt, and nothing else; this one radius carries the "paper" signal
+  pill: "{rounded.full}"        # buttons, chips, badges
 
 spacing:
-  xs: 4px
-  sm: 8px
-  md: 12px
-  lg: 16px
-  xl: 20px
-  2xl: 24px      # hero/reward card vertical padding; the tight end of a group gap
-  xxl: 28px
-  huge: 40px
+  # Names = multiples of 4px (SEED-style, N-1 2026-11). Old names in brackets.
+  x1: 4px        # [xs]
+  x2: 8px        # [sm]
+  x3: 12px       # [md]
+  x4: 16px       # [lg]
+  x5: 20px       # [xl]
+  x6: 24px       # [2xl] gap BETWEEN groups (D0-4) · hero/reward card vertical padding
+  x7: 28px       # [xxl]
+  x10: 40px      # [huge] gap between major sections · top of screen
+
+# Layout roles (2026-11, D0-1/D0-4/D0-5). Reference spacing — never a raw number in a screen.
+layout:
+  gutter: "{spacing.x4}"          # 16 — screen left/right margin (Figma 2026-09-01 decision; was 20)
+  gap-tight: "{spacing.x3}"       # 12 — inside one group (8–12)
+  gap-group: "{spacing.x6}"       # 24 — between groups
+  gap-section: "{spacing.x10}"    # 40 — between major sections
+  touch-target: 44px
+  cta-height: 56px                # button-primary and grade-button share it
+  session-top-bar: 52px           # 44 nav (close 48×44 + counter) + 4px progress bar under it
 
 components:
   # ─── Actions ───
@@ -237,31 +261,30 @@ components:
     textColor: "{colors.on-ink}"
     typography: "{typography.button-large}"
     rounded: "{rounded.pill}"
-    padding: "{spacing.lg} {spacing.xl}"   # 16 + 24 lineHeight + 16 = 56px, the confirmed CTA height
+    padding: "{spacing.x4} {spacing.x5}"   # 16 + 24 lineHeight + 16 = 56px, the confirmed CTA height
   button-secondary:
     description: "Paired or standalone non-primary action. Surface pill, ink text."
     backgroundColor: "{colors.canvas}"
     textColor: "{colors.ink}"
     typography: "{typography.button-md}"
     rounded: "{rounded.pill}"
-    padding: "{spacing.md} {spacing.xl}"
+    padding: "{spacing.x3} {spacing.x5}"
   button-subtle:
     description: "Tertiary / in-card action (e.g. 단어 상세). Soft grey pill."
     backgroundColor: "{colors.soft}"
     textColor: "{colors.ink}"
     typography: "{typography.button-md}"
     rounded: "{rounded.pill}"
-    padding: "{spacing.md} {spacing.lg}"
+    padding: "{spacing.x3} {spacing.x4}"
   grade-button:
-    description: "The study self-rating set (모름·어려움·앎·쉬움). A NEUTRAL escalation, not orange — a set has no single primary. Ramps outline → soft → tinted → solid ink."
-    typography: "{typography.button-md}"
+    description: "The study self-rating PAIR (2026-11, D0-5: was 4-step). Two equal-width pills side by side: 아직이에요 (outline) · 외웠어요 (ink). 회독 variant relabels to 모름 · 안다."
+    typography: "{typography.card-title}"   # 17/600 — kept from COMPONENTS.md GradeButtons; confirm against the rebuilt screen B
     rounded: "{rounded.pill}"
-    padding: "{spacing.xl}"
+    height: "{layout.cta-height}"   # 56 — same as button-primary
+    gap: "{spacing.x2}"             # 8
     variants:
-      unknown: "outline {colors.pressed}"
-      hard: "fill {colors.soft} @ 60%"
-      known: "fill {colors.soft}"
-      easy: "fill {colors.ink}, text {colors.on-ink}"
+      again: "outline 1.5 {colors.pressed} on {colors.canvas}, text {colors.ink}"
+      good: "fill {colors.ink}, text {colors.on-ink}"
 
   # ─── Surfaces ───
   card:
@@ -270,19 +293,19 @@ components:
     textColor: "{colors.ink}"
     typography: "{typography.body-md}"
     rounded: "{rounded.card}"
-    padding: "{spacing.2xl} {spacing.xl}"   # 24 vertical / 20 horizontal, per the confirmed screens
+    padding: "{spacing.x6} {spacing.x5}"   # 24 vertical / 20 horizontal, per the confirmed screens
   card-tinted:
     description: "Sub-region card on a page. Grey-soft fill, no shadow."
     backgroundColor: "{colors.soft}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.lg}"
-    padding: "{spacing.xl}"
+    rounded: "{rounded.card-tinted}"
+    padding: "{spacing.x5}"
   kanji-tile:
     description: "The single large-kanji square inside a card. Soft grey fill. Requires the JP font cut — see typography."
     backgroundColor: "{colors.soft}"
     textColor: "{colors.ink}"
     typography: "{typography.display-xxl}"
-    rounded: "{rounded.md}"
+    rounded: "{rounded.r4}"
     size: 104x104
 
   # ─── Reward system (lime lives here, and ONLY here) ───
@@ -293,7 +316,7 @@ components:
     accent: "{colors.secondary}"
     typography: "{typography.body-sm-strong}"
     rounded: "{rounded.pill}"
-    padding: "{spacing.sm} {spacing.md}"
+    padding: "{spacing.x2} {spacing.x3}"
   ingredient-earned:
     description: "A collected ingredient row / checkmark. Lime check = the achievement cue."
     icon: "{colors.secondary}"
@@ -309,12 +332,12 @@ components:
     textColor: "{colors.body}"
     typography: "{typography.label}"
   badge:
-    description: "JLPT level / meta tag. NEUTRAL by default (never orange — orange is reserved for actions)."
+    description: "JLPT level / meta tag. NEUTRAL by default. Status badges are the exception: 진행 중 = {colors.primary-soft} + primary, 완료 = {colors.secondary-soft}."
     backgroundColor: "{colors.soft}"
     textColor: "{colors.ink}"
     typography: "{typography.label}"
     rounded: "{rounded.pill}"
-    padding: "{spacing.xs} {spacing.md}"
+    padding: "{spacing.x1} {spacing.x3}"
   stat-block:
     description: "Big-number metric + stacked caption (12 / 새 단어). One hero number per card."
     valueTypography: "{typography.display-xxl}"
@@ -322,11 +345,12 @@ components:
 
   # ─── Navigation ───
   tab-bar:
-    description: "Bottom tab bar (오늘·메뉴·기록·설정). Text tabs; active = ink + underline, inactive = body."
+    description: "Bottom tab bar (오늘·메뉴·기록·설정). Icon 26 + label 12; active = {colors.tab-active} tint on both, no underline/fill/badge."
     backgroundColor: "{colors.softer}"
-    activeColor: "{colors.ink}"
+    activeColor: "{colors.tab-active}"
     inactiveColor: "{colors.body}"
-    typography: "{typography.body-md-strong}"
+    typography: "{typography.tab-label}"
+    activeTypography: "{typography.tab-label-active}"
     topBorder: "{colors.pressed}"
   list-row:
     description: "Collection / index row (001 TUNA MAYO / LOCKED). Locked rows drop to mute."
@@ -343,7 +367,7 @@ components:
     textColor: "{colors.on-ink}"
     accent: "{colors.secondary}"
     rounded: "{rounded.pill}"
-    padding: "{spacing.md} {spacing.lg}"
+    padding: "{spacing.x3} {spacing.x4}"
     typography: "{typography.body-sm}"
     variants:
       reward: "lime check mark + label"
@@ -401,9 +425,9 @@ Copy speaks in the boss's warm, terse Korean ("왔네. 처음 보는 얼굴이�
 > 4. *None of the above?* → **no accent.** Ink / grey. ~85% of the UI lives here.
 
 ### Surface — the "Onikan Grey" ramp (cool neutral)
-Neutrals are the **Onikan Grey** ramp: hue 228 fixed, ~2.6% saturation — a deliberately *chosen* cool-leaning neutral, midway between pure grey (0%) and cool-neutral (~5%). Everything rides one axis (page `#F2F2F4`, cards, dividers, text) so nothing feels borrowed from another system.
+Neutrals are the **Onikan Grey** ramp: hue 228 fixed, ~2.6% saturation — a deliberately *chosen* cool-leaning neutral, midway between pure grey (0%) and cool-neutral (~5%). Everything rides one axis (cards, dividers, text) so nothing feels borrowed from another system. **One deliberate exception: the page background `softer` is `#F5F5F5`**, a plain neutral picked to sit with the warm illustrations (D0-2, 2026-11).
 - **Canvas** (`{colors.canvas}` — `#FFFFFF` / dark `#1D1D21`): Card surfaces.
-- **Softer** (`{colors.softer}` — `#F2F2F4` / dark `#131316`, grey-97/10): Page background and tab bar.
+- **Softer** (`{colors.softer}` — `#F5F5F5` / dark `#131316`): Page background and tab bar. Light value is off-ramp by decision (D0-2); dark stays grey-10. The only page background — no screen-specific page colours.
 - **Soft** (`{colors.soft}` — `#E8E8EC` / dark `#2B2B31`, grey-95/22): Pills, example blocks, segment-toggle track.
 - **Pressed** (`{colors.pressed}` — `#DCDCE2` / dark `#3E3E45`, grey-90/30): Hairline dividers and incomplete progress cells.
 - **Plate** (`{colors.plate}` — `#EDEDF1`, grey-96): The tile behind an illustration — **fixed in both themes**. The illustrations are black line art; if the tile darkened too, the drawing would disappear. Revisit when white-line-art assets exist.
@@ -486,15 +510,15 @@ Fallback stack: `"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont,
 ### Spacing Philosophy
 Base unit **4px**. Grouping is done with spacing, not borders — *proximity is the primary grouping device.*
 
-- **Within a component** (label → value → caption): tight, `{spacing.sm}`–`{spacing.md}` (8–12px). Elements that belong together sit close.
-- **Between components / cards**: `{spacing.xxl}` (28px). The gap between two cards is what makes them read as separate groups.
-- **Section / screen padding**: horizontal gutter `{spacing.xl}` (20px); top of screen `{spacing.huge}` (40px) to let the first headline breathe.
-- **Card interior**: `{spacing.2xl} {spacing.xl}` (24 vertical / 20 horizontal) on hero and reward cards; compact progress and list cards tighten to `{spacing.lg}`.
+- **Within a component** (label → value → caption): tight, `{spacing.x2}`–`{spacing.x3}` (8–12px). Elements that belong together sit close.
+- **Between components / cards**: `{layout.gap-group}` (24px). The gap between two cards is what makes them read as separate groups.
+- **Section / screen padding**: horizontal gutter `{layout.gutter}` (16px, D0-1 — was 20); top of screen `{spacing.x10}` (40px) to let the first headline breathe.
+- **Card interior**: `{spacing.x6} {spacing.x5}` (24 vertical / 20 horizontal) on hero and reward cards; compact progress and list cards tighten to `{spacing.x4}`.
 
-> **Decision logic — how much gap?** If two things are *the same idea*, use 8–12px. If they are *different groups*, jump to 28px. Never use an in-between 18–20px gap between groups — it blurs the boundary and is the #1 cause of "everything feels equally important."
+> **Decision logic — how much gap?** *Same idea* → 8–12px (`gap-tight`). *Different groups* → 24px (`gap-group`, `{spacing.x6}`). *Different sections* → 40px (`gap-section`). Use only these three; values like 14, 18, 30 are snapped to the nearest role. (D0-4, 2026-11: group gap 28 → 24, matching the latest screens.)
 
 ### Grid & Container
-Single-column mobile. Content aligns to one **left spine** at the 20px gutter (strong reading edge); the primary button intentionally breaks that spine by going full-width to signal "action." Bottom tab bar is fixed; screen content reserves space for it via a safe-area inset (never overlaps).
+Single-column mobile. Content aligns to one **left spine** at the 16px gutter (strong reading edge); the primary button intentionally breaks that spine by going full-width to signal "action." Bottom tab bar is fixed; screen content reserves space for it via a safe-area inset (never overlaps).
 
 ### Whitespace
 Top-load information (title + hero card), bottom-anchor personality + action (mascot → primary button). The empty middle is intentional — it is the calm the study tool needs.
@@ -513,36 +537,38 @@ Depth cues are **fill polarity** (white card on grey page; ink card for a dark p
 | Token | Value | Use |
 |---|---|---|
 | `{rounded.none}` | 0px | Full-bleed bands, raw dividers. |
-| `{rounded.receipt}` | 10px | **The receipt, and nothing else.** This single radius carries the "paper" signal, so it must not appear anywhere else. *(Figma 2026-08: 4→10.)* |
-| `{rounded.sm}` | 12px | Small tiles (kanji tile). |
-| `{rounded.md}` | 18px | Secondary cards, inputs, kanji tile. |
-| `{rounded.lg}` | 22px | Sub-region card (`card-tinted`). |
-| `{rounded.card}` | 24px | Standard content card (`card`) and hero / feature card. |
-| `{rounded.pill}` | 999px | Every interactive control — buttons, chips, badges. |
-| `{rounded.full}` | 9999px | Circular icon containers. |
+| `{rounded.r2_5}` · `{rounded.receipt}` | 10px | **The receipt, and nothing else.** This single radius carries the "paper" signal, so it must not appear anywhere else. *(Figma 2026-08: 4→10.)* |
+| `{rounded.r3}` | 12px | Small tiles (kanji tile, small thumbnails). |
+| `{rounded.r3_5}` | 14px | Medium thumbnails (44–48px). |
+| `{rounded.r4}` | 16px | Secondary cards, inputs, large tiles. *(N-3: 18→16.)* |
+| `{rounded.r5}` · `{rounded.card-tinted}` | 20px | Grey sub-region card (`card-tinted`). *(N-3: 22→20.)* |
+| `{rounded.r6}` · `{rounded.card}` | 24px | Every white card (`card`), including hero / feature cards. |
+| `{rounded.full}` · `{rounded.pill}` | 9999px | Every interactive control — buttons, chips, badges — and circular icon containers. |
 
-The signature is a **soft, generous radius**: cards at 22–24px, every control a full pill. Nothing in the UI is a hard rectangle except full-bleed edges and dividers.
+Every value sits on the SEED radius scale (`r` + value ÷ 4); nothing off-scale is allowed.
+
+The signature is a **soft, generous radius**: cards at 20–24px, every control a full pill. Nothing in the UI is a hard rectangle except full-bleed edges and dividers.
 
 ## Components
 
 ### Actions
 
-**`button-primary`** — the **ink** action pill. Background `{colors.ink}`, label `{colors.on-ink}` `#F7F7F9`, `{typography.button-large}`, `{rounded.pill}`, padding `{spacing.xl}`, full-width at screen bottom. *(2026-08: primary CTA is ink, was orange.)*
+**`button-primary`** — the **ink** action pill. Background `{colors.ink}`, label `{colors.on-ink}` `#F7F7F9`, `{typography.button-large}`, `{rounded.pill}`, padding `{spacing.x5}`, full-width at screen bottom. *(2026-08: primary CTA is ink, was orange.)*
 - **When to use:** the single most important action on the screen (학습 시작하기 · 회독하기 · 외웠어요 · 지금 연습하기 · 오늘 학습 시작 · 영수증 받고 마치기 · 확인). If a second action competes, it becomes a **white outline**, not a second ink pill.
 
 **`button-secondary`** — **white outline** pill (1.5px `{colors.pressed}`, ink label) for a non-primary action beside a primary, or a de-emphasised CTA (아직이에요 · 백업 내보내기 · 완료-state 회독하러 가기 · 발음 듣기·사전). A `{colors.soft}`-filled variant exists for in-card use.
 
 **`button-subtle`** — soft grey pill (`{colors.soft}`) for tertiary / in-card actions (e.g. 단어 상세).
 
-**`grade-button`** — the study self-rating set (모름 · 어려움 · 앎 · 쉬움). A **neutral escalation**, because a set of peers has no single primary: outline → soft grey @ 60% → soft grey → solid ink. Orange is *not* used here. The Easy chip's label is `{colors.on-ink}`, which inverts with the fill so the step reads in both themes.
+**`grade-button`** — the study self-rating **pair** (아직이에요 · 외웠어요; 회독: 모름 · 안다). Two equal-width pills, height 56 (= `button-primary`), 8 apart: outline → ink. Orange is *not* used here. *(2026-11, D0-5: the 4-step 모름·어려움·앎·쉬움 set is retired.)*
 
 ### Surfaces
 
-**`card`** — the standard content card. `{colors.canvas}`, `{rounded.card}`, `{spacing.xl}` padding, flat (Level 0) or Level 1 soft shadow. The workhorse.
+**`card`** — the standard content card. `{colors.canvas}`, `{rounded.card}` (24 — **every white card**, D0-3), `{spacing.x5}` padding, flat (Level 0) or Level 1 soft shadow. The workhorse.
 
 **`card-tinted`** — grey-soft sub-region card, no shadow. Use for a callout *inside* a screen — never nested inside another card (see composition rules).
 
-**`kanji-tile`** — the large-kanji square, grey-soft fill, `{rounded.md}`.
+**`kanji-tile`** — the large-kanji square, grey-soft fill, `{rounded.r4}`.
 
 ### Progress & Reward (lime / green)
 
@@ -562,7 +588,7 @@ The signature is a **soft, generous radius**: cards at 22–24px, every control 
 
 **`section-label`** — uppercase tracked eyebrow (`{typography.label}`), `{colors.body}`. Groups a card's content (오늘의 학습, INGREDIENTS).
 
-**`badge`** — JLPT / meta tag = **neutral** grey pill (`{colors.soft}`). **Status** badges are the deliberate exception: `진행 중` = orange-soft pill (`#FCE8DE`/primary), `완료` = green-soft pill (`#E7F4D9`/`success-deep`), `잠김` = mute text. Status badges carry colour because they signal state, not because they are actions.
+**`badge`** — JLPT / meta tag = **neutral** grey pill (`{colors.soft}`). **Status** badges are the deliberate exception: `진행 중` = orange-soft pill (`{colors.primary-soft}` `#FCE8DE` + primary text), `완료` = green-soft pill (`{colors.secondary-soft}` `#EAF6DD`), `잠김` = mute text. Status badges carry colour because they signal state, not because they are actions.
 
 **`stat-block`** — one hero number (`display-xxl`) + a stacked `label` caption. **One hero number per card**; secondary metrics drop to a small pill, never a second giant number.
 
@@ -585,9 +611,9 @@ These are the "how pieces combine" guarantees — an AI or dev can self-check ag
 - **One hero number per card.** Additional metrics become pills / inline text (see the home card: `12` is hero, `복습 0` is a pill).
 - **Lime/green = progress or reward.** It belongs on the arc gauge, a completion card, or an earned check — a progress/achievement semantic, not decoration. **Orange never means "tap here."** If orange is about to sit on a primary button, it's wrong — the primary is ink.
 - **Badges/labels stay neutral.** Never color a JLPT badge or section label with orange or lime.
-- **Group by gap, not by box.** Prefer spacing (8–12 within, 28 between) over adding borders/cards to separate content.
+- **Group by gap, not by box.** Prefer spacing (8–12 within, 24 between, 40 between sections) over adding borders/cards to separate content.
 - **Shadow is a rarity.** Only `card` (Level 1) and `toast` may cast one. Everything else is flat.
-- **Full-pill controls, soft-radius cards.** Controls = `{rounded.pill}`; surfaces = `{rounded.lg}`/`{rounded.card}`. Don't mix (no rectangular buttons, no pill-shaped cards).
+- **Full-pill controls, soft-radius cards.** Controls = `{rounded.pill}`; white cards = `{rounded.card}` (24); grey `card-tinted` = `{rounded.card-tinted}` (20). Don't mix (no rectangular buttons, no pill-shaped cards).
 
 ## Do's and Don'ts
 
@@ -596,7 +622,7 @@ These are the "how pieces combine" guarantees — an AI or dev can self-check ag
 - Keep orange `{colors.primary}` for **brand/status** only — active tab, 단골 stamps, section overlines, 진행 중 badge, a chart's "you are here" mark. Its scarcity as an accent *is* the brand signal.
 - Use lime/green `{colors.secondary}` for **progress & reward** — the arc gauge, a completion card, an earned check, a 완성 badge.
 - Let the Onikan Grey neutrals and Pretendard carry ~85% of the UI; accents are the exception, not the rhythm.
-- Group information by proximity: tight inside a group, a clear 28px jump between groups.
+- Group information by proximity: tight inside a group, a clear 24px jump between groups, 40px between sections.
 - Give every token a dark value and check contrast in both themes.
 - Use tabular figures wherever numbers align or compare.
 - Keep one hero number per card; demote the rest.
@@ -607,7 +633,7 @@ These are the "how pieces combine" guarantees — an AI or dev can self-check ag
 - **No orange on a primary button** — the primary is ink. Orange is brand/status only (tab, 단골 stamps, overlines, 진행 중 badge, chart "you are here"); don't spread it onto plain labels or icons.
 - **No lime/green as decoration** — if it's not progress or a reward, it's not lime.
 - **No card nested in a card**, and no rectangular (hard-corner) buttons.
-- **No warm or true-grey neutral** — neutrals are the Onikan Grey ramp (cool, hue 228, ~2.6% sat). Don't swap in stone, zinc, or a pure 0%-saturation grey.
+- **No other neutrals** — neutrals are the Onikan Grey ramp (cool, hue 228, ~2.6% sat), plus the single page background `softer #F5F5F5` (D0-2). Don't add stone, zinc or screen-specific page colours.
 - **`mute` is not a caption colour** — it's for LOCKED / placeholder only (3.4:1). To quiet a caption, lower size/weight, not colour.
 - **Lime only at the earn moment** — the check badge or a just-filled progress cell's fade-out. Never as steady-state decoration.
 - **No second typeface or monospace** — Pretendard does every role; labels get tracking, codes get tabular figures.
@@ -615,11 +641,13 @@ These are the "how pieces combine" guarantees — an AI or dev can self-check ag
 
 ## Implemented Variant Axes
 
+> ⚠️ **2026-11:** the Figma library below is still the alpha.1 build — `button-primary` is orange and `tab-bar` is text + underline there, and the redesign components are missing. Refresh is step 2 of the 2026-11 plan; until then **this document wins** over the library.
+
 The Figma library ships 16 components. Only these carry variants — everything else is a single component, because a variant axis is only justified where the spec actually defines alternate states.
 
 | Component | Axis | Values |
 |---|---|---|
-| `grade-button` | `State` | Unknown · Hard · Known · Easy |
+| `grade-button` | `State` | Unknown · Hard · Known · Easy *(retired 2026-11 → Again · Good pair, D0-5)* |
 | `card` | `Elevation` | Flat · Level 1 |
 | `ingredient-earned` | `State` | Earned · Locked |
 | `progress-dots` | `State` | Empty · Filled |
@@ -630,6 +658,21 @@ The Figma library ships 16 components. Only these carry variants — everything 
 `button-primary`, `button-secondary` and `button-subtle` are deliberately **three separate components, not one variant set** — they differ in typography *and* padding (`button-large` + 20/20 vs `button-md` + 12/20 vs `button-md` + 12/16), so a shared variant set would force one padding scheme and break the spec.
 
 ## Changelog
+
+### beta.1 — 2026-11 source-of-truth alignment
+
+Decisions from [`design-system/00-DECISIONS-2026-11.md`](./design-system/00-DECISIONS-2026-11.md), taken against the latest Figma screens (학습완료 `615:1611`, 학습 카드 `615:1527`). This file is the value source of truth; Figma and code follow it.
+
+- **D0-1 Gutter 16** (was 20) — new `layout.gutter`.
+- **D0-2 `softer` → `#F5F5F5`** — page background leaves the cool ramp on purpose to sit with the illustrations; dark unchanged. Screen-specific page colours (code `#F4F2EF`) are retired.
+- **D0-3 White cards = radius 24**; grey `card-tinted` goes one step under (20, see N-3).
+- **D0-4 Group gap 24 (`x6`, was `2xl`)** — three gap roles: 12 / 24 / 40 (`layout.gap-*`). Replaces "28 between groups".
+- **D0-5 `grade-button` = 2-button pair**, height 56, gap 8.
+- **New tokens** already used by the app: `primary-soft`, `secondary-soft`, `ink-pressed` (+ dark values); `layout.*` roles.
+- **N-1 Spacing names = value ÷ 4** (SEED `$dimension` style): `xs sm md lg xl 2xl xxl huge` → `x1 x2 x3 x4 x5 x6 x7 x10`. Values unchanged; removes the `xxl` 28 / `2xl` 24 mix-up. See [`01-NAMING-SEED-2026-11.md`](./design-system/01-NAMING-SEED-2026-11.md).
+- **N-3 Radius = SEED scale as-is** (`r` + value ÷ 4, half steps `_5`): 10 `r2_5` · 12 `r3` · 14 `r3_5` · 16 `r4` · 20 `r5` · 24 `r6` · `full`. Two off-scale values snapped: **18 → 16**, **22 → 20** (`card-tinted`). `pill` 999 merged into `full` 9999. Role aliases `card` · `card-tinted` · `receipt` · `pill` stay.
+- **N-4 Colour role names unchanged** — only SEED's state-suffix rule (`-pressed`, `-soft`) is adopted.
+- **Fixed stale text** — `badge` no longer says "orange is for actions"; `tab-bar` frontmatter now matches the icon + label + `tab-active` spec; 완료 badge uses `secondary-soft #EAF6DD` (was an undefined `#E7F4D9`).
 
 ### alpha.1 — Figma library build
 

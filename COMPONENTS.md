@@ -3,10 +3,15 @@
 > 목적: **디자인 = 개발이 정확히 일치**하도록, 재사용 부품을 이름·토큰·정확값으로 고정한다.
 > 이 문서는 Figma 컴포넌트와 코드(RN) 컴포넌트가 **함께 구현하는 단일 계약**이다.
 > 기준: [`DESIGN.md`](./DESIGN.md) 토큰 · [`handoff/README.md`](./handoff/README.md) 5화면 스펙.
+>
+> **정본 순서 (2026-11, D0-6):** 결정표 [`design-system/00-DECISIONS-2026-11.md`](./design-system/00-DECISIONS-2026-11.md) → `DESIGN.md`(값) · 이 문서(컴포넌트) → Figma 라이브러리·코드가 따라온다. 시안 PNG는 참고용이다.
+> **전달 경로:** 개발자는 Figma를 열 수 없다(Dev 좌석 없음). 그래서 **개발에 필요한 값은 전부 이 저장소 문서에 있어야 한다** — Figma에만 있는 값은 전달되지 않은 값이다.
 
 ---
 
 ## 왜 이 문서가 필요한가 — 관측된 불일치
+
+> 아래 표는 **2026-08 당시** 기록이다. 카드 그림자·반경 24·색 체계 등은 이후 코드에 반영됐다. 최신 현황은 [`design-system/AUDIT-2026-11.md`](./design-system/AUDIT-2026-11.md).
 
 디자인과 현재 개발 구현이 어긋나는 건 "누가 틀려서"가 아니라 **강제되는 공통 계약이 없어서**다. 실제로 관측된 예:
 
@@ -27,7 +32,7 @@
 
 1. **토큰 = 단일 소스** — `DESIGN.md` ↔ **Figma Variables** ↔ 코드 `tokens.ts` 를 **같은 값**으로. (radius 24 / shadow `0 6px 14px` / Onikan Grey)
 2. **컴포넌트 계약(이 문서)** — 아래 부품을 이름·props·정확값으로 고정. Figma 컴포넌트 1개 ↔ RN 컴포넌트 1개.
-3. **Code Connect** — 그 둘을 매핑. 개발자가 Figma에서 요소를 고르면 대응 코드 컴포넌트가 뜨게.
+3. **저장소 핸드오프** — 컴포넌트마다 구조·변형·상태·정확값을 이 문서에 적는다. 개발자가 Figma 없이 이 문서만으로 만들 수 있어야 한다. *(2026-11: 개발자에게 Figma Dev 좌석이 없어 Code Connect 대신 이 방식으로 바꿈.)*
 
 ---
 
@@ -49,14 +54,15 @@
 
 ## 컴포넌트 카탈로그
 
-각 항목: **Figma 이름 / RN 이름** · 언제 · 해부 · 정확값(토큰) · 상태 · Code Connect.
+각 항목: **Figma 이름 / RN 이름** · 언제 · 해부 · 정확값(토큰) · 상태 · 코드 매핑.
 
 ### Foundations
 
 **Tokens** — `DESIGN.md`가 정본. Figma Variables·`tokens.ts`는 이 값을 미러링만 한다.
-`ink #1D1D21` · `body #56565E` · `mute #8E8E97` · `canvas #FFF` · `softer #F2F2F4` · `soft #E8E8EC` · `pressed #DCDCE2` · `plate #EDEDF1` · `primary #EF5112` · `primary-pressed #D2460E` · `on-primary #FFF` · `tab-active #C2410C` · `secondary #A3E635` · `bar-fill #71717A` · `shadow rgba(0,0,0,.05)` (다크 값은 DESIGN.md).
+`ink #1D1D21` · `body #56565E` · `mute #8E8E97` · `canvas #FFF` · `softer #F5F5F5`(D0-2) · `soft #E8E8EC` · `pressed #DCDCE2` · `plate #EDEDF1` · `primary #EF5112` · `primary-pressed #D2460E` · `primary-soft #FCE8DE` · `ink-pressed #131316` · `on-primary #FFF` · `tab-active #C2410C` · `secondary #A3E635` · `secondary-soft #EAF6DD` · `bar-fill #71717A` · `shadow rgba(0,0,0,.05)` (다크 값은 DESIGN.md).
 > 위 값은 2026-08 Figma 실측(`get_variable_defs`)과 일치 확인됨. (구 `primary #EA580C`는 폐기 — `#EF5112`.)
-반경: `card 24` · 타일 12/14/16/18 · 컨트롤 pill(999) · **영수증 10**(Figma 2026-08: 4→10). 좌우 여백 20. 그룹 간격: 한 덩어리 12 / 다른 그룹 24–28.
+반경: **흰 카드 전부 24**(D0-3) · 회색 `card-tinted` **20** · 타일 12/14/16 (N-3: 18→16) · 컨트롤 pill(=full 9999) · **영수증 10**(Figma 2026-08: 4→10).
+여백·간격(2026-11): **화면 좌우 16**(D0-1) · 한 묶음 안 12 · 묶음 사이 **24**(`2xl`, D0-4) · 큰 구역 사이 40. 이 세 값 외의 간격(14·18·30 등)은 가까운 값으로 맞춘다.
 
 ---
 
@@ -64,7 +70,7 @@
 - **언제**: 히어로·보상·메뉴·요약 등 모든 내용 카드.
 - **해부**: 배경 `canvas`, 반경 `24`, 그림자 `0 6px 14px shadow`, 패딩(히어로/보상 `24 20`, 진행/리스트 `16 16 16 18`).
 - **변형**: `elevated`(그림자 O) / `flat`(그림자 X — 진행 카드처럼 "누를 수 있으나 히어로 아님"). **테두리 변형 없음.**
-- **Code Connect**: `Card` → `<Card variant="elevated|flat" padding=...>`
+- **코드 매핑**: `Card` → `<Card variant="elevated|flat" padding=...>`
 
 ### `Overline` / `<Overline>`
 - **언제**: 카드·섹션 머리말("오늘의 학습", "만드는 중", "재료 4").
@@ -85,7 +91,7 @@
 
 ### `GradeButtons` / `<GradeButtons variant>`
 - **언제**: 학습·회독 공개 후 2단계 평가.
-- **해부**: gap 10, 각 flex:1 min-h **60** pill 17/600.
+- **해부**: gap **8**, 각 flex:1(같은 폭) 높이 **56**(= `PrimaryButton`) pill 17/600. *(2026-11, D0-5: gap 10·높이 60에서 변경.)*
 - **변형 `study`(기본)**: `아직이에요`=outline(`pressed`) → FSRS **Again** · `외웠어요`=`ink` 채움/글자 `softer` → **Good**.
 - **변형 `review`(회독)**: `모름`=outline(`pressed`) · `안다`=`ink` 채움/글자 `softer`. 구조 동일, 라벨만 다름. (C-1)
 - **4단계 아님.**
@@ -104,7 +110,7 @@
 
 ### `PlateTile` / `<PlateTile>`
 - **언제**: 오니기리·재료·마스코트 일러스트 담는 타일.
-- **해부**: 배경 **`plate`(양테마 고정)**, 반경(크기별 12/14/16/18), 이미지 `contain` 타일의 ~74%.
+- **해부**: 배경 **`plate`(양테마 고정)**, 반경(크기별 12/14/16 — 18은 16으로), 이미지 `contain` 타일의 ~74%.
 - **상태(재료/오니기리)**: `earned/done`(실물) · `making`(실물 + `inset 0 0 0 2px ink`) · `locked/next`(투명 + `inset 0 0 0 1.5px pressed` + "?").
 
 ### `TabBar` / `<TabBar>` + `TabItem`
@@ -119,7 +125,7 @@
 - **상태**: `earned`(PlateTile 실물 + 이름 `ink` + "받았어요") · `next`(?링 + 이름 `ink` + `Chip.next` "다음") · `locked`(?링 + 이름 `mute`).
 
 ### `OnigiriCell` / `<OnigiriCell>` (그리드)
-- **해부**: 정사각 `aspect-ratio:1` 타일 radius 18 + 라벨 14/600 gap 8.
+- **해부**: 정사각 `aspect-ratio:1` 타일 radius 16 + 라벨 14/600 gap 8.
 - **상태**: `done`(plate+실물) · `making`(plate+실물+2px ink) · `locked`(투명+1.5 `pressed` 링 + "?" 22/700 `mute`, 라벨=인덱스).
 
 ### `RewardCard` / `RewardBadge`
@@ -180,7 +186,7 @@
 - **언제**: 오늘 복습 완료 등 done 상태. **연녹(`#EAF6DD` 계열) 틴트 배경 + 그린 체크 + 짧은 문장**. Primary CTA 없음(또는 약한 아웃라인). 카드 안 서브영역이면 `Card` 중첩 금지 → 틴트 서브카드.
 
 #### `StatusBadge` (진행 중 / 완료 / 잠김 / 새로 열림)
-- **진행 중**=오렌지 소프트(`#FCE8DE`/`primary`) · **완료**=그린 소프트(`#E7F4D9`/`secondary-deep`) · **잠김**=`mute` 텍스트 · **새로 열림**=오렌지 솔리드 pill(주의 환기, 액션 아님) + `시작하기 ›`. 상태 뱃지는 색을 갖되 **액션 아님**(주요 액션은 잉크 버튼).
+- **진행 중**=오렌지 소프트(`#FCE8DE`/`primary`) · **완료**=그린 소프트(`secondary-soft #EAF6DD`/`secondary-deep`) · **잠김**=`mute` 텍스트 · **새로 열림**=오렌지 솔리드 pill(주의 환기, 액션 아님) + `시작하기 ›`. 상태 뱃지는 색을 갖되 **액션 아님**(주요 액션은 잉크 버튼).
 
 #### 학습 카드 추가 요소 (`FlashCard` 내)
 - **`PhoneticHintCard`(조건부)**: 발음이 유사한 단어가 있을 때만. 배경 **`soft`(뉴트럴, 라임 아님 — D-1)** + `발음이 유사한 단어` 필 + 2열 유사어.
@@ -234,7 +240,7 @@
 | ScoreDistribution | `<ScoreDistribution>` | `src/features/stats/components/ScoreDistribution.tsx` |
 | Ratio | `<StatTile>` | `src/components/ui/StatTile.tsx` |
 
-> **Code Connect**: 각 Figma 컴포넌트에 `.figma.tsx` 매핑을 붙여 Dev Mode에서 코드 스니펫이 뜨게 한다.
+> **Code Connect**: 보류. 개발자에게 Figma Dev 좌석이 없어 효과가 없다. 대신 위 표의 경로와 이 문서의 정확값으로 전달한다.
 > RN 경로·컴포넌트 이름은 제안 — 개발 레포(`taiyoungkim/AshitaKanji`)의 feature-first 구조 관례를 따름.
 
 ---
