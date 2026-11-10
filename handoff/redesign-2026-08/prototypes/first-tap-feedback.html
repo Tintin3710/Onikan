@@ -7,7 +7,8 @@
 <!--
   시안 비교용 프로토타입. 명세: ../../study-first-tap-feedback-SPEC.md
   - 정규 학습 1차에서 '한 번 익혔어요' / '다시 볼래요'를 처음 누른 순간, 그 결과를 애니메이션으로 1회 보여준다.
-  - 상단 패널(실제 앱 미포함)에서 형태(바텀시트 / 센터 / 토스트)와 사용자(신규 / 기존)를 바꿔 비교한다.
+  - 확정(O-7·O-8): 신규 사용자 = 버튼별 첫 탭에 바텀시트 1회 / 기존 사용자 = 첫 탭에 토스트 1회(버튼 이름 변경 안내).
+  - 상단 패널(실제 앱 미포함)에서 사용자(신규 / 기존)를 바꿔 본다. 센터형은 비교 후 제외(이전 커밋 30ed6bd 참고).
   - prefers-reduced-motion: 애니메이션 생략, 최종 상태만 표시.
 -->
 <style>
@@ -145,23 +146,9 @@ button{ font-family:inherit; }
 .sheet p{ font-size:15px; color:var(--body); margin:0 0 24px; line-height:1.55; }
 .cta{ width:100%; height:56px; border:none; border-radius:999px; background:var(--ink); color:var(--on-ink); font-size:17px; font-weight:700; cursor:pointer; }
 
-/* ── 형태 ② 센터 (토스형) ── */
-.center{ position:absolute; inset:0; z-index:11; display:flex; flex-direction:column; align-items:center; padding:0 24px calc(env(safe-area-inset-bottom) + 28px);
-  background:rgba(242,242,244,.86); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); opacity:0; pointer-events:none; transition:opacity .3s; }
-.center.on{ opacity:1; pointer-events:auto; }
-.center .glow{ position:absolute; left:50%; top:40%; width:420px; height:420px; transform:translate(-50%,-50%); border-radius:999px; background:radial-gradient(closest-side, var(--glow, #fff), transparent); opacity:.9; pointer-events:none; }
-.center .body{ position:relative; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
-.center .ill{ transform:scale(1.3); margin-bottom:34px; }
-.center .mascot{ width:64px; height:64px; margin-bottom:14px; border-radius:999px; background:var(--canvas); padding:5px; box-shadow:0 2px 8px rgba(30,25,20,.10); opacity:0; transform:translateY(8px); transition:.35s var(--out) .1s; }
-.center.on .mascot{ opacity:1; transform:none; }
-.center h2{ font-size:26px; font-weight:800; letter-spacing:-.02em; margin:0 0 10px; line-height:1.35; }
-.center p{ font-size:15px; color:var(--body); margin:0; line-height:1.55; }
-.center .cta{ position:relative; transform:translateY(24px); opacity:0; transition:.45s var(--up) .9s; }
-.center.on .cta{ transform:none; opacity:1; }
-
 /* ── 형태 ③ 토스트 ── */
 .toast{ position:absolute; left:50%; bottom:112px; transform:translate(-50%,16px); display:flex; align-items:center; gap:10px; background:var(--ink); color:var(--on-ink);
-  padding:12px 18px 12px 12px; border-radius:999px; font-size:15px; font-weight:600; white-space:nowrap; box-shadow:0 6px 16px rgba(30,25,20,.18); opacity:0; pointer-events:none; transition:.3s var(--up); z-index:12; }
+  padding:12px 18px 12px 12px; border-radius:22px; font-size:15px; font-weight:600; width:max-content; max-width:calc(100% - 32px); line-height:1.4; box-shadow:0 6px 16px rgba(30,25,20,.18); opacity:0; pointer-events:none; transition:.3s var(--up); z-index:12; }
 .toast.on{ opacity:1; transform:translate(-50%,0); }
 .toast .ic{ position:relative; width:30px; height:30px; border-radius:10px; background:#3A3A40; display:flex; align-items:center; justify-content:center; font-size:15px; }
 .toast .ic .dot{ position:absolute; right:-4px; bottom:-4px; width:14px; height:14px; border-radius:999px; background:var(--secondary); box-shadow:0 0 0 2px var(--ink); transform:scale(0); }
@@ -175,13 +162,9 @@ button{ font-family:inherit; }
 <body>
 
 <div class="panel" aria-label="시안 비교 패널 (실제 앱 미포함)">
-  <span class="lbl">형태</span>
-  <span class="seg" id="segForm">
-    <button data-v="sheet" class="on">바텀시트</button><button data-v="center">센터</button><button data-v="toast">토스트</button>
-  </span>
   <span class="lbl">사용자</span>
   <span class="seg" id="segUser">
-    <button data-v="new" class="on">신규</button><button data-v="old">기존</button>
+    <button data-v="new" class="on">신규 · 바텀시트</button><button data-v="old">기존 · 토스트</button>
   </span>
   <button class="reset" id="reset">↺ 처음부터</button>
   <span class="seen" id="seen"></span>
@@ -217,18 +200,6 @@ button{ font-family:inherit; }
     <button class="cta" data-close>알겠어요</button>
   </div>
 
-  <!-- ② 센터 (토스형) -->
-  <div class="center" id="center" role="dialog" aria-modal="true" aria-labelledby="centerT">
-    <div class="glow" id="glow"></div>
-    <div class="body">
-      <div id="centerIll"></div>
-      <img class="mascot" src="../../assets/mascot.png" alt="">
-      <h2 id="centerT"></h2>
-      <p id="centerP"></p>
-    </div>
-    <button class="cta" data-close>알겠어요</button>
-  </div>
-
   <!-- ③ 토스트 -->
   <div class="toast" id="toast" role="status" aria-live="polite"><span class="ic" id="toastIc"></span><span id="toastT"></span></div>
 </div>
@@ -249,7 +220,9 @@ const LABELS = {
 const COPY = {
   good:  { t:'익힌 단어는\n내일 다시 꺼내 볼게요', p:'오늘은 한 번 살펴본 것으로 충분해요.\n내일 기억나는지 함께 확인해요.', toast:'내일 다시 꺼내 볼게요' },
   again: { t:'이 단어는\n오늘 한 번 더 나와요', p:'단어를 다 본 뒤 다시 보여 드릴게요.\n부담 없이 넘어가도 돼요.', toast:'오늘 한 번 더 보여 드릴게요' },
-  rename:{ t:'버튼 이름이 바뀌었어요', p:'외웠다고 약속하지 않아도 돼요.\n한 번 살펴봤다면 \'한 번 익혔어요\'를 눌러 주세요.' },
+  // 기존 사용자: 처음 누른 버튼의 이전 이름 → 새 이름 (토스트 1회)
+  renameGood:  { toast:"'외웠어요'가 '한 번 익혔어요'로 바뀌었어요" },
+  renameAgain: { toast:"'아직이에요'가 '다시 볼래요'로 바뀌었어요" },
 };
 
 const S = { form:'sheet', user:'new', i:0, revealed:false, busy:false, seen:{ good:false, again:false, rename:false }, n:{ good:0, again:0 }, open:null };
@@ -301,41 +274,40 @@ function grade(kind){
   const c = document.querySelector('.card');
   c.classList.remove('in'); c.classList.add(kind === 'good' ? 'out-good' : 'out-again');
   const word = WORDS[S.i];
-  const first = !S.seen[kind];
+  const first = S.user === 'old' ? !S.seen.rename : !S.seen[kind];
   setTimeout(() => {
     S.i++; S.busy = false;
     if (S.i >= WORDS.length){ finish(); }
     else renderCard();
-    if (first){ S.seen[kind] = true; showFeedback(kind, word); updateSeen(); }   // 표시 시점에 '봤음' 저장 (O-2)
+    if (first){                                   // 표시 시점에 '봤음' 저장 (O-2)
+      if (S.user === 'old'){ S.seen.rename = true; showToast(kind === 'good' ? 'renameGood' : 'renameAgain', kind); }
+      else { S.seen[kind] = true; showFeedback(kind, word); }
+      updateSeen();
+    }
   }, kind === 'good' ? 300 : 360);
 }
 function finish(){ $('bar').style.width = '100%'; $('nGood').textContent = S.n.good; $('nAgain').textContent = S.n.again; $('done').classList.add('on'); $('actions').innerHTML = ''; }
 
 // ── 피드백 표시 ──
-function showFeedback(kind, word){
+function showToast(key, kind){
+  $('toastIc').innerHTML = (kind === 'good' ? '📅<span class="dot"></span>' : '↻');
+  $('toastT').textContent = COPY[key].toast;
+  const t = $('toast'); t.classList.remove('on'); void t.offsetWidth; t.classList.add('on');
+  clearTimeout(showToast.tt); showToast.tt = setTimeout(() => t.classList.remove('on'), 3000);
+}
+function showFeedback(kind, word){       // 신규 사용자: 바텀시트
   const copy = COPY[kind];
-  if (S.form === 'toast' && kind !== 'rename'){
-    $('toastIc').innerHTML = (kind === 'good' ? '📅' : '↻') + (kind === 'good' ? '<span class="dot"></span>' : '');
-    $('toastT').textContent = copy.toast;
-    const t = $('toast'); t.classList.remove('on'); void t.offsetWidth; t.classList.add('on');
-    clearTimeout(showFeedback.tt); showFeedback.tt = setTimeout(() => t.classList.remove('on'), 2400);
-    return;
-  }
-  const form = S.form === 'center' ? 'center' : 'sheet';   // 기존 사용자 안내는 토스트로 담기 어려워 시트로 보여준다
-  S.open = { form, kind, word };
-  const illBox = $(form + 'Ill');
+  S.open = { kind, word };
+  const illBox = $('sheetIll');
   illBox.innerHTML = ill(kind, word);
-  $(form + 'T').innerHTML = copy.t.replace(/\n/g, '<br>');
-  $(form + 'P').innerHTML = copy.p.replace(/\n/g, '<br>');
-  if (form === 'sheet'){ $('dim').classList.add('on'); $('sheet').classList.add('on'); setTimeout(() => play(illBox), 260); }
-  else { $('glow').style.setProperty('--glow', kind === 'good' ? '#EAF6DD' : '#FFFFFF'); $('center').classList.add('on'); setTimeout(() => play(illBox), 180); }
+  $('sheetT').innerHTML = copy.t.replace(/\n/g, '<br>');
+  $('sheetP').innerHTML = copy.p.replace(/\n/g, '<br>');
+  $('dim').classList.add('on'); $('sheet').classList.add('on'); setTimeout(() => play(illBox), 260);
 }
 function closeFeedback(){
   if (!S.open) return;
-  const wasRename = S.open.kind === 'rename';
-  $('dim').classList.remove('on'); $('sheet').classList.remove('on'); $('center').classList.remove('on');
+  $('dim').classList.remove('on'); $('sheet').classList.remove('on');
   S.open = null;
-  if (wasRename) renderActions();
 }
 document.querySelectorAll('[data-close]').forEach(b => b.onclick = closeFeedback);
 $('dim').onclick = closeFeedback;
@@ -345,7 +317,9 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFeedbac
 // ── 패널 ──
 function updateSeen(){
   const f = (b) => b ? '✓' : '–';
-  $('seen').textContent = `1회 피드백 · 한 번 익혔어요 ${f(S.seen.good)} · 다시 볼래요 ${f(S.seen.again)}` + (S.user === 'old' ? ` · 이름 변경 안내 ${f(S.seen.rename)}` : '');
+  $('seen').textContent = S.user === 'old'
+    ? `1회 토스트 · 이름 변경 안내 ${f(S.seen.rename)}`
+    : `1회 바텀시트 · 한 번 익혔어요 ${f(S.seen.good)} · 다시 볼래요 ${f(S.seen.again)}`;
 }
 function seg(id, key){
   document.querySelectorAll(`#${id} button`).forEach(b => b.onclick = () => {
@@ -353,17 +327,13 @@ function seg(id, key){
     S[key] = b.dataset.v; start();
   });
 }
-seg('segForm', 'form'); seg('segUser', 'user');
+seg('segUser', 'user');
 $('reset').onclick = start; $('again').onclick = start;
 
 function start(){
   closeFeedback(); $('toast').classList.remove('on'); $('done').classList.remove('on');
   Object.assign(S, { i:0, busy:false, seen:{ good:false, again:false, rename:false }, n:{ good:0, again:0 } });
   renderCard(); updateSeen();
-  if (S.user === 'old'){                       // 기존 사용자: 업데이트 후 첫 학습 시작 시 1회 (O-8 ⚠️)
-    S.seen.rename = true; updateSeen();
-    setTimeout(() => showFeedback('rename', WORDS[0]), 350);
-  }
 }
 start();
 </script>
