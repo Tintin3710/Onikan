@@ -18,18 +18,12 @@
 /* 화면5(학습완료)는 자동 전환하지 않는다 — 이동은 오직 사용자 [계속] 클릭.
    (과거 AUTO_ADVANCE_DELAY 자동전환은 학습완료.mp4 스펙에 따라 제거됨) */
 
-/* 테스트용 단어 10개. sim*(발음 유사)는 있을 때만 노출(화면 뒷면). */
+/* 테스트용 단어 3개 (앱 TutorialScreen과 같은 수, O-8 2026-11 변경). sim*(발음 유사)는 있을 때만 노출(화면 뒷면).
+   ko = 한글 발음 — 히라가나 선택(O-14) 후에만 표시. */
 const WORDS = [
-  { id:1,  w:'勉強', r:'べんきょう', m:'공부, 학습', simA:'しんど', simB:'진도', exJa:'毎日 日本語を 勉強します。', exKo:'매일 일본어를 공부합니다.' },
-  { id:2,  w:'時間', r:'じかん',     m:'시간',      exJa:'時間が ありません。',        exKo:'시간이 없습니다.' },
-  { id:3,  w:'学校', r:'がっこう',   m:'학교',      exJa:'学校へ 行きます。',          exKo:'학교에 갑니다.' },
-  { id:4,  w:'電車', r:'でんしゃ',   m:'전철',      exJa:'電車に 乗ります。',          exKo:'전철을 탑니다.' },
-  { id:5,  w:'天気', r:'てんき',     m:'날씨',      exJa:'今日は いい 天気です。',      exKo:'오늘은 좋은 날씨입니다.' },
-  { id:6,  w:'名前', r:'なまえ',     m:'이름',      exJa:'名前を 書いて ください。',    exKo:'이름을 써 주세요.' },
-  { id:7,  w:'友達', r:'ともだち',   m:'친구',      exJa:'友達と 話します。',          exKo:'친구와 이야기합니다.' },
-  { id:8,  w:'料理', r:'りょうり',   m:'요리',      exJa:'料理を 作ります。',          exKo:'요리를 만듭니다.' },
-  { id:9,  w:'会社', r:'かいしゃ',   m:'회사',      exJa:'会社に 行きます。',          exKo:'회사에 갑니다.' },
-  { id:10, w:'旅行', r:'りょこう',   m:'여행',      exJa:'旅行が 好きです。',          exKo:'여행을 좋아합니다.' },
+  { id:1, w:'勉強', r:'べんきょう', ko:'벤쿄-', m:'공부, 학습', simA:'しんど', simB:'진도', exJa:'毎日 日本語を 勉強します。', exKo:'매일 일본어를 공부합니다.' },
+  { id:2, w:'時間', r:'じかん',     ko:'지칸',  m:'시간',      exJa:'時間が ありません。',        exKo:'시간이 없습니다.' },
+  { id:3, w:'学校', r:'がっこう',   ko:'갓코-', m:'학교',      exJa:'学校へ 行きます。',          exKo:'학교에 갑니다.' },
 ];
 
 /* central state (화면 로직은 여기만 참조. 화면별 임시 state 만들지 않는다.) */
@@ -41,7 +35,12 @@ const state = {
   studyAnswers: [],                // [{ wordId, result:'known'|'again' }]
   isStudyCompleted: false,
   isReceiptOpen: false,
-  onboardingExitType: null,        // 'start-learning' | 'later'
+  onboardingExitType: null,        // 'start-learning' | 'later' | 'kana'
+  /* 히라가나 선택 (O-14·O-15) */
+  kanaMode: false,                 // '히라가나부터 배울래요' 확정 → 한글 발음 표시 + 마침에서 히라가나 과정 안내
+  kanaSheetOpen: false,            // 확인 바텀시트
+  kanaHintSeen: false,             // '설정에서 후리가나로 바꿀 수 있어요' 1회 안내
+  kanaHintShowing: false,
 };
 
 const app = document.getElementById('app');
@@ -87,7 +86,7 @@ function renderGuide(){
     <div class="body">
       <img class="illust guide-illust" src="assets/guide-mascot.png" alt="">
       <div class="guide-copy">
-        <p class="lead-title">먼저 10개만.</p>
+        <p class="lead-title">먼저 3개만.</p>
         <p class="lead-sub">짧게 공부하고, 재료를 얻는<br>흐름을 먼저 연습해보자.</p>
       </div>
     </div>
@@ -134,12 +133,15 @@ function renderStudy(){
       <div class="study-card">
         <div class="word">${word.w}</div>
         <div class="reading-row"><span class="reading">${word.r}</span>
+          ${ state.kanaMode ? `<span class="reading-ko" aria-label="한글 발음">${word.ko}</span>` : '' }
           <button class="tts" data-action="tts" aria-label="발음 듣기">${icoSpeaker}</button></div>
+        ${ state.kanaHintShowing ? renderKanaHint() : '' }
         ${ rev
             ? revealContent(word)
             : `<div class="spacer"></div><div class="tap-hint"><div class="tap-dot"></div>탭해서 뜻 확인</div><div class="spacer"></div>` }
       </div>
     </div>
+    ${ state.kanaMode ? '' : `<button class="kana-link" data-action="kana-open"><span class="m">읽기가 어렵다면</span> 히라가나부터 배울래요 ${icoChevR}</button>` }
     <div class="actions">
       ${ rev
           ? `<div class="grade">
@@ -148,7 +150,31 @@ function renderStudy(){
              </div>`
           : `<button class="btn btn-primary" data-action="reveal">뜻 보기</button>` }
     </div>
+  ${ state.kanaSheetOpen ? renderKanaSheet() : '' }
   </section>`;
+}
+
+/* 03-a. 히라가나 선택 확인 바텀시트 (O-14) */
+function renderKanaSheet(){
+  return `
+  <div class="kana-dim" data-action="kana-cancel"></div>
+  <div class="kana-sheet" role="dialog" aria-modal="true" aria-labelledby="kanaT">
+    <img class="kana-mascot" src="assets/guide-mascot.png" alt="">
+    <h2 id="kanaT">히라가나부터 해볼까?</h2>
+    <p>읽는 법을 한글 발음으로 같이 보여줄게.<br>연습이 끝나면 히라가나부터 차근차근 배워.</p>
+    <div class="kana-preview"><span class="r">べんきょう</span><span class="reading-ko">벤쿄-</span></div>
+    <button class="btn btn-primary" data-action="kana-confirm">히라가나부터 배울래요</button>
+    <button class="btn-text" data-action="kana-cancel">그냥 계속할게요</button>
+  </div>`;
+}
+/* 03-b. 한글 발음 첫 표시 때 1회 — 후리가나로 바꿀 수 있다는 안내 (O-15) */
+function renderKanaHint(){
+  return `
+  <div class="kana-hint" role="note">
+    <span class="tip"></span>
+    <span class="t">한글 발음은 <b>설정 › 학습 설정</b>에서<br>후리가나로 바꿀 수 있어요</span>
+    <button class="x" data-action="kana-hint-close" aria-label="안내 닫기">${icoClose}</button>
+  </div>`;
 }
 
 /* 05. 학습 완료 — Particle Motion은 추후. 빈 motion layer만 준비, 자동 전환. */
@@ -244,6 +270,7 @@ function renderReceipt(known, again){
 
 /* 08. 온보딩 마침 */
 function renderFinish(){
+  if (state.kanaMode) return renderFinishKana();
   return `
   <section class="screen illust-screen" data-screen="onboarding-finish">
     ${statusBar()}
@@ -257,6 +284,50 @@ function renderFinish(){
     <div class="actions">
       <button class="btn btn-primary" data-action="finish-start">오늘 학습 시작</button>
       <button class="btn-text" data-action="finish-later">나중에</button>
+    </div>
+  </section>`;
+}
+
+/* 08-a. 마침 — 히라가나 선택한 유저 (O-14) */
+function renderFinishKana(){
+  return `
+  <section class="screen illust-screen" data-screen="onboarding-finish-kana">
+    ${statusBar()}
+    <div class="body">
+      <img class="illust finish-illust" src="assets/finish-mascot.png" alt="">
+      <div class="finish-copy">
+        <p class="lead-title">그럼 히라가나부터 해볼까.</p>
+        <p class="lead-sub">한 글자씩 천천히 익혀요.</p>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" data-action="kana-start">히라가나 배우기</button>
+      <button class="btn-text" data-action="finish-start">단어 학습 먼저 할래요</button>
+    </div>
+  </section>`;
+}
+/* 08-b. 히라가나 과정 진입 (자리만 — 과정 자체는 별도 명세, O-14 ⚠️) */
+const KANA_ROWS = [
+  [['あ','아'],['い','이'],['う','우'],['え','에'],['お','오']],
+  [['か','카'],['き','키'],['く','쿠'],['け','케'],['こ','코']],
+  [['さ','사'],['し','시'],['す','스'],['せ','세'],['そ','소']],
+];
+function renderKana(){
+  const rows = KANA_ROWS.map((row, i) => `<div class="kana-row${i ? ' locked' : ''}">${
+    row.map(([k, ko]) => `<div class="kana-cell"><span class="k">${k}</span><span class="ko">${ko}</span></div>`).join('')}</div>`).join('');
+  return `
+  <section class="screen" data-screen="kana-course">
+    ${statusBar()}
+    <div class="body kana-body">
+      <div class="result-ov">히라가나</div>
+      <h1 class="result-h1">あ행부터 시작해요</h1>
+      <p class="kana-sub">하루 5글자씩, 보고 · 듣고 · 따라 써요.</p>
+      <div class="kana-grid">${rows}</div>
+      <p class="kana-note">시안 범위는 여기까지예요. 히라가나 과정(글자 수·진도·따라 쓰기)은 별도 명세로 정해요.</p>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" data-action="kana-noop">あ 배우기</button>
+      <button class="btn-text" data-action="finish-later">홈으로</button>
     </div>
   </section>`;
 }
@@ -324,6 +395,7 @@ function render(){
       case 'studyComplete': html = renderStudyComplete(); break;
       case 'result':        html = renderResult(); break;
       case 'finish':        html = renderFinish(); break;
+      case 'kana':          html = renderKana(); break;
       default:              html = renderIntro();
     }
   }
@@ -555,6 +627,7 @@ function answer(result){
   isTransitioning = true;
   const word = WORDS[state.studyIndex];
   state.studyAnswers.push({ wordId: word.id, result });
+  state.kanaHintShowing = false;                             // 안내는 다음 카드로 넘어가면 사라짐 (O-15)
 
   if (state.studyIndex + 1 >= WORDS.length){
     state.isStudyCompleted = true;
@@ -579,6 +652,17 @@ function closeReceipt(){
   state.onboardingStep = 'finish';
   render();
 }
+/* 히라가나 선택 (O-14) */
+function openKanaSheet(){ if (state.kanaMode || state.kanaSheetOpen) return; state.kanaSheetOpen = true; render(); }
+function closeKanaSheet(){ if (!state.kanaSheetOpen) return; state.kanaSheetOpen = false; render(); }
+function confirmKana(){
+  state.kanaSheetOpen = false;
+  state.kanaMode = true;                                     // 실제 앱: 학습 수준 = 가나 입문, 읽기 표기 = 한글 발음 (저장)
+  if (!state.kanaHintSeen){ state.kanaHintSeen = true; state.kanaHintShowing = true; }   // 표시 시점에 '봤음' (O-15)
+  render();
+}
+function startKana(){ state.onboardingExitType = 'kana'; state.onboardingStep = 'kana'; render(); }
+
 function exitOnboarding(type){
   if (state.currentPage === 'home') return;
   state.onboardingExitType = type;                           // 'start-learning' | 'later'
@@ -605,6 +689,12 @@ app.addEventListener('click', (e) => {
     case 'finish-later':      exitOnboarding('later'); break;
     case 'tts':               /* 발음 재생 — 이후 연결 */ break;
     case 'word-detail':       /* 단어 상세 시트 — 이후 연결 */ break;
+    case 'kana-open':         openKanaSheet(); break;
+    case 'kana-cancel':       closeKanaSheet(); break;
+    case 'kana-confirm':      confirmKana(); break;
+    case 'kana-hint-close':   state.kanaHintShowing = false; render(); break;
+    case 'kana-start':        startKana(); break;
+    case 'kana-noop':         break;
     case 'close-study':       /* 온보딩 중 닫기 — 정책 확정 후 연결 */ break;
   }
 });
@@ -617,7 +707,8 @@ function applyDevMode(){
   if (page === 'home'){ state.currentPage = 'home'; return; }
   if (!step) return;
   // 임의 진입 시 그럴듯한 studyAnswers 채워두기(결과/영수증 숫자 계산용)
-  const seed = () => { state.studyAnswers = WORDS.map((w,i) => ({ wordId:w.id, result: i < 7 ? 'known' : 'again' })); };
+  const seed = () => { state.studyAnswers = WORDS.map((w,i) => ({ wordId:w.id, result: i < 2 ? 'known' : 'again' })); };
+  if (q.has('kana')){ state.kanaMode = true; state.kanaHintSeen = true; }   // ?kana — 히라가나 선택한 유저로 진입
   switch (step){
     case 'intro':    state.onboardingStep = 'intro'; break;
     case 'guide':    state.onboardingStep = 'guide'; break;
@@ -626,6 +717,7 @@ function applyDevMode(){
     case 'result':   seed(); state.onboardingStep = 'result'; break;
     case 'receipt':  seed(); state.onboardingStep = 'result'; state.isReceiptOpen = true; break;
     case 'finish':   seed(); state.onboardingStep = 'finish'; break;
+    case 'kana':     seed(); state.kanaMode = true; state.onboardingStep = 'kana'; break;
   }
 }
 function startStudyState(){ state.onboardingStep = 'study'; state.studyIndex = 0; state.isMeaningRevealed = false; }

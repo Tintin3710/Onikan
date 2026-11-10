@@ -250,3 +250,51 @@ html.capture .device{ margin:0; box-shadow:none; max-width:none; }
 
 /* dev badge (연습용) */
 .dev-badge{ position:absolute; left:8px; bottom:8px; z-index:80; font-size:10px; color:var(--mute); background:rgba(255,255,255,.7); padding:2px 6px; border-radius:6px; pointer-events:none; }
+
+/* ============ 히라가나 선택 (O-14·O-15, 2026-11) ============ */
+/* 학습 카드 아래 텍스트 링크 — 버튼보다 약하게(뉴트럴), 카드 앞·뒷면 모두 */
+.kana-link{ flex:none; display:flex; align-items:center; justify-content:center; gap:4px; margin:12px auto 0; padding:6px 10px;
+  background:none; border:none; font-family:inherit; font-size:14px; font-weight:600; color:var(--ink); cursor:pointer; }
+.kana-link .m{ color:var(--mute); font-weight:500; }
+.kana-link svg{ width:14px; height:14px; color:var(--mute); }
+
+/* 한글 발음 pill — 후리가나 옆, 뉴트럴 plate */
+.reading-ko{ display:inline-flex; align-items:center; height:28px; padding:0 10px; border-radius:var(--radius-pill);
+  background:var(--plate); font-size:15px; font-weight:600; color:var(--ink); }
+
+/* 1회 안내 말풍선 — 발음 줄 아래 */
+.kana-hint{ position:relative; display:flex; align-items:center; gap:8px; margin:12px auto 0; padding:10px 10px 10px 14px;
+  background:var(--ink); color:var(--on-ink); border-radius:14px; font-size:13px; line-height:19px; text-align:left;
+  animation:kanaHintIn .32s cubic-bezier(.22,1,.36,1) both; }
+.kana-hint .tip{ position:absolute; left:50%; top:-6px; width:12px; height:12px; background:var(--ink); transform:translateX(-50%) rotate(45deg); border-radius:2px; }
+.kana-hint b{ font-weight:700; }
+.kana-hint .x{ flex:none; width:28px; height:28px; border:none; background:none; color:var(--on-ink); opacity:.7; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.kana-hint .x svg{ width:14px; height:14px; stroke:var(--on-ink); }
+@keyframes kanaHintIn{ from{ opacity:0; transform:translateY(-6px) } to{ opacity:1; transform:none } }
+
+/* 확인 바텀시트 */
+.kana-dim{ position:absolute; inset:0; background:rgba(29,29,33,.42); z-index:20; animation:kanaFade .25s both; }
+.kana-sheet{ position:absolute; left:0; right:0; bottom:0; z-index:21; background:var(--canvas); border-radius:28px 28px 0 0;
+  padding:28px 20px 22px; text-align:center; animation:kanaUp .42s cubic-bezier(.22,1,.36,1) both; }
+.kana-sheet .kana-mascot{ width:96px; height:auto; display:block; margin:0 auto 8px; }
+.kana-sheet h2{ font-size:22px; font-weight:800; margin:0 0 8px; }
+.kana-sheet p{ font-size:15px; line-height:23px; color:var(--body); margin:0 0 16px; }
+.kana-preview{ display:flex; align-items:center; justify-content:center; gap:10px; padding:14px; margin-bottom:20px; background:var(--page); border-radius:16px; }
+.kana-preview .r{ font-size:18px; font-weight:500; color:var(--body); }
+.kana-sheet .btn-text{ margin-top:6px; }
+@keyframes kanaFade{ from{ opacity:0 } }
+@keyframes kanaUp{ from{ transform:translateY(100%) } }
+
+/* 히라가나 과정 진입(자리) */
+.kana-sub{ font-size:15px; color:var(--body); margin:8px 0 24px; }
+.kana-grid{ display:flex; flex-direction:column; gap:10px; }
+.kana-row{ display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+.kana-row.locked{ opacity:.35; }
+.kana-cell{ aspect-ratio:1/1.1; background:var(--canvas); border-radius:16px; box-shadow:var(--shadow); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; }
+.kana-cell .k{ font-size:28px; font-weight:700; }
+.kana-cell .ko{ font-size:12px; color:var(--mute); }
+.kana-note{ font-size:13px; color:var(--mute); margin-top:20px; line-height:20px; }
+
+@media (prefers-reduced-motion: reduce){
+  .kana-hint, .kana-dim, .kana-sheet{ animation:none; }
+}
