@@ -21,9 +21,9 @@
 /* 테스트용 단어 3개 (앱 TutorialScreen과 같은 수, O-8 2026-11 변경). sim*(발음 유사)는 있을 때만 노출(화면 뒷면).
    ko = 한글 발음 — 히라가나 선택(O-14) 후에만 표시. */
 const WORDS = [
-  { id:1, w:'勉強', r:'べんきょう', ko:'벤쿄-', m:'공부, 학습', simA:'しんど', simB:'진도', exJa:'毎日 日本語を 勉強します。', exKo:'매일 일본어를 공부합니다.' },
+  { id:1, w:'勉強', r:'べんきょう', ko:'벤쿄ー', m:'공부, 학습', simA:'しんど', simB:'진도', exJa:'毎日 日本語を 勉強します。', exKo:'매일 일본어를 공부합니다.' },
   { id:2, w:'時間', r:'じかん',     ko:'지칸',  m:'시간',      exJa:'時間が ありません。',        exKo:'시간이 없습니다.' },
-  { id:3, w:'学校', r:'がっこう',   ko:'갓코-', m:'학교',      exJa:'学校へ 行きます。',          exKo:'학교에 갑니다.' },
+  { id:3, w:'学校', r:'がっこう',   ko:'갓코ー', m:'학교',      exJa:'学校へ 行きます。',          exKo:'학교에 갑니다.' },
 ];
 
 /* central state (화면 로직은 여기만 참조. 화면별 임시 state 만들지 않는다.) */
@@ -162,7 +162,7 @@ function renderKanaSheet(){
     <img class="kana-mascot" src="assets/guide-mascot.png" alt="">
     <h2 id="kanaT">히라가나부터 해볼까?</h2>
     <p>읽는 법을 한글 발음으로 같이 보여줄게.<br>연습이 끝나면 히라가나부터 차근차근 배워.</p>
-    <div class="kana-preview"><span class="r">べんきょう</span><span class="reading-ko">벤쿄-</span></div>
+    <div class="kana-preview"><span class="r">べんきょう</span><span class="reading-ko">벤쿄ー</span></div>
     <button class="btn btn-primary" data-action="kana-confirm">히라가나부터 배울래요</button>
     <button class="btn-text" data-action="kana-cancel">그냥 계속할게요</button>
   </div>`;
@@ -306,27 +306,28 @@ function renderFinishKana(){
     </div>
   </section>`;
 }
-/* 08-b. 히라가나 과정 진입 (자리만 — 과정 자체는 별도 명세, O-14 ⚠️) */
+/* 08-b. 히라가나 전체 표 (O-17: 하루 제한 없이 46자 전부. 시안은 3행만 그림) */
 const KANA_ROWS = [
   [['あ','아'],['い','이'],['う','우'],['え','에'],['お','오']],
   [['か','카'],['き','키'],['く','쿠'],['け','케'],['こ','코']],
   [['さ','사'],['し','시'],['す','스'],['せ','세'],['そ','소']],
 ];
 function renderKana(){
-  const rows = KANA_ROWS.map((row, i) => `<div class="kana-row${i ? ' locked' : ''}">${
+  const rows = KANA_ROWS.map((row, i) => `<div class="kana-row${i === 0 ? ' seen' : ''}">${
     row.map(([k, ko]) => `<div class="kana-cell"><span class="k">${k}</span><span class="ko">${ko}</span></div>`).join('')}</div>`).join('');
   return `
   <section class="screen" data-screen="kana-course">
     ${statusBar()}
     <div class="body kana-body">
       <div class="result-ov">히라가나</div>
-      <h1 class="result-h1">あ행부터 시작해요</h1>
-      <p class="kana-sub">하루 5글자씩, 보고 · 듣고 · 따라 써요.</p>
+      <h1 class="result-h1">46자를 한눈에</h1>
+      <p class="kana-sub">아무 글자나 눌러 듣고 · 따라 써요. 하루 제한은 없어요.</p>
+      <div class="kana-tabs"><span class="on">기본 46</span><span>탁음·반탁음 25</span><span>요음 33</span></div>
       <div class="kana-grid">${rows}</div>
-      <p class="kana-note">시안 범위는 여기까지예요. 히라가나 과정(글자 수·진도·따라 쓰기)은 별도 명세로 정해요.</p>
+      <p class="kana-note">시안은 3행(あ·か·さ)만 그렸어요. 실제는 あ~わ 10행 + ん, 46자. 첫 행은 '본 글자' 표시 예시예요.</p>
     </div>
     <div class="actions">
-      <button class="btn btn-primary" data-action="kana-noop">あ 배우기</button>
+      <button class="btn btn-primary" data-action="kana-noop">모르는 글자만 퀴즈</button>
       <button class="btn-text" data-action="finish-later">홈으로</button>
     </div>
   </section>`;
@@ -340,6 +341,18 @@ function navTab(label, on, path){
   return `<div class="tab ${on ? 'on' : ''}">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${path}</svg>
     <span>${label}</span></div>`;
+}
+/* 09-a. 홈 히라가나 섹션 (O-17) — 히라가나 선택 유저에게 상시. 버튼은 outline(화면당 잉크 1개 = 학습 시작) */
+function renderHomeKana(){
+  const chips = ['あ','い','う','え','お','か','き','く']
+    .map((k, i) => `<span class="hk-chip${i < 5 ? ' seen' : ''}">${k}</span>`).join('');
+  return `
+      <div class="home-card home-kana">
+        <div class="hk-head"><div class="t1">히라가나</div><div class="hk-frac">5 / 46</div></div>
+        <div class="hk-bar"><i style="width:${Math.round(5/46*100)}%"></i></div>
+        <div class="hk-chips">${chips}<span class="hk-more">…</span></div>
+        <button class="btn btn-outline hk-btn" data-action="home-kana">히라가나 표 열기</button>
+      </div>`;
 }
 function renderHome(){
   return `
@@ -361,6 +374,7 @@ function renderHome(){
         <div class="ing-row">${ingChip('밥',true)}${ingChip('참치',true)}${ingChip('마요네즈',true)}${ingChip('김',true)}</div>
         <button class="home-cta">학습 시작하기</button>
       </div>
+      ${ state.kanaMode ? renderHomeKana() : '' }
       <div class="home-card">
         <div class="t1">단골 0일차</div>
         <img class="regular-empty" src="assets/regular-empty.png" alt="아직 단골이 아니에요">
@@ -695,6 +709,7 @@ app.addEventListener('click', (e) => {
     case 'kana-hint-close':   state.kanaHintShowing = false; render(); break;
     case 'kana-start':        startKana(); break;
     case 'kana-noop':         break;
+    case 'home-kana':         state.currentPage = 'onboarding'; state.onboardingStep = 'kana'; render(); break;
     case 'close-study':       /* 온보딩 중 닫기 — 정책 확정 후 연결 */ break;
   }
 });
@@ -704,6 +719,7 @@ function applyDevMode(){
   const q = new URLSearchParams(location.search);
   const page = q.get('page');
   const step = q.get('step');
+  if (q.has('kana')){ state.kanaMode = true; state.kanaHintSeen = true; }
   if (page === 'home'){ state.currentPage = 'home'; return; }
   if (!step) return;
   // 임의 진입 시 그럴듯한 studyAnswers 채워두기(결과/영수증 숫자 계산용)

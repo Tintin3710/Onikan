@@ -289,7 +289,10 @@ html.capture .device{ margin:0; box-shadow:none; max-width:none; }
 .kana-sub{ font-size:15px; color:var(--body); margin:8px 0 24px; }
 .kana-grid{ display:flex; flex-direction:column; gap:10px; }
 .kana-row{ display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
-.kana-row.locked{ opacity:.35; }
+.kana-row.seen .kana-cell{ box-shadow:inset 0 0 0 1.5px var(--ink); }
+.kana-tabs{ display:flex; gap:6px; margin:0 0 16px; }
+.kana-tabs span{ font-size:13px; font-weight:600; color:var(--body); background:var(--plate); border-radius:999px; padding:6px 10px; }
+.kana-tabs span.on{ background:var(--ink); color:var(--on-ink); }
 .kana-cell{ aspect-ratio:1/1.1; background:var(--canvas); border-radius:16px; box-shadow:var(--shadow); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; }
 .kana-cell .k{ font-size:28px; font-weight:700; }
 .kana-cell .ko{ font-size:12px; color:var(--mute); }
@@ -298,3 +301,14 @@ html.capture .device{ margin:0; box-shadow:none; max-width:none; }
 @media (prefers-reduced-motion: reduce){
   .kana-hint, .kana-dim, .kana-sheet{ animation:none; }
 }
+
+/* 홈 히라가나 섹션 (O-17) */
+.home-kana .hk-head{ display:flex; justify-content:space-between; align-items:baseline; }
+.home-kana .hk-frac{ font-size:13px; color:var(--mute); font-variant-numeric:tabular-nums; }
+.hk-bar{ height:6px; border-radius:999px; background:var(--soft); margin:10px 0 14px; overflow:hidden; }
+.hk-bar i{ display:block; height:100%; background:var(--ink); border-radius:999px; }
+.hk-chips{ display:flex; gap:6px; }
+.hk-chip{ flex:1; min-width:0; height:36px; border-radius:10px; background:var(--plate); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:700; color:var(--mute); }
+.hk-chip.seen{ background:var(--canvas); color:var(--ink); box-shadow:inset 0 0 0 1.5px var(--ink); }
+.hk-more{ align-self:center; color:var(--mute); }
+.hk-btn{ margin-top:14px; height:48px; font-size:15px; }
