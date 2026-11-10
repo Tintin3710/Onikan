@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>오니칸 · 첫 탭 피드백 (시안)</title>
+<!--
+  시안 비교용 프로토타입. 명세: ../../study-first-tap-feedback-SPEC.md
+  - 정규 학습 1차에서 '한 번 익혔어요' / '다시 볼래요'를 처음 누른 순간, 그 결과를 애니메이션으로 1회 보여준다.
+  - 상단 패널(실제 앱 미포함)에서 형태(바텀시트 / 센터 / 토스트)와 사용자(신규 / 기존)를 바꿔 비교한다.
+  - prefers-reduced-motion: 애니메이션 생략, 최종 상태만 표시.
+-->
+<style>
+@font-face{font-family:'Pretendard';font-weight:400;font-display:swap;src:url('../../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Regular.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:500;font-display:swap;src:url('../../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Medium.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:600;font-display:swap;src:url('../../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-SemiBold.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:700;font-display:swap;src:url('../../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Bold.woff2') format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:800;font-display:swap;src:url('../../_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-ExtraBold.woff2') format('woff2')}
+:root{
+  --ink:#1D1D21; --body:#56565E; --mute:#8E8E97; --canvas:#FFFFFF; --page:#F2F2F4;
+  --soft:#E8E8EC; --pressed:#DCDCE2; --plate:#EDEDF1; --on-ink:#F7F7F9;
+  --secondary:#A3E635; --secondary-soft:#EAF6DD; --primary:#EF5112;
+  --shadow:0 6px 16px rgba(30,25,20,.06);
+  --pop:cubic-bezier(.34,1.56,.64,1); --out:cubic-bezier(0,0,.2,1); --up:cubic-bezier(.22,1,.36,1);
+}
+*{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html,body{ margin:0; height:100%; }
+body{ background:#cfccc6; font-family:'Pretendard',-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",system-ui,sans-serif; -webkit-font-smoothing:antialiased; color:var(--ink); }
+button{ font-family:inherit; }
+
+/* ── 시안 비교 패널 (실제 앱 미포함) ── */
+.panel{ max-width:440px; margin:0 auto; padding:10px 12px; display:flex; flex-wrap:wrap; gap:8px 10px; align-items:center; font-size:12px; color:#3a3a40; }
+.seg{ display:inline-flex; background:rgba(255,255,255,.55); border-radius:999px; padding:3px; }
+.seg button{ border:none; background:transparent; padding:6px 10px; border-radius:999px; font-size:12px; font-weight:600; color:#55555c; cursor:pointer; }
+.seg button.on{ background:var(--ink); color:var(--on-ink); }
+.panel .lbl{ font-weight:700; }
+.panel .reset{ border:none; background:rgba(29,29,33,.75); color:#fff; border-radius:999px; padding:6px 12px; font-size:12px; font-weight:600; cursor:pointer; margin-left:auto; }
+.panel .seen{ width:100%; color:#55555c; }
+
+/* ── 앱 ── */
+.app{ position:relative; height:min(100dvh - 92px, 860px); min-height:640px; max-width:440px; margin:0 auto; background:var(--page); overflow:hidden; display:flex; flex-direction:column; }
+.top{ display:flex; align-items:center; padding:18px 16px 10px; }
+.top .x{ width:28px; font-size:22px; color:var(--body); }
+.top .cnt{ flex:1; text-align:center; font-size:14px; font-weight:600; color:var(--body); font-variant-numeric:tabular-nums; margin-right:28px; }
+.bar{ height:3px; background:var(--soft); }
+.bar i{ display:block; height:100%; width:0; background:var(--ink); transition:width .35s var(--out); }
+
+.deck{ position:relative; flex:1; margin:18px 20px 0; }
+.ghost, .card{ position:absolute; inset:0; border-radius:24px; background:var(--canvas); }
+.ghost{ box-shadow:var(--shadow); }
+.ghost.g1{ transform:translateY(10px) scale(.96); opacity:.7; }
+.ghost.g2{ transform:translateY(20px) scale(.92); opacity:.45; }
+.card{ display:flex; flex-direction:column; align-items:center; padding:56px 24px 24px; box-shadow:var(--shadow); cursor:pointer; z-index:3; }
+.card .kanji{ font-size:56px; font-weight:800; letter-spacing:-.02em; margin-top:36px; }
+.card .read{ display:flex; align-items:center; gap:10px; margin-top:8px; font-size:18px; color:var(--body); }
+.card .spk{ width:40px; height:40px; border-radius:999px; background:var(--plate); display:flex; align-items:center; justify-content:center; }
+.card .meaning{ font-size:24px; font-weight:800; margin-top:26px; opacity:0; transform:translateY(6px); transition:.28s var(--out); }
+.card .ex{ width:100%; margin-top:22px; border:1px solid var(--soft); border-radius:16px; padding:14px 16px; text-align:center; opacity:0; transform:translateY(6px); transition:.28s var(--out) .06s; }
+.card .ex .t{ font-size:12px; color:var(--mute); }
+.card .ex .jp{ font-size:16px; margin-top:6px; }
+.card .ex .ko{ font-size:13px; color:var(--body); margin-top:4px; }
+.card.revealed .meaning, .card.revealed .ex{ opacity:1; transform:none; }
+.card.revealed{ cursor:default; }
+
+.card.in{ animation:cardIn .32s var(--out) both; }
+@keyframes cardIn{ from{ transform:translateY(12px) scale(.96); opacity:.6 } to{ transform:none; opacity:1 } }
+.card.out-good{ animation:outGood .42s var(--out) forwards; }
+@keyframes outGood{ to{ transform:translate(38%,-26%) rotate(9deg) scale(.55); opacity:0 } }
+.card.out-again{ animation:outAgain .5s var(--out) forwards; }
+@keyframes outAgain{ 40%{ transform:translateY(-18px) scale(1.01) } 100%{ transform:translateY(40px) scale(.86); opacity:0 } }
+
+.actions{ display:flex; gap:10px; padding:16px 16px calc(env(safe-area-inset-bottom) + 28px); }
+.btn{ flex:1; height:60px; border-radius:999px; font-size:17px; font-weight:600; cursor:pointer; border:1.5px solid transparent; transition:transform .12s; }
+.btn:active{ transform:scale(.98); }
+.btn.ink{ background:var(--ink); color:var(--on-ink); }
+.btn.outline{ background:var(--canvas); color:var(--ink); border-color:var(--pressed); }
+.btn .swap{ display:inline-block; }
+
+/* 1차 끝(중간 결과 자리) */
+.done{ position:absolute; inset:0; background:var(--page); display:none; flex-direction:column; padding:80px 24px 32px; z-index:6; }
+.done.on{ display:flex; }
+.done .ov{ font-size:13px; color:var(--body); font-weight:500; }
+.done .h1{ font-size:30px; font-weight:800; margin:4px 0 24px; }
+.done .row{ display:flex; justify-content:space-between; padding:16px 0; border-top:1px solid var(--soft); font-size:15px; }
+.done .row:first-of-type{ border-top:none; }
+.done .row b{ font-variant-numeric:tabular-nums; }
+.done .note{ font-size:13px; color:var(--mute); margin-top:12px; }
+
+/* ── 공통 일러스트 ── */
+.ill{ position:relative; width:220px; height:132px; margin:0 auto; }
+.mini{ position:absolute; width:52px; height:68px; border-radius:12px; background:var(--canvas); box-shadow:0 2px 8px rgba(30,25,20,.10); border:1px solid var(--soft); display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:800; }
+/* 익혔어요: 카드 → 내일 달력 */
+.cal{ position:absolute; right:30px; top:26px; width:76px; height:84px; border-radius:16px; background:var(--canvas); border:1px solid var(--soft); box-shadow:0 2px 8px rgba(30,25,20,.08); overflow:hidden; }
+.cal .hd{ height:22px; background:var(--ink); color:var(--on-ink); font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.cal .d{ font-size:30px; font-weight:800; text-align:center; margin-top:8px; font-variant-numeric:tabular-nums; }
+.chk{ position:absolute; right:22px; top:16px; width:26px; height:26px; border-radius:999px; background:var(--secondary); display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 3px var(--canvas); transform:scale(0); }
+.chk svg{ width:14px; height:14px; }
+.ill.good .mini{ left:30px; top:32px; }
+.ill.good.play .mini{ animation:toCal .8s var(--out) .15s forwards; }
+@keyframes toCal{ 0%{ transform:none } 45%{ transform:translate(48px,-26px) rotate(-6deg) } 100%{ transform:translate(112px,10px) rotate(4deg) scale(.42); opacity:0 } }
+.ill.good.play .cal{ animation:calBump .36s var(--pop) .84s both; }
+@keyframes calBump{ 0%{ transform:scale(1) } 50%{ transform:scale(1.08) } 100%{ transform:scale(1) } }
+.ill.good.play .chk{ animation:badgePop .42s var(--pop) 1.0s forwards; }
+@keyframes badgePop{ 0%{ transform:scale(.3) } 70%{ transform:scale(1.15) } 100%{ transform:scale(1) } }
+/* 다시 볼래요: 맨 앞 카드 → 오늘 줄의 맨 뒤 */
+.ill.again .mini{ width:42px; height:56px; font-size:19px; top:30px; }
+.ill.again .q{ color:var(--mute); font-weight:700; }
+.ill.again .m0{ left:14px; z-index:2; }
+.ill.again .q1{ left:62px; } .ill.again .q2{ left:110px; } .ill.again .q3{ left:158px; }
+.ill.again.play .m0{ animation:toEnd 1s var(--out) .15s forwards; }
+@keyframes toEnd{
+  0%{ transform:none }
+  45%{ transform:translate(72px,-30px) rotate(6deg) }
+  100%{ transform:translate(144px,0); border-color:var(--ink) } }
+.ill.again.play .q{ animation:shiftLeft .42s var(--out) .55s forwards; }
+@keyframes shiftLeft{ to{ transform:translateX(-48px) } }
+.again-tag{ position:absolute; left:179px; bottom:8px; transform:translateX(-50%); font-size:12px; font-weight:600; color:var(--body); background:var(--plate); border-radius:999px; padding:4px 10px; opacity:0; white-space:nowrap; }
+.ill.again.play .again-tag{ animation:fadeUp .3s var(--out) 1.15s forwards; }
+@keyframes fadeUp{ from{ opacity:0; transform:translate(-50%,6px) } to{ opacity:1; transform:translate(-50%,0) } }
+/* 기존 사용자: 버튼 이름 변경 */
+.rename{ display:flex; flex-direction:column; gap:10px; width:240px; margin:0 auto; }
+.rename .pill{ position:relative; height:48px; border-radius:999px; font-size:15px; font-weight:600; overflow:hidden; }
+.rename .pill.o{ background:var(--canvas); border:1.5px solid var(--pressed); }
+.rename .pill.i{ background:var(--ink); color:var(--on-ink); }
+.rename .pill span{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+.rename .pill .old{ text-decoration:line-through; text-decoration-color:transparent; }
+.rename.play .pill .old{ animation:oldOut .5s var(--out) .6s forwards; }
+.rename .pill .new{ opacity:0; transform:translateY(14px); }
+.rename.play .pill .new{ animation:newIn .45s var(--pop) 1.0s forwards; }
+.rename.play .pill.i .old{ animation-delay:.75s } .rename.play .pill.i .new{ animation-delay:1.15s }
+@keyframes oldOut{ 0%{ opacity:1 } 40%{ opacity:1; text-decoration-color:currentColor } 100%{ opacity:0; transform:translateY(-14px); text-decoration-color:currentColor } }
+@keyframes newIn{ to{ opacity:1; transform:none } }
+
+.replay-ill{ display:block; margin:6px auto 0; border:none; background:none; color:var(--mute); font-size:12px; cursor:pointer; }
+
+/* ── 형태 ① 바텀시트 ── */
+.dim{ position:absolute; inset:0; background:rgba(29,29,33,.42); opacity:0; pointer-events:none; transition:opacity .25s; z-index:10; }
+.dim.on{ opacity:1; pointer-events:auto; }
+.sheet{ position:absolute; left:0; right:0; bottom:0; background:var(--canvas); border-radius:28px 28px 0 0; padding:28px 20px calc(env(safe-area-inset-bottom) + 24px); transform:translateY(105%); transition:transform .42s var(--up); z-index:11; }
+.sheet.on{ transform:none; }
+.sheet .stage{ position:relative; background:var(--plate); border-radius:20px; padding:14px 0; }
+.sheet .mascot{ position:absolute; right:12px; top:-30px; width:58px; height:58px; border-radius:999px; background:var(--canvas); box-shadow:0 2px 8px rgba(30,25,20,.12); padding:4px; }
+.sheet .mascot img{ width:100%; height:100%; }
+.sheet h2{ font-size:22px; font-weight:800; letter-spacing:-.01em; margin:22px 0 8px; line-height:1.35; }
+.sheet p{ font-size:15px; color:var(--body); margin:0 0 24px; line-height:1.55; }
+.cta{ width:100%; height:56px; border:none; border-radius:999px; background:var(--ink); color:var(--on-ink); font-size:17px; font-weight:700; cursor:pointer; }
+
+/* ── 형태 ② 센터 (토스형) ── */
+.center{ position:absolute; inset:0; z-index:11; display:flex; flex-direction:column; align-items:center; padding:0 24px calc(env(safe-area-inset-bottom) + 28px);
+  background:rgba(242,242,244,.86); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); opacity:0; pointer-events:none; transition:opacity .3s; }
+.center.on{ opacity:1; pointer-events:auto; }
+.center .glow{ position:absolute; left:50%; top:40%; width:420px; height:420px; transform:translate(-50%,-50%); border-radius:999px; background:radial-gradient(closest-side, var(--glow, #fff), transparent); opacity:.9; pointer-events:none; }
+.center .body{ position:relative; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+.center .ill{ transform:scale(1.3); margin-bottom:34px; }
+.center .mascot{ width:64px; height:64px; margin-bottom:14px; border-radius:999px; background:var(--canvas); padding:5px; box-shadow:0 2px 8px rgba(30,25,20,.10); opacity:0; transform:translateY(8px); transition:.35s var(--out) .1s; }
+.center.on .mascot{ opacity:1; transform:none; }
+.center h2{ font-size:26px; font-weight:800; letter-spacing:-.02em; margin:0 0 10px; line-height:1.35; }
+.center p{ font-size:15px; color:var(--body); margin:0; line-height:1.55; }
+.center .cta{ position:relative; transform:translateY(24px); opacity:0; transition:.45s var(--up) .9s; }
+.center.on .cta{ transform:none; opacity:1; }
+
+/* ── 형태 ③ 토스트 ── */
+.toast{ position:absolute; left:50%; bottom:112px; transform:translate(-50%,16px); display:flex; align-items:center; gap:10px; background:var(--ink); color:var(--on-ink);
+  padding:12px 18px 12px 12px; border-radius:999px; font-size:15px; font-weight:600; white-space:nowrap; box-shadow:0 6px 16px rgba(30,25,20,.18); opacity:0; pointer-events:none; transition:.3s var(--up); z-index:12; }
+.toast.on{ opacity:1; transform:translate(-50%,0); }
+.toast .ic{ position:relative; width:30px; height:30px; border-radius:10px; background:#3A3A40; display:flex; align-items:center; justify-content:center; font-size:15px; }
+.toast .ic .dot{ position:absolute; right:-4px; bottom:-4px; width:14px; height:14px; border-radius:999px; background:var(--secondary); box-shadow:0 0 0 2px var(--ink); transform:scale(0); }
+.toast.on .ic .dot{ animation:badgePop .42s var(--pop) .3s forwards; }
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation-duration:1ms !important; animation-delay:0ms !important; transition-duration:1ms !important; transition-delay:0ms !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="panel" aria-label="시안 비교 패널 (실제 앱 미포함)">
+  <span class="lbl">형태</span>
+  <span class="seg" id="segForm">
+    <button data-v="sheet" class="on">바텀시트</button><button data-v="center">센터</button><button data-v="toast">토스트</button>
+  </span>
+  <span class="lbl">사용자</span>
+  <span class="seg" id="segUser">
+    <button data-v="new" class="on">신규</button><button data-v="old">기존</button>
+  </span>
+  <button class="reset" id="reset">↺ 처음부터</button>
+  <span class="seen" id="seen"></span>
+</div>
+
+<div class="app" id="app">
+  <div class="top"><span class="x">✕</span><span class="cnt" id="cnt">1 / 5</span></div>
+  <div class="bar"><i id="bar"></i></div>
+
+  <div class="deck" id="deck">
+    <div class="ghost g2"></div><div class="ghost g1"></div>
+  </div>
+
+  <div class="actions" id="actions"></div>
+
+  <section class="done" id="done">
+    <div class="ov">첫 번째 학습</div>
+    <div class="h1">다 봤어요</div>
+    <div class="row"><span>한 번 익힌 단어</span><b id="nGood">0</b></div>
+    <div class="row"><span>다시 볼 단어</span><b id="nAgain">0</b></div>
+    <div class="note">시안 범위는 여기까지예요. 실제 앱에서는 이 자리에 중간 결과 → 기억 확인이 이어져요.</div>
+    <div style="flex:1"></div>
+    <button class="cta" id="again">처음부터 다시 보기</button>
+  </section>
+
+  <!-- ① 바텀시트 -->
+  <div class="dim" id="dim"></div>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetT">
+    <div class="stage"><span class="mascot"><img src="../../assets/mascot.png" alt=""></span><div id="sheetIll"></div></div>
+    <button class="replay-ill" data-replay>↻ 다시 보기</button>
+    <h2 id="sheetT"></h2>
+    <p id="sheetP"></p>
+    <button class="cta" data-close>알겠어요</button>
+  </div>
+
+  <!-- ② 센터 (토스형) -->
+  <div class="center" id="center" role="dialog" aria-modal="true" aria-labelledby="centerT">
+    <div class="glow" id="glow"></div>
+    <div class="body">
+      <div id="centerIll"></div>
+      <img class="mascot" src="../../assets/mascot.png" alt="">
+      <h2 id="centerT"></h2>
+      <p id="centerP"></p>
+    </div>
+    <button class="cta" data-close>알겠어요</button>
+  </div>
+
+  <!-- ③ 토스트 -->
+  <div class="toast" id="toast" role="status" aria-live="polite"><span class="ic" id="toastIc"></span><span id="toastT"></span></div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const WORDS = [
+  { k:'店', r:'みせ', m:'가게', jp:'店を 広げる', ko:'가게를 넓히다' },
+  { k:'顔', r:'かお', m:'얼굴', jp:'顔を 洗う', ko:'얼굴을 씻다' },
+  { k:'男', r:'おとこ', m:'남자', jp:'男の 人', ko:'남자' },
+  { k:'来る', r:'くる', m:'오다', jp:'友だちが 来る', ko:'친구가 오다' },
+  { k:'使う', r:'つかう', m:'사용하다', jp:'ペンを 使う', ko:'펜을 사용하다' },
+];
+const LABELS = {
+  new: { neg:'다시 볼래요', pos:'한 번 익혔어요' },
+  old: { neg:'다시 볼래요', pos:'한 번 익혔어요' },  // 기존 사용자도 같은 새 이름. 이전 이름은 안내에서만 보여준다.
+};
+const COPY = {
+  good:  { t:'익힌 단어는\n내일 다시 꺼내 볼게요', p:'오늘은 한 번 살펴본 것으로 충분해요.\n내일 기억나는지 함께 확인해요.', toast:'내일 다시 꺼내 볼게요' },
+  again: { t:'이 단어는\n오늘 한 번 더 나와요', p:'단어를 다 본 뒤 다시 보여 드릴게요.\n부담 없이 넘어가도 돼요.', toast:'오늘 한 번 더 보여 드릴게요' },
+  rename:{ t:'버튼 이름이 바뀌었어요', p:'외웠다고 약속하지 않아도 돼요.\n한 번 살펴봤다면 \'한 번 익혔어요\'를 눌러 주세요.' },
+};
+
+const S = { form:'sheet', user:'new', i:0, revealed:false, busy:false, seen:{ good:false, again:false, rename:false }, n:{ good:0, again:0 }, open:null };
+
+// ── 일러스트 ──
+const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="#1D1D21" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
+function ill(kind, word){
+  if (kind === 'good') return `<div class="ill good"><div class="mini">${word.k.slice(0,1)}</div><div class="cal"><div class="hd">내일</div><div class="d">${tomorrow()}</div></div><span class="chk">${CHECK}</span></div>`;
+  if (kind === 'again'){
+    const rest = WORDS.filter(w => w !== word).slice(0, 3).map((w, n) => `<div class="mini q q${n+1}">${w.k.slice(0,1)}</div>`).join('');
+    return `<div class="ill again">${rest}<div class="mini m0">${word.k.slice(0,1)}</div><span class="again-tag">↻ 한 번 더</span></div>`;
+  }
+  const l = LABELS.new;
+  return `<div class="rename"><div class="pill o"><span class="old">아직이에요</span><span class="new">${l.neg}</span></div><div class="pill i"><span class="old">외웠어요</span><span class="new">${l.pos}</span></div></div>`;
+}
+const SPK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1D1D21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z" fill="#1D1D21"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+function tomorrow(){ const d = new Date(); d.setDate(d.getDate()+1); return d.getDate(); }
+function play(root){ const el = root.firstElementChild; if (!el) return; el.classList.remove('play'); void el.offsetWidth; el.classList.add('play'); }
+
+// ── 카드 ──
+function renderCard(){
+  const w = WORDS[S.i];
+  const old = document.querySelector('.card'); if (old) old.remove();
+  const c = document.createElement('div');
+  c.className = 'card in';
+  c.innerHTML = `<div class="kanji">${w.k}</div>
+    <div class="read">${w.r}<span class="spk">${SPK}</span></div>
+    <div class="meaning">${w.m}</div>
+    <div class="ex"><div class="t">예문을 들어보세요</div><div class="jp">${w.jp}</div><div class="ko">${w.ko}</div></div>`;
+  c.addEventListener('click', () => { if (!S.revealed && !S.open) reveal(); });
+  $('deck').appendChild(c);
+  S.revealed = false;
+  $('cnt').textContent = `${S.i+1} / ${WORDS.length}`;
+  $('bar').style.width = `${(S.i/WORDS.length)*100}%`;
+  renderActions();
+}
+function renderActions(){
+  const a = $('actions'); const l = LABELS[S.user];
+  if (!S.revealed){ a.innerHTML = `<button class="btn ink" id="rev">뜻 보기</button>`; $('rev').onclick = reveal; return; }
+  a.innerHTML = `<button class="btn outline" id="neg">${l.neg}</button><button class="btn ink" id="pos">${l.pos}</button>`;
+  $('neg').onclick = () => grade('again');
+  $('pos').onclick = () => grade('good');
+}
+function reveal(){ S.revealed = true; document.querySelector('.card').classList.add('revealed'); renderActions(); }
+
+function grade(kind){
+  if (S.busy || S.open) return; S.busy = true;
+  S.n[kind]++;
+  const c = document.querySelector('.card');
+  c.classList.remove('in'); c.classList.add(kind === 'good' ? 'out-good' : 'out-again');
+  const word = WORDS[S.i];
+  const first = !S.seen[kind];
+  setTimeout(() => {
+    S.i++; S.busy = false;
+    if (S.i >= WORDS.length){ finish(); }
+    else renderCard();
+    if (first){ S.seen[kind] = true; showFeedback(kind, word); updateSeen(); }   // 표시 시점에 '봤음' 저장 (O-2)
+  }, kind === 'good' ? 300 : 360);
+}
+function finish(){ $('bar').style.width = '100%'; $('nGood').textContent = S.n.good; $('nAgain').textContent = S.n.again; $('done').classList.add('on'); $('actions').innerHTML = ''; }
+
+// ── 피드백 표시 ──
+function showFeedback(kind, word){
+  const copy = COPY[kind];
+  if (S.form === 'toast' && kind !== 'rename'){
+    $('toastIc').innerHTML = (kind === 'good' ? '📅' : '↻') + (kind === 'good' ? '<span class="dot"></span>' : '');
+    $('toastT').textContent = copy.toast;
+    const t = $('toast'); t.classList.remove('on'); void t.offsetWidth; t.classList.add('on');
+    clearTimeout(showFeedback.tt); showFeedback.tt = setTimeout(() => t.classList.remove('on'), 2400);
+    return;
+  }
+  const form = S.form === 'center' ? 'center' : 'sheet';   // 기존 사용자 안내는 토스트로 담기 어려워 시트로 보여준다
+  S.open = { form, kind, word };
+  const illBox = $(form + 'Ill');
+  illBox.innerHTML = ill(kind, word);
+  $(form + 'T').innerHTML = copy.t.replace(/\n/g, '<br>');
+  $(form + 'P').innerHTML = copy.p.replace(/\n/g, '<br>');
+  if (form === 'sheet'){ $('dim').classList.add('on'); $('sheet').classList.add('on'); setTimeout(() => play(illBox), 260); }
+  else { $('glow').style.setProperty('--glow', kind === 'good' ? '#EAF6DD' : '#FFFFFF'); $('center').classList.add('on'); setTimeout(() => play(illBox), 180); }
+}
+function closeFeedback(){
+  if (!S.open) return;
+  const wasRename = S.open.kind === 'rename';
+  $('dim').classList.remove('on'); $('sheet').classList.remove('on'); $('center').classList.remove('on');
+  S.open = null;
+  if (wasRename) renderActions();
+}
+document.querySelectorAll('[data-close]').forEach(b => b.onclick = closeFeedback);
+$('dim').onclick = closeFeedback;
+document.querySelectorAll('[data-replay]').forEach(b => b.onclick = () => play($('sheetIll')));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFeedback(); });
+
+// ── 패널 ──
+function updateSeen(){
+  const f = (b) => b ? '✓' : '–';
+  $('seen').textContent = `1회 피드백 · 한 번 익혔어요 ${f(S.seen.good)} · 다시 볼래요 ${f(S.seen.again)}` + (S.user === 'old' ? ` · 이름 변경 안내 ${f(S.seen.rename)}` : '');
+}
+function seg(id, key){
+  document.querySelectorAll(`#${id} button`).forEach(b => b.onclick = () => {
+    document.querySelectorAll(`#${id} button`).forEach(x => x.classList.toggle('on', x === b));
+    S[key] = b.dataset.v; start();
+  });
+}
+seg('segForm', 'form'); seg('segUser', 'user');
+$('reset').onclick = start; $('again').onclick = start;
+
+function start(){
+  closeFeedback(); $('toast').classList.remove('on'); $('done').classList.remove('on');
+  Object.assign(S, { i:0, busy:false, seen:{ good:false, again:false, rename:false }, n:{ good:0, again:0 } });
+  renderCard(); updateSeen();
+  if (S.user === 'old'){                       // 기존 사용자: 업데이트 후 첫 학습 시작 시 1회 (O-8 ⚠️)
+    S.seen.rename = true; updateSeen();
+    setTimeout(() => showFeedback('rename', WORDS[0]), 350);
+  }
+}
+start();
+</script>
+</body>
+</html>
