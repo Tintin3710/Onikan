@@ -222,8 +222,8 @@ const COPY = {
   good:  { t:'익힌 단어는\n며칠 뒤 다시 꺼내 볼게요', p:'오늘은 한 번 살펴본 것으로 충분해요.\n며칠 뒤 기억나는지 함께 확인해요.', toast:'며칠 뒤 다시 꺼내 볼게요' },
   again: { t:'이 단어는\n오늘 한 번 더 나와요', p:'단어를 다 본 뒤 다시 보여 드릴게요.\n부담 없이 넘어가도 돼요.', toast:'오늘 한 번 더 보여 드릴게요' },
   // 기존 사용자: 처음 누른 버튼의 이전 이름 → 새 이름 (토스트 1회)
-  renameGood:  { toast:"'외웠어요'가 '한 번 익혔어요'로 바뀌었어요" },
-  renameAgain: { toast:"'아직이에요'가 '다시 볼래요'로 바뀌었어요" },
+  renameGood:  { toast:'며칠 뒤에 또 만나요!' },
+  renameAgain: { toast:'오늘 한 번 더 만나요!' },
 };
 
 const S = { form:'sheet', user:'new', i:0, revealed:false, busy:false, seen:{ good:false, again:false, rename:false }, n:{ good:0, again:0 }, open:null };
@@ -318,7 +318,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFeedbac
 function updateSeen(){
   const f = (b) => b ? '✓' : '–';
   $('seen').textContent = S.user === 'old'
-    ? `1회 토스트 · 이름 변경 안내 ${f(S.seen.rename)}`
+    ? `1회 토스트 · 버튼 의미 안내 ${f(S.seen.rename)}`
     : `1회 바텀시트 · 한 번 익혔어요 ${f(S.seen.good)} · 다시 볼래요 ${f(S.seen.again)}`;
 }
 function seg(id, key){
