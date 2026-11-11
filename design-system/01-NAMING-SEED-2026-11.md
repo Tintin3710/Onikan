@@ -39,6 +39,7 @@
 | N-1 | 간격 이름을 `x1…x10`으로 바꿀까? | ✅ **바꾼다.** `xs→x1` `sm→x2` `md→x3` `lg→x4` `xl→x5` `2xl→x6` `xxl→x7` `huge→x10`. 값은 그대로 | DESIGN.md `spacing`·`layout`·본문 참조 전부 |
 | N-3 | 반경을 SEED 단계에 맞출까? | ✅ **SEED 단계 그대로 사용.** 단계 밖 값 **18 → 16(`r4`)**, **22 → 20(`r5`, 회색 `card-tinted`)** — 흰 카드 24보다 한 단계 작아 구분은 유지. 14는 `r3_5`로 유지. `pill` 999는 `full` 9999로 합침 | DESIGN.md `rounded`·Shapes 표·규칙, COMPONENTS.md 반경 요약·타일 |
 | N-4 | 색을 SEED식 `bg/fg/stroke` 이름으로 전부 바꿀까? | ✅ **바꾸지 않는다.** 상태 접미사(`-pressed`·`-soft`) 규칙만 가져온다 | 변경 없음 |
+| N-4b | Figma 컬러 스타일 이름 (2026-11-11) | ✅ **SEED 속성 묶음 + 오니칸 역할 이름**: `bg/softer` · `fg/ink` · `stroke/pressed`. 묶음은 변수 사용 범위(채움·글자·테두리)로 정하고, 스타일은 변수에 연결. 변수 이름은 N-4대로 그대로 | Figma 컬러 스타일 39개 |
 
 ### 옛 이름 → 새 이름 (Figma·코드 이름 변경용)
 

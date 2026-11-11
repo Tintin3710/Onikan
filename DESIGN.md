@@ -277,7 +277,7 @@ components:
     rounded: "{rounded.pill}"
     padding: "{spacing.x3} {spacing.x4}"
   grade-button:
-    description: "The study self-rating PAIR (2026-11, D0-5: was 4-step). Two equal-width pills side by side: 아직이에요 (outline) · 외웠어요 (ink). 회독 variant relabels to 모름 · 안다."
+    description: "The study self-rating PAIR (2026-11, D0-5: was 4-step). Two equal-width pills side by side: 다시 볼래요 (outline) · 한 번 익혔어요 (ink). 회독 variant relabels to 모름 · 안다."
     typography: "{typography.card-title}"   # 17/600 — kept from COMPONENTS.md GradeButtons; confirm against the rebuilt screen B
     rounded: "{rounded.pill}"
     height: "{layout.cta-height}"   # 56 — same as button-primary
@@ -554,13 +554,13 @@ The signature is a **soft, generous radius**: cards at 20–24px, every control 
 ### Actions
 
 **`button-primary`** — the **ink** action pill. Background `{colors.ink}`, label `{colors.on-ink}` `#F7F7F9`, `{typography.button-large}`, `{rounded.pill}`, padding `{spacing.x5}`, full-width at screen bottom. *(2026-08: primary CTA is ink, was orange.)*
-- **When to use:** the single most important action on the screen (학습 시작하기 · 회독하기 · 외웠어요 · 지금 연습하기 · 오늘 학습 시작 · 영수증 받고 마치기 · 확인). If a second action competes, it becomes a **white outline**, not a second ink pill.
+- **When to use:** the single most important action on the screen (학습 시작하기 · 회독하기 · 한 번 익혔어요 · 지금 연습하기 · 오늘 학습 시작 · 영수증 받고 마치기 · 확인). If a second action competes, it becomes a **white outline**, not a second ink pill.
 
-**`button-secondary`** — **white outline** pill (1.5px `{colors.pressed}`, ink label) for a non-primary action beside a primary, or a de-emphasised CTA (아직이에요 · 백업 내보내기 · 완료-state 회독하러 가기 · 발음 듣기·사전). A `{colors.soft}`-filled variant exists for in-card use.
+**`button-secondary`** — **white outline** pill (1.5px `{colors.pressed}`, ink label) for a non-primary action beside a primary, or a de-emphasised CTA (다시 볼래요 · 백업 내보내기 · 완료-state 회독하러 가기 · 발음 듣기·사전). A `{colors.soft}`-filled variant exists for in-card use.
 
 **`button-subtle`** — soft grey pill (`{colors.soft}`) for tertiary / in-card actions (e.g. 단어 상세).
 
-**`grade-button`** — the study self-rating **pair** (아직이에요 · 외웠어요; 회독: 모름 · 안다). Two equal-width pills, height 56 (= `button-primary`), 8 apart: outline → ink. Orange is *not* used here. *(2026-11, D0-5: the 4-step 모름·어려움·앎·쉬움 set is retired.)*
+**`grade-button`** — the study self-rating **pair** (다시 볼래요 · 한 번 익혔어요; 회독: 모름 · 안다). Two equal-width pills, height 56 (= `button-primary`), 8 apart: outline → ink. Orange is *not* used here. *(2026-11, D0-5: the 4-step 모름·어려움·앎·쉬움 set is retired.)*
 
 ### Surfaces
 
@@ -672,6 +672,8 @@ Decisions from [`design-system/00-DECISIONS-2026-11.md`](./design-system/00-DECI
 - **N-1 Spacing names = value ÷ 4** (SEED `$dimension` style): `xs sm md lg xl 2xl xxl huge` → `x1 x2 x3 x4 x5 x6 x7 x10`. Values unchanged; removes the `xxl` 28 / `2xl` 24 mix-up. See [`01-NAMING-SEED-2026-11.md`](./design-system/01-NAMING-SEED-2026-11.md).
 - **N-3 Radius = SEED scale as-is** (`r` + value ÷ 4, half steps `_5`): 10 `r2_5` · 12 `r3` · 14 `r3_5` · 16 `r4` · 20 `r5` · 24 `r6` · `full`. Two off-scale values snapped: **18 → 16**, **22 → 20** (`card-tinted`). `pill` 999 merged into `full` 9999. Role aliases `card` · `card-tinted` · `receipt` · `pill` stay.
 - **N-4 Colour role names unchanged** — only SEED's state-suffix rule (`-pressed`, `-soft`) is adopted.
+- **Figma colour styles (2026-11-11)** — 39 paint styles, each bound to its `Color` variable. Named SEED-style by property group + Onikan role: `bg/{role}` (fills), `fg/{role}` (text), `stroke/{role}` (borders), e.g. `bg/softer`, `fg/ink`, `stroke/pressed`. The group comes from the variable's scope; multi-use roles appear in each group they are scoped for.
+- **Grade labels (2026-11-10)** — 아직이에요 / 외웠어요 → **다시 볼래요 / 한 번 익혔어요** (see `handoff/study-first-tap-feedback-SPEC.md`).
 - **Fixed stale text** — `badge` no longer says "orange is for actions"; `tab-bar` frontmatter now matches the icon + label + `tab-active` spec; 완료 badge uses `secondary-soft #EAF6DD` (was an undefined `#E7F4D9`).
 
 ### alpha.1 — Figma library build

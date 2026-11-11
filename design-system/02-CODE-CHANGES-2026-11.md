@@ -47,3 +47,50 @@
 | F-7 | 두 화면 공통 | 외부 변수(`Labels/Primary`, `Background/Elevated/Normal`, `Margin/Action/Normal Horizontal`) → 오니칸 변수 | D0-15 |
 | F-8 | 라이브러리 | `button-primary` 잉크 · `tab-bar` 아이콘형 · `grade-button` 2버튼 (2단계 본작업) | D0-7·8, 감사표 P6 |
 | F-9 | 간격·반경 변수 | 간격 `xs…huge` → `x1…x10`. 반경을 SEED 단계(`r2_5` `r3` `r3_5` `r4` `r5` `r6` `full`)로 바꾸고 `md` 18→**16**, `lg` 22→**20**(`card-tinted`), `pill` 999→`full` 9999 (표는 01-NAMING) | N-1 · N-3 확정 |
+
+## D. 2단계 진행 기록 — Figma (2026-11-10)
+
+Figma API로 직접 고친 것과, 글꼴 제약 때문에 **디자이너가 손으로 해야 하는 것**을 나눠 적는다.
+API 실행 환경에 `Pretendard JP`가 설치돼 있지 않아 **글자 내용·텍스트 스타일 변경은 스크립트로 불가**하다(색 변경은 가능).
+
+### 완료 (API)
+
+| # | 내용 | 결과 |
+|---|---|---|
+| F-1 | `softer` | 원시값 `grey/97`이 #F5F5F5로 덮여 있던 것을 **#F2F2F4로 복구**. 새 원시값 `neutral/page #F5F5F5`를 만들고 `softer`(라이트)가 이것을 가리키게 함 → DESIGN.md와 같은 구조(그레이 단계는 그대로, 페이지 배경만 예외) |
+| F-3 | 색 변수 추가 | `primary-soft`(#FCE8DE / 다크 #3A2216) · `secondary-soft`(#EAF6DD / #26301A) · `ink-pressed`(grey/10 / white). 원시값 `orange/soft(-dark)` · `lime/soft(-dark)` 추가. `primary-pressed` · `bar-fill`은 이미 있었음 |
+| F-4 · F-9 | 반경 | SEED 단계 `r2_5 10` · `r3 12` · `r3_5 14` · `r4 16` · `r5 20` · `r6 24` · `full`. 기존 역할 변수는 **이름·ID 유지**(연결된 레이어 보존)하고 값만 별칭으로: `card`→r6, `card-tinted`(옛 `lg` 22)→r5 **20**, `receipt` 4→r2_5 **10**, `pill`→full. `sm`→`r3`, `md` 18→`r4` **16** |
+| F-9 | 간격 | `xs…huge` → `x1…x10` 이름 변경(ID 유지, 값 그대로). `layout/*` 역할 변수 7개 추가: gutter→x4 · gap-tight→x3 · gap-group→x6 · gap-section→x10 · touch-target 44 · cta-height 56 · session-top-bar 52 |
+| F-8 | `button-primary` | 채움 `primary`(주황) → **`ink`**, 라벨 → `on-ink`. 인스턴스 242개 중 239개는 이미 잉크로 덮어써 있어 변화 없음. **원본을 따르던 3개만 주황→잉크로 바뀜**: 포폴 페이지 `온보딩`·`회독`, Screens `회독 상세` |
+| F-8 | `grade-button` | 4단계 → **2버튼**: `State=Again`(canvas + 1.5 `pressed` 테두리, `ink` 라벨) · `State=Good`(`ink` 채움, `on-ink` 라벨). 175×56, 높이 `layout/cta-height`, 반경 `pill` 연결. 옛 `Hard`·`Known`은 지우지 않고 `_legacy grade-button 4-step` 프레임으로 옮김(컴포넌트 데모 페이지에서만 쓰임) |
+
+| F-10 | 컬러 스타일 (2026-11-11) | 스타일 0개 → **39개 등록**, 모두 `Color` 변수에 연결(라이트·다크 자동 전환). 이름은 SEED의 속성 묶음 `bg/` · `fg/` · `stroke/` + 오니칸 역할 이름(N-4 유지). 어느 묶음에 넣을지는 변수 사용 범위(scope)로 정함: 채움 → `bg/`, 글자 → `fg/`, 테두리 → `stroke/`. 여러 용도 색(`ink` · `secondary` · 상태 4색 등)은 쓰이는 묶음마다 스타일이 있음. 원시값(`grey/*` 등)과 `shadow`(그림자 전용)는 스타일로 만들지 않음 |
+
+### 손으로 할 것 (글꼴 필요)
+
+| # | 위치 | 할 일 |
+|---|---|---|
+| M-1 | 텍스트 스타일 `button/md` | 굵기 Medium → **SemiBold** (F-2) |
+| M-2 | `grade-button` 라벨 | `모름` → **다시 볼래요**, `쉬움` → **한 번 익혔어요** (2026-11-10 문구 변경, `handoff/study-first-tap-feedback-SPEC.md`), 두 라벨 스타일 → `card-title`(17/600) |
+| M-3 | `tab-bar` (Navigation 페이지) | 텍스트+밑줄 → 아이콘 26 + 라벨 12, 활성 `tab-active` (D0-8) |
+| M-4 | Foundations 페이지 견본 | `softer` 표기 #F2F2F4 → #F5F5F5, 새 색 3개·반경·간격 이름 견본 갱신 |
+
+### 화면 정리 (F-5 · F-6 · F-7, 2026-11-10)
+
+| # | 화면 | 바꾼 것 |
+|---|---|---|
+| F-5 | 학습완료 `615:1611` | 좌우 여백 20 → **16** (콘텐츠·CTA 358 폭). 요약 카드 반경을 `radius/card`(**24**)에 연결 — 옛 `radius/lg`에 연결돼 있어 22 → 20으로 같이 바뀌었던 것을 바로잡음. 이미지→제목 30 → **24**(`x6`), 제목→카드 **24**(`x6`), 카드→안내문 14 → **12**(`x3`) 변수 연결 |
+| F-6 | 학습 카드 `615:1527` | 소수점 값 정리: 본문 위 22.75 → 24, 좌우 = `layout/gutter`, 카드 안쪽 40/24/24/24 · 간격 28 · 단어 블록 13 → 12 · 발음 10 → 8 모두 변수 연결. 학습 카드는 남은 높이를 채우게(FILL), 아래 34 홈 인디케이터 여백. "단어 상세" 버튼 92.25×37.75 → 높이 **36**, 좌 16 · 우 12. **평가 버튼을 손으로 그린 프레임 → `grade-button` 라이브러리 인스턴스 2개**로 교체(175 + 8 + 175, 높이 56) |
+| F-7 | 두 화면 | 상태바의 외부 변수 `Labels/Primary` → `ink` (화면당 6곳). **보이는 레이어에 남은 외부 변수 0개** (A의 숨김 레이어 3곳에만 남음) |
+| — | Screens 페이지 | 흰 카드인데 옛 `radius/lg`에 연결돼 있던 카드 2개(`2b.주먹밥 완성`, `04-중간결과-첫학습완료`)도 `radius/card` 24로 다시 연결. 포폴 페이지는 이 변수들을 쓰지 않아 영향 없음 |
+
+### 손으로 할 것 (추가)
+
+| # | 위치 | 할 일 |
+|---|---|---|
+| M-5 | 화면 A·B | 텍스트 스타일 연결 — 스타일 없는 글자 B 9개 · A 2개 (단어 44 → `display/word`, 뜻 26 → `display/meaning`, 발음 18 → `body/lg`, 예문 16 → `body/md`, 번역 14 → `body/sm`, 카운터 14·15 → `body/base-strong` 등). 평가 버튼 라벨은 M-2를 하면 인스턴스에 자동 반영 |
+| M-6 | Screens `설정`·`QA`의 `stepper` 5개 | 흰 배경인데 옛 `radius/lg`에 연결돼 22 → 20이 됨. 카드로 볼지(24) 컨트롤로 볼지 판단 필요 |
+
+### 남은 한계
+- 상태바(61.22 높이 등)는 iOS 목업이라 소수점 값을 그대로 둠 → 학습 카드 높이가 576.78로 계산됨.
+- A의 숨김 레이어(옛 hero-card 등)는 지우지 않음.
