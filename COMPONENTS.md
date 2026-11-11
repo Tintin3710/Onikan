@@ -87,13 +87,13 @@
 - **경쟁 액션**: 오렌지 2번째 버튼 만들지 말 것 → `SecondaryButton`(화이트 아웃라인).
 
 ### `SecondaryButton` / `<SecondaryButton>`
-- **변형**: `outline`(투명+1.5px `pressed`, 글자 `ink`) · `soft`(`soft` 배경). 학습 "다시 볼래요", 영수증 "이미지로 저장/공유" 등.
+- **변형** *(C3-1, 2026-11-11 정리)*: `outline` = 흰 면 + 1.5px `pressed` 테두리, 높이 56, 18/600 — 주요 버튼 옆 약한 행동(나중에·백업 내보내기·회독하러 가기). `secondary` = 테두리 없는 흰 면, 높이 44, 16/600 — 회색 화면·오버레이 위 작은 행동(확인했어·공유). `subtle` = `soft` 면, 44 — 카드 안 3차 행동(단어 상세). 눌림: outline·secondary → `soft`, subtle → `pressed`. 상세: [03 명세 §1](./design-system/03-COMPONENT-SPECS-2026-11.md)
 
 ### `GradeButtons` / `<GradeButtons variant>`
 - **언제**: 학습·회독 공개 후 2단계 평가.
 - **해부**: gap **8**, 각 flex:1(같은 폭) 높이 **56**(= `PrimaryButton`) pill 17/600. *(2026-11, D0-5: gap 10·높이 60에서 변경.)*
-- **변형 `study`(기본)**: `다시 볼래요`=outline(`pressed`) → FSRS **Again** · `한 번 익혔어요`=`ink` 채움/글자 `softer` → **Good**.
-- **변형 `review`(회독)**: `모름`=outline(`pressed`) · `안다`=`ink` 채움/글자 `softer`. 구조 동일, 라벨만 다름. (C-1)
+- **변형 `study`(기본)**: `다시 볼래요`=outline(`pressed`) → FSRS **Again** · `한 번 익혔어요`=`ink` 채움/글자 `on-ink` → **Good**.
+- **변형 `review`(회독)**: `모름`=outline(`pressed`) · `안다`=`ink` 채움/글자 `on-ink`. 구조 동일, 라벨만 다름. (C-1)
 - **4단계 아님.**
 
 ### `Chip` / `<Chip>`
@@ -114,7 +114,8 @@
 - **상태(재료/오니기리)**: `earned/done`(실물) · `making`(실물 + `inset 0 0 0 2px ink`) · `locked/next`(투명 + `inset 0 0 0 1.5px pressed` + "?").
 
 ### `TabBar` / `<TabBar>` + `TabItem`
-- **해부**: 배경 `softer`, 위 1px `pressed`, padding `8 8 26`. 각 탭 flex:1 min-h 52, 세로, gap 5. 아이콘 26px·1.7 스트로크·라운드캡, 라벨 12px(활성 600/비활성 500, letter-spacing −0.1). **활성 `tab-active` 틴트만**(면·배지·밑줄 없음).
+- **해부** *(2026-11-11 Figma 재구성 기준)*: 배경 **`canvas`**, 위 1px `pressed`, padding 위 8 · 아래 12(+ 홈 인디케이터 영역). 각 탭 같은 폭(390 기준 97.5), 높이 44, 세로, gap 2. 아이콘 **24px**, 라벨 12px(`tab-label` 500 / 활성 `tab-label-active` 600). 비활성 `body`, **활성 `tab-active` 틴트 + 아이콘 채움형**(면·배지·밑줄 없음).
+- **Figma 구조**: `icon`(`name` today·menu·record·setting × `style` line·fill) → `tab-item`(`Tab` × `Active`) → `Bottom Navigation`(`Active` 4개).
 - **아이콘**: 오늘=**`icon-today.svg`(제공, 오니기리)** · 메뉴=책 · 기록=시계 · 설정=슬라이더(원은 `softer`로 채움). viewBox 값 유지.
 - **`tab-active`는 primary와 별개 토큰**(12px 틴트라 탭바 배경 위 4.5:1 필요): 라이트 `#C2410C`(4.63:1) / 다크 `#F97316`(6.62:1). 라이트에서 primary `#EF5112`를 그대로 쓰면 near-white 탭바 위 **3.21:1로 미달** ✗ — 반드시 어두운 `#C2410C`.
 

@@ -32,6 +32,10 @@
 | C-16 | 좌우 여백 16 반영 확인 | C-6 이후 홈·학습·결과·회독·설정 화면이 모두 `layout.gutter`를 쓰는지 확인 (직접 쓴 20 없는지) | D0-1 |
 | C-17 | 타이포 이름 통일 | `screenTitle`→`displayXl` 식으로 DESIGN.md 이름에 맞춰 변경 (N-5 확정 후) | D0-13 |
 
+| C-18 | 탭바 (`MainTabBar.tsx`) | 실제 코드 값(fork `d7d9011`): padding 위 16 · 아래 24 · 좌우 20, 탭 72×54 · gap 8, 라벨 14 Regular, 배경 `canvas`(이미 맞음). → 위 8 / 아래 12(+안전 영역) · 좌우 0, 탭 4칸 같은 폭 × 44 · gap 2, 아이콘 **24**, 라벨 `tab-label` 12/500 · 활성 600, 비활성 `body`, 활성 아이콘 채움형. 상세: [03 §3](./03-COMPONENT-SPECS-2026-11.md) | 2026-11-11 Figma 탭바 재구성 |
+| C-19 | 버튼 크기 (`components/ui/Button.tsx`) | `size: 'large' | 'medium'`(56 / 44) 추가, `tall`(60)·`compact`(48) 삭제. `tall` 6곳(`StudyActionBar` 2 · `RecallStage` 2 · `TutorialScreen` 2) → large, `compact` 2곳(`HomeSections:89` · `StatsScreen:175`) → large(카드 안이면 medium). `secondary` 기본 높이 56 → **44**(medium) | C3-2 |
+| C-20 | 오렌지 버튼 삭제 | `variant="brand"` 3곳 → `primary`: `ReadingChaptersScreen:165` · `RecallStage:52`("뜻 보기") · `WeaknessScreen:228`("오늘로 돌아가기"). 이후 `brand` variant 삭제 | C3-3 |
+
 **C-6·C-12·C-1은 거의 모든 화면에 보이는 변화**다. 적용 후 `npm run ui:capture` → `ui:diff`를 다시 돌리고, 기준 이미지는 갱신된 Figma 화면으로 `ui:approve -- --from-design` 해야 한다(옛 기준 이미지는 여백 20 시절).
 
 ## C. Figma — 디자이너 쪽 할 일
@@ -64,15 +68,16 @@ API 실행 환경에 `Pretendard JP`가 설치돼 있지 않아 **글자 내용�
 | F-8 | `button-primary` | 채움 `primary`(주황) → **`ink`**, 라벨 → `on-ink`. 인스턴스 242개 중 239개는 이미 잉크로 덮어써 있어 변화 없음. **원본을 따르던 3개만 주황→잉크로 바뀜**: 포폴 페이지 `온보딩`·`회독`, Screens `회독 상세` |
 | F-8 | `grade-button` | 4단계 → **2버튼**: `State=Again`(canvas + 1.5 `pressed` 테두리, `ink` 라벨) · `State=Good`(`ink` 채움, `on-ink` 라벨). 175×56, 높이 `layout/cta-height`, 반경 `pill` 연결. 옛 `Hard`·`Known`은 지우지 않고 `_legacy grade-button 4-step` 프레임으로 옮김(컴포넌트 데모 페이지에서만 쓰임) |
 
+| F-11 | `grade-button` 여백 (2026-11-11) | 위아래 여백 20 → `x4` **16** (높이 56 고정 안에 20+24+20이 들어가 있던 것). 좌우 `x5` 20 그대로 |
 | F-10 | 컬러 스타일 (2026-11-11) | 스타일 0개 → **39개 등록**, 모두 `Color` 변수에 연결(라이트·다크 자동 전환). 이름은 SEED의 속성 묶음 `bg/` · `fg/` · `stroke/` + 오니칸 역할 이름(N-4 유지). 어느 묶음에 넣을지는 변수 사용 범위(scope)로 정함: 채움 → `bg/`, 글자 → `fg/`, 테두리 → `stroke/`. 여러 용도 색(`ink` · `secondary` · 상태 4색 등)은 쓰이는 묶음마다 스타일이 있음. 원시값(`grey/*` 등)과 `shadow`(그림자 전용)는 스타일로 만들지 않음 |
 
 ### 손으로 할 것 (글꼴 필요)
 
 | # | 위치 | 할 일 |
 |---|---|---|
-| M-1 | 텍스트 스타일 `button/md` | 굵기 Medium → **SemiBold** (F-2) |
-| M-2 | `grade-button` 라벨 | `모름` → **다시 볼래요**, `쉬움` → **한 번 익혔어요** (2026-11-10 문구 변경, `handoff/study-first-tap-feedback-SPEC.md`), 두 라벨 스타일 → `card-title`(17/600) |
-| M-3 | `tab-bar` (Navigation 페이지) | 텍스트+밑줄 → 아이콘 26 + 라벨 12, 활성 `tab-active` (D0-8) |
+| M-1 ✅ | 텍스트 스타일 `button/md` | 굵기 Medium → **SemiBold** (F-2) — 2026-11-11 완료 |
+| M-2 ✅ | `grade-button` 라벨 | `모름` → **다시 볼래요**, `쉬움` → **한 번 익혔어요** (2026-11-10 문구 변경, `handoff/study-first-tap-feedback-SPEC.md`), 두 라벨 스타일 → `card-title`(17/600). 2026-11-11 완료 (화면 B 인스턴스 반영 확인) |
+| M-3 ✅ | `tab-bar` (Navigation 페이지) | 텍스트+밑줄 → 아이콘 + 라벨, 활성 `tab-active` (D0-8). 2026-11-11: 디자이너가 아이콘형으로 다시 그리고, API로 구조 정리 — `icon`(name × style line·fill, 색 변수 연결, `Fill` 불리언 삭제, 설정 아이콘의 빈 `Ratio` 삭제) · `tab-item`(Tab × Active 8개, 높이 44) · `Bottom Navigation`(Active 4개, 배경 `canvas`, 활성 `primary` → `tab-active`). 옛 `Container` 삭제, 리뷰 프레임 탭바 8개 교체. **남은 것: 라벨 스타일 `code` → `tab-label` / `tab-label-active` (M-7)** |
 | M-4 | Foundations 페이지 견본 | `softer` 표기 #F2F2F4 → #F5F5F5, 새 색 3개·반경·간격 이름 견본 갱신 |
 
 ### 화면 정리 (F-5 · F-6 · F-7, 2026-11-10)
@@ -88,7 +93,8 @@ API 실행 환경에 `Pretendard JP`가 설치돼 있지 않아 **글자 내용�
 
 | # | 위치 | 할 일 |
 |---|---|---|
-| M-5 | 화면 A·B | 텍스트 스타일 연결 — 스타일 없는 글자 B 9개 · A 2개 (단어 44 → `display/word`, 뜻 26 → `display/meaning`, 발음 18 → `body/lg`, 예문 16 → `body/md`, 번역 14 → `body/sm`, 카운터 14·15 → `body/base-strong` 등). 평가 버튼 라벨은 M-2를 하면 인스턴스에 자동 반영 |
+| M-5 ✅ | 화면 A·B | 텍스트 스타일 연결 — 상태바 `9:41`(iOS 목업)은 제외, A 1개 · B 8개. 카운터 `12 / 12`(A, 14) · `1 / 10`(B, 15) → 둘 다 `body/base-strong`(15/22)로 통일. `過剰` → `display/word` · `かじょう` → `body/lg` · `과잉, 과다` → `display/meaning` · `예문을 들어보세요`(12/20) → `label`(12/16) · 예문 → `body/md` · 번역 → `body/sm` · `단어 상세`(13) → `body/sm-strong`(14/20). 2026-11-11 완료 확인 (스타일 없는 글자는 상태바 시계와 숨긴 레이어뿐) |
+| M-7 | `tab-item` 라벨 8개 | 텍스트 스타일 `code`(13) → 비활성 `tab-label`(12 Medium) · 활성 `tab-label-active`(12 SemiBold). 원본 8개만 바꾸면 탭바 4개 변형·리뷰 프레임에 반영 |
 | M-6 | Screens `설정`·`QA`의 `stepper` 5개 | 흰 배경인데 옛 `radius/lg`에 연결돼 22 → 20이 됨. 카드로 볼지(24) 컨트롤로 볼지 판단 필요 |
 
 ### 남은 한계

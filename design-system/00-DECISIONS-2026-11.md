@@ -47,7 +47,7 @@
 |---|---|---|---|---|---|
 | D0-6 | 정본 순서 | 디자인 저장소는 문서 우선, 개발 QA는 PNG 우선 | **결정표 → `DESIGN.md`(값 정본) → Figma 라이브러리·코드가 따라옴. PNG는 참고용** | DESIGN.md·COMPONENTS.md 머리말, 개발 `ui-qa.md` 우선순위 | |
 | D0-7 | 주요 버튼 색 | 라이브러리 주황 / 화면은 덮어써서 잉크 | **잉크** (D-3 그대로) | Figma `button-primary` 원본 수정 | |
-| D0-8 | 탭바 | 라이브러리 "텍스트 + 밑줄" / 앱·시안은 아이콘 + 라벨 + 오렌지 | **아이콘 26 + 라벨 12, 활성 `tab-active`** | Figma `tab-bar`, DESIGN.md 탭바 설명 | |
+| D0-8 | 탭바 | 라이브러리 "텍스트 + 밑줄" / 앱·시안은 아이콘 + 라벨 + 오렌지 | **아이콘 26 + 라벨 12, 활성 `tab-active`** | Figma `tab-bar`, DESIGN.md 탭바 설명 | ✅ 2026-11-11 Figma 재구성: **아이콘 24**, 배경 **`canvas`**(흰색), 활성 `tab-active` + 채움 아이콘 |
 | D0-9 | 다크 `tab-active` | 코드만 #EA580C | **#F97316** (Figma·문서 값) | 코드 | |
 | D0-10 | 다크 `primary-pressed` | 문서 #FA8432 / 코드 #FB923C / Figma 견본 없음 | **#FA8432** | 코드, Figma 견본 추가 | |
 | D0-11 | 영수증 반경 | 문서 10 / 코드 4 / Figma 변수 없음 | **10** (2026-08 Figma 결정) | 코드, Figma `radius-receipt` 변수 추가 | |

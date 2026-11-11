@@ -276,12 +276,21 @@ components:
     typography: "{typography.button-md}"
     rounded: "{rounded.pill}"
     padding: "{spacing.x3} {spacing.x4}"
+  button-outline:
+    description: "Weak action beside a primary at the same height (C3-1). White pill + 1.5 pressed border."
+    backgroundColor: "{colors.canvas}"
+    borderColor: "{colors.pressed}"   # 1.5px, inside
+    textColor: "{colors.ink}"
+    typography: "{typography.button-large}"
+    rounded: "{rounded.pill}"
+    padding: "{spacing.x4} {spacing.x5}"   # 56
   grade-button:
     description: "The study self-rating PAIR (2026-11, D0-5: was 4-step). Two equal-width pills side by side: 다시 볼래요 (outline) · 한 번 익혔어요 (ink). 회독 variant relabels to 모름 · 안다."
     typography: "{typography.card-title}"   # 17/600 — kept from COMPONENTS.md GradeButtons; confirm against the rebuilt screen B
     rounded: "{rounded.pill}"
     height: "{layout.cta-height}"   # 56 — same as button-primary
     gap: "{spacing.x2}"             # 8
+    padding: "{spacing.x4} {spacing.x5}"   # 16 + 24 + 16 = 56
     variants:
       again: "outline 1.5 {colors.pressed} on {colors.canvas}, text {colors.ink}"
       good: "fill {colors.ink}, text {colors.on-ink}"
@@ -345,8 +354,8 @@ components:
 
   # ─── Navigation ───
   tab-bar:
-    description: "Bottom tab bar (오늘·메뉴·기록·설정). Icon 26 + label 12; active = {colors.tab-active} tint on both, no underline/fill/badge."
-    backgroundColor: "{colors.softer}"
+    description: "Bottom tab bar (오늘·메뉴·기록·설정). Icon 24 + label 12, gap 2, item 44 high; active = {colors.tab-active} tint on both (line → fill icon), no underline/fill/badge. Padding 8 top / 12 bottom."
+    backgroundColor: "{colors.canvas}"   # 2026-11-11: white bar (was softer) — follows the rebuilt Figma tab bar; flips in dark
     activeColor: "{colors.tab-active}"
     inactiveColor: "{colors.body}"
     typography: "{typography.tab-label}"
@@ -556,7 +565,7 @@ The signature is a **soft, generous radius**: cards at 20–24px, every control 
 **`button-primary`** — the **ink** action pill. Background `{colors.ink}`, label `{colors.on-ink}` `#F7F7F9`, `{typography.button-large}`, `{rounded.pill}`, padding `{spacing.x5}`, full-width at screen bottom. *(2026-08: primary CTA is ink, was orange.)*
 - **When to use:** the single most important action on the screen (학습 시작하기 · 회독하기 · 한 번 익혔어요 · 지금 연습하기 · 오늘 학습 시작 · 영수증 받고 마치기 · 확인). If a second action competes, it becomes a **white outline**, not a second ink pill.
 
-**`button-secondary`** — **white outline** pill (1.5px `{colors.pressed}`, ink label) for a non-primary action beside a primary, or a de-emphasised CTA (다시 볼래요 · 백업 내보내기 · 완료-state 회독하러 가기 · 발음 듣기·사전). A `{colors.soft}`-filled variant exists for in-card use.
+**`button-outline`** — **white outline** pill (`{colors.canvas}` + 1.5px `{colors.pressed}`, ink label, 56 high) for a weak action beside a primary, or a de-emphasised CTA (나중에 · 백업 내보내기 · 완료-state 회독하러 가기). Pressed → `{colors.soft}`. The grade pair's 다시 볼래요 uses the same look. **`button-secondary`** is the borderless white pill (`{colors.canvas}`, 44 high) for small actions on a grey page or overlay (확인했어 · 공유). *(C3-1, 2026-11-11: the docs used to call both "secondary".)*
 
 **`button-subtle`** — soft grey pill (`{colors.soft}`) for tertiary / in-card actions (e.g. 단어 상세).
 
@@ -594,7 +603,7 @@ The signature is a **soft, generous radius**: cards at 20–24px, every control 
 
 ### Navigation
 
-**`tab-bar`** — bottom tabs (오늘·메뉴·기록·설정). Icon + label; **active = `{colors.tab-active}` (orange) tint** on both, inactive = `{colors.mute}`. No underline / fill / badge. Sits on `{colors.softer}` with a `{colors.pressed}` top hairline. (The active-tab orange is one of orange's few jobs now.)
+**`tab-bar`** — bottom tabs (오늘·메뉴·기록·설정). Icon + label; **active = `{colors.tab-active}` (orange) tint** on both, inactive = `{colors.body}`; the active icon switches from the line to the fill shape. Icon 24, label 12, gap 2. No underline / fill / badge. Sits on `{colors.canvas}` with a `{colors.pressed}` top hairline. Figma: `tab-bar` = `Bottom Navigation` (`Active` = today·menu·record·setting) built from `tab-item` (`Tab` × `Active`) and the `icon` set (`name` × `style` = line·fill). (The active-tab orange is one of orange's few jobs now.)
 
 **`list-row`** — collection/index row: `{typography.code}` index + `display-sm` title, `{colors.pressed}` divider. Locked rows drop title + trailing to `{colors.mute}` with a lock glyph.
 
@@ -607,7 +616,7 @@ The signature is a **soft, generous radius**: cards at 20–24px, every control 
 These are the "how pieces combine" guarantees — an AI or dev can self-check against them.
 
 - **No card inside a card.** A `card` never contains another `card`. For a sub-region, use `card-tinted`, a divider, or plain spacing. Nested rounded surfaces read as a bug.
-- **One `button-primary` (ink) per screen.** If two actions both feel primary, demote one to a `button-secondary` white outline. The ink pill is the spotlight — never two.
+- **One `button-primary` (ink) per screen.** If two actions both feel primary, demote one to a `button-outline` white outline. The ink pill is the spotlight — never two.
 - **One hero number per card.** Additional metrics become pills / inline text (see the home card: `12` is hero, `복습 0` is a pill).
 - **Lime/green = progress or reward.** It belongs on the arc gauge, a completion card, or an earned check — a progress/achievement semantic, not decoration. **Orange never means "tap here."** If orange is about to sit on a primary button, it's wrong — the primary is ink.
 - **Badges/labels stay neutral.** Never color a JLPT badge or section label with orange or lime.
@@ -673,6 +682,8 @@ Decisions from [`design-system/00-DECISIONS-2026-11.md`](./design-system/00-DECI
 - **N-3 Radius = SEED scale as-is** (`r` + value ÷ 4, half steps `_5`): 10 `r2_5` · 12 `r3` · 14 `r3_5` · 16 `r4` · 20 `r5` · 24 `r6` · `full`. Two off-scale values snapped: **18 → 16**, **22 → 20** (`card-tinted`). `pill` 999 merged into `full` 9999. Role aliases `card` · `card-tinted` · `receipt` · `pill` stay.
 - **N-4 Colour role names unchanged** — only SEED's state-suffix rule (`-pressed`, `-soft`) is adopted.
 - **Figma colour styles (2026-11-11)** — 39 paint styles, each bound to its `Color` variable. Named SEED-style by property group + Onikan role: `bg/{role}` (fills), `fg/{role}` (text), `stroke/{role}` (borders), e.g. `bg/softer`, `fg/ink`, `stroke/pressed`. The group comes from the variable's scope; multi-use roles appear in each group they are scoped for.
+- **Tab bar (2026-11-11)** — rebuilt in Figma: icon **24** (was 26 in the spec; icons are drawn on a 24 grid), background **`canvas`** (was `softer`), inactive `body`, active `tab-active` with fill icon. Components `icon` · `tab-item` · `Bottom Navigation`.
+- **Buttons (2026-11-11, C3-1~4)** — `button-outline` split out from `button-secondary` (outline = border, 56; secondary = borderless white, 44). Two sizes only: `large` 56 · `medium` 44 (code `tall` 60 / `compact` 48 retire). Orange `brand` button retires → `primary`. Tabs have no pressed state. Specs: [`03-COMPONENT-SPECS-2026-11.md`](./design-system/03-COMPONENT-SPECS-2026-11.md).
 - **Grade labels (2026-11-10)** — 아직이에요 / 외웠어요 → **다시 볼래요 / 한 번 익혔어요** (see `handoff/study-first-tap-feedback-SPEC.md`).
 - **Fixed stale text** — `badge` no longer says "orange is for actions"; `tab-bar` frontmatter now matches the icon + label + `tab-active` spec; 완료 badge uses `secondary-soft #EAF6DD` (was an undefined `#E7F4D9`).
 
