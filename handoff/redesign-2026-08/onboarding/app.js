@@ -320,10 +320,10 @@ function renderKana(){
     <div class="body kana-body">
       <div class="result-ov">히라가나</div>
       <h1 class="result-h1">46자를 한눈에</h1>
-      <p class="kana-sub">아무 글자나 눌러 듣고 · 따라 써요. 하루 제한은 없어요.</p>
+      <p class="kana-sub">아무 글자나 눌러 발음을 들어 봐요. 하루 제한은 없어요.</p>
       <div class="kana-tabs"><span class="on">기본 46</span><span>탁음·반탁음 25</span><span>요음 33</span></div>
       <div class="kana-grid">${rows}</div>
-      <p class="kana-note">시안은 3행(あ·か·さ)만 그렸어요. 실제는 あ~わ 10행 + ん, 46자. 첫 행은 '본 글자' 표시 예시예요.</p>
+      <p class="kana-note">시안은 3행(あ·か·さ)만 그렸어요. 실제 화면은 앱(feat/kana-chart)과 README '가나 표' 절이 기준이에요.</p>
     </div>
     <div class="actions">
       <button class="btn btn-primary" data-action="kana-noop">모르는 글자만 퀴즈</button>
