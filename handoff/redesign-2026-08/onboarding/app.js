@@ -159,10 +159,9 @@ function renderKanaSheet(){
   return `
   <div class="kana-dim" data-action="kana-cancel"></div>
   <div class="kana-sheet" role="dialog" aria-modal="true" aria-labelledby="kanaT">
-    <img class="kana-mascot" src="assets/guide-mascot.png" alt="">
+    <img class="kana-mascot" src="assets/kana-sheet-owner.png" alt="">
     <h2 id="kanaT">히라가나부터 해볼까?</h2>
     <p>읽는 법을 한글 발음으로 같이 보여줄게.<br>연습이 끝나면 히라가나부터 차근차근 배워.</p>
-    <div class="kana-preview"><span class="r">べんきょう</span><span class="reading-ko">벤쿄ー</span></div>
     <button class="btn btn-primary" data-action="kana-confirm">히라가나부터 배울래요</button>
     <button class="btn-text" data-action="kana-cancel">그냥 계속할게요</button>
   </div>`;

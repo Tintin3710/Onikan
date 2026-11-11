@@ -254,6 +254,27 @@
 - 고양이 48(`assets/onigiri/owner-quote-cat.png`, Figma에서 투명 배경으로 내보냄) · 한마디 `card-title` `ink` · 서명 `body/base` `body`, 사이 4.
 - 한마디는 메뉴 데이터(`ownerLine`)에 둠. 없으면 `오늘 것도 잘 만들었네.`
 
+### `IllustrationSheet` — 일러스트 확인 바텀시트 (2026-11-11, Figma `669:1542`) — 신규
+
+첫 사용처: 온보딩 학습 중 `히라가나부터 배울래요` 확인 시트(O-14, `handoff/redesign-2026-08/onboarding/README.md`). 같은 틀을 '처음 누를 때 결과 안내' 시트(`study-first-tap-feedback-SPEC.md` N-1)에도 쓸 수 있다.
+
+| 순서 | 요소 | 값 |
+|---|---|---|
+| 1 | 딤 | `bg/dim`(Figma `Semantic/Background/Dim`, 검정 20%). 탭하면 닫힘(= 텍스트 버튼) |
+| 2 | 시트 | `bg/floated`(라이트 흰색) · 위 반경 28 · 아래 안쪽 = 홈 인디케이터 + 8 (Figma 40) |
+| 3 | 손잡이 | 48×4 · 반경 2 · `Component/Bottom Sheet/Handle/Fill`(코드 `pressed`) · 위에서 16 |
+| 4 | 일러스트 | 폭 220, 원본 비율. 손잡이에서 24. 배경 투명 PNG |
+| 5 | 제목 | `display/md` 24/32 Bold `ink` 가운데. 일러스트에서 20 |
+| 6 | 설명 | `body/base` 15/22 `body` 가운데, 최대 2줄. 제목에서 8 |
+| 7 | 주요 버튼 | `button-primary` 가득 채움. 설명에서 32. 좌우 = 화면 여백(gutter) |
+| 8 | 텍스트 버튼 | 높이 44 · `button/md` 16/20 SemiBold `body` · 배경 없음. 주요 버튼에서 8 |
+| — | 모션 | 딤 0.25초 페이드 + 시트 0.42초 아래에서 위로(`cubic-bezier(.22,1,.36,1)`). 닫힘 0.22초. 모션 줄이기면 바로 표시 |
+| — | 닫기 | 텍스트 버튼 · 딤 탭 · 안드로이드 뒤로가기 → 모두 같은 `onDismiss`. 자동으로 닫히지 않음 |
+
+- 코드: `src/components/ui/IllustrationSheet.tsx`(props: `image` · `title` · `description` · `primaryLabel`/`onPrimary` · `dismissLabel`/`onDismiss`). 검토 화면 `/_dev/kana-sheet`.
+- 히라가나 시트 일러스트: `assets/onboarding/kana-sheet-owner.png`(고민하는 사장, 물음표 말풍선). 원본 흰 배경을 투명으로 바꿔 씀.
+- 텍스트 버튼은 아직 Figma 컴포넌트가 없다(온보딩 마침 `나중에`와 같은 모양). 두 번 이상 쓰이면 `button-text`로 승격.
+
 ## 명명 매핑 (Figma ↔ 코드)
 
 | Figma 컴포넌트 | RN 컴포넌트 | 제안 경로 |
