@@ -341,7 +341,7 @@ components:
     textColor: "{colors.body}"
     typography: "{typography.label}"
   badge:
-    description: "JLPT level / meta tag. NEUTRAL by default. Status badges are the exception: 진행 중 = {colors.primary-soft} + primary, 완료 = {colors.secondary-soft}."
+    description: "JLPT level / meta tag. NEUTRAL by default. Status badges are the exception: 진행 중 = {colors.primary-soft} + primary, 완료(챕터) = {colors.secondary-soft}, 완성(새 주먹밥) = {colors.primary-soft} + {colors.link} (Figma `badge` default, 2026-11-11)."
     backgroundColor: "{colors.soft}"
     textColor: "{colors.ink}"
     typography: "{typography.label}"
@@ -351,6 +351,23 @@ components:
     description: "Big-number metric + stacked caption (12 / 새 단어). One hero number per card."
     valueTypography: "{typography.display-xxl}"
     captionTypography: "{typography.label}"
+  stat-tile-summary:
+    description: "Result-screen summary tile, used in a row of three (학습 단어 · 학습 시간 · 단골 기록). Value carries its unit (6분, 5일). Figma `hero-card` in 주먹밥 완성 `638:7977`; code `<StatTile variant=\"summary\">`."
+    backgroundColor: "{colors.softer}"
+    borderColor: "{colors.pressed}"   # 0.8px
+    rounded: "{rounded.r3}"           # 12
+    height: 66px
+    padding: "0 {spacing.x2}"
+    gap: 6px
+    valueTypography: "{typography.body-md-strong}"   # 16/22 600
+    labelTypography: "{typography.body-sm}"          # 14/20 400 (2026-11-11, was 14/500 in Figma)
+  owner-quote-card:
+    description: "사장님 한마디 — bottom of the 주먹밥 완성 screen, 20 above the CTA. Cat 48 + per-menu line (`card-title`) + '- 사장님' (`body-base`, {colors.body}). Figma `progress-card` in `638:7977`; code `OwnerQuoteCard`."
+    backgroundColor: "{colors.softer}"
+    rounded: "{rounded.card-tinted}"  # 20
+    shadow: "0 6px 14px {colors.shadow}"
+    padding: "16px 16px 16px 18px"
+    gap: 14px
 
   # ─── Navigation ───
   tab-bar:
@@ -438,7 +455,7 @@ Copy speaks in the boss's warm, terse Korean ("왔네. 처음 보는 얼굴이�
 ### Surface — the "Onikan Grey" ramp (cool neutral)
 Neutrals are the **Onikan Grey** ramp: hue 228 fixed, ~2.6% saturation — a deliberately *chosen* cool-leaning neutral, midway between pure grey (0%) and cool-neutral (~5%). Everything rides one axis (cards, dividers, text) so nothing feels borrowed from another system. **One deliberate exception: the page background `softer` is `#F5F5F5`**, a plain neutral picked to sit with the warm illustrations (D0-2, 2026-11).
 - **Canvas** (`{colors.canvas}` — `#FFFFFF` / dark `#1D1D21`): Card surfaces.
-- **Softer** (`{colors.softer}` — `#F5F5F5` / dark `#131316`): Page background and tab bar. Light value is off-ramp by decision (D0-2); dark stays grey-10. The only page background — no screen-specific page colours.
+- **Softer** (`{colors.softer}` — `#F5F5F5` / dark `#131316`): Page background and tab bar. Light value is off-ramp by decision (D0-2); dark stays grey-10. The only page background — no screen-specific page colours. **One exception: the 주먹밥 완성 celebration screen sits on `{colors.canvas}` (white)** so the illustration and confetti read clean; its grey tiles and owner card then carry `{colors.softer}` (2026-11-11, Figma `638:7977`).
 - **Soft** (`{colors.soft}` — `#E8E8EC` / dark `#2B2B31`, grey-95/22): Pills, example blocks, segment-toggle track.
 - **Pressed** (`{colors.pressed}` — `#DCDCE2` / dark `#3E3E45`, grey-90/30): Hairline dividers and incomplete progress cells.
 - **Plate** (`{colors.plate}` — `#EDEDF1`, grey-96): The tile behind an illustration — **fixed in both themes**. The illustrations are black line art; if the tile darkened too, the drawing would disappear. Revisit when white-line-art assets exist.
@@ -599,9 +616,13 @@ The signature is a **soft, generous radius**: cards at 20–24px, every control 
 
 **`section-label`** — uppercase tracked eyebrow (`{typography.label}`), `{colors.body}`. Groups a card's content (오늘의 학습, INGREDIENTS).
 
-**`badge`** — JLPT / meta tag = **neutral** grey pill (`{colors.soft}`). **Status** badges are the deliberate exception: `진행 중` = orange-soft pill (`{colors.primary-soft}` `#FCE8DE` + primary text), `완료` = green-soft pill (`{colors.secondary-soft}` `#EAF6DD`), `잠김` = mute text. Status badges carry colour because they signal state, not because they are actions.
+**`badge`** — JLPT / meta tag = **neutral** grey pill (`{colors.soft}`). **Status** badges are the deliberate exception: `진행 중` = orange-soft pill (`{colors.primary-soft}` `#FCE8DE` + primary text), `완료` (chapter) = green-soft pill (`{colors.secondary-soft}` `#EAF6DD`), `완성` (a new onigiri) = orange-soft pill + `{colors.link}` text, 12/500, padding 4/12, centred above the menu name, `잠김` = mute text. Status badges carry colour because they signal state, not because they are actions.
 
 **`stat-block`** — one hero number (`display-xxl`) + a stacked `label` caption. **One hero number per card**; secondary metrics drop to a small pill, never a second giant number.
+
+**`stat-tile-summary`** — three equal tiles in a row on a result screen: value with its unit (`20` · `6분` · `5일`, 16/600) over a `body-sm` (14/20 400) `{colors.body}` label, centred, 66 high, `{colors.softer}` + 0.8px `{colors.pressed}` border, radius 12, gap 8. Units go in the value, not the label (`학습 시간`, not `학습 시간(분)`).
+
+**`owner-quote-card`** — the owner's one-liner that closes a celebration screen: cat 48 · per-menu line in `card-title` · `- 사장님` in `body-base`. `{colors.softer}`, radius 20, Level-1 shadow, padding 16/16/16/18, gap 14; sits 20 above the CTA. Lines live with the menu (`ownerLine`); default `오늘 것도 잘 만들었네.`
 
 ### Navigation
 
@@ -687,6 +708,7 @@ Decisions from [`design-system/00-DECISIONS-2026-11.md`](./design-system/00-DECI
 - **Tab bar (2026-11-11)** — rebuilt in Figma: icon **24** (was 26 in the spec; icons are drawn on a 24 grid), background **`canvas`** (was `softer`), inactive `body`, active `tab-active` with fill icon. Components `icon` · `tab-item` · `Bottom Navigation`.
 - **Buttons (2026-11-11, C3-1~4)** — `button-outline` split out from `button-secondary` (outline = border, 56; secondary = borderless white, 44). Two sizes only: `large` 56 · `medium` 44 (code `tall` 60 / `compact` 48 retire). Orange `brand` button retires → `primary`. Tabs have no pressed state. Specs: [`03-COMPONENT-SPECS-2026-11.md`](./design-system/03-COMPONENT-SPECS-2026-11.md).
 - **Surfaces & feedback (2026-11-11, C3-5~7)** — card padding = 3 steps `compact` 16 · `default` 20 · `spacious` 24. `list-row` height follows content (16 + 28 + 16 = 60), gap 12. `toast` label = `body-sm` 14/400.
+- **주먹밥 완성 screen (2026-11-11)** — app aligned to Figma `638:7977`: white page (`canvas`, the one exception to `softer`), no overline, illustration 140 without a plate, orange `완성` badge above `{menu} 오니기리` (24/32 700), three `stat-tile-summary` tiles, `owner-quote-card` above the CTA, confetti. New entries: `stat-tile-summary`, `owner-quote-card`, `badge` 완성.
 - **Grade labels (2026-11-10)** — 아직이에요 / 외웠어요 → **다시 볼래요 / 한 번 익혔어요** (see `handoff/study-first-tap-feedback-SPEC.md`).
 - **Fixed stale text** — `badge` no longer says "orange is for actions"; `tab-bar` frontmatter now matches the icon + label + `tab-active` spec; 완료 badge uses `secondary-soft #EAF6DD` (was an undefined `#E7F4D9`).
 

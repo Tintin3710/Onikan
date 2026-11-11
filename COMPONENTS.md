@@ -131,7 +131,7 @@
 
 ### `RewardCard` / `RewardBadge`
 - **RewardCard**: 88 PlateTile(재료 65) + 오버라인 "새 재료" / 이름 26/700 / 설명. 진입 `riseIn`.
-- **RewardBadge**: 우하단 −6/−6, 30×30 원 `secondary`(라임/그린), 안에 체크(색 `ink`). 진입 `pop`. **라임/그린 사용처(진척·완료)** = 여기(재료 체크) + N5 아크 게이지 + 오늘 복습 완료 카드 + 완성 뱃지. **단골 `도장`은 오렌지로 이동**(D-3).
+- **RewardBadge**: 우하단 −6/−6, 30×30 원 `secondary`(라임/그린), 안에 체크(색 `ink`). 진입 `pop`. **라임/그린 사용처(진척·완료)** = 여기(재료 체크) + N5 아크 게이지 + 오늘 복습 완료 카드 + 챕터 완료 뱃지. *(주먹밥 `완성` 뱃지는 2026-11-11부터 오렌지 소프트 — 아래 `StatusBadge`.)* **단골 `도장`은 오렌지로 이동**(D-3).
 
 ### `Receipt` / `<Receipt>`
 - **해부**: 배경 `canvas`, **반경 10**(종이 신호 전용 · Figma 2026-08: 4→10), padding `30 24 36`, width **338**. "ONIGIRI SHOP" 15/600 tracking 3. 행 사이 1px `soft`, 섹션 경계 1px dashed `pressed`. 잠긴 오니기리 타일 = **둥근 삼각형**(`icoOnigiriQ`, 폴리곤 `#CACACE`@.4 + `?` `#929299`@.6), locked 서브카드 `#fafafa`·radius 16.
@@ -186,8 +186,8 @@
 #### `<CompletionCard>` — 완료 상태 콜아웃
 - **언제**: 오늘 복습 완료 등 done 상태. **연녹(`#EAF6DD` 계열) 틴트 배경 + 그린 체크 + 짧은 문장**. Primary CTA 없음(또는 약한 아웃라인). 카드 안 서브영역이면 `Card` 중첩 금지 → 틴트 서브카드.
 
-#### `StatusBadge` (진행 중 / 완료 / 잠김 / 새로 열림)
-- **진행 중**=오렌지 소프트(`#FCE8DE`/`primary`) · **완료**=그린 소프트(`secondary-soft #EAF6DD`/`secondary-deep`) · **잠김**=`mute` 텍스트 · **새로 열림**=오렌지 솔리드 pill(주의 환기, 액션 아님) + `시작하기 ›`. 상태 뱃지는 색을 갖되 **액션 아님**(주요 액션은 잉크 버튼).
+#### `StatusBadge` (진행 중 / 완료 / 잠김 / 새로 열림 / 완성)
+- **진행 중**=오렌지 소프트(`#FCE8DE`/`primary`) · **완료**(챕터)=그린 소프트(`secondary-soft #EAF6DD`/`secondary-deep`) · **잠김**=`mute` 텍스트 · **새로 열림**=오렌지 솔리드 pill(주의 환기, 액션 아님) + `시작하기 ›` · **완성**(새 주먹밥, `kind="crafted"`)=오렌지 소프트 + `link` 글자, 12/500, 안쪽 4/12, 메뉴 이름 바로 위 가운데(간격 6). 상태 뱃지는 색을 갖되 **액션 아님**(주요 액션은 잉크 버튼).
 
 #### 학습 카드 추가 요소 (`FlashCard` 내)
 - **`PhoneticHintCard`(조건부)**: 발음이 유사한 단어가 있을 때만. 배경 **`soft`(뉴트럴, 라임 아님 — D-1)** + `발음이 유사한 단어` 필 + 2열 유사어.
@@ -221,6 +221,30 @@
 
 ---
 
+### 주먹밥 완성 화면 (2026-11-11, Figma `638:7977`)
+
+앱이 디자인과 달라 디자인 기준으로 맞춤. 화면 구성(위→아래):
+
+| 순서 | 요소 | 값 |
+|---|---|---|
+| 1 | 배경 | `canvas` 흰색 — 페이지 배경 `softer`의 **유일한 예외**(축하 화면) |
+| 2 | 제목 `새 주먹밥을 만들었어요.` | `display/lg` 32/40, 상태바 아래 54. **오버라인 없음** |
+| 3 | 일러스트 | 140×140, **접시(PlateTile) 없음**, 제목에서 44 |
+| 4 | `완성` 뱃지 + `{메뉴} 오니기리` | 뱃지 `StatusBadge crafted` → 간격 6 → 이름 `display/md` 24/32. 일러스트에서 16. 다시 만든 메뉴는 뱃지 `n번째 완성` (순환, `handoff/onigiri-menu-SPEC.md` §6) |
+| 5 | 요약 타일 3개 | `StatTile variant="summary"`: `학습 단어 20` · `학습 시간 6분` · `단골 기록 5일`. 단위는 값에. 이름에서 16, 화면 끝에서 40 안쪽, 사이 8 |
+| 6 | 사장님 카드 | `OwnerQuoteCard`, CTA 위 20. 메뉴별 한마디(`ownerLine`) + `- 사장님` |
+| 7 | CTA `영수증 받고 마치기` | `button-primary`, 아래는 홈 인디케이터 영역만 |
+| — | 모션 | 진입 시 색종이(`OnboardingConfetti` 재사용), 모션 감소 시 생략 |
+
+#### `StatTile` `variant="summary"` (Figma `hero-card`)
+- 66 높이 · `softer` · 0.8 `pressed` 테두리 · 반경 12 · 가로 안쪽 8 · 가운데 정렬 · 값↔라벨 6.
+- 값 16/22 600(`body/md-strong`) `ink` · 라벨 `body/sm` 14/20 400 `body` (2026-11-11 결정). 기본(`default`) 변형은 통계 화면용 그대로.
+
+#### `OwnerQuoteCard` (Figma `progress-card`) — 신규
+- `softer` · 반경 20(`card-tinted`) · 그림자 0 6 14 `shadow` · 안쪽 16/16/16/18 · 간격 14.
+- 고양이 48(`assets/onigiri/owner-quote-cat.png`, Figma에서 투명 배경으로 내보냄) · 한마디 `card-title` `ink` · 서명 `body/base` `body`, 사이 4.
+- 한마디는 메뉴 데이터(`ownerLine`)에 둠. 없으면 `오늘 것도 잘 만들었네.`
+
 ## 명명 매핑 (Figma ↔ 코드)
 
 | Figma 컴포넌트 | RN 컴포넌트 | 제안 경로 |
@@ -240,6 +264,9 @@
 | ReviewTopCard | `<ReviewTopCard>` | `src/features/home/components/ReviewTopCard.tsx` |
 | ScoreDistribution | `<ScoreDistribution>` | `src/features/stats/components/ScoreDistribution.tsx` |
 | Ratio | `<StatTile>` | `src/components/ui/StatTile.tsx` |
+| hero-card (결과 요약 타일) | `<StatTile variant="summary">` | `src/components/ui/StatTile.tsx` |
+| progress-card (사장님 한마디) | `<OwnerQuoteCard>` | `src/features/done/components/OwnerQuoteCard.tsx` |
+| badge `완성` | `<StatusBadge kind="crafted">` | `src/components/ui/StatusBadge.tsx` |
 
 > **Code Connect**: 보류. 개발자에게 Figma Dev 좌석이 없어 효과가 없다. 대신 위 표의 경로와 이 문서의 정확값으로 전달한다.
 > RN 경로·컴포넌트 이름은 제안 — 개발 레포(`taiyoungkim/AshitaKanji`)의 feature-first 구조 관례를 따름.
