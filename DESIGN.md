@@ -368,6 +368,7 @@ components:
     shadow: "0 6px 14px {colors.shadow}"
     padding: "16px 16px 16px 18px"
     gap: 14px
+    motion: "Enters 0.6s after the screen: rises 16px with a light spring (≈2px overshoot), then the cat hops 6px once. Once only; none under reduced motion."
 
   # ─── Navigation ───
   tab-bar:
@@ -622,7 +623,7 @@ The signature is a **soft, generous radius**: cards at 20–24px, every control 
 
 **`stat-tile-summary`** — three equal tiles in a row on a result screen: value with its unit (`20` · `6분` · `5일`, 16/600) over a `body-sm` (14/20 400) `{colors.body}` label, centred, 66 high, `{colors.softer}` + 0.8px `{colors.pressed}` border, radius 12, gap 8. Units go in the value, not the label (`학습 시간`, not `학습 시간(분)`).
 
-**`owner-quote-card`** — the owner's one-liner that closes a celebration screen: cat 48 · per-menu line in `card-title` · `- 사장님` in `body-base`. `{colors.softer}`, radius 20, Level-1 shadow, padding 16/16/16/18, gap 14; sits 20 above the CTA. Lines live with the menu (`ownerLine`); default `오늘 것도 잘 만들었네.`
+**`owner-quote-card`** — the owner's one-liner that closes a celebration screen: cat 48 · per-menu line in `card-title` · `- 사장님` in `body-base`. `{colors.softer}`, radius 20, Level-1 shadow, padding 16/16/16/18, gap 14; sits 20 above the CTA. Lines live with the menu (`ownerLine`); default `오늘 것도 잘 만들었네.` Motion: rises 16px with a light spring 0.6s after the screen opens, then **only the cat** hops 6px once — the card itself never bounces (it would compete with the confetti and the CTA).
 
 ### Navigation
 
@@ -708,7 +709,7 @@ Decisions from [`design-system/00-DECISIONS-2026-11.md`](./design-system/00-DECI
 - **Tab bar (2026-11-11)** — rebuilt in Figma: icon **24** (was 26 in the spec; icons are drawn on a 24 grid), background **`canvas`** (was `softer`), inactive `body`, active `tab-active` with fill icon. Components `icon` · `tab-item` · `Bottom Navigation`.
 - **Buttons (2026-11-11, C3-1~4)** — `button-outline` split out from `button-secondary` (outline = border, 56; secondary = borderless white, 44). Two sizes only: `large` 56 · `medium` 44 (code `tall` 60 / `compact` 48 retire). Orange `brand` button retires → `primary`. Tabs have no pressed state. Specs: [`03-COMPONENT-SPECS-2026-11.md`](./design-system/03-COMPONENT-SPECS-2026-11.md).
 - **Surfaces & feedback (2026-11-11, C3-5~7)** — card padding = 3 steps `compact` 16 · `default` 20 · `spacious` 24. `list-row` height follows content (16 + 28 + 16 = 60), gap 12. `toast` label = `body-sm` 14/400.
-- **주먹밥 완성 screen (2026-11-11)** — app aligned to Figma `638:7977`: white page (`canvas`, the one exception to `softer`), no overline, illustration 140 without a plate, orange `완성` badge above `{menu} 오니기리` (24/32 700), three `stat-tile-summary` tiles, `owner-quote-card` above the CTA, confetti. New entries: `stat-tile-summary`, `owner-quote-card`, `badge` 완성.
+- **주먹밥 완성 screen (2026-11-11)** — app aligned to Figma `638:7977`: white page (`canvas`, the one exception to `softer`), no overline, illustration 140 without a plate, orange `완성` badge above `{menu} 오니기리` (24/32 700), three `stat-tile-summary` tiles, `owner-quote-card` above the CTA, confetti replayed from the Figma keyframes (43 pieces, four bursts, once). New entries: `stat-tile-summary`, `owner-quote-card`, `badge` 완성.
 - **Grade labels (2026-11-10)** — 아직이에요 / 외웠어요 → **다시 볼래요 / 한 번 익혔어요** (see `handoff/study-first-tap-feedback-SPEC.md`).
 - **Fixed stale text** — `badge` no longer says "orange is for actions"; `tab-bar` frontmatter now matches the icon + label + `tab-active` spec; 완료 badge uses `secondary-soft #EAF6DD` (was an undefined `#E7F4D9`).
 
