@@ -199,9 +199,9 @@ section{ margin-top:36px; }
             다시 보기
           </button>
           <h4 id="sheetTitle">익힌 단어는
-내일 다시 꺼내 볼게요</h4>
+며칠 뒤 다시 꺼내 볼게요</h4>
           <p>오늘은 한 번 살펴본 것으로 충분해요.
-내일 기억나는지 함께 확인해요.</p>
+며칠 뒤 기억나는지 함께 확인해요.</p>
           <button class="cta" type="button">알겠어요</button>
         </div>
       </div>
@@ -264,7 +264,7 @@ section{ margin-top:36px; }
 // ── 메인 그래픽: 같은 SVG를 바텀시트와 스토리보드에 쓴다 (viewBox 320×210)
 function graphic(state){
   return `
-<svg class="g ${state}" viewBox="0 0 320 210" role="img" aria-label="단어 카드 顔가 '내일' 달력 뒤에 보관된 그림">
+<svg class="g ${state}" viewBox="0 0 320 210" role="img" aria-label="단어 카드 顔가 '며칠 뒤' 달력 뒤에 보관된 그림">
   <defs>
     <filter id="sh" x="-20%" y="-20%" width="140%" height="150%">
       <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#1D1D21" flood-opacity=".07"/>
@@ -282,7 +282,7 @@ function graphic(state){
   <g class="cal">
     <rect x="-64" y="-50" width="128" height="100" rx="14" fill="#fff" stroke="#E3E1EA" filter="url(#sh)"/>
     <path d="M-64 -36a14 14 0 0 1 14-14h100a14 14 0 0 1 14 14v12h-128z" fill="#1D1D21"/>
-    <text x="0" y="-32" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" style="font-family:var(--kr)">내일</text>
+    <text x="0" y="-32" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" style="font-family:var(--kr)">며칠 뒤</text>
     <rect x="-37" y="-57" width="7" height="14" rx="3.5" fill="#56565E" stroke="#fff" stroke-width="2"/>
     <rect x="30"  y="-57" width="7" height="14" rx="3.5" fill="#56565E" stroke="#fff" stroke-width="2"/>
     ${[0,1].map(r=>[0,1,2,3].map(c=>{
