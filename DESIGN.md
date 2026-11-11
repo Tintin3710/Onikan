@@ -302,7 +302,7 @@ components:
     textColor: "{colors.ink}"
     typography: "{typography.body-md}"
     rounded: "{rounded.card}"
-    padding: "{spacing.x6} {spacing.x5}"   # 24 vertical / 20 horizontal, per the confirmed screens
+    padding: "{spacing.x5}"   # default 20 · compact {spacing.x4} 16 (progress/list) · spacious {spacing.x6} 24 (hero/reward) — C3-5
   card-tinted:
     description: "Sub-region card on a page. Grey-soft fill, no shadow."
     backgroundColor: "{colors.soft}"
@@ -368,6 +368,8 @@ components:
     typography: "{typography.display-sm}"
     codeTypography: "{typography.code}"
     divider: "{colors.pressed}"
+    padding: "{spacing.x4} {spacing.x5}"   # 16 / 20 — height follows content (60), C3-6
+    gap: "{spacing.x3}"                    # 12 (was 14 in COMPONENTS.md)
 
   # ─── Feedback ───
   toast:
@@ -684,6 +686,7 @@ Decisions from [`design-system/00-DECISIONS-2026-11.md`](./design-system/00-DECI
 - **Figma colour styles (2026-11-11)** — 39 paint styles, each bound to its `Color` variable. Named SEED-style by property group + Onikan role: `bg/{role}` (fills), `fg/{role}` (text), `stroke/{role}` (borders), e.g. `bg/softer`, `fg/ink`, `stroke/pressed`. The group comes from the variable's scope; multi-use roles appear in each group they are scoped for.
 - **Tab bar (2026-11-11)** — rebuilt in Figma: icon **24** (was 26 in the spec; icons are drawn on a 24 grid), background **`canvas`** (was `softer`), inactive `body`, active `tab-active` with fill icon. Components `icon` · `tab-item` · `Bottom Navigation`.
 - **Buttons (2026-11-11, C3-1~4)** — `button-outline` split out from `button-secondary` (outline = border, 56; secondary = borderless white, 44). Two sizes only: `large` 56 · `medium` 44 (code `tall` 60 / `compact` 48 retire). Orange `brand` button retires → `primary`. Tabs have no pressed state. Specs: [`03-COMPONENT-SPECS-2026-11.md`](./design-system/03-COMPONENT-SPECS-2026-11.md).
+- **Surfaces & feedback (2026-11-11, C3-5~7)** — card padding = 3 steps `compact` 16 · `default` 20 · `spacious` 24. `list-row` height follows content (16 + 28 + 16 = 60), gap 12. `toast` label = `body-sm` 14/400.
 - **Grade labels (2026-11-10)** — 아직이에요 / 외웠어요 → **다시 볼래요 / 한 번 익혔어요** (see `handoff/study-first-tap-feedback-SPEC.md`).
 - **Fixed stale text** — `badge` no longer says "orange is for actions"; `tab-bar` frontmatter now matches the icon + label + `tab-active` spec; 완료 badge uses `secondary-soft #EAF6DD` (was an undefined `#E7F4D9`).
 
