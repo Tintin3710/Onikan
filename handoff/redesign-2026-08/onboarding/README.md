@@ -126,7 +126,7 @@
 | ID | 항목 | 변경 |
 |---|---|---|
 | **D-4** | 온보딩 단어 수 (O-8) | 10 → **3** (2026-11). 화면 PNG(`02-guide`·`03-study-front`)는 10단어 기준 — ⚠️ Figma에서 3단어로 재익스포트 필요 |
-| **N-9** | 히라가나 선택 UI | 신규 — 학습 카드 아래 텍스트 링크 · 확인 바텀시트 · 한글 발음 pill · 1회 말풍선 · 마침(히라가나) 변형 · 히라가나 과정 진입 화면(자리). 프로토타입 `index.html?step=study`에서 링크 탭 / `?step=finish&kana` / `?step=kana` |
+| **N-9** | 히라가나 선택 UI | 신규 — 학습 카드 아래 텍스트 링크 · 확인 바텀시트 · 한글 발음 pill · 1회 말풍선 · 마침(히라가나) 변형 · 히라가나 과정 진입 화면(자리). 프로토타입 `index.html?step=study`에서 링크 탭 / `?step=finish&kana` / `?step=kana`<br>앱 구현(2026-11-12, 개발 저장소 브랜치 `feat/onboarding-kana` 14f9ee0): ✅ 링크 · 확인 시트 · 한글 발음 pill(앞·뒷면) · 링크 숨김 · `showKanaSection` 켜기 · 마침(히라가나) 변형 → `히라가나 배우기`는 홈 위로 가나 표(`/kana`). ⬜ 1회 말풍선(O-15, 가리킬 설정 N-10 없음) · ⬜ 학습 수준 '가나 입문' 저장 |
 | **N-10** | 설정 `읽는 법 표기` | 신규 — 학습 설정 › 카드 표시 (O-16) |
 | **N-11** | 홈 히라가나 섹션 · 가나 표 | 신규 (O-17·O-19). 프로토타입 `?page=home&kana` → `히라가나 표 열기`. 앱 구현: 개발 저장소 브랜치 `feat/kana-chart`(`app/kana.tsx`, `src/features/kana/`). 글자 상세·따라 쓰기 없음 |
 | **N-8** | 온보딩 일러스트 화면 3종 | 신규 — `OnboardingIntro`(사장 인사) · `OnboardingGuide`(먼저 3개만) · `OnboardingFinish`(오늘 학습 시작). COMPONENTS.md 카탈로그 추가 대상. |
