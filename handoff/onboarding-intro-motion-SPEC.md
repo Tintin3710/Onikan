@@ -123,7 +123,7 @@ t는 시퀀스 시작(포커스 + 복원 완료 + 모션 설정 확인) 기준 m
 | O-7 | 구현 도구 | **Reanimated 4**(설치됨 `~4.1.1`) + 레이어 PNG. Rive·Lottie는 v1에서 쓰지 않음(네이티브 의존성·새 빌드 회피). 반응이 좋으면 사장님만 Rive로 옮기는 건 후속 |
 | O-8 | 동작 줄이기 | 기존 `useReducedMotion` 훅 사용. 켜짐이면 opacity 200ms 한 번만 |
 | O-9 | 출시 조건 | 레이어 분리 에셋이 오기 전까지 **현재 인트로 유지**. 부분 에셋으로 반쯤 움직이는 버전은 내보내지 않음 |
-| O-10 | 도장 인장 디자인 | **앱 아이콘 심볼 단색 인장**으로 확정(2026-11-15). 잉크 `primary`, 크기 56pt, 위치는 그림 슬롯 오른쪽 아래(노렌 모서리에 살짝 겹치게) |
+| O-10 | 도장 인장 디자인 | **앱 아이콘 심볼(김 두른 오니기리 얼굴) 단색 인장**으로 확정(2026-11-15). 홈 방문 도장 `stamp`(고양이 얼굴)와는 별개. 잉크 `primary`, 크기 56pt, 위치는 그림 슬롯 오른쪽 아래(노렌 모서리에 살짝 겹치게) |
 | O-11 | 햅틱 | **v1 제외**로 확정(2026-11-15). `expo-haptics` 추가·새 빌드 없음. 후속 검토 대상 |
 | O-12 | 소리 | **소리 없음**으로 확정(2026-11-15) |
 | O-13 | 재방문 도장 | **정적 도장**(처음부터 찍혀 있음)으로 확정(2026-11-15). 이유: ① 재방문은 매일 보는 1.8초라 찍는 동작이 반복되면 금방 소음이 됨 ② 홈 진입 0.5초 뒤 방문 도장(`StreakStamps`) 팝이 바로 이어져 "도장 찍기"가 2초 안에 두 번 나옴 ③ 정적이어도 브랜드 마크는 매번 보임 → 찍는 순간은 첫 실행의 특별한 모먼트로 남김 |
@@ -172,5 +172,6 @@ t는 시퀀스 시작(포커스 + 복원 완료 + 모션 설정 확인) 기준 m
 ## 관련 화면 · 컴포넌트
 
 - 코드: `src/features/onigiri/IntroScreen.tsx`, `src/features/onigiri/components/CatDialogue`, `src/features/onigiri/onboardingAssets.ts`, `src/hooks/useReducedMotion.ts`, 도장 팝 참고 `src/features/home/components/StreakStamps.tsx`
-- 컴포넌트: `button-primary`(ink), `stamp`(Figma Components — Reward 248:5210, 인장 모양 참고)
+- 컴포넌트: `button-primary`(ink)
+- 인장 주의: 인트로 도장은 **앱 아이콘의 오니기리 얼굴**을 단색 인장으로 만든 것이다. 홈 방문 도장 `stamp`(Figma 248:5210, 물결 테두리 + 흰 고양이 얼굴)는 **쓰지 않는다** — 의미(방문 기록)가 겹치기 때문
 - 관련 모션: `DESIGN.md` `owner-quote-card.motion`, `handoff/redesign-2026-08/motion/onigiri-complete.mp4`(B안 연결 후보)
