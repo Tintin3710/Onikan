@@ -24,6 +24,7 @@
 | 4. 운영 | 디자인 QA 문서로 시안 → 앱 반영을 건별로 기록(11-13~15: 화면 10여 개). 정책 결정 ID(O-n) 유지 | 🟡 | `handoff/design-qa-2026-11-13.md` |
 | — | Code Connect (Figma ↔ 코드 매핑) | ⬜ | 매핑 파일 없음 |
 | — | 신규 컴포넌트 Figma화 (2026-11-15) | 🟡 | **9종 생성**: Reward `plate-tile`(Size 40·48 × Filled·Locked) · `progress-segments`(0~4) · `receipt`(Crafted·Ingredient) · `owner-quote-card` / Labels `status-badge`(5종) · `stat-tile` / Feedback `done-notice`(Stats Two·None) / Actions `text-button` / Navigation `session-top-bar`(Stacked·Inline). 색·반경·간격 변수 연결, 설명 작성. **남은 것:** 글자 레이어 텍스트 스타일 연결(작업 환경에 Pretendard JP가 없어 임시 글꼴 Noto Sans KR — 레이어 이름 `역할 → 스타일`대로 연결), `StudyCard` · `SummaryCard` 미생성 |
+| — | 라이브러리 정리 (2026-11-15) | ✅ | 사용처 조사 후: `도장`(사용 157곳)을 포폴 페이지 → Components — Reward `stamp`로 편입 · 아카이브 전용 컴포넌트 3개(`Caret Down/Up`, 추후 배포 `card`)는 `_` 접두어로 퍼블리시 제외 · 화면 사용처 없는 `stat-block` · `progress-dots`는 `_legacy`(대체 stat-tile · progress-segments) · `badge`는 `_legacy`(Screens 1곳은 텍스트 스타일 연결 후 status-badge Crafted로 교체 예정) · Screens 숨김 조각 21개 → `🗂 정리 대기` 섹션 |
 
 ---
 
