@@ -249,6 +249,9 @@ rounded:
   # SEED radius scale as-is (N-3, 2026-11-10): name = value ÷ 4, half steps "_5" up to 16.
   # Onikan uses only the steps below. Components reference the ROLE aliases (card, card-tinted, receipt, pill).
   none: 0px
+  r1: 4px           # small bars, chart bars (2026-11-16, C-24)
+  r1_5: 6px         # ~22px marks (calendar day mark)
+  r2: 8px           # photos inside a card, skeletons
   r2_5: 10px        # receipt
   r3: 12px          # small tiles (kanji tile, 44px-and-under thumbnails)
   r3_5: 14px        # medium tiles (44–48px thumbnails)
@@ -603,6 +606,9 @@ Depth cues are **fill polarity** (white card on grey page; ink card for a dark p
 | Token | Value | Use |
 |---|---|---|
 | `{rounded.none}` | 0px | Full-bleed bands, raw dividers. |
+| `{rounded.r1}` | 4px | Small bars, chart bars. *(2026-11-16, C-24.)* |
+| `{rounded.r1_5}` | 6px | Marks around 22px (calendar day mark). |
+| `{rounded.r2}` | 8px | Photos inside a card, loading skeletons. |
 | `{rounded.r2_5}` · `{rounded.receipt}` | 10px | **The receipt, and nothing else.** This single radius carries the "paper" signal, so it must not appear anywhere else. *(Figma 2026-08: 4→10.)* |
 | `{rounded.r3}` | 12px | Small tiles (kanji tile, small thumbnails). |
 | `{rounded.r3_5}` | 14px | Medium thumbnails (44–48px). |

@@ -38,6 +38,7 @@
 | C-21 | 토스트 (`components/Toast.tsx`) | 좌우 여백 20 → 16, 글자 `bodyStrong` 15/600 → `bodySm` 14/400 (C3-7), `type: 'plain' | 'reward'` 추가 — reward면 14 라임 체크(선 2, `secondary`) | 03 §8 |
 | C-22 | 카드 여백 | **16 하나로 통일** (C3-5 개정 2026-11-16): `Card` 기본 16, 화면 덮어쓰기(22·18·24) 삭제 — PR #15 | 03 §4 |
 | C-23 | 목록 줄 (`ListRow`) | 최소 높이 64/68 삭제 → 여백 16/20으로 높이 결정, gap 14 → 12 | C3-6 · 03 §7 |
+| C-24 | 화면 직접 값 정리 + lint | `fontSize`·`borderRadius` 숫자 직접 값 금지 lint(error). fontSize 62 → 18, borderRadius 35 → 9 (남은 것 = 이유 단 예외 19 + 그림 비례 `* k`). 가까운 토큰으로 맞춤(23→display/md, 17/22→card-title, 13.6→code-strong, 반경 22·28·32→card 등). 반경 `r1 4`·`r1_5 6`·`r2 8` 추가(Figma 변수도). OwnerQuoteCard 여백 16 — PR #18 | DESIGN.md Shapes |
 
 **C-6·C-12·C-1은 거의 모든 화면에 보이는 변화**다. 적용 후 `npm run ui:capture` → `ui:diff`를 다시 돌리고, 기준 이미지는 갱신된 Figma 화면으로 `ui:approve -- --from-design` 해야 한다(옛 기준 이미지는 여백 20 시절).
 
