@@ -1,7 +1,7 @@
 # 오니칸 디자인 시스템 — 진행 현황과 포트폴리오 정리 (2026-11-15)
 
 > 근거: [AUDIT-2026-11.md](./AUDIT-2026-11.md) · [00-DECISIONS](./00-DECISIONS-2026-11.md) · [01-NAMING-SEED](./01-NAMING-SEED-2026-11.md) · [02-CODE-CHANGES](./02-CODE-CHANGES-2026-11.md) · [03-COMPONENT-SPECS](./03-COMPONENT-SPECS-2026-11.md) · [`DESIGN.md` beta.1](../DESIGN.md)
-> 앱 코드 기준: `taiyoungkim/AshitaKanji-app` `origin/main@0cf5037` (2026-11-15 확인, 스토어 출시 1.0.6)
+> 앱 코드 기준: `taiyoungkim/AshitaKanji-app` `origin/main@85912f9` (2026-11-16 확인 — PR #11 완성 흐름 · #12 고양이 카드 · #13 스토어 스크린샷 머지 반영, 스토어 출시 1.0.6)
 > 표기: ✅ 완료·근거 있음 · 🟡 일부 · ⬜ 아직
 
 ## 한 줄 요약
@@ -20,9 +20,9 @@
 | 2. Figma 반영 (11-10~11) | 변수 이름 변경(ID를 유지해 연결된 레이어 보존). 레이아웃 변수 7개, 색 변수 3개 추가. **컬러 스타일 0 → 39개**(bg/fg/stroke). `button-primary` 잉크, `grade-button` 2버튼, `tab-bar` 아이콘형으로 다시 만듦. 기준 화면 2장의 외부 변수 0개, 텍스트 스타일 연결 완료 | ✅ | 02 §D |
 | 2. 코드 반영 — 토큰 (11-12, PR #6) | `softer` #F5F5F5, 여백 16, 간격 `x6 24`, 반경 SEED 단계와 별칭, 다크 `tabActive`·`primaryPressed`, 평가 버튼 56. 시스템 밖 색 `#F4F2EF` 삭제 | ✅ | `src/design/tokens.ts`, 회귀 테스트 `tokens.test.ts` 13개 |
 | 3. 컴포넌트 명세 (11-11) | SEED 문서 형식(구조 · 속성 · 상태별 명세 표 · 가이드라인)으로 **8종 확정**: button, grade-button, tab-bar, card, card-tinted, kanji-tile, list-row, toast. 결정 C3-1~7 | ✅ | 03-COMPONENT-SPECS |
-| 3. 코드 반영 — 컴포넌트 | 버튼 크기 `large`/`medium`, 오렌지 `brand` 버튼 삭제, 토스트 14/400, 카드 여백 3단계, 타이포 이름 통일 | ⬜ | 02 C-13·17·19~23 (아직 `tall`·`compact`·`brand`, `screenTitle` 체계 남음) |
+| 3. 코드 반영 — 컴포넌트 | 버튼 크기 `large`/`medium`, 오렌지 `brand` 버튼 삭제, 토스트 14/400, 카드 여백 3단계, 타이포 이름 통일 | ⬜ | 02 C-13·17·19~23. 11-16 재확인: `src/components/ui/Button.tsx`에 `'brand'` 변형 **아직 있음** |
 | 4. 운영 | 디자인 QA 문서로 시안 → 앱 반영을 건별로 기록(11-13~15: 화면 10여 개). 정책 결정 ID(O-n) 유지 | 🟡 | `handoff/design-qa-2026-11-13.md` |
-| — | Code Connect (Figma ↔ 코드 매핑) | ⬜ | 매핑 파일 없음 |
+| — | Code Connect (Figma ↔ 코드 매핑) | ⬜ | **2026-11-16 재확인: 연결 안 됨.** `origin/main@85912f9`와 원격 브랜치 전체에 `*.figma.tsx`·`figma.config.json` 없음, `@figma/code-connect` 의존성 없음. 11-15 머지된 PR #11~#13에도 Code Connect 변경 없음. (Figma UI에서만 연결했을 가능성은 Figma 데스크톱에 파일이 열려 있지 않아 확인 못 함) |
 | — | 신규 컴포넌트 Figma화 (2026-11-15) | 🟡 | **9종 생성**: Reward `plate-tile`(Size 40·48 × Filled·Locked) · `progress-segments`(0~4) · `receipt`(Crafted·Ingredient) · `owner-quote-card` / Labels `status-badge`(5종) · `stat-tile` / Feedback `done-notice`(Stats Two·None) / Actions `text-button` / Navigation `session-top-bar`(Stacked·Inline). 색·반경·간격 변수 연결, 설명 작성. **남은 것:** 글자 레이어 텍스트 스타일 연결(작업 환경에 Pretendard JP가 없어 임시 글꼴 Noto Sans KR — 레이어 이름 `역할 → 스타일`대로 연결), Surfaces `study-card`(State Front·Revealed × Example On·Off — 화면 B 카드 복제라 글자 스타일 연결 유지, 앞면 안내 문구만 임시 글꼴) · `summary-card`(Figma 709:112354를 컴포넌트로 전환, 2026-11-15 추가) |
 | — | 라이브러리 정리 (2026-11-15) | ✅ | 사용처 조사 후: `도장`(사용 157곳)을 포폴 페이지 → Components — Reward `stamp`로 편입 · 아카이브 전용 컴포넌트 3개(`Caret Down/Up`, 추후 배포 `card`)는 `_` 접두어로 퍼블리시 제외 · 화면 사용처 없는 `stat-block` · `progress-dots`는 `_legacy`(대체 stat-tile · progress-segments) · `badge`는 `_legacy`(Screens 1곳은 텍스트 스타일 연결 후 status-badge Crafted로 교체 예정) · Screens 숨김 조각 21개 → `🗂 정리 대기` 섹션 |
 
@@ -37,8 +37,8 @@
 | Figma 텍스트 스타일 | 22 | 22 (`button/md` 굵기 수정) | 기준 화면 2장은 시계 외 전부 연결 |
 | 기준 화면의 외부 디자인 시스템 변수 | 화면당 6곳+ | **0** (보이는 레이어) | |
 | 시스템 밖 색 (`#F4F2EF`) | 화면 5곳 | **0** | |
-| 코드 `fontSize` 직접 값 | 47 | 86 | ⚠️ **늘었다.** 최신 시안을 1:1로 옮기며 13.6·19.2처럼 토큰에 없는 크기를 직접 씀 → 타이포 토큰 보강(C-13)이 다음 할 일 |
-| 코드 `borderRadius` 직접 값 | 15 | 27 | ⚠️ 같은 이유 |
+| 코드 `fontSize` 직접 값 | 47 | 86 → **98** (11-16 main) | ⚠️ **늘었다.** 최신 시안을 1:1로 옮기며 13.6·19.2처럼 토큰에 없는 크기를 직접 씀 + 고양이 카드(#12) 머지분 → 타이포 토큰 보강(C-13)이 다음 할 일. 측정: `git grep "fontSize: [0-9]" origin/main -- 'src/**/*.tsx'` 합계 |
+| 코드 `borderRadius` 직접 값 | 15 | 27 → **35** (11-16 main) | ⚠️ 같은 이유. 측정: 같은 방식 `borderRadius: [0-9]` |
 | 시안의 라이브러리 인스턴스 비율 | 9% | 재측정 안 함 | 재측정해야 쓸 수 있음 |
 
 > 포트폴리오에서 숫자를 쓸 때는 위 표의 "지금" 열 중 ✅ 항목만 쓴다. 직접 값이 늘어난 것은 숨기지 말고 "다음 단계"로 쓰는 편이 설득력 있다.
@@ -50,7 +50,7 @@
 | ✅ 지금 근거 있음 | ⬜ 아직 근거 없음 (쓰지 않기) |
 |---|---|
 | 출시 앱의 디자인 시스템을 문서·Figma·코드 3곳에서 감사하고, 불일치 원인을 **시안 제작 방식까지 추적**했다 | "Figma ↔ 코드 1:1 일치" |
-| 최신 화면을 기준으로 결정 16개를 내리고 **문서·Figma·코드에 모두 반영**했다 | "Code Connect로 연결" |
+| 최신 화면을 기준으로 결정 16개를 내리고 **문서·Figma·코드에 모두 반영**했다 | "Code Connect로 연결" (11-16 레포 확인 결과 매핑 파일 없음) |
 | 당근 SEED와 비교해 **간격·반경 이름 체계만 선택적으로 도입**했다. 색 이름은 바꾸는 비용(문서·Figma·코드·결정 기록 전부)이 커서 유지 | "공용 컴포넌트로 화면 전체를 구성" |
 | Figma 변수 이름을 바꾸면서 **ID를 유지해 연결된 레이어를 끊지 않았다** | "라이브러리 사용률 n% 향상" (재측정 전) |
 | 컬러 스타일 39개를 변수에 연결해 **라이트·다크가 자동으로 전환**되게 했다 | |
@@ -83,4 +83,4 @@
 | 2 | 타이포 토큰 보강·이름 통일 (C-13·17) 후 직접 값 재측정 | "직접 쓴 글자 크기 86 → n" |
 | 3 | 신규 컴포넌트 Figma화 (SessionTopBar · SummaryCard · StudyCard · TextButton · Receipt) | "자주 쓰는 화면 블록 n종 라이브러리화" |
 | 4 | 시안 라이브러리 사용률 재측정 | "9% → n%" |
-| 5 | Code Connect 연결 (최소 button · grade-button · tab-bar) | "Figma ↔ 코드 연결" |
+| 5 | Code Connect 연결 (최소 button · grade-button · tab-bar) — **11-16 확인: 아직 안 됨** (레포에 매핑 파일 없음) | "Figma ↔ 코드 연결" |
