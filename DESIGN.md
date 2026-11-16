@@ -214,6 +214,36 @@ typography:
     fontWeight: 600
     lineHeight: 16px
     letterSpacing: -0.1px
+  # ─── 2026-11-16 added to match code (AshitaKanji-app PR #14). Figma styles still to create/fix. ───
+  body-example:
+    # Japanese example sentence on the study card. Figma: not yet created.
+    fontSize: 16px
+    fontWeight: 500
+    lineHeight: 26px
+  code-strong:
+    # Emphasised tabular number. Figma: not yet created.
+    fontSize: 13px
+    fontWeight: 600
+    lineHeight: 18px
+    fontVariantNumeric: tabular-nums
+  receipt-title:
+    # Receipt wordmark only (ONIGIRI SHOP). Figma `receipt/title` currently Pretendard Bold / ls 4 — fix to JP SemiBold / ls 3.
+    fontSize: 15px
+    fontWeight: 600
+    lineHeight: 22px
+    letterSpacing: 3px
+  receipt-footer:
+    # Receipt last line only. Figma `receipt/footer` family should be Pretendard JP.
+    fontSize: 12px
+    fontWeight: 500
+    lineHeight: 16px
+    letterSpacing: 3px
+  receipt-body:
+    # Receipt rows (mono replacement). Figma: not yet created.
+    fontSize: 13px
+    fontWeight: 400
+    lineHeight: 20px
+    fontVariantNumeric: tabular-nums
 
 rounded:
   # SEED radius scale as-is (N-3, 2026-11-10): name = value ÷ 4, half steps "_5" up to 16.
@@ -527,6 +557,13 @@ Fallback stack: `"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont,
 | `{typography.button-md}` | 16px | 600 | 20px | Default button label. |
 | `{typography.tab-label}` | 12px | 500 | 16px | Bottom tab label — **not** uppercase, −0.1 tracking. |
 | `{typography.tab-label-active}` | 12px | 600 | 16px | Bottom tab label, active. |
+| `{typography.body-example}` | 16px | 500 | 26px | Japanese example sentence (study card). |
+| `{typography.code-strong}` | 13px | 600 | 18px | Emphasised tabular number. |
+| `{typography.receipt-title}` | 15px | 600 | 22px | Receipt wordmark only — +3 tracking. |
+| `{typography.receipt-footer}` | 12px | 500 | 16px | Receipt last line only — +3 tracking. |
+| `{typography.receipt-body}` | 13px | 400 | 20px | Receipt rows — tabular figures. |
+
+Code names are the camelCase of these names (`display-md` → `typography.displayMd`, D0-13).
 
 ### Principles
 - **One family, many weights.** Hierarchy comes from size + weight, never from a second typeface.
