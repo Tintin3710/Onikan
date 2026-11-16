@@ -181,7 +181,7 @@ typography:
     fontSize: 12px
     fontWeight: 500
     lineHeight: 16px
-    letterSpacing: 1.4px
+    letterSpacing: 0px
     textTransform: uppercase
   code:
     # Numeric codes & indices (001, N5, 0/4). Tabular figures for alignment.
@@ -214,32 +214,32 @@ typography:
     fontWeight: 600
     lineHeight: 16px
     letterSpacing: -0.1px
-  # ─── 2026-11-16 added to match code (AshitaKanji-app PR #14). Figma styles still to create/fix. ───
+  # ─── 2026-11-16 added to match code (AshitaKanji-app PR #14). Figma styles created 2026-11-16. ───
   body-example:
-    # Japanese example sentence on the study card. Figma: not yet created.
+    # Japanese example sentence on the study card.
     fontSize: 16px
     fontWeight: 500
     lineHeight: 26px
   code-strong:
-    # Emphasised tabular number. Figma: not yet created.
+    # Emphasised tabular number.
     fontSize: 13px
     fontWeight: 600
     lineHeight: 18px
     fontVariantNumeric: tabular-nums
   receipt-title:
-    # Receipt wordmark only (ONIGIRI SHOP). Figma `receipt/title` currently Pretendard Bold / ls 4 — fix to JP SemiBold / ls 3.
+    # Receipt wordmark only (ONIGIRI SHOP). ls 4 (2026-11-16). Figma family should be Pretendard JP.
     fontSize: 15px
     fontWeight: 600
     lineHeight: 22px
-    letterSpacing: 3px
+    letterSpacing: 4px
   receipt-footer:
-    # Receipt last line only. Figma `receipt/footer` family should be Pretendard JP.
+    # Receipt last line only.
     fontSize: 12px
     fontWeight: 500
     lineHeight: 16px
     letterSpacing: 3px
   receipt-body:
-    # Receipt rows (mono replacement). Figma: not yet created.
+    # Receipt rows (mono replacement).
     fontSize: 13px
     fontWeight: 400
     lineHeight: 20px
@@ -551,7 +551,7 @@ Fallback stack: `"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont,
 | `{typography.body-md-strong}` | 16px | 600 | 22px | Emphasis, tab labels. |
 | `{typography.body-sm}` | 14px | 400 | 20px | Captions, secondary meta. |
 | `{typography.body-sm-strong}` | 14px | 600 | 20px | Reward-chip label. |
-| `{typography.label}` | 12px | 500 | 16px | Eyebrows / group labels — uppercase, +1.4 tracking. |
+| `{typography.label}` | 12px | 500 | 16px | Eyebrows / group labels — uppercase, no tracking (2026-11-16). |
 | `{typography.code}` | 13px | 500 | 18px | Codes & indices (001, N5, 0/4) — tabular figures. |
 | `{typography.button-large}` | 18px | 600 | 24px | Primary button label. |
 | `{typography.button-md}` | 16px | 600 | 20px | Default button label. |
@@ -559,7 +559,7 @@ Fallback stack: `"Pretendard JP", Pretendard, -apple-system, BlinkMacSystemFont,
 | `{typography.tab-label-active}` | 12px | 600 | 16px | Bottom tab label, active. |
 | `{typography.body-example}` | 16px | 500 | 26px | Japanese example sentence (study card). |
 | `{typography.code-strong}` | 13px | 600 | 18px | Emphasised tabular number. |
-| `{typography.receipt-title}` | 15px | 600 | 22px | Receipt wordmark only — +3 tracking. |
+| `{typography.receipt-title}` | 15px | 600 | 22px | Receipt wordmark only — +4 tracking. |
 | `{typography.receipt-footer}` | 12px | 500 | 16px | Receipt last line only — +3 tracking. |
 | `{typography.receipt-body}` | 13px | 400 | 20px | Receipt rows — tabular figures. |
 
