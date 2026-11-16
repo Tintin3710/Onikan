@@ -83,6 +83,8 @@
 
 마이모리처럼 섹션형 카드로 구성한다. **모두 무료** — 유지율이 패스 전환의 바탕이다.
 
+> **Figma 시안(2026-11-16, 초안):** Screens — Light › 섹션 `기록 — 이벤트 코너 시안` `731:1971` — 기록 탭 `731:1972` · 오미쿠지 수집판 `734:2038` · 쪽지 모달 `734:2161` · 칸 컴포넌트 `omikuji-cell (draft)` `734:2037`(Drawn·Today·Empty). 상단 기존 카드는 QA 기록 화면(`537:21286`) 복제. 새 글자는 임시 글꼴(Noto Sans KR/JP, 레이어 이름 `→ 스타일`), 라이브러리 인스턴스(`text-button`·`stat-tile`) 라벨은 레이어 이름대로 바꿔야 함.
+
 | 섹션 | 카드 | 내용 | 주기 |
 |---|---|---|---|
 | 나의 가게 | 단골 · 익힌 단어 · 완성 메뉴 · 복습 수 | 지금 있는 통계 숫자 카드 | 실시간 |
@@ -179,4 +181,5 @@
 - 코드: `src/lib/ads/adPolicy.ts` · `src/lib/ads/entitlement.ts` · `src/features/settings/useRemoveAdsPurchase.ts` · `src/components/RemoveAdsUpsell.tsx` · `src/features/stats/StatsScreen.tsx` · `src/features/stats/RecordService.ts` · `src/features/catCards/catCardUnlock.ts`
 - 컴포넌트: `receipt` · `button-primary` · `text-button` · `stat-tile` · `toast`(reward) · `stamp` (COMPONENTS.md / Figma 라이브러리)
 - 관련 문서: [dangol-reward-SPEC.md](dangol-reward-SPEC.md)(단골·고양이 카드 해금) · [study-daily-load-SPEC.md](study-daily-load-SPEC.md)(하루 신규 단어) · [onigiri-menu-SPEC.md](onigiri-menu-SPEC.md)(메뉴 24종)
+- Figma: 섹션 `731:1971` (기록 탭 `731:1972` · 오미쿠지 수집판 `734:2038` · 쪽지 모달 `734:2161` · `omikuji-cell` `734:2037`)
 - 레퍼런스: 마이모리 설정·컬렉션(섹션형 카드, 도토리 n/200 수집 그리드 + 메시지 모달, 패스 배너)
