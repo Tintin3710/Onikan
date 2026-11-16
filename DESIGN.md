@@ -269,7 +269,7 @@ spacing:
   x3: 12px       # [md]
   x4: 16px       # [lg]
   x5: 20px       # [xl]
-  x6: 24px       # [2xl] gap BETWEEN groups (D0-4) · hero/reward card vertical padding
+  x6: 24px       # [2xl] gap BETWEEN groups (D0-4)
   x7: 28px       # [xxl]
   x10: 40px      # [huge] gap between major sections · top of screen
 
@@ -332,7 +332,7 @@ components:
     textColor: "{colors.ink}"
     typography: "{typography.body-md}"
     rounded: "{rounded.card}"
-    padding: "{spacing.x5}"   # default 20 · compact {spacing.x4} 16 (progress/list) · spacious {spacing.x6} 24 (hero/reward) — C3-5
+    padding: "{spacing.x4}"   # 16 for EVERY white card — C3-5 revised 2026-11-16 (was 3 steps 16/20/24)
   card-tinted:
     description: "Sub-region card on a page. Grey-soft fill, no shadow."
     backgroundColor: "{colors.soft}"
@@ -630,7 +630,7 @@ The signature is a **soft, generous radius**: cards at 20–24px, every control 
 
 ### Surfaces
 
-**`card`** — the standard content card. `{colors.canvas}`, `{rounded.card}` (24 — **every white card**, D0-3), `{spacing.x5}` padding, flat (Level 0) or Level 1 soft shadow. The workhorse.
+**`card`** — the standard content card. `{colors.canvas}`, `{rounded.card}` (24 — **every white card**, D0-3), `{spacing.x4}` (16) padding — one value for every card, flat (Level 0) or Level 1 soft shadow. The workhorse.
 
 **`card-tinted`** — grey-soft sub-region card, no shadow. Use for a callout *inside* a screen — never nested inside another card (see composition rules).
 
@@ -745,7 +745,7 @@ Decisions from [`design-system/00-DECISIONS-2026-11.md`](./design-system/00-DECI
 - **Figma colour styles (2026-11-11)** — 39 paint styles, each bound to its `Color` variable. Named SEED-style by property group + Onikan role: `bg/{role}` (fills), `fg/{role}` (text), `stroke/{role}` (borders), e.g. `bg/softer`, `fg/ink`, `stroke/pressed`. The group comes from the variable's scope; multi-use roles appear in each group they are scoped for.
 - **Tab bar (2026-11-11)** — rebuilt in Figma: icon **24** (was 26 in the spec; icons are drawn on a 24 grid), background **`canvas`** (was `softer`), inactive `body`, active `tab-active` with fill icon. Components `icon` · `tab-item` · `Bottom Navigation`.
 - **Buttons (2026-11-11, C3-1~4)** — `button-outline` split out from `button-secondary` (outline = border, 56; secondary = borderless white, 44). Two sizes only: `large` 56 · `medium` 44 (code `tall` 60 / `compact` 48 retire). Orange `brand` button retires → `primary`. Tabs have no pressed state. Specs: [`03-COMPONENT-SPECS-2026-11.md`](./design-system/03-COMPONENT-SPECS-2026-11.md).
-- **Surfaces & feedback (2026-11-11, C3-5~7)** — card padding = 3 steps `compact` 16 · `default` 20 · `spacious` 24. `list-row` height follows content (16 + 28 + 16 = 60), gap 12. `toast` label = `body-sm` 14/400.
+- **Surfaces & feedback (2026-11-11, C3-5~7)** — card padding = 3 steps (revised 2026-11-16 → **16 only**). `list-row` height follows content (16 + 28 + 16 = 60), gap 12. `toast` label = `body-sm` 14/400.
 - **주먹밥 완성 screen (2026-11-11)** — app aligned to Figma `638:7977`: white page (`canvas`, the one exception to `softer`), no overline, illustration 140 without a plate, orange `완성` badge above `{menu} 오니기리` (24/32 700), three `stat-tile-summary` tiles, `owner-quote-card` above the CTA, confetti replayed from the Figma keyframes (43 pieces, four bursts, once). New entries: `stat-tile-summary`, `owner-quote-card`, `badge` 완성.
 - **Grade labels (2026-11-10)** — 아직이에요 / 외웠어요 → **다시 볼래요 / 한 번 익혔어요** (see `handoff/study-first-tap-feedback-SPEC.md`).
 - **Fixed stale text** — `badge` no longer says "orange is for actions"; `tab-bar` frontmatter now matches the icon + label + `tab-active` spec; 완료 badge uses `secondary-soft #EAF6DD` (was an undefined `#E7F4D9`).

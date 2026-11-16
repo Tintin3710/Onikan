@@ -36,7 +36,7 @@
 | C-19 | 버튼 크기 (`components/ui/Button.tsx`) | `size: 'large' | 'medium'`(56 / 44) 추가, `tall`(60)·`compact`(48) 삭제. `tall` 6곳(`StudyActionBar` 2 · `RecallStage` 2 · `TutorialScreen` 2) → large, `compact` 2곳(`HomeSections:89` · `StatsScreen:175`) → large(카드 안이면 medium). `secondary` 기본 높이 56 → **44**(medium) | C3-2 |
 | C-20 | 오렌지 버튼 삭제 | `variant="brand"` 3곳 → `primary`: `ReadingChaptersScreen:165` · `RecallStage:52`("뜻 보기") · `WeaknessScreen:228`("오늘로 돌아가기"). 이후 `brand` variant 삭제 | C3-3 |
 | C-21 | 토스트 (`components/Toast.tsx`) | 좌우 여백 20 → 16, 글자 `bodyStrong` 15/600 → `bodySm` 14/400 (C3-7), `type: 'plain' | 'reward'` 추가 — reward면 14 라임 체크(선 2, `secondary`) | 03 §8 |
-| C-22 | 카드 여백 | `Card`에 `padding: 'compact' | 'default' | 'spacious'`(16·20·24) 추가, 화면에 직접 쓴 18 등은 가까운 단계로 (C3-5) | 03 §4 |
+| C-22 | 카드 여백 | **16 하나로 통일** (C3-5 개정 2026-11-16): `Card` 기본 16, 화면 덮어쓰기(22·18·24) 삭제 — PR #15 | 03 §4 |
 | C-23 | 목록 줄 (`ListRow`) | 최소 높이 64/68 삭제 → 여백 16/20으로 높이 결정, gap 14 → 12 | C3-6 · 03 §7 |
 
 **C-6·C-12·C-1은 거의 모든 화면에 보이는 변화**다. 적용 후 `npm run ui:capture` → `ui:diff`를 다시 돌리고, 기준 이미지는 갱신된 Figma 화면으로 `ui:approve -- --from-design` 해야 한다(옛 기준 이미지는 여백 20 시절).
