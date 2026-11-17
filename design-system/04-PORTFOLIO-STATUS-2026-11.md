@@ -6,7 +6,7 @@
 
 ## 한 줄 요약
 
-출시된 앱에 쓰던 디자인 시스템을 **감사 → 기준값 결정 → 이름 체계 정리(SEED 참고) → Figma·코드 반영 → 컴포넌트 명세**의 순서로 다시 정렬했다. **토큰은 문서·Figma·코드 세 곳에서 같은 값과 이름을 갖게 됐고, 테스트가 Figma와 코드의 차이를 자동으로 잡는다(차이 0).** 컴포넌트 명세는 코드에 반영했고, Figma 컴포넌트 28개는 코드 매핑표로 연결했다(11-16 머지). 화면 코드의 글자 크기·반경 직접 값은 lint로 막는다. Figma 카드 여백도 코드와 같은 16으로 맞췄다. 신규 컴포넌트의 임시 글꼴도 모두 텍스트 스타일로 연결했다(11-17). 남은 일은 라이브러리 재publish와 시안 라이브러리 사용률 재측정이다.
+출시된 앱에 쓰던 디자인 시스템을 **감사 → 기준값 결정 → 이름 체계 정리(SEED 참고) → Figma·코드 반영 → 컴포넌트 명세**의 순서로 다시 정렬했다. **토큰은 문서·Figma·코드 세 곳에서 같은 값과 이름을 갖게 됐고, 테스트가 Figma와 코드의 차이를 자동으로 잡는다(차이 0).** 컴포넌트 명세는 코드에 반영했고, Figma 컴포넌트 28개의 코드 대응을 정리했다 — 24개는 코드 공용 컴포넌트와 매핑, 4개는 화면별 구현이라 대응 코드 없음(11-16 머지). 화면 코드의 글자 크기·반경 직접 값은 lint로 막는다. Figma 카드 여백도 코드와 같은 16으로 맞췄다. 신규 컴포넌트의 임시 글꼴도 모두 텍스트 스타일로 연결했다(11-17). 남은 일은 라이브러리 재publish와 시안 라이브러리 사용률 재측정이다.
 
 ---
 
@@ -61,10 +61,10 @@
 | 결정마다 ID(D-n · O-n · C3-n)를 붙여 **근거를 추적할 수 있게** 했다 | |
 | 신규 컴포넌트 11종의 **글자 레이어를 전부 텍스트 스타일에 연결**했다 (임시 글꼴 0, 11-17 확인) | |
 | **카드 여백을 Figma·코드 모두 16 하나로 통일**하고, Figma에서는 여백을 간격 변수에 연결했다 | |
-| **디자인 시스템과 코드 연결 완료** — 토큰은 테스트로 자동 대조(차이 0), Figma 컴포넌트 28개를 코드에 매핑 (Code Connect 없이, 11-16 머지) | |
+| **디자인 시스템과 코드 연결 완료** — 토큰은 테스트로 자동 대조(차이 0), Figma 컴포넌트 28개 대응 정리 — 24개 코드 매핑 · 4개 대응 코드 없음 (Code Connect 없이, 11-16 머지) | |
 | 화면 코드의 글자 크기 직접 값 **98 → 18**, 반경 **35 → 9** — 남은 것은 모두 이유를 단 예외·그림 비례 값이고, **lint가 새 직접 값을 막는다** | |
 
-**기존 포트폴리오 페이지 수정 필요:** `portfolio/onikan-02-design-system.html`의 "Figma ↔ 코드 **1:1 · Code Connect**" 카드는 지금 근거가 없다. → "토큰 3곳 일치(자동 대조) · 컴포넌트 28개 매핑"으로 바꾼다. Code Connect는 요금제상 쓰지 않으므로 그 단어는 빼고, 대신 쓴 방법(B 경로)을 적는다.
+**기존 포트폴리오 페이지 수정 필요:** `portfolio/onikan-02-design-system.html`의 "Figma ↔ 코드 **1:1 · Code Connect**" 카드는 지금 근거가 없다. → "토큰 3곳 일치(자동 대조) · 컴포넌트 24개 코드 매핑(28개 중)"으로 바꾼다. Code Connect는 요금제상 쓰지 않으므로 그 단어는 빼고, 대신 쓴 방법(B 경로)을 적는다.
 
 ---
 
@@ -89,7 +89,7 @@
 | 2 | ~~타이포 토큰 보강·이름 통일 (C-13·17)~~ — ✅ PR #14, 11-16 머지 | "직접 쓴 글자 크기 98 → 62" |
 | 3 | ~~신규 컴포넌트 Figma화~~ — ✅ 11종 생성, 글꼴 연결까지 완료(11-17) | "자주 쓰는 화면 블록 11종 라이브러리화" |
 | 4 | 시안 라이브러리 사용률 재측정 | "9% → n%" |
-| 5 | ~~Figma ↔ 코드 연결~~ — ✅ PR #17, 11-16 머지, 토큰 차이 0 | "디자인 시스템과 코드 연결 완료 — 토큰은 테스트로 자동 대조, 컴포넌트 28개 매핑" |
+| 5 | ~~Figma ↔ 코드 연결~~ — ✅ PR #17, 11-16 머지, 토큰 차이 0 | "디자인 시스템과 코드 연결 완료 — 토큰은 테스트로 자동 대조, 컴포넌트 24개 코드 매핑(28개 중)" |
 | 6 | ~~화면 직접 값 정리 + lint~~ — ✅ PR #18, 11-16 머지, 시뮬레이터 확인 | "글자 크기 직접 값 98 → 18(남은 것은 모두 이유 단 예외), lint로 새 직접 값 차단" |
 | 7 | ~~Figma 임시 글꼴 → 텍스트 스타일 연결~~ — ✅ 6곳 모두 (11-17 Figma 확인): [plate-tile](https://www.figma.com/design/UiXc63pKkJr8WpkKqFVGBr/?node-id=707-22) [mark 40](https://www.figma.com/design/UiXc63pKkJr8WpkKqFVGBr/?node-id=707-17) → `body/md-strong`, [mark 48](https://www.figma.com/design/UiXc63pKkJr8WpkKqFVGBr/?node-id=707-21) → `body/lg-strong` (코드는 `bodyLgStrong`에 타일 크기×0.4 = 16·19라 `button/md`보다 가까움) · [session-top-bar](https://www.figma.com/design/UiXc63pKkJr8WpkKqFVGBr/?node-id=707-545) [count Inline](https://www.figma.com/design/UiXc63pKkJr8WpkKqFVGBr/?node-id=707-544) → `body/base-strong`, [count Stacked](https://www.figma.com/design/UiXc63pKkJr8WpkKqFVGBr/?node-id=707-535) → `code-strong`. [study-card](https://www.figma.com/design/UiXc63pKkJr8WpkKqFVGBr/?node-id=713-110) [hint-label Revealed·Example On](https://www.figma.com/design/UiXc63pKkJr8WpkKqFVGBr/?node-id=713-62) → `body/base`. [hint-label Revealed·Example Off](https://www.figma.com/design/UiXc63pKkJr8WpkKqFVGBr/?node-id=713-86) → `body/base` | "신규 컴포넌트 글자 전부 텍스트 스타일 연결" |
 | 8 | ~~Figma 카드 여백 16 맞추기~~ — ✅ 11-16 Figma 확인: [card](https://www.figma.com/design/UiXc63pKkJr8WpkKqFVGBr/?node-id=106-2565) · [card-tinted](https://www.figma.com/design/UiXc63pKkJr8WpkKqFVGBr/?node-id=106-2566) · [summary-card](https://www.figma.com/design/UiXc63pKkJr8WpkKqFVGBr/?node-id=712-1702) · [owner-quote-card](https://www.figma.com/design/UiXc63pKkJr8WpkKqFVGBr/?node-id=707-112) 모두 16, 간격 변수 연결 | "카드 여백 Figma·코드 일치" |
