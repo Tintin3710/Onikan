@@ -3,6 +3,7 @@
 > 상태: **확정** (2026-11-10) · 앱 구현: fork `feat/learning-flow-home-ux` `4f06f40`, 상한 규칙 O-8 반영 커밋 이후
 > 근거: 앱 스케줄러(`src/srs/FsrsScheduler.ts`, ts-fsrs 5.4.2, fuzz on) · 하루 구성(`SessionEngine.start`, `src/features/study/dailyStudyPolicy.ts`) · 60일 시뮬레이션(2026-11-10, 아래 표) · 사용자 의견(2026-11-10): "하루 12개 설정했는데 며칠 쉬다 왔더니 36개면 당황", "입문자는 같은 단어만 보면 지루 — 반반?" · 결정: "설정값과 상관없이 최대 36단어", "보완책(입문자 0.85)대로", "홈에 나눠 보여주기"
 > 관련: [`study-first-tap-feedback-SPEC.md`](./study-first-tap-feedback-SPEC.md) "복습 일정" 절
+> 출시 코드 재현 (2026-11-23): 앱 v1.0.8 코드로 같은 시나리오를 시드 30개로 다시 돌림 — 7일 쉼 후 첫날 124.5 → 36 (복습 30 + 신규 6) 일치. [`../research/sim/README.md`](../research/sim/README.md)
 > 토큰 정본 `../DESIGN.md`, 컴포넌트 계약 `../COMPONENTS.md`가 최종. 충돌 시 정본이 이긴다.
 
 **남은 것:** 없음 (⚠️ 0개)

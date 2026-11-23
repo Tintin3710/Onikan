@@ -1,0 +1,88 @@
+{
+  "old-break0": {
+    "maxMedian": 53,
+    "maxWorst": 60,
+    "avg": 32.6
+  },
+  "new-break0": {
+    "maxMedian": 36,
+    "maxWorst": 36,
+    "avg": 31.7
+  },
+  "old-break3": {
+    "returnDay": {
+      "total": 85,
+      "review": 85,
+      "fresh": 0,
+      "deferred": 0,
+      "totalRange": [
+        79,
+        95
+      ]
+    },
+    "daysUntilNoDeferredMedian": 0,
+    "sampleFirst4Days_seed1000": [
+      "87+0",
+      "37+0",
+      "16+12",
+      "11+12"
+    ]
+  },
+  "new-break3": {
+    "returnDay": {
+      "total": 36,
+      "review": 30,
+      "fresh": 6,
+      "deferred": 55,
+      "totalRange": [
+        36,
+        36
+      ]
+    },
+    "daysUntilNoDeferredMedian": 4,
+    "sampleFirst4Days_seed1000": [
+      "30+6*",
+      "30+6*",
+      "30+6*",
+      "36+0"
+    ]
+  },
+  "old-break7": {
+    "returnDay": {
+      "total": 124.5,
+      "review": 124.5,
+      "fresh": 0,
+      "deferred": 0,
+      "totalRange": [
+        116,
+        131
+      ]
+    },
+    "daysUntilNoDeferredMedian": 0,
+    "sampleFirst4Days_seed1000": [
+      "127+0",
+      "30+6",
+      "14+12",
+      "17+12"
+    ]
+  },
+  "new-break7": {
+    "returnDay": {
+      "total": 36,
+      "review": 30,
+      "fresh": 6,
+      "deferred": 94.5,
+      "totalRange": [
+        36,
+        36
+      ]
+    },
+    "daysUntilNoDeferredMedian": 7,
+    "sampleFirst4Days_seed1000": [
+      "30+6*",
+      "30+6*",
+      "30+6*",
+      "36+0"
+    ]
+  }
+}
