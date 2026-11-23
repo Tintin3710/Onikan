@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920">
+<title>Onikan · AI 워크플로</title>
+<!--
+  오니칸 포트폴리오 — AI 워크플로 도식 (2026-11-23)
+  - 대지 1920×1080, 요약 4장(onikan-deck-2026-11.html)과 같은 색·글꼴
+  - 근거: design-system/04-PORTFOLIO-STATUS-2026-11.md (감사 11-09 → PR #14·#15·#17·#18 머지 11-16, 토큰 차이 0, 24/28 매핑, lint)
+  - 레퍼런스(한 방향 흐름)와 달리: 사람이 판단한 지점을 색으로 구분 + 테스트·lint가 기준으로 되돌리는 순환
+-->
+<style>
+  :root {
+    --bg: #18181B; --panel: #232327; --panel-2: #2B2B30; --line: #34343A;
+    --ink: #F4F4F5; --body: #B4B4BC; --mute: #7C7C86;
+    --orange: #FF6A2C; --lime: #B5EF4A; --amber: #F5C04A; --white: #E8E8EC;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); }
+  body {
+    font-family: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+    color: var(--ink); -webkit-font-smoothing: antialiased; letter-spacing: -0.01em; word-break: keep-all;
+  }
+  .slide { width: 1920px; height: 1080px; position: relative; overflow: hidden; padding: 84px 120px 0; }
+  .slide::before {
+    content: ""; position: absolute; inset: -300px 0 auto 0; height: 700px;
+    background: radial-gradient(ellipse at 50% 60%, rgba(255,106,44,0.10), transparent 60%); pointer-events: none;
+  }
+  b { color: var(--ink); font-weight: 600; }
+
+  .head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; position: relative; }
+  .label { font-size: 22px; font-weight: 600; color: var(--orange); }
+  h1 { font-size: 50px; line-height: 1.3; font-weight: 700; letter-spacing: -0.02em; margin: 16px 0 14px; }
+  .sub { font-size: 21px; line-height: 1.6; color: var(--body); }
+  .legend { display: flex; gap: 10px; }
+  .lg { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 16px; border-radius: 999px;
+        background: var(--panel-2); font-size: 16px; font-weight: 600; color: var(--body); white-space: nowrap; }
+  .lg i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+  .lg .dash { width: 22px; height: 0; border-top: 2px dashed var(--amber); border-radius: 0; }
+
+  /* 도식: 1680 × 620, 좌표는 아래 SVG와 같은 기준 */
+  .dia { position: relative; width: 1680px; height: 656px; }
+  .lane { position: absolute; left: 0; width: 1680px; height: 180px; border-radius: 22px; background: rgba(255,255,255,0.025); }
+  .lane .who { position: absolute; left: 24px; top: 50%; transform: translateY(-50%); width: 130px; }
+  .lane .who .t { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 700; }
+  .lane .who .t i { width: 10px; height: 10px; border-radius: 50%; display: block; flex: none; }
+  .lane .who .s { font-size: 14px; color: var(--mute); margin-top: 4px; padding-left: 20px; }
+
+  .node { position: absolute; width: 212px; height: 150px; background: var(--panel); border-radius: 18px;
+          padding: 16px 18px; display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,0.05); }
+  .node .n { font-size: 13px; font-weight: 700; letter-spacing: 0.02em; }
+  .node h3 { font-size: 20px; font-weight: 700; margin-top: 2px; letter-spacing: -0.02em; }
+  .node p { font-size: 14px; line-height: 1.45; color: var(--body); margin-top: 4px; }
+  .node .tool { margin-top: auto; margin-bottom: 2px; align-self: flex-start; font-size: 12.5px; font-weight: 600; color: var(--mute);
+                background: var(--panel-2); border-radius: 999px; padding: 4px 10px; white-space: nowrap; }
+  .me  { box-shadow: inset 0 3px 0 var(--orange); } .me .n  { color: var(--orange); }
+  .ai  { box-shadow: inset 0 3px 0 var(--lime); }   .ai .n  { color: var(--lime); }
+  .dev { box-shadow: inset 0 3px 0 var(--white); }  .dev .n { color: var(--white); }
+
+  .band { position: absolute; left: 170px; top: 584px; width: 1490px; height: 72px; border-radius: 18px;
+          border: 1.5px dashed rgba(245,192,74,0.55); background: rgba(245,192,74,0.05);
+          display: flex; align-items: center; justify-content: center; gap: 28px; font-size: 17px; color: var(--body); }
+  .band .tag { color: var(--amber); font-weight: 700; font-size: 17px; }
+  .band .sep { width: 1px; height: 22px; background: var(--line); }
+
+  .note { position: absolute; font-size: 14px; line-height: 1.45; color: var(--mute); }
+  .note b { color: var(--amber); font-weight: 600; }
+
+  svg { position: absolute; left: 0; top: 0; overflow: visible; }
+  .foot { margin-top: 26px; font-size: 16px; color: var(--mute); line-height: 1.5; }
+  .foot b { color: var(--body); }
+</style>
+</head>
+<body>
+<section class="slide">
+  <div class="head">
+    <div>
+      <div class="label">AI 워크플로 · 디자인 시스템</div>
+      <h1>기준은 제가 정하고, 옮기는 건 AI가, 지키는 건 테스트가</h1>
+      <div class="sub">판단이 필요한 세 지점은 직접 맡고, 반복되는 대조·변경은 AI로 옮겼어요. <b>11월 9일 감사부터 16일 PR 4건 머지까지 1주.</b></div>
+    </div>
+    <div class="legend">
+      <span class="lg"><i style="background:var(--orange)"></i>내가 판단</span>
+      <span class="lg"><i style="background:var(--lime)"></i>AI</span>
+      <span class="lg"><i style="background:var(--white)"></i>개발자</span>
+      <span class="lg"><i class="dash"></i>자동 검사</span>
+    </div>
+  </div>
+
+  <div class="dia">
+    <div class="lane" style="top:0"><div class="who"><div class="t"><i style="background:var(--orange)"></i>디자이너</div><div class="s">나</div></div></div>
+    <div class="lane" style="top:192px"><div class="who"><div class="t"><i style="background:var(--lime)"></i>AI</div><div class="s">Claude Code</div></div></div>
+    <div class="lane" style="top:384px"><div class="who"><div class="t"><i style="background:var(--white)"></i>개발자</div><div class="s">1명</div></div></div>
+
+    <svg width="1680" height="656" viewBox="0 0 1680 656" fill="none">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#8A8A94"/>
+        </marker>
+        <marker id="ahA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#F5C04A"/>
+        </marker>
+      </defs>
+      <g stroke="#8A8A94" stroke-width="2" stroke-linejoin="round" marker-end="url(#ah)">
+        <path d="M402,90 H439"/>
+        <path d="M653,90 H673 V282 H691"/>
+        <path d="M905,282 H943"/>
+        <path d="M1157,282 H1177 V90 H1195"/>
+        <path d="M1409,90 H1428 V474 H1446"/>
+        <path d="M1554,549 V580"/>
+      </g>
+      <g stroke="#F5C04A" stroke-width="2" stroke-dasharray="6 6" marker-end="url(#ahA)">
+        <path d="M547,165 V580"/>
+        <path d="M220,584 V169"/>
+      </g>
+    </svg>
+
+    <div class="node me"  style="left:190px;  top:15px"><div class="n">01</div><h3>기준 정하기</h3><p>최신 화면 기준 결정 16개, 결정마다 ID(D-n)</p><span class="tool">DESIGN.md</span></div>
+    <div class="node me"  style="left:441px;  top:15px"><div class="n">02</div><h3>Figma 반영</h3><p>변수 · 컬러 스타일 39 · 컴포넌트 28</p><span class="tool">Figma</span></div>
+    <div class="node ai"  style="left:693px;  top:207px"><div class="n">03</div><h3>3곳 대조 감사</h3><p>문서·Figma·코드에서 토큰 18 · 컴포넌트 31 대조</p><span class="tool">Figma MCP · Claude Code</span></div>
+    <div class="node ai"  style="left:945px;  top:207px"><div class="n">04</div><h3>변경 초안 PR</h3><p>토큰 · 공용 컴포넌트 · lint 규칙</p><span class="tool">Claude Code → GitHub</span></div>
+    <div class="node me"  style="left:1197px; top:15px"><div class="n">05</div><h3>시뮬레이터 검수</h3><p>바뀐 화면 직접 확인, 넘친 사진 발견·수정</p><span class="tool">iOS 시뮬레이터</span></div>
+    <div class="node dev" style="left:1448px; top:399px"><div class="n">06</div><h3>리뷰 · 머지</h3><p>PR 4건 머지, 앱 v1.0.7에 반영</p><span class="tool">GitHub</span></div>
+
+    <div class="note" style="left:236px; top:262px; width:180px"><b>차이가 생기면</b><br>기준으로 되돌림</div>
+    <div class="note" style="left:563px; top:440px; width:140px"><b>토큰 스냅샷</b><br>Figma 개발 플러그인<br>(읽기 전용)</div>
+
+    <div class="band">
+      <span class="tag">자동 지킴</span>
+      <span><b>테스트</b> &nbsp;Figma ↔ 코드 토큰 자동 대조 → 차이 0</span>
+      <span class="sep"></span>
+      <span><b>lint</b> &nbsp;화면 코드에 새 직접 값은 에러 (글자 크기 98 → 18)</span>
+    </div>
+  </div>
+
+  <div class="foot" style="margin-top:22px">* <b>Code Connect 대신</b> — Figma 요금제(Professional)상 Code Connect를 쓸 수 없어, 토큰 스냅샷 자동 대조 · 컴포넌트 매핑표(28개 중 24개) · Figma 컴포넌트 설명의 코드 예시로 연결했어요.</div>
+</section>
+</body>
+</html>
