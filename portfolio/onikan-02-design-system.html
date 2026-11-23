@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>Onikan 02 · Design System</title>
+<style>
+  @font-face{font-family:'Pretendard';font-weight:400;src:url('../handoff/_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Regular.woff2') format('woff2')}
+  @font-face{font-family:'Pretendard';font-weight:500;src:url('../handoff/_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Medium.woff2') format('woff2')}
+  @font-face{font-family:'Pretendard';font-weight:600;src:url('../handoff/_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-SemiBold.woff2') format('woff2')}
+  @font-face{font-family:'Pretendard';font-weight:700;src:url('../handoff/_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-Bold.woff2') format('woff2')}
+  @font-face{font-family:'Pretendard';font-weight:800;src:url('../handoff/_ds/tintin-design-system-0bedd68d-616c-4058-b2fa-e93785070703/assets/fonts/Pretendard-ExtraBold.woff2') format('woff2')}
+
+  :root{
+    --bg:#0E0F12; --card:#16171B; --card2:#1B1C22; --chip:#212228;
+    --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.06);
+    --tx:#F4F4F6; --bd:#AEAFB6; --mt:#75767D;
+    --or:#FF6A2B; --or-real:#EF5112; --lime:#A3E635; --ink:#1D1D21;
+    --mono:'SF Mono',ui-monospace,'Menlo',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#000}
+  .slide{
+    position:relative; width:1920px; height:1080px; overflow:hidden;
+    background:
+      radial-gradient(1200px 620px at 50% -8%, rgba(255,106,43,.10), transparent 60%),
+      radial-gradient(900px 700px at 92% 8%, rgba(80,110,255,.06), transparent 55%),
+      var(--bg);
+    color:var(--tx);
+    font-family:'Pretendard','Apple SD Gothic Neo',-apple-system,system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding:64px 84px 56px;
+    display:flex; flex-direction:column;
+  }
+  /* header */
+  .hd{display:flex; justify-content:space-between; align-items:center;
+      font-size:15px; letter-spacing:.14em; color:var(--mt); font-weight:600;
+      padding-bottom:18px; border-bottom:1px solid var(--line);}
+  .hd .l b{color:var(--or)} .hd .l span{color:#C9CAD0; margin-left:10px}
+  /* title */
+  .title{margin-top:34px}
+  .title h1{font-size:46px; font-weight:800; letter-spacing:-.02em; line-height:1.15}
+  .title p{margin-top:14px; font-size:19px; line-height:1.6; color:var(--bd); font-weight:400; max-width:1180px}
+  .title p b{color:#EDEDF0; font-weight:600}
+  /* governance band */
+  .gov{margin-top:26px; display:flex; align-items:center; gap:18px;
+       background:linear-gradient(90deg, rgba(255,106,43,.12), rgba(255,106,43,.03) 60%, transparent);
+       border:1px solid rgba(255,106,43,.28); border-radius:14px; padding:16px 22px;}
+  .gov .dot{width:9px;height:9px;border-radius:99px;background:var(--or);box-shadow:0 0 0 5px rgba(255,106,43,.16);flex:none}
+  .gov .k{font-size:13px;font-weight:700;letter-spacing:.12em;color:var(--or);flex:none}
+  .gov .v{font-size:23px;font-weight:700;letter-spacing:-.01em}
+  .gov .en{margin-left:auto;font-size:13px;color:var(--mt);font-family:var(--mono);letter-spacing:.02em}
+  /* cards */
+  .cards{margin-top:24px; flex:1; display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:20px; padding:26px 26px 24px;
+        display:flex; flex-direction:column;}
+  .card .no{font-size:13px;font-weight:700;color:var(--mt);font-family:var(--mono);letter-spacing:.1em}
+  .card .eb{margin-top:12px;font-size:12.5px;font-weight:700;letter-spacing:.16em;color:var(--or)}
+  .card h3{margin-top:7px;font-size:24px;font-weight:700;letter-spacing:-.01em}
+  .card .doc{margin-top:3px;font-size:13px;color:var(--mt);font-family:var(--mono)}
+  .divider{height:1px;background:var(--line2);margin:20px 0}
+  /* token rows */
+  .tok{display:flex;align-items:center;gap:13px;padding:9px 0}
+  .tok .sw{width:34px;height:34px;border-radius:9px;flex:none;border:1px solid rgba(255,255,255,.10)}
+  .tok .nm{font-size:15.5px;font-weight:600}
+  .tok .hex{font-size:12.5px;color:var(--mt);font-family:var(--mono);margin-top:2px}
+  .tok .role{margin-left:auto;font-size:13px;color:var(--bd)}
+  .metarow{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+  .mchip{font-size:13px;color:var(--bd);background:var(--chip);border:1px solid var(--line2);border-radius:8px;padding:7px 11px;font-weight:500}
+  .mchip b{color:#fff;font-weight:600}
+  /* contract block */
+  .code{background:#0C0D10;border:1px solid var(--line2);border-radius:12px;padding:16px 18px;font-family:var(--mono);font-size:13.5px;line-height:1.9;color:#C7C8CF}
+  .code .cn{color:var(--lime);font-weight:600}
+  .code .kk{color:var(--mt)} .code .vv{color:#EDEDF0}
+  .code .st{color:var(--or)}
+  .note{margin-top:15px;font-size:15px;line-height:1.55;color:var(--bd)}
+  .note b{color:#fff;font-weight:600}
+  /* decision before/after */
+  .ba{display:flex;align-items:center;gap:16px;margin-top:4px}
+  .pill{height:52px;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;flex:1}
+  .pill.before{background:var(--or-real);color:#fff;opacity:.55;position:relative}
+  .pill.before .x{position:absolute;right:-9px;top:-9px;width:22px;height:22px;border-radius:99px;background:#2a2b31;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:12px;color:#ff7a7a}
+  .pill.after{background:var(--ink);color:#F7F7F9;border:1px solid rgba(255,255,255,.14)}
+  .arrow{color:var(--mt);font-size:22px;flex:none}
+  .lab{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--mt)}
+  .legend{display:flex;flex-direction:column;gap:9px;margin-top:18px}
+  .lg{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--bd)}
+  .lg i{width:13px;height:13px;border-radius:4px;flex:none}
+  .lg b{color:#fff;font-weight:600}
+  /* tag foot in card */
+  .tag{margin-top:auto;padding-top:18px;font-size:13.5px;color:var(--mt)}
+  .tag b{color:var(--or)}
+  /* outcome */
+  .out{margin-top:22px;display:flex;align-items:center;gap:16px}
+  .out .ar{color:var(--or);font-size:20px;font-weight:800}
+  .out .t{font-size:19px;font-weight:600;color:#EDEDF0}
+  .out .sub{margin-left:auto;font-size:13px;letter-spacing:.12em;color:var(--mt);font-weight:600}
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="hd">
+    <div class="l"><b>02 · ONIKAN</b><span>DESIGN SYSTEM</span></div>
+    <div class="r">SSOT · GOVERNANCE</div>
+  </div>
+
+  <div class="title">
+    <h1>하나의 기준으로 굴러가는 디자인 시스템</h1>
+    <p>토큰을 한 문서(SSOT)에 모으고, 컴포넌트를 <b>계약</b>으로 고정하고, 결정마다 <b>근거</b>를 남겼습니다.
+       그래서 화면이 늘어도 · 다른 사람이 이어받아도 기준이 흔들리지 않습니다.</p>
+  </div>
+
+  <div class="gov">
+    <span class="dot"></span>
+    <span class="k">SSOT 원칙</span>
+    <span class="v">값이 충돌하면, <b style="color:var(--or)">DESIGN.md</b>가 이긴다.</span>
+    <span class="en">single source of truth · conflict → doc wins</span>
+  </div>
+
+  <div class="cards">
+    <!-- 01 tokens -->
+    <div class="card">
+      <div class="no">01</div>
+      <div class="eb">TOKENS · SSOT</div>
+      <h3>토큰을 한 문서에</h3>
+      <div class="doc">DESIGN.md</div>
+      <div class="divider"></div>
+      <div class="tok"><span class="sw" style="background:#1D1D21"></span><div><div class="nm">잉크 Ink</div><div class="hex">#1D1D21</div></div><span class="role">주요 액션</span></div>
+      <div class="tok"><span class="sw" style="background:#EF5112"></span><div><div class="nm">오렌지 Orange</div><div class="hex">#EF5112</div></div><span class="role">브랜드·상태</span></div>
+      <div class="tok"><span class="sw" style="background:#A3E635"></span><div><div class="nm">라임 Lime</div><div class="hex">#A3E635</div></div><span class="role">진척·완료</span></div>
+      <div class="tok"><span class="sw" style="background:#8E8E97"></span><div><div class="nm">Onikan Grey</div><div class="hex">hue 228 · 뉴트럴</div></div><span class="role">기본</span></div>
+      <div class="metarow">
+        <span class="mchip">Radius <b>24 / 999</b></span>
+        <span class="mchip">Space <b>4pt scale</b></span>
+        <span class="mchip">Type <b>Pretendard</b></span>
+      </div>
+      <div class="tag">색·간격·타이포·라운드 = <b>단일 소스</b></div>
+    </div>
+
+    <!-- 02 component contract -->
+    <div class="card">
+      <div class="no">02</div>
+      <div class="eb">COMPONENT CONTRACT</div>
+      <h3>컴포넌트를 계약으로</h3>
+      <div class="doc">COMPONENTS.md</div>
+      <div class="divider"></div>
+      <div class="code">
+<span class="cn">button-primary</span><br>
+<span class="kk">&nbsp;&nbsp;bg</span>&nbsp;&nbsp;&nbsp;&nbsp;→ <span class="vv">--ink</span><br>
+<span class="kk">&nbsp;&nbsp;text</span>&nbsp;&nbsp;→ <span class="vv">--on-ink</span><br>
+<span class="kk">&nbsp;&nbsp;radius</span> → <span class="vv">--pill</span><br>
+<span class="kk">&nbsp;&nbsp;state</span>&nbsp;→ <span class="st">default / pressed / disabled</span>
+      </div>
+      <div class="note"><b>이름 · 값 · 상태</b>를 고정 → 화면마다 버튼을 새로 만들지 않습니다.</div>
+      <div class="metarow">
+        <span class="mchip">토큰 차이 <b>0</b> · 자동 대조</span>
+        <span class="mchip">컴포넌트 <b>24/28</b> 매핑</span>
+      </div>
+      <div class="tag">재사용 · <b>디자인 = 개발 일치</b></div>
+    </div>
+
+    <!-- 03 decision log -->
+    <div class="card">
+      <div class="no">03</div>
+      <div class="eb">DECISION LOG</div>
+      <h3>결정엔 근거를</h3>
+      <div class="doc">D-1~D-3 · O-1~O-7</div>
+      <div class="divider"></div>
+      <div style="font-size:13px;color:var(--mt);font-weight:600;letter-spacing:.04em;margin-bottom:12px">D-3 · 색 역할 재정의</div>
+      <div class="ba">
+        <div class="pill before">주요 버튼<span class="x">✕</span></div>
+        <span class="arrow">→</span>
+        <div class="pill after">주요 버튼</div>
+      </div>
+      <div class="lab"><span>Before · 오렌지</span><span>After · 잉크</span></div>
+      <div class="legend">
+        <div class="lg"><i style="background:#1D1D21;border:1px solid rgba(255,255,255,.2)"></i><b>잉크</b> = 주요 액션</div>
+        <div class="lg"><i style="background:#EF5112"></i><b>오렌지</b> = 브랜드·상태 전용</div>
+        <div class="lg"><i style="background:#A3E635"></i><b>라임</b> = 진척·완료</div>
+      </div>
+      <div class="note" style="margin-top:16px">액션·브랜드·상태가 한 색이면 충돌 → <b>액션은 잉크로 단일화</b>.</div>
+      <div class="tag">“왜 그렇게 정했나”를 <b>ID로 기록</b></div>
+    </div>
+  </div>
+
+  <div class="out">
+    <span class="ar">→</span>
+    <span class="t">화면이 늘어도, 사람이 바뀌어도 <b style="color:#fff">같은 기준</b>으로 판단합니다.</span>
+    <span class="sub">확장 · 협업 · 핸드오프</span>
+  </div>
+</div>
+</body>
+</html>
