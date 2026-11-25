@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>평가 버튼 결과 표시 — 시안</title>
+<!--
+  평가 버튼(grade-button)에 '누르면 어떻게 되는지'를 보조 문구로 늘 보여 주는 시안 (2026-11-25)
+  - 근거: 출시 후 빠른 테스트(2026-11-24, 3명) — 2명은 바텀시트 문구대로 "다시 나온다"고 설명,
+          1명은 바텀시트를 본 뒤에도 '한 번 익혔어요'를 "다음 버튼"으로 이해. → 1회 안내만으로는 부족.
+          handoff/study-first-tap-feedback-SPEC.md 상단 기록 참고.
+  - 토큰: DESIGN.md (ink #1D1D21 · on-ink #F7F7F9 · canvas #FFF · softer #F5F5F5 · pressed #DCDCE2 · body #56565E)
+          grade-button 명세: design-system/03-COMPONENT-SPECS-2026-11.md §2 (높이 56 · pill · 같은 폭 · 사이 8)
+  - 보조 문구는 출시된 바텀시트 문구(LearnedSheet.tsx)와 같은 말로 맞춤.
+-->
+<style>
+:root{
+  --ink:#1D1D21; --on-ink:#F7F7F9; --body:#56565E; --mute:#8E8E97;
+  --canvas:#FFFFFF; --softer:#F5F5F5; --soft:#E8E8EC; --pressed:#DCDCE2; --ink-pressed:#131316;
+  --primary:#EF5112; --lime:#A3E635;
+  --kr:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  --jp:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo","Noto Sans JP",sans-serif;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{ box-sizing:border-box; margin:0; padding:0; }
+body{ background:var(--softer); color:var(--ink); font-family:var(--kr); -webkit-font-smoothing:antialiased; word-break:keep-all; }
+button{ font-family:inherit; cursor:pointer; }
+.jp{ font-family:var(--jp); }
+
+/* ───────── 검토 화면 (앱 UI 바깥) ───────── */
+.wrap{ max-width:1120px; margin:0 auto; padding:32px 16px 72px; }
+.page-hd .eyebrow{ font-size:13px; font-weight:700; color:var(--primary); }
+.page-hd h1{ margin-top:6px; font-size:24px; font-weight:800; letter-spacing:-.02em; }
+.page-hd p{ margin-top:8px; font-size:15px; color:var(--body); line-height:1.6; max-width:760px; }
+.finding{ margin-top:16px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:10px; max-width:860px; }
+.finding div{ background:var(--canvas); border:1px solid var(--pressed); border-radius:16px; padding:14px 16px; font-size:14px; line-height:1.55; color:var(--body); }
+.finding b{ display:block; color:var(--ink); font-size:15px; margin-bottom:2px; }
+section{ margin-top:44px; }
+.sec-hd{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:16px; }
+.sec-hd h2{ font-size:18px; font-weight:800; }
+.sec-hd span{ font-size:13px; color:var(--body); }
+
+/* 비교 표: 한 줄 = 한 안 */
+.cmp{ display:grid; gap:12px; }
+.row{ display:grid; grid-template-columns:200px 343px 1fr; gap:24px; align-items:center; background:var(--canvas); border:1px solid var(--pressed); border-radius:20px; padding:18px 22px; }
+.row.rec{ border:2px solid var(--ink); }
+.row .who{ font-size:15px; font-weight:800; }
+.row .who small{ display:block; margin-top:3px; font-size:13px; font-weight:500; color:var(--body); line-height:1.45; }
+.row .who .tag{ display:inline-block; margin-left:6px; font-size:11px; font-weight:700; color:var(--on-ink); background:var(--ink); border-radius:999px; padding:2px 8px; vertical-align:2px; }
+.row .pro{ font-size:14px; line-height:1.6; color:var(--body); }
+.row .pro b{ color:var(--ink); }
+@media (max-width:900px){ .row{ grid-template-columns:1fr; gap:14px; } }
+
+/* ───────── grade-button (앱 UI) ───────── */
+.pair{ display:grid; grid-template-columns:1fr 1fr; gap:8px; width:100%; max-width:343px; }
+.gb{ height:56px; border-radius:999px; border:none; padding:0 16px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px;
+     transition:transform .12s var(--ease), background .12s; -webkit-tap-highlight-color:transparent; }
+.gb .l{ font-size:17px; line-height:22px; font-weight:600; letter-spacing:-.01em; white-space:nowrap; }
+.gb .s{ font-size:13px; line-height:16px; font-weight:500; white-space:nowrap; }
+.gb.again{ background:var(--canvas); color:var(--ink); box-shadow:inset 0 0 0 1.5px var(--pressed); }
+.gb.again .s{ color:var(--body); }
+.gb.again:active{ background:var(--soft); }
+.gb.good{ background:var(--ink); color:var(--on-ink); }
+.gb.good .s{ color:rgba(247,247,249,.74); }
+.gb.good:active{ background:var(--ink-pressed); }
+.gb:active{ transform:scale(.98); }
+.gb .s .ic{ display:inline-block; vertical-align:-2px; margin-right:3px; }
+
+/* ───────── 폰 미리보기 ───────── */
+.live{ display:grid; grid-template-columns:395px 1fr; gap:36px; align-items:start; }
+@media (max-width:860px){ .live{ grid-template-columns:1fr; justify-items:center; } }
+.phone{ position:relative; width:375px; max-width:calc(100vw - 52px); height:760px; border-radius:44px; background:var(--softer); overflow:hidden;
+        box-shadow:0 0 0 10px #1D1D21, 0 24px 60px rgba(29,29,33,.18); margin:10px; }
+.study{ position:absolute; inset:0; padding:58px 16px 34px; display:flex; flex-direction:column; }
+.top{ display:flex; align-items:center; gap:12px; font-size:13px; color:var(--body); }
+.top .x{ width:22px; height:22px; color:var(--body); flex:none; }
+.top .bar{ flex:1; height:6px; border-radius:6px; background:var(--pressed); overflow:hidden; }
+.top .bar i{ display:block; height:100%; background:var(--ink); transition:width .3s var(--ease); }
+.stage{ position:relative; flex:1; margin-top:22px; }
+.card{ position:absolute; inset:0; background:var(--canvas); border-radius:24px; display:flex; flex-direction:column; align-items:center; padding-top:64px; gap:10px;
+       transition:transform .34s var(--ease), opacity .34s var(--ease); }
+.card .k{ font-size:96px; font-weight:600; line-height:1; }
+.card .r{ font-size:18px; color:var(--body); }
+.card .m{ font-size:22px; font-weight:700; margin-top:8px; }
+.card .ex{ margin-top:22px; width:calc(100% - 40px); background:var(--softer); border-radius:16px; padding:14px 16px; font-size:15px; line-height:1.55; color:var(--body); }
+.card .ex .jp{ color:var(--ink); }
+.card.out-up{ transform:translateY(-70px) scale(.96); opacity:0; }
+.card.out-down{ transform:translateY(70px) scale(.96); opacity:0; }
+.card.in{ transform:scale(.97); opacity:0; }
+.acts{ margin-top:16px; }
+.acts .pair{ max-width:none; }
+.toast{ position:absolute; left:16px; right:16px; bottom:112px; background:rgba(29,29,33,.92); color:var(--on-ink); border-radius:16px; padding:12px 16px; font-size:15px; line-height:1.45;
+        opacity:0; transform:translateY(8px); transition:opacity .2s, transform .2s var(--ease); pointer-events:none; }
+.toast.on{ opacity:1; transform:none; }
+
+.panel{ background:var(--canvas); border:1px solid var(--pressed); border-radius:20px; padding:20px; width:100%; max-width:560px; }
+.panel h3{ font-size:15px; font-weight:800; margin-bottom:10px; }
+.seg{ display:flex; flex-wrap:wrap; gap:8px; }
+.seg button{ height:38px; padding:0 14px; border-radius:999px; border:1px solid var(--pressed); background:var(--canvas); color:var(--ink); font-size:14px; font-weight:700; }
+.seg button[aria-pressed="true"]{ background:var(--ink); border-color:var(--ink); color:var(--on-ink); }
+.panel .hint{ margin-top:10px; font-size:13px; color:var(--body); line-height:1.6; }
+.panel + .panel{ margin-top:14px; }
+.spec{ width:100%; border-collapse:collapse; font-size:14px; }
+.spec th, .spec td{ text-align:left; padding:9px 8px; border-top:1px solid var(--soft); vertical-align:top; line-height:1.5; }
+.spec th{ color:var(--body); font-weight:600; width:34%; }
+.q{ list-style:none; display:grid; gap:8px; }
+.q li{ background:var(--softer); border-radius:12px; padding:10px 12px; font-size:14px; line-height:1.55; }
+.q li b{ margin-right:6px; }
+.dec td:first-child{ font-weight:700; white-space:nowrap; width:56px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="page-hd">
+    <div class="eyebrow">시안 · 평가 버튼 (grade-button)</div>
+    <h1>버튼이 ‘누르면 어떻게 되는지’를 늘 말하게</h1>
+    <p>처음 한 번 뜨는 바텀시트는 결과를 잘 설명하지만, 닫고 나면 버튼에는 결과가 남지 않아요. 시트 문구를 버튼 아래 보조 문구로 옮겨, 하루 36번 누를 때마다 같은 말을 보게 합니다.</p>
+    <div class="finding">
+      <div><b>3명 중 2명 이해</b>바텀시트를 보고 “한 번 익혔으니 언젠가 다시 나온다”고 설명</div>
+      <div><b>1명은 ‘다음 버튼’으로 이해</b>바텀시트를 본 뒤에도. 학습엔 지장 없었지만 “무슨 기능인지 더 직관적이면”</div>
+      <div><b>참여자 제안: ‘다음 단어’ · ‘맞췄어요’</b>채택 안 함 — 두 버튼 모두 다음으로 넘어가서 ‘다음’은 평가 의미를 지우고, ‘맞췄어요’는 정답 퀴즈처럼 들림</div>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-hd"><h2>1. 버튼 한 쌍 비교</h2><span>실제 크기 · 화면 폭 375 − 좌우 여백 16 = 343 · 높이 56 · 사이 8</span></div>
+    <div class="cmp">
+      <div class="row">
+        <div class="who">지금 (v1.0.6)<small>이름만. 결과는 첫 탭 바텀시트에서 1회</small></div>
+        <div class="pair"><button class="gb again"><span class="l">다시 볼래요</span></button><button class="gb good"><span class="l">한 번 익혔어요</span></button></div>
+        <div class="pro">시트를 닫은 뒤에는 결과 단서가 없음. 위치·색으로만 기억하는 습관이 남을 수 있음.</div>
+      </div>
+      <div class="row rec">
+        <div class="who">A1 · 이름 유지 + 결과 <span class="tag">추천</span><small>보조 문구 = 바텀시트 문구</small></div>
+        <div class="pair"><button class="gb again"><span class="l">다시 볼래요</span><span class="s">오늘 한 번 더</span></button><button class="gb good"><span class="l">한 번 익혔어요</span><span class="s">며칠 뒤 다시</span></button></div>
+        <div class="pro"><b>바꾸는 게 가장 적어요.</b> UT에서 ‘한 번 익혔어요’가 ‘외웠어요’보다 부담이 낮았던 근거(부담 4.7 → 3.0)를 지키면서 결과만 더함.</div>
+      </div>
+      <div class="row">
+        <div class="who">A2 · 이름 줄임 + 결과<small>‘한 번 익혔어요’ → ‘알았어요’</small></div>
+        <div class="pair"><button class="gb again"><span class="l">다시 볼래요</span><span class="s">오늘 한 번 더</span></button><button class="gb good"><span class="l">알았어요</span><span class="s">며칠 뒤 다시</span></button></div>
+        <div class="pro">더 짧고 읽기 쉬움. 대신 ‘알았다’는 부담이 다시 커질 수 있어 A1과 같이 테스트할 가치가 있음.</div>
+      </div>
+      <div class="row">
+        <div class="who">A3 · 실제 일수<small>FSRS가 미리 계산한 다음 복습일</small></div>
+        <div class="pair"><button class="gb again"><span class="l">다시 볼래요</span><span class="s">오늘 한 번 더</span></button><button class="gb good"><span class="l">한 번 익혔어요</span><span class="s">3일 뒤 다시</span></button></div>
+        <div class="pro">가장 정확함(새 단어 +3일 → 복습할수록 +14일, +57일…). 다만 숫자가 카드마다 바뀌어 읽을 게 늘고, 개발에 스케줄 미리 계산이 필요.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-hd"><h2>2. 학습 화면에서 눌러 보기</h2><span>버튼을 누르면 카드가 넘어가고, 그 결과가 아래 토스트로 보여요 (검토용 — 앱에서는 토스트 없음)</span></div>
+    <div class="live">
+      <div class="phone">
+        <div class="study">
+          <div class="top">
+            <svg class="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            <div class="bar"><i id="bar" style="width:8%"></i></div>
+            <span id="cnt">1 / 12</span>
+          </div>
+          <div class="stage" id="stage"></div>
+          <div class="acts"><div class="pair" id="pair"></div></div>
+        </div>
+        <div class="toast" id="toast"></div>
+      </div>
+
+      <div>
+        <div class="panel">
+          <h3>안 고르기</h3>
+          <div class="seg" id="seg">
+            <button data-v="now">지금</button>
+            <button data-v="a1" aria-pressed="true">A1 추천</button>
+            <button data-v="a2">A2</button>
+            <button data-v="a3">A3</button>
+          </div>
+          <p class="hint">A3의 일수는 예시예요. 새 단어는 +3일, 같은 단어를 계속 익히면 +14일 · +57일로 늘어나요 (study-first-tap-feedback-SPEC “복습 일정”).</p>
+        </div>
+
+        <div class="panel">
+          <h3>A1 명세 (grade-button 변경분만)</h3>
+          <table class="spec">
+            <tr><th>보조 문구 슬롯</th><td><code>sublabel</code> 추가 — 이름 아래 한 줄, 가운데 정렬</td></tr>
+            <tr><th>글자</th><td>이름 17/22 600 (card-title, 줄 높이만 24 → 22) · 보조 13/16 500</td></tr>
+            <tr><th>색</th><td>Again 보조 = <code>body</code> · Good 보조 = <code>on-ink</code> 74%</td></tr>
+            <tr><th>문구</th><td>Again “오늘 한 번 더” · Good “며칠 뒤 다시” (바텀시트 제목과 같은 말)</td></tr>
+            <tr><th>크기</th><td>높이 56 · 반경 pill · 두 버튼 같은 폭 · 사이 8 — 그대로</td></tr>
+            <tr><th>범위</th><td>정규 학습 1차만. 회독(‘모름’ · ‘안다’)과 2차 기억 확인은 그대로</td></tr>
+            <tr><th>바텀시트</th><td>그대로 유지 — 처음 한 번 그림으로 이해시키고, 버튼이 그 말을 이어받음</td></tr>
+          </table>
+          <p class="hint">⚠️ 보조 13px는 DESIGN.md 본문 하한(15)보다 작아요. 버튼 안 보조 문구로서 예외를 둘지, 14로 올리고 이름을 16으로 줄일지 결정 필요.</p>
+        </div>
+
+        <div class="panel">
+          <h3>검증 — 새 참여자 3명, 5분</h3>
+          <ul class="q">
+            <li><b>누르기 전</b>“이 버튼을 누르면 어떻게 될 것 같아요?”</li>
+            <li><b>누른 뒤</b>“방금 무슨 일이 일어났어요? 이 단어는 언제 다시 볼까요?”</li>
+            <li><b>목표</b>3명 중 3명이 ‘다시 나온다’를 설명 (지금 3명 중 2명). A1·A2를 나눠 볼 때는 “어느 쪽이 더 누르기 편해요?”도 함께</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+const V = {
+  now: { a:['다시 볼래요',''], g:['한 번 익혔어요',''] },
+  a1:  { a:['다시 볼래요','오늘 한 번 더'], g:['한 번 익혔어요','며칠 뒤 다시'] },
+  a2:  { a:['다시 볼래요','오늘 한 번 더'], g:['알았어요','며칠 뒤 다시'] },
+  a3:  { a:['다시 볼래요','오늘 한 번 더'], g:['한 번 익혔어요','3일 뒤 다시'] },
+};
+const WORDS = [
+  { k:'服', r:'ふく', m:'옷', ex:'<span class="jp">この服、ぴったりです。</span><br>이 옷이 딱 맞아요.' },
+  { k:'水', r:'みず', m:'물', ex:'<span class="jp">水をください。</span><br>물 주세요.' },
+  { k:'店', r:'みせ', m:'가게', ex:'<span class="jp">この店はおいしい。</span><br>이 가게는 맛있어요.' },
+  { k:'駅', r:'えき', m:'역', ex:'<span class="jp">駅はどこですか。</span><br>역은 어디예요?' },
+];
+let v = 'a1', i = 0, n = 1, busy = false;
+const $ = (id) => document.getElementById(id);
+
+function btn(kind, [l, s]) {
+  return `<button class="gb ${kind}" data-k="${kind}"><span class="l">${l}</span>${s ? `<span class="s">${s}</span>` : ''}</button>`;
+}
+function renderPair() {
+  $('pair').innerHTML = btn('again', V[v].a) + btn('good', V[v].g);
+}
+function cardHTML(w) {
+  return `<div class="k jp">${w.k}</div><div class="r jp">${w.r}</div><div class="m">${w.m}</div><div class="ex">${w.ex}</div>`;
+}
+function mount(cls) {
+  const c = document.createElement('div');
+  c.className = 'card' + (cls ? ' ' + cls : '');
+  c.innerHTML = cardHTML(WORDS[i % WORDS.length]);
+  $('stage').appendChild(c);
+  return c;
+}
+let toastT;
+function toast(msg) {
+  const t = $('toast'); t.textContent = msg; t.classList.add('on');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 1600);
+}
+$('pair').addEventListener('click', (e) => {
+  const b = e.target.closest('.gb'); if (!b || busy) return;
+  busy = true;
+  const good = b.dataset.k === 'good';
+  const w = WORDS[i % WORDS.length];
+  const old = $('stage').querySelector('.card:last-child');
+  old.classList.add(good ? 'out-up' : 'out-down');
+  toast(good ? `${w.k}(${w.m}) — 며칠 뒤 다시 나와요` : `${w.k}(${w.m}) — 오늘 줄 맨 뒤로, 한 번 더 나와요`);
+  i++; n = n % 12 + 1;
+  const next = mount('in');
+  requestAnimationFrame(() => requestAnimationFrame(() => next.classList.remove('in')));
+  setTimeout(() => { old.remove(); busy = false; }, 340);
+  $('cnt').textContent = `${n} / 12`;
+  $('bar').style.width = `${Math.round((n / 12) * 100)}%`;
+});
+$('seg').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  v = b.dataset.v;
+  [...$('seg').children].forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  renderPair();
+});
+renderPair(); mount();
+</script>
+</body>
+</html>
