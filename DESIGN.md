@@ -318,15 +318,16 @@ components:
     rounded: "{rounded.pill}"
     padding: "{spacing.x4} {spacing.x5}"   # 56
   grade-button:
-    description: "The study self-rating PAIR (2026-11, D0-5: was 4-step). Two equal-width pills side by side: 다시 볼래요 (outline) · 한 번 익혔어요 (ink). 회독 variant relabels to 모름 · 안다."
-    typography: "{typography.card-title}"   # 17/600 — kept from COMPONENTS.md GradeButtons; confirm against the rebuilt screen B
-    rounded: "{rounded.pill}"
-    height: "{layout.cta-height}"   # 56 — same as button-primary
-    gap: "{spacing.x2}"             # 8
-    padding: "{spacing.x4} {spacing.x5}"   # 16 + 24 + 16 = 56
+    description: "The study self-rating PAIR (2026-11, D0-5: was 4-step). Two equal-width buttons side by side: 다시 볼래요 (outline) · 한 번 익혔어요 (ink), each with a consequence sublabel (C3-8, 2026-11-26): 오늘 한 번 더 · 며칠 뒤 다시. 회독 variant relabels to 모름 · 안다. Figma 847:13042."
+    typography: "{typography.card-title}"   # 17/24 600 — label
+    sublabelTypography: "{typography.code}" # 13/18 500 — consequence line. Exception to the 15px body floor (C3-8): a 2-word line inside a 72-high button, never body copy
+    rounded: "{rounded.r5}"                 # 20 — answer buttons, NOT pill (C3-8). Exception to "Full-pill controls"
+    height: 72                              # C3-8 (was {layout.cta-height} 56): two lines need 24 + 2 + 18 + 12×2
+    gap: "{spacing.x2}"             # 8 between the two buttons; 2 between label and sublabel
+    padding: "{spacing.x3} {spacing.x5}"   # 12 / 20
     variants:
-      again: "outline 1.5 {colors.pressed} on {colors.canvas}, text {colors.ink}"
-      good: "fill {colors.ink}, text {colors.on-ink}"
+      again: "outline 1px {colors.pressed} on {colors.canvas}, label {colors.ink}, sublabel {colors.body} (Figma has mute — 3.4:1 on white fails AA for 13px, so body)"
+      good: "fill {colors.ink}, label {colors.on-ink}, sublabel {colors.mute} (5.2:1 on ink — passes AA; the mute 'locked only' rule is about light surfaces)"
 
   # ─── Surfaces ───
   card:
@@ -628,7 +629,7 @@ The signature is a **soft, generous radius**: cards at 20–24px, every control 
 **`button-primary`** — the **ink** action pill. Background `{colors.ink}`, label `{colors.on-ink}` `#F7F7F9`, `{typography.button-large}`, `{rounded.pill}`, padding `{spacing.x5}`, full-width at screen bottom. *(2026-08: primary CTA is ink, was orange.)*
 - **When to use:** the single most important action on the screen (학습 시작하기 · 회독하기 · 한 번 익혔어요 · 지금 연습하기 · 오늘 학습 시작 · 영수증 받고 마치기 · 확인). If a second action competes, it becomes a **white outline**, not a second ink pill.
 
-**`button-outline`** — **white outline** pill (`{colors.canvas}` + 1.5px `{colors.pressed}`, ink label, 56 high) for a weak action beside a primary, or a de-emphasised CTA (나중에 · 백업 내보내기 · 완료-state 회독하러 가기). Pressed → `{colors.soft}`. The grade pair's 다시 볼래요 uses the same look. **`button-secondary`** is the borderless white pill (`{colors.canvas}`, 44 high) for small actions on a grey page or overlay (확인했어 · 공유). *(C3-1, 2026-11-11: the docs used to call both "secondary".)*
+**`button-outline`** — **white outline** pill (`{colors.canvas}` + 1.5px `{colors.pressed}`, ink label, 56 high) for a weak action beside a primary, or a de-emphasised CTA (나중에 · 백업 내보내기 · 완료-state 회독하러 가기). Pressed → `{colors.soft}`. The grade pair's 다시 볼래요 uses the same colours, but its own shape (72 high, `r5` 20, 1px border — C3-8). **`button-secondary`** is the borderless white pill (`{colors.canvas}`, 44 high) for small actions on a grey page or overlay (확인했어 · 공유). *(C3-1, 2026-11-11: the docs used to call both "secondary".)*
 
 **`button-subtle`** — soft grey pill (`{colors.soft}`) for tertiary / in-card actions (e.g. 단어 상세).
 
@@ -689,7 +690,7 @@ These are the "how pieces combine" guarantees — an AI or dev can self-check ag
 - **Badges/labels stay neutral.** Never color a JLPT badge or section label with orange or lime.
 - **Group by gap, not by box.** Prefer spacing (8–12 within, 24 between, 40 between sections) over adding borders/cards to separate content.
 - **Shadow is a rarity.** Only `card` (Level 1) and `toast` may cast one. Everything else is flat.
-- **Full-pill controls, soft-radius cards.** Controls = `{rounded.pill}`; white cards = `{rounded.card}` (24); grey `card-tinted` = `{rounded.card-tinted}` (20). Don't mix (no rectangular buttons, no pill-shaped cards).
+- **Full-pill controls, soft-radius cards.** Controls = `{rounded.pill}`; white cards = `{rounded.card}` (24); grey `card-tinted` = `{rounded.card-tinted}` (20). Don't mix (no rectangular buttons, no pill-shaped cards). **One exception: `grade-button` = `{rounded.r5}` 20, 72 high (C3-8)** — the self-rating pair is an *answer choice* with a two-line label, not an action; a 72-high pill reads as a giant CTA and squeezes the text.
 
 ## Do's and Don'ts
 
@@ -734,6 +735,9 @@ The Figma library ships 16 components. Only these carry variants — everything 
 `button-primary`, `button-secondary` and `button-subtle` are deliberately **three separate components, not one variant set** — they differ in typography *and* padding (`button-large` + 20/20 vs `button-md` + 12/20 vs `button-md` + 12/16), so a shared variant set would force one padding scheme and break the spec.
 
 ## Changelog
+
+### beta.2 — 2026-11-26 grade-button consequence line
+- **C3-8 `grade-button` shows what happens** — sublabel 오늘 한 번 더 · 며칠 뒤 다시 (same words as the first-tap bottom sheet), height 56 → **72**, radius pill → **`r5` 20**, label 17/24 600 + sublabel 13/18 500 (`code`), gap 2, padding 12/20, outline border 1.5 → 1. Two documented exceptions: control radius (not pill) and the 15px floor (13px sublabel). Why: post-launch quick test 2026-11-24 — 1 of 3 still read 한 번 익혔어요 as "next" *after* seeing the one-time sheet. Source: Figma `847:13042`, prototype `handoff/redesign-2026-08/prototypes/grade-button-consequence.html`. App code: not yet.
 
 ### beta.1 — 2026-11 source-of-truth alignment
 

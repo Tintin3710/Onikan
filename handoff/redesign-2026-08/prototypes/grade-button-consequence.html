@@ -53,17 +53,21 @@ section{ margin-top:44px; }
 
 /* ───────── grade-button (앱 UI) ───────── */
 .pair{ display:grid; grid-template-columns:1fr 1fr; gap:8px; width:100%; max-width:343px; }
-.gb{ height:56px; border-radius:999px; border:none; padding:0 16px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px;
+/* Figma 847:13042 (C3-8): 72 · r5 20 · 패딩 12/20 · 이름 17/24 600 · 보조 13/18 500 · 사이 2 */
+.gb{ height:72px; border-radius:20px; border:none; padding:12px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
      transition:transform .12s var(--ease), background .12s; -webkit-tap-highlight-color:transparent; }
-.gb .l{ font-size:17px; line-height:22px; font-weight:600; letter-spacing:-.01em; white-space:nowrap; }
-.gb .s{ font-size:13px; line-height:16px; font-weight:500; white-space:nowrap; }
-.gb.again{ background:var(--canvas); color:var(--ink); box-shadow:inset 0 0 0 1.5px var(--pressed); }
+.gb .l{ font-size:17px; line-height:24px; font-weight:600; letter-spacing:-.01em; white-space:nowrap; }
+.gb .s{ font-size:13px; line-height:18px; font-weight:500; white-space:nowrap; }
+.gb.again{ background:var(--canvas); color:var(--ink); box-shadow:inset 0 0 0 1px var(--pressed); }
 .gb.again .s{ color:var(--body); }
 .gb.again:active{ background:var(--soft); }
 .gb.good{ background:var(--ink); color:var(--on-ink); }
-.gb.good .s{ color:rgba(247,247,249,.74); }
+.gb.good .s{ color:var(--mute); } /* Figma 그대로 — 잉크 위 5.2:1 */
 .gb.good:active{ background:var(--ink-pressed); }
 .gb:active{ transform:scale(.98); }
+/* v1.0.6 지금: 56 pill, 이름만 */
+.pair.old .gb{ height:56px; border-radius:999px; padding:0 16px; }
+.pair.old .gb.again{ box-shadow:inset 0 0 0 1.5px var(--pressed); }
 .gb .s .ic{ display:inline-block; vertical-align:-2px; margin-right:3px; }
 
 /* ───────── 폰 미리보기 ───────── */
@@ -89,7 +93,7 @@ section{ margin-top:44px; }
 .card.in{ transform:scale(.97); opacity:0; }
 .acts{ margin-top:16px; }
 .acts .pair{ max-width:none; }
-.toast{ position:absolute; left:16px; right:16px; bottom:112px; background:rgba(29,29,33,.92); color:var(--on-ink); border-radius:16px; padding:12px 16px; font-size:15px; line-height:1.45;
+.toast{ position:absolute; left:16px; right:16px; bottom:128px; background:rgba(29,29,33,.92); color:var(--on-ink); border-radius:16px; padding:12px 16px; font-size:15px; line-height:1.45;
         opacity:0; transform:translateY(8px); transition:opacity .2s, transform .2s var(--ease); pointer-events:none; }
 .toast.on{ opacity:1; transform:none; }
 
@@ -123,15 +127,15 @@ section{ margin-top:44px; }
   </header>
 
   <section>
-    <div class="sec-hd"><h2>1. 버튼 한 쌍 비교</h2><span>실제 크기 · 화면 폭 375 − 좌우 여백 16 = 343 · 높이 56 · 사이 8</span></div>
+    <div class="sec-hd"><h2>1. 버튼 한 쌍 비교</h2><span>실제 크기 · 화면 폭 375 − 좌우 여백 16 = 343 · 사이 8 · A안은 Figma 847:13042 기준 높이 72 · 반경 20</span></div>
     <div class="cmp">
       <div class="row">
-        <div class="who">지금 (v1.0.6)<small>이름만. 결과는 첫 탭 바텀시트에서 1회</small></div>
-        <div class="pair"><button class="gb again"><span class="l">다시 볼래요</span></button><button class="gb good"><span class="l">한 번 익혔어요</span></button></div>
+        <div class="who">지금 (v1.0.6)<small>56 · pill · 이름만. 결과는 첫 탭 바텀시트에서 1회</small></div>
+        <div class="pair old"><button class="gb again"><span class="l">다시 볼래요</span></button><button class="gb good"><span class="l">한 번 익혔어요</span></button></div>
         <div class="pro">시트를 닫은 뒤에는 결과 단서가 없음. 위치·색으로만 기억하는 습관이 남을 수 있음.</div>
       </div>
       <div class="row rec">
-        <div class="who">A1 · 이름 유지 + 결과 <span class="tag">추천</span><small>보조 문구 = 바텀시트 문구</small></div>
+        <div class="who">A1 · 이름 유지 + 결과 <span class="tag">확정</span><small>보조 문구 = 바텀시트 문구 · Figma 847:13042</small></div>
         <div class="pair"><button class="gb again"><span class="l">다시 볼래요</span><span class="s">오늘 한 번 더</span></button><button class="gb good"><span class="l">한 번 익혔어요</span><span class="s">며칠 뒤 다시</span></button></div>
         <div class="pro"><b>바꾸는 게 가장 적어요.</b> UT에서 ‘한 번 익혔어요’가 ‘외웠어요’보다 부담이 낮았던 근거(부담 4.7 → 3.0)를 지키면서 결과만 더함.</div>
       </div>
@@ -169,7 +173,7 @@ section{ margin-top:44px; }
           <h3>안 고르기</h3>
           <div class="seg" id="seg">
             <button data-v="now">지금</button>
-            <button data-v="a1" aria-pressed="true">A1 추천</button>
+            <button data-v="a1" aria-pressed="true">A1 확정</button>
             <button data-v="a2">A2</button>
             <button data-v="a3">A3</button>
           </div>
@@ -177,17 +181,17 @@ section{ margin-top:44px; }
         </div>
 
         <div class="panel">
-          <h3>A1 명세 (grade-button 변경분만)</h3>
+          <h3>A1 명세 (C3-8 · grade-button 변경분만)</h3>
           <table class="spec">
             <tr><th>보조 문구 슬롯</th><td><code>sublabel</code> 추가 — 이름 아래 한 줄, 가운데 정렬</td></tr>
-            <tr><th>글자</th><td>이름 17/22 600 (card-title, 줄 높이만 24 → 22) · 보조 13/16 500</td></tr>
-            <tr><th>색</th><td>Again 보조 = <code>body</code> · Good 보조 = <code>on-ink</code> 74%</td></tr>
+            <tr><th>글자</th><td>이름 17/24 600 (<code>card-title</code>) · 보조 13/18 500 (<code>code</code>) · 사이 2</td></tr>
+            <tr><th>색</th><td>Again 보조 = <code>body</code> (Figma의 <code>mute</code>는 흰 바탕 3.4:1로 AA 미달) · Good 보조 = <code>mute</code> (잉크 위 5.2:1)</td></tr>
             <tr><th>문구</th><td>Again “오늘 한 번 더” · Good “며칠 뒤 다시” (바텀시트 제목과 같은 말)</td></tr>
-            <tr><th>크기</th><td>높이 56 · 반경 pill · 두 버튼 같은 폭 · 사이 8 — 그대로</td></tr>
+            <tr><th>크기</th><td>높이 56 → <b>72</b> · 반경 pill → <b><code>r5</code> 20</b> · 패딩 12/20 · 테두리 1.5 → 1 · 두 버튼 같은 폭 · 사이 8</td></tr>
             <tr><th>범위</th><td>정규 학습 1차만. 회독(‘모름’ · ‘안다’)과 2차 기억 확인은 그대로</td></tr>
             <tr><th>바텀시트</th><td>그대로 유지 — 처음 한 번 그림으로 이해시키고, 버튼이 그 말을 이어받음</td></tr>
           </table>
-          <p class="hint">⚠️ 보조 13px는 DESIGN.md 본문 하한(15)보다 작아요. 버튼 안 보조 문구로서 예외를 둘지, 14로 올리고 이름을 16으로 줄일지 결정 필요.</p>
+          <p class="hint">예외 2개는 DESIGN.md C3-8에 기록: 컨트롤 pill 규칙(평가 버튼만 반경 20) · 본문 15 하한(보조 문구 13). ⚠️ 회독(모름 · 안다)도 72 · 보조 문구로 맞출지 미정.</p>
         </div>
 
         <div class="panel">
@@ -224,6 +228,7 @@ function btn(kind, [l, s]) {
 }
 function renderPair() {
   $('pair').innerHTML = btn('again', V[v].a) + btn('good', V[v].g);
+  $('pair').classList.toggle('old', v === 'now');
 }
 function cardHTML(w) {
   return `<div class="k jp">${w.k}</div><div class="r jp">${w.r}</div><div class="m">${w.m}</div><div class="ex">${w.ex}</div>`;
