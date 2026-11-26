@@ -151,22 +151,23 @@
   .s3 .next li b { display: block; font-size: 20px; margin-bottom: 4px; }
 
   /* ───────── 4. AI와 디자인 시스템 ───────── */
-  .s4 .head { margin-bottom: 44px; }
-  .s4 .head h1 { margin: 18px 0 16px; }
+  .s4 .fig-link { position: absolute; top: 50px; right: 168px; height: 36px; padding: 0 16px; border-radius: 999px;
+                  display: inline-flex; align-items: center; background: var(--panel-2); color: var(--body);
+                  font-size: 16px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+  .s4 .head { margin-bottom: 48px; }
+  .s4 .head h1 { margin: 18px 0 18px; }
+  .s4 .head .sub { font-size: 20px; }
   .s4 .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .s4 .col { background: var(--panel); border-radius: 28px; padding: 32px 36px; }
-  .s4 .col .who { display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 700; margin-bottom: 20px; }
-  .s4 .col .who .dot { width: 12px; height: 12px; border-radius: 50%; }
-  .s4 .col ul { list-style: none; }
-  .s4 .col li { font-size: 18px; line-height: 1.55; color: var(--body); padding: 12px 0; border-top: 1px solid var(--line); }
-  .s4 .col li:first-child { border-top: 0; padding-top: 0; }
-  .s4 .nums { margin-top: 24px; display: grid; grid-template-columns: repeat(4, 1fr) 1.15fr; gap: 16px; }
-  .s4 .num { background: var(--panel-2); border-radius: 22px; padding: 24px 26px; }
-  .s4 .num .v { font-size: 38px; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-  .s4 .num .v small { font-size: 22px; color: var(--mute); font-weight: 600; margin: 0 6px; }
-  .s4 .num .k { font-size: 16px; line-height: 1.45; color: var(--body); margin-top: 6px; }
-  .s4 .num.next { background: transparent; border: 1.5px dashed #4A4A52; }
-  .s4 .num.next .v { font-size: 22px; color: var(--amber); padding-top: 6px; }
+  .s4 .col { background: var(--panel); border-radius: 28px; padding: 34px 36px 38px; }
+  .s4 .col .step { font-size: 16px; font-weight: 700; letter-spacing: 0.02em; }
+  .s4 .col .who { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; margin: 10px 0 16px; }
+  .s4 .col p { font-size: 18px; line-height: 1.65; color: var(--body); }
+  .s4 .nums { margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .s4 .num { background: var(--panel-2); border-radius: 22px; padding: 26px 32px; display: flex; align-items: center; gap: 24px; }
+  .s4 .num .v { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .s4 .num .v small { font-size: 20px; color: var(--mute); font-weight: 600; margin-left: 4px; }
+  .s4 .num .k { font-size: 17px; line-height: 1.45; color: var(--body); }
+  .s4 .nums-note { margin-top: 16px; font-size: 15px; color: var(--mute); }
 
   /* ───────── 5. AI 워크플로 도식 (onikan-ai-workflow.html과 같은 내용) ───────── */
   .s5 { justify-content: flex-start; padding-top: 84px; }
@@ -371,46 +372,37 @@
 <!-- ═════════ 5. AI와 디자인 시스템 ═════════ -->
 <section class="slide s4" id="s4">
   <div class="page-no">05 / 06</div>
+  <a class="fig-link" href="https://www.figma.com/design/Yo6tyXMvlhrKVEzwlZKH3R?node-id=1-33" target="_blank" rel="noopener">Figma 디자인 시스템 보기 ↗</a>
   <div class="head center">
     <div class="label">AI와 디자인 시스템</div>
-    <h1>기준은 제가 정하고, AI로 그 기준을<br>Figma와 코드 끝까지 옮겼어요</h1>
-    <p class="sub">개발자가 시안 PNG를 눈으로 보고 맞추던 방식을 바꾸려고, 디자인 시스템을 앱 코드와 연결했어요.</p>
+    <h1>화면마다 달랐던 스타일을 정리하고,<br>Figma와 앱 코드의 기준을 맞췄습니다.</h1>
+    <p class="sub">시안 이미지를 보고 구현하던 방식에서 벗어나, 공통 스타일과 컴포넌트의 기준을 정리했습니다.<br>AI로 문서와 Figma, 코드의 차이를 찾아 수정 초안을 만들고, 직접 검수한 뒤 개발자 리뷰를 거쳐 반영했습니다.</p>
   </div>
 
   <div class="cols">
     <div class="col">
-      <div class="who"><span class="dot" style="background:var(--orange)"></span>내가 정한 기준</div>
-      <ul>
-        <li>최신 화면 기준으로 <b>결정 16개</b> — 화면 여백 16, 카드 반경 24, 평가 버튼 2개</li>
-        <li>색의 역할 분리 — <b>잉크 = 행동</b>, 오렌지 = 브랜드·상태, 라임 = 완료</li>
-        <li>정책마다 ID(D-n · O-n)를 붙여 “왜 이렇게 정했나”를 남김</li>
-      </ul>
+      <div class="step" style="color:var(--orange)">01 · 기준</div>
+      <div class="who">공통 기준을 정의했습니다</div>
+      <p>최신 화면을 기준으로 여백, 카드 형태, 버튼 구성을 정리했습니다. 색상은 행동, 브랜드, 완료 상태의 역할을 구분하고, 각 결정의 이유를 문서에 남겼습니다.</p>
     </div>
     <div class="col">
-      <div class="who"><span class="dot" style="background:var(--lime)"></span>AI가 도운 작업</div>
-      <ul>
-        <li>문서·Figma·코드 <b>3곳 대조 감사</b> — 토큰 18개, 컴포넌트 31개(라이브러리 정리 전)</li>
-        <li>기준을 코드로 옮기는 변경 초안 — 글자·반경 토큰, 공용 컴포넌트, lint 규칙</li>
-        <li>Figma 스캔으로 임시 글꼴·어긋난 여백 찾기, 캐릭터 에셋을 같은 그림체로 생성</li>
-      </ul>
+      <div class="step" style="color:var(--lime)">02 · AI 적용</div>
+      <div class="who">AI로 차이를 찾고 수정안을 만들었습니다</div>
+      <p>AI로 문서와 Figma, 앱 코드의 토큰과 컴포넌트를 비교했습니다. 차이가 있는 항목은 공통 토큰과 컴포넌트를 사용하도록 수정 초안을 만들고, 새로운 글자 크기 직접 지정을 검사하는 규칙을 추가했습니다.</p>
     </div>
     <div class="col">
-      <div class="who"><span class="dot" style="background:var(--ink)"></span>직접 검수 · 개발자 협업</div>
-      <ul>
-        <li>바뀐 화면을 시뮬레이터에서 직접 확인 — 넘친 사진 같은 문제는 이 단계에서 발견</li>
-        <li>개발자가 변경 4건을 리뷰하고 머지</li>
-        <li>Figma 라이브러리 정리(글꼴 연결·카드 여백)는 제가 직접 마무리</li>
-      </ul>
+      <div class="step" style="color:var(--white)">03 · 확인</div>
+      <div class="who">직접 검수하고 개발자와 반영했습니다</div>
+      <p>변경한 화면을 시뮬레이터에서 확인하며 이미지 넘침 등 구현 문제를 수정했습니다. Figma의 글꼴 연결과 카드 여백도 직접 정리하고, 개발자의 코드 리뷰와 병합을 거쳐 앱에 반영했습니다.</p>
     </div>
   </div>
 
   <div class="nums">
-    <div class="num"><div class="v">0</div><div class="k">Figma ↔ 코드 토큰 차이<br>(테스트가 자동 대조)</div></div>
-    <div class="num"><div class="v">24<small>/</small>28</div><div class="k">정리 후 Figma 28개 중 코드 공용<br>컴포넌트와 연결 (4개는 화면별 구현)</div></div>
-    <div class="num"><div class="v">98<small>→</small>18</div><div class="k">화면 코드의 글자 크기 직접 값<br>(새 직접 값은 lint가 차단)</div></div>
-    <div class="num"><div class="v">16</div><div class="k">카드 여백을 Figma·코드<br>하나의 값으로 통일</div></div>
-    <div class="num next"><div class="v">다음 · 재측정</div><div class="k">시안의 라이브러리 사용률<br>(감사 시점 9%)</div></div>
+    <div class="num"><div class="v">0<small>개</small></div><div class="k">자동 대조한 Figma와 코드의 토큰 값 차이</div></div>
+    <div class="num"><div class="v">24 / 28<small>개</small></div><div class="k">공통 코드 컴포넌트와 대응 관계를<br>정리한 Figma 컴포넌트</div></div>
+    <div class="num"><div class="v">98 → 18<small>곳</small></div><div class="k">화면 코드에서 글자 크기를<br>직접 지정한 위치</div></div>
   </div>
+  <p class="nums-note">* 토큰 값은 검사 대상 범위에서 비교했습니다. Figma 컴포넌트 중 나머지 4개는 화면별 구현에 대응합니다.</p>
 </section>
 
 </div>
