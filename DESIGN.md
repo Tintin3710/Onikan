@@ -318,7 +318,7 @@ components:
     rounded: "{rounded.pill}"
     padding: "{spacing.x4} {spacing.x5}"   # 56
   grade-button:
-    description: "The study self-rating PAIR (2026-11, D0-5: was 4-step). Two equal-width buttons side by side: 다시 볼래요 (outline) · 한 번 익혔어요 (ink), each with a consequence sublabel (C3-8, 2026-11-26): 오늘 한 번 더 · 며칠 뒤 다시. 회독 variant relabels to 모름 · 안다 with the SAME shape (72 · r5 20) and sublabels 다음 회독에 다시 · 다음 회독엔 빼요 (proposed, 2026-11-26 — 회독 is FSRS-free: 모름 returns next pass, 안다 leaves the chapter queue). Figma 847:13042."
+    description: "The study self-rating PAIR (2026-11, D0-5: was 4-step). Two equal-width buttons side by side: 다시 볼래요 (outline) · 한 번 익혔어요 (ink), each with a consequence sublabel (C3-8, 2026-11-26): 오늘 또 봐요 · 며칠 뒤 봐요. 회독 variant relabels to 모르겠어요 · 알아요 with the SAME shape (72 · r5 20) and sublabels 다음 회독에 또 봐요 · 다음 회독부터 빠져요 (회독 is FSRS-free: 모르겠어요 returns next pass; 알아요 marks the word known for good — it leaves every later pass of that chapter, back only via 완료 화면 '다시 외우기'). Figma 847:13042."
     typography: "{typography.card-title}"   # 17/24 600 — label
     sublabelTypography: "{typography.code}" # 13/18 500 — consequence line. Exception to the 15px body floor (C3-8): a 2-word line inside a 72-high button, never body copy
     rounded: "{rounded.r5}"                 # 20 — answer buttons, NOT pill (C3-8). Exception to "Full-pill controls"
@@ -633,7 +633,7 @@ The signature is a **soft, generous radius**: cards at 20–24px, every control 
 
 **`button-subtle`** — soft grey pill (`{colors.soft}`) for tertiary / in-card actions (e.g. 단어 상세).
 
-**`grade-button`** — the study self-rating **pair** (다시 볼래요 · 한 번 익혔어요; 회독: 모름 · 안다). Two equal-width pills, height 56 (= `button-primary`), 8 apart: outline → ink. Orange is *not* used here. *(2026-11, D0-5: the 4-step 모름·어려움·앎·쉬움 set is retired.)*
+**`grade-button`** — the study self-rating **pair** (다시 볼래요 · 한 번 익혔어요; 회독: 모르겠어요 · 알아요). Two equal-width buttons, **72 high, `r5` 20**, 8 apart: outline → ink, each with a consequence sublabel (학습 오늘 또 봐요 · 며칠 뒤 봐요 / 회독 다음 회독에 또 봐요 · 다음 회독부터 빠져요) — C3-8. Orange is *not* used here. *(2026-11, D0-5: the 4-step 모름·어려움·앎·쉬움 set is retired.)*
 
 ### Surfaces
 
@@ -737,7 +737,7 @@ The Figma library ships 16 components. Only these carry variants — everything 
 ## Changelog
 
 ### beta.2 — 2026-11-26 grade-button consequence line
-- **C3-8 `grade-button` shows what happens** — sublabel 오늘 한 번 더 · 며칠 뒤 다시 (same words as the first-tap bottom sheet), height 56 → **72**, radius pill → **`r5` 20**, label 17/24 600 + sublabel 13/18 500 (`code`), gap 2, padding 12/20, outline border 1.5 → 1. Two documented exceptions: control radius (not pill) and the 15px floor (13px sublabel). The 회독 pair (모름 · 안다) takes the same shape so both self-rating pairs look alike; its sublabel copy is proposed, not yet confirmed. Why: post-launch quick test 2026-11-24 — 1 of 3 still read 한 번 익혔어요 as "next" *after* seeing the one-time sheet. Source: Figma `847:13042`, prototype `handoff/redesign-2026-08/prototypes/grade-button-consequence.html`. App code: not yet.
+- **C3-8 `grade-button` shows what happens** — sublabel 오늘 또 봐요 · 며칠 뒤 봐요 (same meaning as the first-tap bottom sheet, '언제 + 봐요' pattern), height 56 → **72**, radius pill → **`r5` 20**, label 17/24 600 + sublabel 13/18 500 (`code`), gap 2, padding 12/20, outline border 1.5 → 1. Two documented exceptions: control radius (not pill) and the 15px floor (13px sublabel). The 회독 pair is renamed 모름 · 안다 → **모르겠어요 · 알아요** (same '~요' tone as the study pair) and takes the same shape, sublabels 다음 회독에 또 봐요 · 다음 회독부터 빠져요. '다음에 또 봐요' was rejected — '다음에' reads as 'next card', the exact confusion from the test; '다음엔 쉬어요' was rejected — 알아요 is a permanent exclusion, not a one-pass rest. Why: post-launch quick test 2026-11-24 — 1 of 3 still read 한 번 익혔어요 as "next" *after* seeing the one-time sheet. Source: Figma `847:13042`, prototype `handoff/redesign-2026-08/prototypes/grade-button-consequence.html`. App code: not yet.
 
 ### beta.1 — 2026-11 source-of-truth alignment
 
