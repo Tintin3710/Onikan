@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>오니칸 다운로드</title>
+<meta name="description" content="오니칸 — JLPT 일본어 단어장. App Store와 Google Play에서 받을 수 있어요.">
+<meta property="og:title" content="오니칸 — JLPT 일본어 단어장">
+<meta property="og:description" content="학습을 마치면 오니기리 재료를 모으는 일본어 단어 학습 앱">
+<meta property="og:image" content="icon.png">
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<!--
+  오니칸 앱 다운로드 안내 페이지 (2026-11-26)
+  - 포트폴리오 QR이 이 페이지 주소를 가리킨다. 스토어 링크가 바뀌면 아래 STORE 링크만 고치면 되고 QR은 그대로 둔다.
+  - 자동 이동은 하지 않는다: 컴퓨터로 여는 사람도 두 버튼을 보게 하고, 휴대폰에서는 해당 기기 스토어 버튼을 위로 올려 강조한다.
+-->
+<style>
+  :root {
+    --bg: #FFF7F2; --card: #FFFFFF; --ink: #18181B; --body: #52525B; --mute: #8A8A94;
+    --line: #EDE6E1; --brand: #F86F32; --btn: #18181B; --btn-ink: #FFFFFF;
+    --btn2: #FFFFFF; --btn2-ink: #18181B;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #18181B; --card: #232327; --ink: #F4F4F5; --body: #B4B4BC; --mute: #7C7C86;
+      --line: #34343A; --btn: #F4F4F5; --btn-ink: #18181B; --btn2: #2B2B30; --btn2-ink: #F4F4F5;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #18181B; --card: #232327; --ink: #F4F4F5; --body: #B4B4BC; --mute: #7C7C86;
+    --line: #34343A; --btn: #F4F4F5; --btn-ink: #18181B; --btn2: #2B2B30; --btn2-ink: #F4F4F5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
+    -webkit-font-smoothing: antialiased; word-break: keep-all; letter-spacing: -0.01em;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh; min-height: 100dvh;
+    padding: max(24px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
+  }
+  main { width: 100%; max-width: 400px; text-align: center; }
+  .icon { width: 112px; height: 112px; border-radius: 26px; display: block; margin: 0 auto 24px;
+          box-shadow: 0 10px 30px rgba(248,111,50,0.28); }
+  h1 { font-size: 28px; line-height: 1.3; font-weight: 700; letter-spacing: -0.02em; }
+  .tag { margin-top: 6px; font-size: 15px; color: var(--mute); font-weight: 500; }
+  .desc { margin-top: 16px; font-size: 16px; line-height: 1.6; color: var(--body); }
+  .buttons { margin-top: 32px; display: flex; flex-direction: column; gap: 10px; }
+  .store {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    height: 60px; border-radius: 16px; text-decoration: none;
+    font-size: 17px; font-weight: 600;
+    background: var(--btn2); color: var(--btn2-ink); border: 1px solid var(--line);
+    transition: transform .12s ease;
+  }
+  .store:active { transform: scale(0.98); }
+  .store.primary { background: var(--btn); color: var(--btn-ink); border-color: transparent; }
+  .store svg { width: 22px; height: 22px; flex: none; }
+  .store:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+  .hint { margin-top: 16px; font-size: 13px; color: var(--mute); min-height: 1em; }
+</style>
+</head>
+<body>
+<main>
+  <img class="icon" src="icon.png" alt="오니칸 앱 아이콘" width="112" height="112">
+  <h1>오니칸</h1>
+  <p class="tag">JLPT 일본어 단어장</p>
+  <p class="desc">학습을 마치면 오니기리 재료를 모으는<br>일본어 단어 학습 앱이에요.</p>
+
+  <div class="buttons" id="buttons">
+    <a class="store primary" id="ios"
+       href="https://apps.apple.com/kr/app/%EC%98%A4%EB%8B%88%EC%B9%B8-jlpt-%EC%9D%BC%EB%B3%B8%EC%96%B4-%EB%8B%A8%EC%96%B4%EC%9E%A5/id6817012548">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg>
+      App Store에서 다운로드
+    </a>
+    <a class="store" id="android"
+       href="https://play.google.com/store/apps/details?id=com.taiyoungkim.ashitakanji&amp;pcampaignid=web_share">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 3.5v17a1 1 0 0 0 1.5.87l14-8.5a1 1 0 0 0 0-1.74l-14-8.5A1 1 0 0 0 6 3.5Z" transform="translate(-2 0)"/></svg>
+      Google Play에서 다운로드
+    </a>
+  </div>
+  <p class="hint" id="hint"></p>
+</main>
+<script>
+  // 휴대폰이면 해당 스토어 버튼을 위로 올리고 강조한다. 자동 이동은 하지 않는다.
+  (function () {
+    var ua = navigator.userAgent || '';
+    var isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var isAndroid = /Android/i.test(ua);
+    var ios = document.getElementById('ios');
+    var android = document.getElementById('android');
+    var hint = document.getElementById('hint');
+    if (isAndroid) {
+      android.classList.add('primary');
+      ios.classList.remove('primary');
+      android.parentNode.insertBefore(android, ios);
+      hint.textContent = 'Android 기기에서는 Google Play 버튼을 눌러 주세요.';
+    } else if (isIOS) {
+      hint.textContent = 'iPhone에서는 App Store 버튼을 눌러 주세요.';
+    }
+  })();
+</script>
+</body>
+</html>
