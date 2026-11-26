@@ -318,7 +318,7 @@ components:
     rounded: "{rounded.pill}"
     padding: "{spacing.x4} {spacing.x5}"   # 56
   grade-button:
-    description: "The study self-rating PAIR (2026-11, D0-5: was 4-step). Two equal-width buttons side by side: 다시 볼래요 (outline) · 한 번 익혔어요 (ink), each with a consequence sublabel (C3-8, 2026-11-26): 오늘 한 번 더 · 며칠 뒤 다시. 회독 variant relabels to 모름 · 안다. Figma 847:13042."
+    description: "The study self-rating PAIR (2026-11, D0-5: was 4-step). Two equal-width buttons side by side: 다시 볼래요 (outline) · 한 번 익혔어요 (ink), each with a consequence sublabel (C3-8, 2026-11-26): 오늘 한 번 더 · 며칠 뒤 다시. 회독 variant relabels to 모름 · 안다 with the SAME shape (72 · r5 20) and sublabels 다음 회독에 다시 · 다음 회독엔 빼요 (proposed, 2026-11-26 — 회독 is FSRS-free: 모름 returns next pass, 안다 leaves the chapter queue). Figma 847:13042."
     typography: "{typography.card-title}"   # 17/24 600 — label
     sublabelTypography: "{typography.code}" # 13/18 500 — consequence line. Exception to the 15px body floor (C3-8): a 2-word line inside a 72-high button, never body copy
     rounded: "{rounded.r5}"                 # 20 — answer buttons, NOT pill (C3-8). Exception to "Full-pill controls"
@@ -737,7 +737,7 @@ The Figma library ships 16 components. Only these carry variants — everything 
 ## Changelog
 
 ### beta.2 — 2026-11-26 grade-button consequence line
-- **C3-8 `grade-button` shows what happens** — sublabel 오늘 한 번 더 · 며칠 뒤 다시 (same words as the first-tap bottom sheet), height 56 → **72**, radius pill → **`r5` 20**, label 17/24 600 + sublabel 13/18 500 (`code`), gap 2, padding 12/20, outline border 1.5 → 1. Two documented exceptions: control radius (not pill) and the 15px floor (13px sublabel). Why: post-launch quick test 2026-11-24 — 1 of 3 still read 한 번 익혔어요 as "next" *after* seeing the one-time sheet. Source: Figma `847:13042`, prototype `handoff/redesign-2026-08/prototypes/grade-button-consequence.html`. App code: not yet.
+- **C3-8 `grade-button` shows what happens** — sublabel 오늘 한 번 더 · 며칠 뒤 다시 (same words as the first-tap bottom sheet), height 56 → **72**, radius pill → **`r5` 20**, label 17/24 600 + sublabel 13/18 500 (`code`), gap 2, padding 12/20, outline border 1.5 → 1. Two documented exceptions: control radius (not pill) and the 15px floor (13px sublabel). The 회독 pair (모름 · 안다) takes the same shape so both self-rating pairs look alike; its sublabel copy is proposed, not yet confirmed. Why: post-launch quick test 2026-11-24 — 1 of 3 still read 한 번 익혔어요 as "next" *after* seeing the one-time sheet. Source: Figma `847:13042`, prototype `handoff/redesign-2026-08/prototypes/grade-button-consequence.html`. App code: not yet.
 
 ### beta.1 — 2026-11 source-of-truth alignment
 
