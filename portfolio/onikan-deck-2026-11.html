@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=1920">
-<title>Onikan · 요약 5장</title>
+<title>Onikan · 요약 6장</title>
 <!--
-  오니칸 포트폴리오 요약본 5장 (2026-11-17)
+  오니칸 포트폴리오 요약본 6장 (2026-11-17 · 11-26 4장 '문제 1 자세히' 추가, 평가 버튼 최신안 C3-8 반영)
   - 대지 1920×1080, 글꼴 SF Pro (한글은 SF Pro에 글리프가 없어 macOS 기본 Apple SD Gothic Neo로 그려짐)
   - 근거: design-system/04-PORTFOLIO-STATUS-2026-11.md · research/interview-synthesis.md ·
           handoff/study-first-tap-feedback-SPEC.md · handoff/study-daily-load-SPEC.md
-  - 한 장만 보기: ?s=1 ~ ?s=5 (PNG 내보내기용)
+  - 한 장만 보기: ?s=1 ~ ?s=6 (PNG 내보내기용)
 -->
 <style>
   :root {
@@ -93,6 +93,26 @@
   .s1 .role { display: flex; gap: 18px; align-items: baseline; background: var(--panel); border-radius: 20px; padding: 20px 28px; font-size: 18px; color: var(--body); line-height: 1.5; }
   .s1 .role .who { flex: none; font-weight: 700; color: var(--ink); font-size: 19px; }
   .s1 .phone { width: 340px; justify-self: end; }
+
+
+  /* ───────── 4. 문제 1 자세히 ───────── */
+  .s3b { display: grid; grid-template-columns: 560px 1fr; gap: 64px; align-items: center; }
+  .s3b h1 { font-size: 46px; margin: 18px 0 18px; }
+  .s3b .sub { font-size: 20px; }
+  .s3b .steps { margin-top: 32px; display: flex; flex-direction: column; gap: 14px; }
+  .s3b .st { background: var(--panel); border-radius: 22px; padding: 22px 26px; }
+  .s3b .st .k { font-size: 16px; font-weight: 600; color: var(--orange); margin-bottom: 6px; }
+  .s3b .st p { font-size: 18px; line-height: 1.55; color: var(--body); }
+  .s3b .status { display: flex; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+  .s3b .flow { display: flex; gap: 18px; align-items: flex-start; justify-content: flex-end; }
+  .s3b .step { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 300px; }
+  .s3b .step .phone { width: 300px; }
+  .s3b .step .cap { text-align: center; }
+  .s3b .step .cap .n { font-size: 15px; font-weight: 600; color: var(--mute); }
+  .s3b .step .cap .t { font-size: 22px; font-weight: 700; margin-top: 4px; }
+  .s3b .step .cap .d { font-size: 16px; line-height: 1.5; color: var(--body); margin-top: 6px; }
+  .s3b .step.now .cap .n { color: var(--orange); }
+  .s3b .arrow { align-self: center; margin-top: -120px; color: var(--mute); font-size: 26px; }
 
   /* ───────── 2. 핵심 학습 경험 ───────── */
   .s2 .head { margin-bottom: 52px; }
@@ -194,7 +214,7 @@
 
 <!-- ═════════ 1. 제품과 역할 ═════════ -->
 <section class="slide" id="s1">
-  <div class="page-no">01 / 05</div>
+  <div class="page-no">01 / 06</div>
   <div class="s1">
     <div>
       <div class="label">ONIKAN · 제품과 역할</div>
@@ -231,7 +251,7 @@
 
 <!-- ═════════ 2. 핵심 학습 경험 ═════════ -->
 <section class="slide s2" id="s2">
-  <div class="page-no">02 / 05</div>
+  <div class="page-no">02 / 06</div>
   <div class="head">
     <div class="label">핵심 학습 경험</div>
     <h1>하루 학습 → 결과 → 다시 학습,<br>외운 단어가 재료가 되는 한 바퀴</h1>
@@ -239,7 +259,7 @@
   <div class="body">
     <div class="flow">
       <div class="step">
-        <div class="phone"><img src="assets/onikan-deck/study-card.png" alt="학습 카드 — 다시 볼래요 / 한 번 익혔어요"></div>
+        <div class="phone"><img src="assets/onikan-deck/study-card.png" alt="학습 카드 — 다시 볼래요 · 오늘 또 봐요 / 한 번 익혔어요 · 며칠 뒤 봐요"></div>
         <div class="cap"><div class="n">STEP 1</div><div class="t">하루 학습</div></div>
       </div>
       <div class="arrow">→</div>
@@ -259,7 +279,7 @@
         <div class="card-title">판단 1</div>
         <h3>평가 버튼은 두 개만 —<br>‘다시 볼래요’와 ‘한 번 익혔어요’</h3>
         <p>복습 간격은 기억 모델(FSRS)이 뒤에서 계산해요. 학습자는 ‘알았다 / 아직이다’만 고르면 돼요.</p>
-        <div class="why">출퇴근길 한 손으로도 고민 없이 누를 수 있게, 버튼을 크게(56) 두 개로 정했어요.</div>
+        <div class="why">출퇴근길 한 손으로도 고민 없이 누를 수 있게 버튼은 크게 두 개로, 누르면 언제 다시 보는지도 버튼 안에 적었어요.</div>
       </div>
       <div class="card">
         <div class="card-title">판단 2</div>
@@ -273,7 +293,7 @@
 
 <!-- ═════════ 3. 출시 후 개선 ═════════ -->
 <section class="slide s3" id="s3">
-  <div class="page-no">03 / 05</div>
+  <div class="page-no">03 / 06</div>
   <div class="head center">
     <div class="label">출시 후 개선</div>
     <h1>출시 후 확인한 두 가지 문제를<br>앱에 반영했어요</h1>
@@ -286,8 +306,8 @@
       <h3>버튼 이름을 읽지 않고<br>“오른쪽 버튼”으로 기억했어요</h3>
       <div class="row"><div class="k">확인한 것</div><div class="v">참여자는 ‘한 번 익혔어요’를 누르면 무슨 일이 생기는지 모른 채 위치·색으로만 버튼을 구분했어요.</div></div>
       <div class="row"><div class="k">바꾼 것</div><div class="v">설명문을 늘리는 대신, <b>처음 누른 직후 한 번만</b> 카드가 ‘며칠 뒤 달력’으로 들어가는 모습을 보여 줘요. 글을 읽지 않아도 결과가 보이게.</div></div>
-      <div class="row"><div class="k">검증</div><div class="v">처음 보는 3명 중 <b>2명은 ‘이 단어가 다시 나온다’</b>고 설명했어요. 1명은 ‘다음 버튼’으로 이해 — 학습엔 지장 없었지만, 버튼 이름은 더 다듬을 여지가 있어요.</div></div>
-      <div class="status"><span class="chip done"><i></i>앱 반영 · v1.0.6</span><span class="chip done"><i></i>빠른 테스트 · 3명 중 2명</span><span class="chip wait"><i></i>버튼 이름 개선 검토</span></div>
+      <div class="row"><div class="k">검증</div><div class="v">처음 보는 3명 중 <b>2명은 ‘이 단어가 다시 나온다’</b>고 설명했어요. 1명은 ‘다음 버튼’으로 이해 → 버튼 안에 결과 문구를 넣었어요 <span class="o">(다음 장)</span>.</div></div>
+      <div class="status"><span class="chip done"><i></i>앱 반영 · v1.0.6</span><span class="chip done"><i></i>빠른 테스트 · 3명 중 2명</span><span class="chip wait"><i></i>결과 문구 · PR 리뷰 중</span></div>
     </div>
     <div class="case">
       <div class="tag">문제 2 · 사용자 의견 + 60일 시뮬레이션</div>
@@ -309,9 +329,48 @@
   </div>
 </section>
 
-<!-- ═════════ 4. AI와 디자인 시스템 ═════════ -->
+<!-- ═════════ 4. 문제 1 자세히 ═════════ -->
+<section class="slide" id="s3b">
+  <div class="page-no">04 / 06</div>
+  <div class="s3b">
+    <div>
+      <div class="label">출시 후 개선 · 문제 1 자세히</div>
+      <h1>버튼 이름은 그대로 두고,<br>누르면 생길 일을 보여 줬어요</h1>
+      <p class="sub">참여자는 버튼 글자보다 위치·색으로 기억했어요. 설명문을 늘리는 대신 두 단계로 바꿨어요.</p>
+      <div class="steps">
+        <div class="st">
+          <div class="k">1단계 · 처음 누를 때 한 번 (v1.0.6)</div>
+          <p>카드가 <b>‘며칠 뒤 달력’</b>으로 들어가는 바텀시트. 빠른 테스트 3명 중 <b>2명</b>이 ‘이 단어가 다시 나온다’고 설명했어요.</p>
+        </div>
+        <div class="st">
+          <div class="k">2단계 · 매번 보는 버튼 안에 (C3-8)</div>
+          <p>나머지 1명은 시트를 본 뒤에도 ‘다음 버튼’으로 이해했어요. 시트는 한 번 보고 사라지니, 결과를 <b>버튼 안에 남겼어요</b> — 높이 56 → 72, 라운드 20.</p>
+        </div>
+      </div>
+      <div class="status"><span class="chip done"><i></i>바텀시트 · v1.0.6</span><span class="chip wait"><i></i>결과 문구 · PR 리뷰 중</span></div>
+    </div>
+    <div class="flow">
+      <div class="step">
+        <div class="phone"><img src="assets/onikan-deck/study-card-before.png" alt="처음 출시한 평가 버튼 — 다시 볼래요 / 한 번 익혔어요"></div>
+        <div class="cap"><div class="n">BEFORE</div><div class="t">이름만 있는 버튼</div><div class="d">“오른쪽 버튼”으로 기억</div></div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="step">
+        <div class="phone"><img src="assets/onikan-deck/learned-sheet.png" alt="첫 탭 바텀시트 — 익힌 단어는 며칠 뒤 다시 꺼내 볼게요"></div>
+        <div class="cap"><div class="n">1단계 · 신규 사용자 1회</div><div class="t">첫 탭 바텀시트</div><div class="d">결과를 그림으로 한 번</div></div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="step now">
+        <div class="phone"><img src="assets/onikan-deck/study-card.png" alt="결과 문구 버튼 — 다시 볼래요 · 오늘 또 봐요 / 한 번 익혔어요 · 며칠 뒤 봐요"></div>
+        <div class="cap"><div class="n">2단계 · 최신안</div><div class="t">결과 보조 문구</div><div class="d">오늘 또 봐요 · 며칠 뒤 봐요</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 5. AI와 디자인 시스템 ═════════ -->
 <section class="slide s4" id="s4">
-  <div class="page-no">04 / 05</div>
+  <div class="page-no">05 / 06</div>
   <div class="head center">
     <div class="label">AI와 디자인 시스템</div>
     <h1>기준은 제가 정하고, AI로 그 기준을<br>Figma와 코드 끝까지 옮겼어요</h1>
@@ -356,9 +415,9 @@
 
 </div>
 
-<!-- ═════════ 5. AI 워크플로 ═════════ -->
+<!-- ═════════ 6. AI 워크플로 ═════════ -->
 <section class="slide s5" id="s5">
-  <div class="page-no">05 / 05</div>
+  <div class="page-no">06 / 06</div>
   <div class="head">
     <div>
       <div class="label">AI 워크플로 · 디자인 시스템</div>
