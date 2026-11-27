@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=1920">
-<title>Onikan · 요약 6장</title>
+<title>Onikan · 요약 7장</title>
 <!--
   오니칸 포트폴리오 요약본 6장 (2026-11-17 · 11-26 4장 '문제 1 자세히' 추가, 평가 버튼 최신안 C3-8 반영)
   - 대지 1920×1080, 글꼴 SF Pro (한글은 SF Pro에 글리프가 없어 macOS 기본 Apple SD Gothic Neo로 그려짐)
   - 근거: design-system/04-PORTFOLIO-STATUS-2026-11.md · research/interview-synthesis.md ·
           handoff/study-first-tap-feedback-SPEC.md · handoff/study-daily-load-SPEC.md
-  - 한 장만 보기: ?s=1 ~ ?s=6 (PNG 내보내기용)
+  - 한 장만 보기: ?s=1 ~ ?s=7 (PNG 내보내기용)
 -->
 <style>
   :root {
@@ -169,6 +169,46 @@
   .s4 .num .k { font-size: 17px; line-height: 1.45; color: var(--body); }
   .s4 .nums-note { margin-top: 16px; font-size: 15px; color: var(--mute); }
 
+  /* ───────── 6. 근거 예시: 카드 여백 (기준 문서 → 코드 diff → 앱 화면) ───────── */
+  .s4b { justify-content: flex-start; padding-top: 84px; }
+  .s4b .head { margin-bottom: 34px; }
+  .s4b h1 { font-size: 46px; margin: 16px 0 14px; }
+  .s4b .sub { font-size: 20px; }
+  .s4b .grid { display: grid; grid-template-columns: 800px 1fr; gap: 24px; flex: 1; min-height: 0; }
+  .s4b .left { display: flex; flex-direction: column; gap: 24px; }
+  .s4b .left .pane { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .s4b .left .pane .k { margin-bottom: 18px; }
+  .s4b .pane { background: var(--panel); border-radius: 26px; padding: 28px 32px; border: 1px solid rgba(255,255,255,0.04); }
+  .s4b .pane .k { display: flex; justify-content: space-between; align-items: baseline; font-size: 16px; font-weight: 700; letter-spacing: 0.02em; margin-bottom: 16px; }
+  .s4b .pane .k .src { font-size: 14px; font-weight: 500; color: var(--mute); letter-spacing: 0; }
+  .s4b .spec { width: 100%; border-collapse: collapse; font-size: 18px; }
+  .s4b .spec th { text-align: left; font-weight: 600; color: var(--mute); font-size: 14px; padding: 0 0 8px; }
+  .s4b .spec td { padding: 10px 0; border-top: 1px solid var(--line); color: var(--body); vertical-align: top; }
+  .s4b .spec td:first-child { width: 90px; color: var(--ink); font-weight: 600; }
+  .s4b .spec td:nth-child(2) { width: 150px; }
+  .s4b code { font-family: "SF Mono", Menlo, monospace; font-size: 0.92em; color: var(--ink); }
+  .s4b .why { margin-top: 16px; padding: 16px 20px; border-radius: 14px; background: var(--panel-2); font-size: 17px; line-height: 1.55; color: var(--body); }
+  .s4b .why b { color: var(--orange); margin-right: 6px; }
+  .s4b .diff { font-family: "SF Mono", Menlo, monospace; font-size: 16px; line-height: 1.7; background: #141416; border-radius: 14px; padding: 14px 0; white-space: pre; overflow: hidden; }
+  .s4b .diff div { padding: 0 18px; }
+  .s4b .diff .f { color: var(--mute); }
+  .s4b .diff .m { background: rgba(255,106,44,0.12); color: #FF9B70; }
+  .s4b .diff .p { background: rgba(181,239,74,0.10); color: var(--lime); }
+  .s4b .diff + p { margin-top: 14px; font-size: 17px; line-height: 1.55; color: var(--body); }
+  .s4b .right { display: flex; flex-direction: column; justify-content: center; }
+  .s4b .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .s4b .shot { position: relative; border-radius: 16px; overflow: hidden; background: #F2F2F3; }
+  .s4b .shot img { display: block; width: 100%; }
+  .s4b .shot .pad { position: absolute; top: 3%; height: 94.5%; left: 3.98%; background: rgba(255,106,44,0.22); border-right: 2px solid var(--orange); }
+  .s4b .shot-cap { margin-top: 14px; margin-bottom: 24px; display: flex; flex-direction: column; gap: 2px; }
+  .s4b .shot-cap .t { font-size: 18px; font-weight: 700; }
+  .s4b .shot-cap .t span { color: var(--orange); }
+  .s4b .shot-cap .d { font-size: 14px; color: var(--mute); }
+  .s4b .checks { list-style: none; margin-top: 8px; border-top: 1px solid var(--line); }
+  .s4b .checks li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 16px; line-height: 1.5; color: var(--body); }
+  .s4b .checks li i { width: 10px; height: 10px; border-radius: 50%; background: var(--lime); margin-top: 7px; display: block; }
+  .s4b .checks li b { color: var(--ink); }
+
   /* ───────── 5. AI 워크플로 도식 (onikan-ai-workflow.html과 같은 내용) ───────── */
   .s5 { justify-content: flex-start; padding-top: 84px; }
   .s5 .head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; position: relative; }
@@ -215,7 +255,7 @@
 
 <!-- ═════════ 1. 제품과 역할 ═════════ -->
 <section class="slide" id="s1">
-  <div class="page-no">01 / 06</div>
+  <div class="page-no">01 / 07</div>
   <div class="s1">
     <div>
       <div class="label">ONIKAN · 제품과 역할</div>
@@ -252,7 +292,7 @@
 
 <!-- ═════════ 2. 핵심 학습 경험 ═════════ -->
 <section class="slide s2" id="s2">
-  <div class="page-no">02 / 06</div>
+  <div class="page-no">02 / 07</div>
   <div class="head">
     <div class="label">핵심 학습 경험</div>
     <h1>하루 학습 → 결과 → 다시 학습,<br>외운 단어가 재료가 되는 한 바퀴</h1>
@@ -294,7 +334,7 @@
 
 <!-- ═════════ 3. 출시 후 개선 ═════════ -->
 <section class="slide s3" id="s3">
-  <div class="page-no">03 / 06</div>
+  <div class="page-no">03 / 07</div>
   <div class="head center">
     <div class="label">출시 후 개선</div>
     <h1>출시 후 확인한 두 가지 문제를<br>앱에 반영했어요</h1>
@@ -332,7 +372,7 @@
 
 <!-- ═════════ 4. 문제 1 자세히 ═════════ -->
 <section class="slide" id="s3b">
-  <div class="page-no">04 / 06</div>
+  <div class="page-no">04 / 07</div>
   <div class="s3b">
     <div>
       <div class="label">출시 후 개선 · 문제 1 자세히</div>
@@ -371,7 +411,7 @@
 
 <!-- ═════════ 5. AI와 디자인 시스템 ═════════ -->
 <section class="slide s4" id="s4">
-  <div class="page-no">05 / 06</div>
+  <div class="page-no">05 / 07</div>
   <a class="fig-link" href="https://www.figma.com/design/Yo6tyXMvlhrKVEzwlZKH3R?node-id=1-33" target="_blank" rel="noopener">Figma 디자인 시스템 보기 ↗</a>
   <div class="head center">
     <div class="label">AI와 디자인 시스템</div>
@@ -405,11 +445,63 @@
   <p class="nums-note">* 토큰 값은 검사 대상 범위에서 비교했습니다. Figma 컴포넌트 중 나머지 4개는 화면별 구현에 대응합니다.</p>
 </section>
 
+<!-- ═════════ 6. 근거 예시: 카드 여백 (2026-11-27) ═════════
+     근거: design-system/03-COMPONENT-SPECS-2026-11.md:193-197 · :333 (C3-5) · 00-DECISIONS:26 (D0-3)
+           앱 PR #15 커밋 aaa9706 (HomeSections.tsx · Surface.tsx)
+           figmaParity.test.ts:111-131 · componentMap.test.ts:35 · figma-tokens.json:64,84
+           캡처: assets/ds-evidence/ — 76193d4(여백 22) vs f5ae6e4(여백 16), iPhone 17 Pro 라이트 -->
+<section class="slide s4b" id="s4b">
+  <div class="page-no">06 / 07</div>
+  <div class="head">
+    <div class="label">AI와 디자인 시스템 · 적용 예시</div>
+    <h1>흰 카드 여백을 16 하나로 정하고, 화면별 지정을 없앴습니다</h1>
+    <p class="sub">화면마다 22·18·24로 달랐던 카드 안쪽 여백을 기준 문서에서 정하고, 공통 Card 컴포넌트가 그 값을 쓰도록 바꿨습니다.</p>
+  </div>
+
+  <div class="grid">
+    <div class="left">
+      <div class="pane">
+        <div class="k"><span style="color:var(--orange)">01 · 기준 문서</span><span class="src">03-COMPONENT-SPECS · card 명세 · C3-5</span></div>
+        <table class="spec">
+          <tr><th>속성</th><th>토큰</th><th>값과 범위</th></tr>
+          <tr><td>반경</td><td><code>card</code></td><td><b>24</b> · 흰 카드는 전부 (D0-3)</td></tr>
+          <tr><td>여백</td><td><code>x4</code></td><td><b>16</b> · 모든 흰 카드, 이전 세 단계 16·20·24는 폐기</td></tr>
+        </table>
+        <div class="why"><b>결정 이유</b>단계를 둬도 화면마다 22·18처럼 벗어났습니다. 하나로 묶고 Figma 컴포넌트와 시안도 16에 맞췄습니다.</div>
+      </div>
+      <div class="pane">
+        <div class="k"><span style="color:var(--lime)">02 · 코드 변경</span><span class="src">앱 PR #15 · aaa9706</span></div>
+        <div class="diff"><div class="f">// HomeSections.tsx — 홈 학습 카드</div><div class="m">-  studyHero: { borderRadius: radius.card, padding: 22, gap: spacing.x3 },</div><div class="p">+  studyHero: { gap: spacing.x3 },</div><div class="f">// Surface.tsx — 공통 Card 기본값</div><div class="m">-  padding: spacing.x5,</div><div class="p">+  padding: spacing.x4,  // 16, 화면에서 덮어쓰지 않는다</div></div>
+        <p>같은 PR에서 단골 카드의 18, 완료 화면의 24 지정도 지웠습니다.</p>
+      </div>
+    </div>
+
+    <div class="pane right">
+      <div class="k"><span style="color:var(--white)">03 · 앱 화면과 검사</span><span class="src"><span style="color:var(--orange)">■</span> 카드 안쪽 여백 · iPhone 17 Pro 시뮬레이터 · 같은 데이터</span></div>
+      <div class="shots">
+        <div>
+          <div class="shot"><img src="assets/ds-evidence/hero-card-before-22.png" alt="수정 전 홈 학습 카드 — 안쪽 여백 22"><div class="pad" style="width:5.47%"></div></div>
+          <div class="shot-cap"><div class="t">수정 전 · 여백 <span>22</span></div><div class="d">화면 코드에서 직접 지정</div></div>
+        </div>
+        <div>
+          <div class="shot"><img src="assets/ds-evidence/hero-card-after-16.png" alt="수정 후 홈 학습 카드 — 안쪽 여백 16"><div class="pad" style="width:3.98%"></div></div>
+          <div class="shot-cap"><div class="t">수정 후 · 여백 <span>16</span></div><div class="d">공통 Card 기본값 사용</div></div>
+        </div>
+      </div>
+      <ul class="checks">
+        <li><i></i><span><b>토큰 대조 테스트</b> · Figma 변수와 코드 값을 양방향 비교, <code>x4</code> 16 · <code>card</code> 24 일치</span></li>
+        <li><i></i><span><b>컴포넌트 대응 테스트</b> · Figma <code>card</code> ↔ 코드 <code>Card</code>가 실제로 있는지 확인</span></li>
+        <li><i></i><span><b>시뮬레이터 검수</b> · 머지 후 바뀐 화면을 직접 확인하고 개발자 리뷰를 거쳐 반영</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 </div>
 
 <!-- ═════════ 6. AI 워크플로 ═════════ -->
 <section class="slide s5" id="s5">
-  <div class="page-no">06 / 06</div>
+  <div class="page-no">07 / 07</div>
   <div class="head">
     <div>
       <div class="label">AI 워크플로 · 디자인 시스템</div>
