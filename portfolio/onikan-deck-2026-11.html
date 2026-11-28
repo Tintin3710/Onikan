@@ -169,38 +169,63 @@
   .s4 .num .k { font-size: 17px; line-height: 1.45; color: var(--body); }
   .s4 .nums-note { margin-top: 16px; font-size: 15px; color: var(--mute); }
 
-  /* ───────── 6. 적용 예시: 카드 여백 (기준 → 구현 → 재사용 결과) ───────── */
-  .s4b { justify-content: flex-start; padding-top: 84px; }
-  .s4b .head { margin-bottom: 30px; }
-  .s4b h1 { font-size: 46px; margin: 16px 0 14px; }
-  .s4b .sub { font-size: 20px; }
-  .s4b .cols3 { display: grid; grid-template-columns: 1fr 1.08fr 1fr; gap: 24px; }
-  .s4b .body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-  .s4b .pane { background: var(--panel); border-radius: 26px; padding: 28px 30px 26px; border: 1px solid rgba(255,255,255,0.04); display: flex; flex-direction: column; }
-  .s4b .pane .k { font-size: 16px; font-weight: 700; letter-spacing: 0.02em; }
-  .s4b .pane .q { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; margin: 8px 0 18px; }
-  .s4b .src { margin-top: auto; padding-top: 16px; font-size: 14px; line-height: 1.5; color: var(--mute); }
-  .s4b code { font-family: "SF Mono", Menlo, monospace; font-size: 0.92em; color: var(--ink); }
-  .s4b .shot { position: relative; border-radius: 14px; overflow: hidden; background: #F2F2F3; }
-  .s4b .shot img { display: block; width: 100%; }
-  .s4b .shot .pad { position: absolute; background: rgba(255,106,44,0.25); border-left: 2px solid var(--orange); border-right: 2px solid var(--orange); }
-  .s4b .shot .tag16 { position: absolute; transform: translateX(-50%); background: var(--orange); color: #fff; font-size: 13px; font-weight: 700; padding: 2px 7px; border-radius: 6px; font-variant-numeric: tabular-nums; }
-  .s4b .cap { margin: 10px 0 0; font-size: 15px; color: var(--body); display: flex; justify-content: space-between; }
-  .s4b .cap b { color: var(--ink); }
-  .s4b .spec { margin-top: 18px; width: 100%; border-collapse: collapse; font-size: 17px; }
-  .s4b .spec td { padding: 10px 0; border-top: 1px solid var(--line); color: var(--body); }
-  .s4b .spec td:first-child { width: 64px; color: var(--ink); font-weight: 600; }
-  .s4b .spec td:nth-child(2) { width: 96px; }
-  .s4b .why { margin-top: 14px; padding: 14px 16px; border-radius: 14px; background: var(--panel-2); font-size: 16px; line-height: 1.55; color: var(--body); }
-  .s4b .why b { color: var(--orange); margin-right: 4px; }
-  .s4b .diff { font-family: "SF Mono", Menlo, monospace; font-size: 14.5px; line-height: 1.75; background: #141416; border-radius: 14px; padding: 12px 0; white-space: pre; overflow: hidden; }
-  .s4b .diff div { padding: 0 16px; }
+  /* ───────── 6. 공통 기준 적용: 카드(대표) + 버튼(보조) ───────── */
+  .s4b { justify-content: flex-start; padding-top: 76px; padding-bottom: 64px; }
+  .s4b .head { margin-bottom: 22px; }
+  .s4b h1 { font-size: 42px; line-height: 1.3; margin: 14px 0 12px; }
+  .s4b .sub { font-size: 19px; line-height: 1.6; }
+  .s4b .main { display: grid; grid-template-columns: 40fr 60fr; gap: 24px; }
+  .s4b .pane { background: var(--panel); border-radius: 26px; padding: 22px 28px; border: 1px solid rgba(255,255,255,0.04); }
+  .s4b .left { display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+  .s4b .blk .k { font-size: 15px; font-weight: 700; letter-spacing: 0.02em; color: var(--orange); }
+  .s4b .blk h3 { font-size: 21px; font-weight: 700; letter-spacing: -0.02em; margin: 5px 0 6px; }
+  .s4b .blk p { font-size: 16px; line-height: 1.55; color: var(--body); }
+  .s4b .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .s4b .chips span { font-size: 13.5px; color: var(--body); background: var(--panel-2); border-radius: 8px; padding: 4px 9px; white-space: nowrap; }
+  .s4b .chips span b { color: var(--ink); font-variant-numeric: tabular-nums; margin-left: 3px; }
+  .s4b .chips .more { color: var(--mute); background: transparent; padding-left: 2px; }
+  .s4b .diff { margin-top: 10px; font-family: "SF Mono", Menlo, monospace; font-size: 13.5px; line-height: 1.7; background: #141416; border-radius: 12px; padding: 8px 0; white-space: pre; overflow: hidden; }
+  .s4b .diff div { padding: 0 14px; }
   .s4b .diff .f { color: var(--mute); }
-  .s4b .diff .f + .f, .s4b .diff .m + .f, .s4b .diff .p + .f { margin-top: 8px; }
   .s4b .diff .m { background: rgba(255,106,44,0.12); color: #FF9B70; }
   .s4b .diff .p { background: rgba(181,239,74,0.10); color: var(--lime); }
-  .s4b .impl-note { margin-top: 16px; font-size: 16px; line-height: 1.6; color: var(--body); }
-  .s4b .reuse { display: flex; flex-direction: column; gap: 14px; }
+  .s4b .right { display: flex; flex-direction: column; }
+  .s4b .right .rk { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+  .s4b .right .rk h3 { font-size: 21px; font-weight: 700; letter-spacing: -0.02em; }
+  .s4b .right .rk .k { font-size: 15px; font-weight: 700; color: var(--lime); margin-right: 10px; }
+  .s4b .right .rk .src { font-size: 13px; color: var(--mute); }
+  .s4b .align { position: relative; display: flex; flex-direction: column; gap: 10px; }
+  .s4b .align .shot { position: relative; border-radius: 12px; overflow: hidden; background: #F4F4F4; }
+  .s4b .align .shot img { display: block; width: 100%; }
+  .s4b .align .tagname { position: absolute; right: 12px; bottom: 10px; font-size: 13px; font-weight: 600; color: #52525B; background: rgba(255,255,255,0.9); border-radius: 6px; padding: 3px 8px; }
+  .s4b .band { position: absolute; top: 0; bottom: 0; background: rgba(255,106,44,0.16); }
+  .s4b .band.b1 { left: 0; width: 3.98%; background: rgba(120,120,130,0.18); }
+  .s4b .band.b2 { left: 3.98%; width: 3.98%; }
+  .s4b .line32 { position: absolute; top: -10px; bottom: -10px; left: 7.96%; border-left: 2px dashed var(--orange); z-index: 2; }
+  .s4b .lbl { position: absolute; z-index: 3; transform: translateX(-50%); font-size: 12.5px; font-weight: 700; color: #fff; border-radius: 6px; padding: 2px 6px; font-variant-numeric: tabular-nums; }
+  .s4b .lbl.g { background: #6B6B75; }
+  .s4b .lbl.o { background: var(--orange); }
+  .s4b .legend32 { margin-top: 14px; display: flex; gap: 18px; font-size: 14px; color: var(--body); }
+  .s4b .legend32 i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+  .s4b .bottom { margin-top: 18px; display: grid; grid-template-columns: 1fr 420px; gap: 24px; }
+  .s4b .btns { display: grid; grid-template-columns: 210px 1fr 40px 1fr; align-items: center; gap: 18px; padding: 20px 28px; }
+  .s4b .btns .bt .k { font-size: 15px; font-weight: 700; color: var(--white); }
+  .s4b .btns .bt h3 { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; margin-top: 4px; line-height: 1.4; }
+  .s4b .spec { display: flex; align-items: flex-end; gap: 10px; background: #F5F5F5; border-radius: 14px; padding: 12px 16px 8px; width: fit-content; }
+  .s4b .spec .b { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+  .s4b .spec .pill { width: 88px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; }
+  .s4b .spec .pill.ink { background: #18181B; color: #fff; }
+  .s4b .spec .pill.or { background: #EF5112; color: #fff; }
+  .s4b .spec .pill.soft { background: #E6E6EA; color: #18181B; }
+  .s4b .spec .pill.line { background: #fff; color: #18181B; border: 1.5px solid #D4D4D8; }
+  .s4b .spec .h { font-size: 12.5px; font-weight: 600; color: #6B6B75; font-variant-numeric: tabular-nums; }
+  .s4b .spec-cap { font-size: 13px; color: var(--mute); margin-top: 8px; }
+  .s4b .arrow { color: var(--mute); font-size: 24px; text-align: center; }
+  .s4b .sum { display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 20px 28px; background: var(--panel-2); }
+  .s4b .sum .row { display: flex; align-items: baseline; gap: 14px; }
+  .s4b .sum .v { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .s4b .sum .v small { font-size: 16px; color: var(--mute); font-weight: 600; margin-left: 2px; }
+  .s4b .sum .d { font-size: 15px; line-height: 1.45; color: var(--body); }
 
   /* ───────── 5. AI 워크플로 도식 (onikan-ai-workflow.html과 같은 내용) ───────── */
   .s5 { justify-content: flex-start; padding-top: 84px; }
@@ -438,72 +463,82 @@
   <p class="nums-note">* 토큰 값은 검사 대상 범위에서 비교했습니다. Figma 컴포넌트 중 나머지 4개는 화면별 구현에 대응합니다.</p>
 </section>
 
-<!-- ═════════ 6. 적용 예시: 카드 여백 (2026-11-28 피드백 반영: 기준 · 구현 · 재사용 결과) ═════════
-     근거: Figma 라이브러리 card / Elevation=Level 1 (UiXc63pKkJr8WpkKqFVGBr 106:2562 — 글자 x 16 · y 16, 320×100 Hug)
-           design-system/03-COMPONENT-SPECS-2026-11.md:193-197 · :333 (C3-5) · 00-DECISIONS:26 (D0-3)
-           앱 PR #15 커밋 aaa9706 — HomeSections.tsx · DangolProgressCard.tsx · Surface.tsx
-           적용 화면: 앱 main c55be75 실행 캡처 (iPhone 17 Pro 시뮬레이터, 라이트, 2026-11-28) — assets/ds-evidence/reuse-*.png
-           주황 띠 = 카드 왼쪽 끝 ~ 콘텐츠 시작 (16pt = 원본 48px @3x, Figma 캡처는 460% 확대) -->
+<!-- ═════════ 6. 공통 기준 적용 (2026-11-28 최종 문구 반영: 카드 대표 · 버튼 보조) ═════════
+     카드: 공통 Card 사용 11곳 — 76193d4(디자인 시스템 PR 직전) 화면별 지정 7가지 → main c55be75 모두 기본값 16 (PR #15 aaa9706)
+           정렬 이미지: main c55be75 실행 캡처(iPhone 17 Pro) — 화면 가장자리→카드 16(gutter) · 카드→본문 16(Card) = 본문 시작 32
+           ※ 홈 '단골 N일차' 카드(StreakStamps.tsx StreakCard)는 공통 Card가 아닌 View + padding 22라 11곳에 포함되지 않고 시작선도 38 — 그래서 단골 카드는 도감 › 스페셜의 DangolProgressCard 사용
+     버튼: 03-COMPONENT-SPECS C3-2 (11-11 감사 시점 높이 56·60·48·44 → large 56 · medium 44) · C3-3 (오렌지 brand → primary 잉크)
+           버튼 그림은 코드 규격으로 그린 도식(캡처 아님) -->
 <section class="slide s4b" id="s4b">
   <div class="page-no">06 / 07</div>
   <div class="head">
-    <div class="label">AI와 디자인 시스템 · 적용 예시</div>
-    <h1>화면마다 달랐던 카드 여백을 공통 컴포넌트에서 관리하도록 바꿨습니다</h1>
-    <p class="sub">홈 학습 카드와 단골 카드 등에서 따로 지정하던 여백을 정리했습니다. 공통 Card의 기본값을 사용하도록 변경하고,<br>Figma와 실제 앱에 같은 기준이 적용됐는지 확인했습니다.</p>
+    <div class="label">AI와 디자인 시스템 · 공통 기준 적용</div>
+    <h1>화면마다 달랐던 카드와 버튼의 기준을 정리하고,<br>공통 컴포넌트에서 관리하도록 바꿨습니다.</h1>
+    <p class="sub">공통 컴포넌트가 있었지만, 개별 화면에서 스타일을 덮어쓰며 서로 다른 값이 사용되고 있었습니다.<br>카드 여백과 주요 버튼의 기준을 정리하고, 화면별 지정을 제거해 Figma와 앱 코드에 반영했습니다.</p>
   </div>
 
-  <div class="cols3">
-    <div class="pane">
-      <div class="k" style="color:var(--orange)">01 · 기준</div>
-      <div class="q">어떤 값을 정했는가</div>
-      <div class="body">
-      <div class="shot" style="background:#EDEDED">
-        <img src="assets/ds-evidence/figma-card-16.png" alt="Figma 라이브러리 card 컴포넌트 — 안쪽 여백 16">
-        <div class="pad" style="left:2.6%; width:4.74%; top:6.7%; height:86%"></div>
-        <div class="tag16" style="left:4.97%; top:40%">16</div>
+  <div class="main">
+    <div class="pane left">
+      <div class="blk">
+        <div class="k">문제 · 화면마다 달랐던 여백</div>
+        <h3>공통 Card를 사용한 11곳에서 여백 설정이 7가지로 나뉘었습니다.</h3>
+        <p>기본값이 있어도 화면별로 다른 값을 지정해, 같은 카드 안에서도 콘텐츠의 시작 위치가 달랐습니다.</p>
+        <div class="chips"><span>홈 학습<b>22</b></span><span>단골<b>18</b></span><span>완료 보상<b>24/16</b></span><span>첫 회독 결과<b>8/22</b></span><span>레벨 완료<b>20</b></span><span class="more">외 6곳 · 상하/좌우</span></div>
       </div>
-      <div class="cap"><span><b>Figma</b> card 컴포넌트 · Level 1</span><span>320 × 100</span></div>
-      <table class="spec">
-        <tr><td>여백</td><td><code>x4</code></td><td><b>16</b> · 모든 흰 카드</td></tr>
-        <tr><td>반경</td><td><code>card</code></td><td><b>24</b> · 모든 흰 카드</td></tr>
-      </table>
-      <div class="why"><b>결정 이유</b> 단계를 둬도 화면마다 22·18처럼 벗어나, 16 하나로 묶었습니다.</div>
+      <div class="blk">
+        <div class="k">판단 · 공통 Card에서 관리</div>
+        <h3>화면별로 달라지던 여백을 16으로 통일했습니다.</h3>
+        <p>여러 단계를 허용한 뒤에도 기준 밖의 값이 반복되어, 공통 Card의 기본값 하나를 사용하도록 정리했습니다.</p>
+        <div class="diff"><div class="f">// HomeSections.tsx — 화면별 지정 제거</div><div class="m">-  studyHero: { …, padding: 22, … },</div><div class="f">// Surface.tsx — 공통 Card 기본값</div><div class="m">-  padding: spacing.x5,</div><div class="p">+  padding: spacing.x4,  // 16</div></div>
       </div>
-      <div class="src">03-COMPONENT-SPECS · card 명세 · C3-5</div>
     </div>
 
-    <div class="pane">
-      <div class="k" style="color:var(--lime)">02 · 구현</div>
-      <div class="q">어디에서 관리하도록 바꿨는가</div>
-      <div class="body">
-      <div class="diff"><div class="f">// HomeSections.tsx — 홈 학습 카드</div><div class="m">-  studyHero: { borderRadius: radius.card,</div><div class="m">-              padding: 22, gap: spacing.x3 },</div><div class="p">+  studyHero: { gap: spacing.x3 },</div><div class="f">// DangolProgressCard.tsx — 단골 카드</div><div class="m">-  paddingVertical: 18,</div><div class="m">-  paddingHorizontal: 18,</div><div class="f">// Surface.tsx — 공통 Card 기본값</div><div class="m">-  padding: spacing.x5,</div><div class="p">+  padding: spacing.x4,  // 16</div></div>
-      <p class="impl-note">화면마다 덮어쓰던 여백을 지우고, 값은 <b>공통 Card 한 곳</b>에서만 정하도록 바꿨습니다.</p>
+    <div class="pane right">
+      <div class="rk"><h3><span class="k">적용 결과</span>같은 시작선으로 정렬</h3><span class="src">앱 main c55be75 실행 화면 · iPhone 17 Pro</span></div>
+      <div class="align">
+        <div class="line32"></div>
+        <div class="shot">
+          <img src="assets/ds-evidence/align-home-study-card.png" alt="홈 학습 카드 — 화면 가장자리 16, 카드 안쪽 16, 본문 시작 32">
+          <div class="band b1"></div><div class="band b2"></div>
+          <div class="lbl g" style="left:1.99%; top:40%">16</div><div class="lbl o" style="left:5.97%; top:40%">16</div>
+          <div class="tagname">홈 · 학습 카드</div>
+        </div>
+        <div class="shot">
+          <img src="assets/ds-evidence/align-cats-dangol-card.png" alt="도감 단골 카드 — 화면 가장자리 16, 카드 안쪽 16, 본문 시작 32">
+          <div class="band b1"></div><div class="band b2"></div>
+          <div class="lbl g" style="left:1.99%; top:40%">16</div><div class="lbl o" style="left:5.97%; top:40%">16</div>
+          <div class="tagname">도감 · 단골 카드</div>
+        </div>
+        <div class="lbl o" style="left:7.96%; bottom:-30px; transform:none; margin-left:8px">32 시작선</div>
       </div>
-      <div class="src">앱 PR #15 · aaa9706</div>
+      <p class="blkp" style="margin-top:40px; font-size:15.5px; line-height:1.55; color:var(--body)"><b>검토한 11곳에 같은 여백 기준을 적용했습니다.</b> 화면 여백 16과 카드 안쪽 여백 16을 적용해, 학습 카드와 단골 카드 본문이 화면 가장자리에서 32 떨어진 같은 시작선에 놓이도록 맞췄습니다.</p>
     </div>
+  </div>
 
-    <div class="pane">
-      <div class="k" style="color:var(--white)">03 · 재사용 결과</div>
-      <div class="q">다른 화면에도 같은 기준이 적용됐는가</div>
-      <div class="reuse">
-        <div>
-          <div class="shot">
-            <img src="assets/ds-evidence/reuse-home-card-edge.png" alt="홈 학습 카드 — 왼쪽 끝에서 콘텐츠까지 16">
-            <div class="pad" style="left:6.67%; width:6.67%; top:10.8%; height:89.2%"></div>
-            <div class="tag16" style="left:10%; top:46%">16</div>
-          </div>
-          <div class="cap"><span><b>홈</b> · 학습 카드</span></div>
+  <div class="bottom">
+    <div class="pane btns">
+      <div class="bt"><div class="k">같은 방식 · 버튼</div><h3>주요 버튼의 높이와<br>강조색도 공통 기준으로</h3></div>
+      <div>
+        <div class="spec">
+          <div class="b"><div class="pill ink" style="height:60px">평가</div><span class="h">60</span></div>
+          <div class="b"><div class="pill or" style="height:56px">브랜드</div><span class="h">56</span></div>
+          <div class="b"><div class="pill ink" style="height:48px">compact</div><span class="h">48</span></div>
+          <div class="b"><div class="pill soft" style="height:44px">subtle</div><span class="h">44</span></div>
         </div>
-        <div>
-          <div class="shot">
-            <img src="assets/ds-evidence/reuse-dangol-card-edge.png" alt="도감 단골 카드 — 왼쪽 끝에서 콘텐츠까지 16">
-            <div class="pad" style="left:6.67%; width:6.67%; top:8.2%; height:81.8%"></div>
-            <div class="tag16" style="left:10%; top:42%">16</div>
-          </div>
-          <div class="cap"><span><b>도감</b> · 단골 카드</span></div>
-        </div>
+        <div class="spec-cap">이전(11-11 감사 시점 코드) · 높이 4가지 · 잉크와 오렌지 강조 혼용</div>
       </div>
-      <div class="src">앱 main c55be75 실행 화면 · iPhone 17 Pro 시뮬레이터 · 카드 왼쪽 확대</div>
+      <div class="arrow">→</div>
+      <div>
+        <div class="spec">
+          <div class="b"><div class="pill ink" style="height:56px; width:120px">large</div><span class="h">56</span></div>
+          <div class="b"><div class="pill ink" style="height:44px; width:100px">medium</div><span class="h">44</span></div>
+        </div>
+        <div class="spec-cap">정리 후 · 2가지 · 기본 상태 주요 버튼은 잉크 · 코드 규격 도식</div>
+      </div>
+    </div>
+    <div class="pane sum">
+      <div class="row"><div class="v">7 → 1<small>가지</small></div><div class="d">카드 여백 설정<br>공통 Card 사용 11곳</div></div>
+      <div class="row"><div class="v">4 → 2<small>가지</small></div><div class="d">버튼 높이<br>주요 행동의 강조색 통일</div></div>
     </div>
   </div>
 </section>
